@@ -1,6 +1,6 @@
 # Team Name/Group 27 Contract
 ## Fall 2021
-### Creation Date
+### 10/10/2021
 
 ### Team Members
 Instructor: Thomas Powell
@@ -18,31 +18,30 @@ Instructor: Thomas Powell
 - Tucker Frandsen: tfrandsen@ucsd.edu
 
 ### Primary Means for Communication
-All members are expected to check MODE OF COMMUNICATION and respond within TIMEFRAME.
-
-### Scheduling Meetings
-- Step 1 to schedule meeting
-- Step 2 to schedule meeting
-- Step 3 to schedule meeting
-
-### Deadlines
-- Deadline 1
-- Deadline 2
-- Deadline 3
+All members are expected to check Slack and respond within 24 hours.
 
 ### General Responsibilities
-- Responsibility 1
-- Responsibility 2
-- Responsibility 3
+- No badmouthing teammates.
+- Alert teammates and give notice if something comes up, conflicts, sickness, etc.
+- Talk to team leaders, TA if there is a big teammate conflict.
+- Feel open to voicing concerns, criticism, feedback.
+- Feel open to receiving concern, criticism, and feedback from teammates.
+- Give your best effort in finishing responsiblities and code by deadlines.
+- Ask for help before deadlines.
+- Help teammates that are struggling.
+- Reach out to teammates if your personal responsibilities are finished and help out.
+- Show up to class to have an understanding of the material.
+- COMMENT YOUR CODE!!!
 
 ### Specific Responsibilities
-- Responsibility 1
-- Responsibility 2
-- Responsibility 3
+- Whoever is leading a meeting, have the agenda ready.
+- Make sure there is a note-taker every meeting.
 
 ### Conflict Resolution
-- Option 1
-- Option 2
-- Option 3
+- Be willing to address issues in a non-confrontational manner.
+- Talk to the person privately.
+- Talk to team leaders to mediate.
+- Talk to TA.
+- Talk to the Professor.
 
 Signed by: 
