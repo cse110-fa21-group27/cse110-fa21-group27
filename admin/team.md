@@ -10,6 +10,10 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 ## **Team Roster:**
 
 ### *[Tucker Frandsen](https://tuckerfrandsen.github.io/CSE110-Lab1/)*
+- Fourth Year Computer Engineering student hoping to graduate 2022.
+- An avid long distance runner.
+- Raised 4 service dogs for Canine Companions for Independence.
+- Big fan of RTS Video Games.
 
 ### *[Delia McGrath](https://dmcgrath19.github.io/CSE110_Lab1/)*:
 - Computer science student from Trinity College Dublin, bringing the luck of the Irish to team 27
