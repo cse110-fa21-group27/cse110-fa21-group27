@@ -23,7 +23,11 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 
 ### *Tiffany Chang*
 
-### *Steven Christensen*
+### *[Steven Christensen](https://steven-christensen.github.io/GitHub-Pages/)*
+- 4th year Computer science student graduating 2022.
+- Enjoys reading and discussing philosophy.
+- obsessed with cute doggos.
+- Metalhead.
 
 ### *[Dilara Marasli](https://dmarasli.github.io/CSE110-GitHubPages/#interests)*
 
