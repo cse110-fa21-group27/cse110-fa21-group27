@@ -66,4 +66,7 @@ Decisions made:
 
 
 Meeting concluded at 10:30 AM.
+
+Signed by:
+
 <!-- REMINDER TO SAVE THE TEMPLATE AS (mmddyy-topic.md)-->
