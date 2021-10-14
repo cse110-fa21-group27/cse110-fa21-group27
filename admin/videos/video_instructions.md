@@ -11,8 +11,20 @@ Tucker Frandsen
 - I'm a 4th year, planning to graduate 2022. My hobbies/interests include long distance running, raising service dogs, and video games.
 
 Delia McGrath
+- I am on exchange from Trinity College Dublin
+- I like to study in the library
+- I enjoy coding
+- I will be bringing the luck of the Irish to the team
 
 Arturo Amaya
+- Expected graduation: 2023
+- Interests/Hobbies:
+- Salsa and bachata dancing
+- Super smash bros
+- Hopefully surfing
+- Hopefully brewing a batch of my own beer
+- Meeting all the people I should have met last year
+- Pic of my cat. Her name is Koshka, which in Russian means “cat”. My sister chose the name. She lives in Colombia with my mom but, we FaceTime regularly
 
 Tiffany Chang
 
@@ -25,6 +37,8 @@ Hobbies: Hiking, napping, and camping.
 Fave movie: Thor Ragnarok
 
 Aryan Malik
+- Graduation date - 2022
+- Hobbies/Interests - machine learning, software development / basketball, gym, tennis
 
 Miguel Christian Sanchez
 - i'm planning to graduate by 2023,
