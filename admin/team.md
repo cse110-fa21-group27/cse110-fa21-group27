@@ -34,11 +34,25 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 ### *Aryan Malik*
 
 ### *[Miguel Christian Sanchez](https://mlgi.github.io/)*
-- 4th year Computer Science student, aiming to graduate by 2033.
+- 4th year Computer Science student, aiming to graduate by 2033. <!---2033?-->
 - Enjoys ~~attempting~~ to 3D print
 - Trying to learn latte art
 - Can make a water droplet noise with my cheek
 
 ### *Steven Schaeffer*
 
-### *Kevin Yu*
+### *[Kevin Yu](https://ctyuucsdedu.github.io/110-Lab1/)*
+- 5th year Computer Science student aiming to graduate by 2022.
+- Enjoys cooking and playing sports
+- Best hiking record was 9 hours in the Grand Canyon.
+
+<hr /> <!---Separating the value section-->
+
+## **Important Team Values**
+
+**We all believe and agree that:**
+* Connecting with the team is essantial such that we should all check Slack and make responds within 24 hours.
+* Give the best effort in finishing responsibilities and comment our code by deadlines.
+* Feel open to voicing concerns, criticism, feedback, and helping other teammates.
+* Alert teammates and give notice if something comes up such as conflicts and sickness.
+* Be willing to address issues in a non-confrontational manner.
