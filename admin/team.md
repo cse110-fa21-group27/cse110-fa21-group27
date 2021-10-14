@@ -43,7 +43,7 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 
 ### *Kevin Yu*
 
-***** <!---Separating the value section-->
+<hr /> <!---Separating the value section-->
 
 ## **Important Team Values**
 
