@@ -51,8 +51,8 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 ## **Important Team Values**
 
 **We all believe and agree that:**
-* Connecting with the team is essantial such that we should all check Slack and make responds within 24 hours.
-* Give the best effort in finishing responsibilities and comment our code by deadlines.
+* Connecting with the team is essential such that we should all check Slack and make responses within 24 hours.
+* Give the best effort in finishing responsibilities and comment on our code by deadlines.
 * Feel open to voicing concerns, criticism, feedback, and helping other teammates.
 * Alert teammates and give notice if something comes up such as conflicts and sickness.
 * Be willing to address issues in a non-confrontational manner.
