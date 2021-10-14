@@ -56,3 +56,6 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 * Feel open to voicing concerns, criticism, feedback, and helping other teammates.
 * Alert teammates and give notice if something comes up such as conflicts and sickness.
 * Be willing to address issues in a non-confrontational manner.
+* Committed to learning and teaching others such that everyone profits from the project.
+* Have the courage to speak out against certain ideas if they might not benefit the project or team.
+* Envision big but start small. Be a responsible risk-taker.
