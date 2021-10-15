@@ -30,6 +30,10 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 - Metalhead.
 
 ### *[Dilara Marasli](https://dmarasli.github.io/CSE110-GitHubPages/#interests)*
+- Senior Math-CS student hoping to graduate in spring 2022.
+- Enjoys hiking, camping and napping.
+- Passionate about enviromental sustainability.
+- Favorite show : WestWorld!
 
 ### *Aryan Malik*
 
