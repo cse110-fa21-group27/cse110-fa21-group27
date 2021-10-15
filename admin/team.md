@@ -20,6 +20,10 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 - Enjoys leading the team with Tucker
 
 ### *[Arturo Amaya](https://arturoamaya.github.io/CSE110Lab1/)*
+- Fourth Year Computer Engineering student, probably going to graduate in 2023.
+- Watches too much soccer.
+- Trying to learn to surf
+- Only fallen off of his onewheel once so far, unsure if that's good or bad.
 
 ### *Tiffany Chang*
 
