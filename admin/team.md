@@ -42,7 +42,7 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 ### *Aryan Malik*
 
 ### *[Miguel Christian Sanchez](https://mlgi.github.io/)*
-- 4th year Computer Science student, aiming to graduate by 2033. <!---2033?-->
+- 4th year Computer Science student, aiming to graduate by 2023.
 - Enjoys ~~attempting~~ to 3D print
 - Trying to learn latte art
 - Can make a water droplet noise with my cheek
