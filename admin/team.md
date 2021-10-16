@@ -1,7 +1,7 @@
 ![image](branding/mascot/mascotsWithLogo.png)
 
 # Team 27
-## **Meet the Team:**
+## **Meet the Buds:**
 
 ### *[Tucker Frandsen](https://tuckerfrandsen.github.io/CSE110-Lab1/)*
 - Fourth Year Computer Engineering student hoping to graduate 2022.
