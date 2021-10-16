@@ -25,7 +25,10 @@ You will have to consult heavily with the "Team Brand" team. Have fun!
 - Trying to learn to surf
 - Only fallen off of his onewheel once so far, unsure if that's good or bad.
 
-### *Tiffany Chang*
+### *[Tiffany Chang](https://tiffkchang.github.io/CSE-110-Lab-Week-1/)*
+- Third year Math-CS student graduating in 2023.
+- Enjoys making digital art and editing videos.
+- Can make one phone case last for over four years.
 
 ### *[Steven Christensen](https://steven-christensen.github.io/GitHub-Pages/)*
 - 4th year Computer science student graduating 2022.
