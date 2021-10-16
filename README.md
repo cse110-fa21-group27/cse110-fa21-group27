@@ -21,4 +21,4 @@ Tests:
 Documentation:
 - TBD
 
-Link to *[Team Roster](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/admin/team.md)*
+Link to *[Team Page](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/admin/team.md)*
