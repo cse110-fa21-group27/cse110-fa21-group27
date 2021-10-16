@@ -1,4 +1,4 @@
-![image](mascotsWithLogo.png)
+![image](branding/mascot/mascotsWithLogo.png)
 
 # Team 27
 ## **Meet the Team:**
@@ -10,12 +10,20 @@
 - Big fan of RTS Video Games.
 
 ### *[Delia McGrath](https://dmcgrath19.github.io/CSE110_Lab1/)*:
-- Computer science student from Trinity College Dublin, bringing the luck of the Irish to team 27
-- Enjoys leading the team with Tucker
+- Computer science student from Trinity College Dublin, bringing the luck of the Irish to team 27.
+- Enjoys leading the team with Tucker.
+- Loves the sun.
 
 ### *[Arturo Amaya](https://arturoamaya.github.io/CSE110Lab1/)*
+- Fourth Year Computer Engineering student, probably going to graduate in 2023.
+- Watches too much soccer.
+- Trying to learn to surf
+- Only fallen off of his onewheel once so far, unsure if that's good or bad.
 
-### *Tiffany Chang*
+### *[Tiffany Chang](https://tiffkchang.github.io/CSE-110-Lab-Week-1/)*
+- Third year Math-CS student graduating in 2023.
+- Enjoys making digital art and editing videos.
+- Can make one phone case last for over four years.
 
 ### *[Steven Christensen](https://steven-christensen.github.io/GitHub-Pages/)*
 - 4th year Computer science student graduating 2022.
@@ -24,11 +32,15 @@
 - Metalhead.
 
 ### *[Dilara Marasli](https://dmarasli.github.io/CSE110-GitHubPages/#interests)*
+- Senior Math-CS student hoping to graduate in spring 2022.
+- Enjoys hiking, camping and napping.
+- Passionate about enviromental sustainability.
+- Favorite show : WestWorld!
 
 ### *Aryan Malik*
 
 ### *[Miguel Christian Sanchez](https://mlgi.github.io/)*
-- 4th year Computer Science student, aiming to graduate by 2033. <!---2033?-->
+- 4th year Computer Science student, aiming to graduate by 2023.
 - Enjoys ~~attempting~~ to 3D print
 - Trying to learn latte art
 - Can make a water droplet noise with my cheek
