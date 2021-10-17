@@ -50,6 +50,10 @@
 - Can make a water droplet noise with my cheek
 
 ### *Steven Schaeffer (Tester)*
+- 3rd year student, aiming to graduate by 2023.
+- Enjoys snowboarding, roller coasters, going to the beach, and hiking.
+- Loves to build pc and play video games.
+- Fan of horror movies.
 
 ### *[Kevin Yu](https://ctyuucsdedu.github.io/110-Lab1/) (Developer)*
 - 5th year Computer Science student aiming to graduate by 2022.
