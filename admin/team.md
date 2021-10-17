@@ -85,17 +85,20 @@ We are C.R.U.D. Buds!
 
 **What is C.R.U.D.?**
 
-crudhere\
-crudthere
+*C.R.U.D. = Create Read Update Delete*\
+A C.R.U.D. application functions on these basic operations.
 
-**Question? 3**
+**Examples of common C.R.U.D. apps:**
 
-answer3
+To-Do List\
+Calendar Planner\
+Recipe Manager
 
-**Question? 4**
+**Our mission:**
 
-answer4
+Developing a polished C.R.U.D. app that manages recipes.
 
-**Question? 5**
+**Why potatoes?**
 
-answer5
+*Budding Potatoes*\
+We are a group of buds that met through CSE 110.
