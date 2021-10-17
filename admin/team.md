@@ -37,7 +37,11 @@
 - Passionate about enviromental sustainability.
 - Favorite show : WestWorld!
 
-### *Aryan Malik (Developer)*
+### *[Aryan Malik](https://aryan-malik-2000.github.io/Aryan-Project) (Developer)*
+- Senior Math-CS student graduating in June 2022
+- Enjoys basketball, tennis and going to the gym
+- Foodie
+- Passionate about software development 
 
 ### *[Miguel Christian Sanchez](https://mlgi.github.io/) (Developer)*
 - 4th year Computer Science student, aiming to graduate by 2023.
