@@ -49,7 +49,7 @@
 - Trying to learn latte art
 - Can make a water droplet noise with my cheek
 
-### *Steven Schaeffer (Tester)*
+### *[Steven Schaeffer](https://sschaeff2023.github.io/cse110-lab1/) (Tester)*
 - 3rd year student, aiming to graduate by 2023.
 - Enjoys snowboarding, roller coasters, going to the beach, and hiking.
 - Loves to build pc and play video games.
