@@ -80,14 +80,15 @@
 
 **Who are we?**
 
-culture description\
-test\
-testing\
-haha\
-blah
+*Group 27*\
+We are C.R.U.D. Buds!
 
 **What is C.R.U.D.?**
 
 crudhere\
 crudthere\
 crudeverywhere
+
+**Question?**
+
+answer
