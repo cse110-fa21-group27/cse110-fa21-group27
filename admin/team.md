@@ -73,3 +73,14 @@
 * Committed to learning and teaching others such that everyone profits from the project.
 * Have the courage to speak out against certain ideas if they might not benefit the project or team.
 * Envision big but start small. Be a responsible risk-taker.
+
+<hr /> <!---Separating the culture section-->
+
+## **Our Culture**
+
+**Who are we?**
+culture description
+test
+testing
+haha
+blah
