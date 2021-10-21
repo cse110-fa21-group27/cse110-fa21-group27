@@ -1,4 +1,4 @@
-# Group #27/Team Name
+# Group #27/C.R.U.D. BUDS
 ## Type of Meeting
 
 ### Attendance
