@@ -6,7 +6,7 @@
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
-- Kevin Yu
+- Dilara Marasli
 - Miguel Sanchez
 - Steven Christensen
 - Steven Schaeffer
