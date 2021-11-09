@@ -33,7 +33,7 @@ Sleepiness aside, nothing
 
 <hr />
 
-### Aryan Malik
+#### Aryan Malik
 
 What did you do since yesterday?
 Look into how to start the main page
