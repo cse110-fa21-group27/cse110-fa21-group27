@@ -9,6 +9,7 @@
 - Kevin Yu
 - Miguel Sanchez
 - Steven Christensen
+- Steven Schaeffer
 - Tiffany Chang
 - Tucker Frandsen
 
@@ -106,6 +107,19 @@ Today will be more of the same but I will also be meeting with Aryan and Kevin t
 
 Anything blocking your progress?
 only thing blocking progress is my lack of knowledge of web development but I am doing what I can to mend that issue
+
+<hr />
+
+#### Steven Schaeffer
+
+What did you do since yesterday?
+Reviewed sprint planning meeting minutes, looked over assigned issues in project repo
+
+What will you do today?
+Research/understand GitHub actions
+
+Anything blocking your progress?
+Work for other classes
 
 <hr />
 
