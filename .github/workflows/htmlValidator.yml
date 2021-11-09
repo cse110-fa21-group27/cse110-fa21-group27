@@ -1,8 +1,6 @@
 name: HTML Check
 on:
   push:
-    branches:
-      - main
     paths:
       - '**.html'
   pull_request:
