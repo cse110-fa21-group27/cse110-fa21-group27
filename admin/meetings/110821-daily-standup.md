@@ -14,7 +14,7 @@
 
 Location: Remote
 Date: 11/08/21
-Time: 10:00-15:00
+Time: 10:00
 
 ### Reports
 
