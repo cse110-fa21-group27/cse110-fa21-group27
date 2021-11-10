@@ -1,0 +1,34 @@
+
+.search {
+    position: relative;
+    text-align: center; 
+    color: black;
+}
+.welcome {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#first{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%; 
+    opacity: .3;
+}
+#second{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%; 
+    opacity: .3;
+}
+
+.text{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
