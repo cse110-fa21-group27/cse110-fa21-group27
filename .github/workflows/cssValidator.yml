@@ -1,9 +1,13 @@
 name: CSS Check
 on:
   push:
+    paths:
+      - '**.css'
   pull_request:
     branches:
       - main
+    paths:
+      - '**.css'
   
 jobs:
   testingCSS:
