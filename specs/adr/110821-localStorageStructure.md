@@ -1,6 +1,6 @@
 # Structure of Local Storage data
 
-* Status: proposed
+* Status: Approved
 * Deciders: {Miguel Sanchez, Steven Christensen}
 * Date: 2021-11-08
 
@@ -14,7 +14,7 @@ We plan to store user information, saved recipes, and recipe information, in [Wi
    - current step?
    - ingredients checked off?
 
-## Decision Drivers <!-- optional -->
+## Decision Drivers 
 
 * Simple, organized retrieval of information
 * Unique IDs for each Recipe
@@ -48,3 +48,4 @@ The user information we want to store for now is an array of SavedRecipes[]. Eac
 We avoided going with UUIDs for now to avoid spending time learning a custom UUID library in javascript.(YAGNI) If we do end up going the cloud database route, most services provide UUID generators that we would need.
 
 * [Miro diagram](https://miro.com/app/board/o9J_lqZdoxc=/?moveToWidget=3074457367154499947&cot=14)
+* ![Structure of Data](img/110821-localStorageStructure.png)
