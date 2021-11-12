@@ -1,10 +1,12 @@
 const userInfo = {}
 const recipeData = {}
+const renderedText = {}
 
 window.addEventListener('DOMContentLoaded', init);
 
 async function init() {
-  getUserInfo();
+  getUserInfo().then(renderText);
+  bindButton();
 }
 
 /**
@@ -67,5 +69,31 @@ async function addUrlToSaved(url) {
       userInfo.savedRecipes.splice(newIndex,1);
       reject(error);
     }
+  });
+}
+
+function renderText() {
+  console.log(userInfo);
+  const body = document.querySelector('body');
+  userInfo.savedRecipes.forEach((url) => {
+    if (!(url in renderedText)) {
+      const newP = document.createElement('p');
+      newP.textContent = url;
+
+      renderedText[url] = newP;
+      body.appendChild(newP);
+    }
+  });
+}
+
+function bindButton() {
+  const button = document.querySelector('button');
+
+  button.addEventListener('click',(event)=>{
+    const field = document.querySelector('input');
+
+    addUrlToSaved(field.value).then(()=>{
+      renderText();
+    });
   });
 }
