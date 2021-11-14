@@ -10,7 +10,9 @@
 }
 
 #Spudly_png {
-    position: absolute;
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
     width: 204px;
     height: 80%;
     left: 2%;
