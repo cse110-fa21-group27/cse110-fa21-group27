@@ -5,7 +5,7 @@ import https from 'https'
 import jslint from './jslint.mjs'
 
 /*jslint-disable*/
-//Syntax error.
+Syntax error.
 /*jslint-enable*/
 
 eval('console.log("hello world");') //jslint-quiet
