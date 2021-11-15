@@ -1,3 +1,46 @@
+/* begin header CSS */
+.search{
+    text-align: center;
+}
+
+.Recommended{
+    text-align: center;
+    color: gold;
+}
+
+.Popular{
+    text-align: center;
+    color: gold;
+}
+/* end header CSS */
+
+/* begin image slider CSS */
+.slide-container{
+    width: 800px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.image-container{
+    width: 24000px;
+    height: 600px;
+    position:relative;
+    transition: 2s;
+    -webkit-transition: left 2s;
+}
+
+.slider-image{
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    width: 800px;
+    height: 600px;
+}
+/* end image slider CSS */
+
 .search_bar {
     z-index: -1;
     position:relative;
