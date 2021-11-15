@@ -16,3 +16,5 @@ We are planning to use Jest to write unit tests, but are waiting on the basic fr
 ## Planned
 - Packaging and Deployment 
 We would love to have a streamlined process that takes commits and validates, cleans, tests, packages and deploys the code but that will have to wait until the rest is set up.
+
+*[Diagram](phase1.drawio.png)*
