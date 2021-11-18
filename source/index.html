@@ -37,7 +37,7 @@
     <div class="Recommended">
         <h2>Recommended</h2>
         <!-- <img src = 'https://images8.alphacoders.com/632/632991.jpg' id = 'second' alt = 'food pics'> -->
-        <!-- Begin Image Sider -->
+        <!-- Begining of code from glider video -->
         <div class ='container'>
             <div class="glide">
                 <div class="glide__track" data-glide-el="track">
@@ -60,20 +60,25 @@
         <script src ='https://cdn.jsdelivr.net/npm/@glidejs/glide'></script>
         <script>
             const config = {
-                focusAt: 'center',
+                focusAt: 'center', //this line seems to being nothing. i wanted it to maybe like, enable the non-translucence. or something like that
                 type: 'carousel',
                 perView: 3,
                 breakpoints:{
                     800:
                     {
                        perView: 2 
-                    }
+                    },
+
+                    // peek: {
+                    //     before: 1000,
+                    //     after: 500
+                    // }
                 }
             };
             new Glide('.glide', config).mount()
           </script>
     </div>
-
+    <!-- end of code from glider video -->
     <div class="Popular">
         <h2>Popular</h2>
     </div>
