@@ -41,6 +41,13 @@
 }
 /* end image slider CSS */
 
+#rec {
+    float: left;
+    width:  100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .search_bar {
     z-index: -1;
     position:relative;
