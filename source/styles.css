@@ -1,8 +1,4 @@
 /* begin header CSS */
-.search{
-    text-align: center;
-}
-
 .Recommended{
     text-align: center;
     color: gold;
@@ -48,7 +44,7 @@
     object-fit: cover;
 }
 
-.search_bar {
+.banner {
     z-index: -1;
     position:relative;
     width: 100%;
@@ -78,26 +74,6 @@
     color: #FFFFFF;
 }
 
-#search_box {
-    position: absolute;
-    width: 40%;
-    height: 66%;
-    left: 30%;
-    top: 15%;
-
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    display: flex;
-    align-items: center;
-
-    color: #000000;
-    background: #FFBB71;
-    border-color: #FFFFFF;
-}
-
 #search_png {
     position: absolute;
     width: 4%;
@@ -124,11 +100,7 @@
     height: 70%;
 }
 
-.search {
-    position: relative;
-    text-align: center; 
-    color: black;
-}
+
 .welcome {
     position: absolute;
     top: 10%;
