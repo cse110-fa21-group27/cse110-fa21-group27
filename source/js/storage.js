@@ -176,7 +176,7 @@ async function renderText() {
 /**
  * function demo for binding add button in storageDemo.html
  */
-function bindButton() {
+function bindButton () {
   const button = document.querySelector("button");
 
   button.addEventListener("click", (event) => {
