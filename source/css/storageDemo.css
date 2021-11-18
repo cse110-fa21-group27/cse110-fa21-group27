@@ -1,3 +1,13 @@
 * {
   font-family: 'Open Sans', sans-serif;
 }
+
+div.recipeEntry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.recipeEntry > * {
+  margin-right: 12px;
+}
