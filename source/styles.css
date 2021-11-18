@@ -1,4 +1,50 @@
-.search_bar {
+/* begin header CSS */
+.Recommended{
+    text-align: center;
+    color: gold;
+}
+
+.Popular{
+    text-align: center;
+    color: gold;
+}
+/* end header CSS */
+
+/* begin image slider CSS */
+.slide-container{
+    width: 800px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.image-container{
+    width: 24000px;
+    height: 600px;
+    position:relative;
+    transition: 2s;
+    -webkit-transition: left 2s;
+}
+
+.slider-image{
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    width: 800px;
+    height: 600px;
+}
+/* end image slider CSS */
+
+#rec {
+    float: left;
+    width:  500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+.banner {
     z-index: -1;
     position:relative;
     width: 100%;
@@ -28,26 +74,6 @@
     color: #FFFFFF;
 }
 
-#search_box {
-    position: absolute;
-    width: 40%;
-    height: 66%;
-    left: 30%;
-    top: 15%;
-
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    display: flex;
-    align-items: center;
-
-    color: #000000;
-    background: #FFBB71;
-    border-color: #FFFFFF;
-}
-
 #search_png {
     position: absolute;
     width: 4%;
@@ -74,11 +100,7 @@
     height: 70%;
 }
 
-.search {
-    position: relative;
-    text-align: center; 
-    color: black;
-}
+
 .welcome {
     position: absolute;
     top: 10%;
