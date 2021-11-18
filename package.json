@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "jest",
-    "format": "prettier --write '*.js'"
+    "format": "prettier --write '*.js'",
+    "build": echo "Build"
   },
   "jest": {
     "preset": "jest-puppeteer",
