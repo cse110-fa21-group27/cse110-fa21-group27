@@ -56,10 +56,15 @@ async function getUserInfo() {
  * @param {String} url - the url for recipe we want to save
  * @returns {Promise}
  */
-async function addUrlToSaved(url) {
+async function addRecipeToSaved(url) {
   return new Promise((resolve,reject)=>{
-    // TODO: verify url
-    let newIndex = userInfo.savedRecipes.push(url);
+    // create new recipe object
+    let newSavedRecipe = {
+      url: url,
+      checkedIngredients: [],
+      checkedSteps: []
+    };
+    let newIndex = userInfo.savedRecipes.push(newSavedRecipe);
     try {
       window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
       // all good!
@@ -68,7 +73,7 @@ async function addUrlToSaved(url) {
       // unable to save to localStorage, remove it from our global variable
       // and reject the promise
       userInfo.savedRecipes.splice(newIndex,1);
-      console.log('Unable to add url to saved recipes', error);
+      console.log('Unable to add recipe to saved recipes', error);
       reject(error);
     }
   });
@@ -87,9 +92,10 @@ async function addUrlToSaved(url) {
  * @param {String} url - the url for the recipe we want to remove
  * @returns {Promise}
  */
-async function removeUrlFromSaved(url) {
+async function removeRecipeFromSaved(url) {
   return new Promise((resolve,reject)=> {
-    let foundIndex = userInfo.savedRecipes.findIndex((savedRecipe)=>savedRecipe==url);
+    let foundIndex = userInfo.savedRecipes
+      .findIndex((savedRecipe)=>savedRecipe.url==url);
 
     if (!foundIndex) { // already not in array, resolve!
       resolve(true);
@@ -107,7 +113,7 @@ async function removeUrlFromSaved(url) {
       // unable to update localStorage, add it back to global variable 
       // and reject the promise
       userInfo.savedRecipes.splice(foundIndex, 0, found);
-      console.log('Unable to remove url from saved recipes', error);
+      console.log('Unable to remove recipe from saved recipes', error);
       reject(error);
     }
 
@@ -119,21 +125,21 @@ async function removeUrlFromSaved(url) {
 async function renderText() {
   const body = document.querySelector('body');
   // add unrendered entries
-  userInfo.savedRecipes.forEach((url) => {
-    if (!(url in renderedText)) {
+  userInfo.savedRecipes.forEach((savedRecipe) => {
+    if (!(savedRecipe in renderedText)) {
       const newLine = document.createElement('div');
       newLine.classList.add('recipeEntry');
-      newLine.setAttribute('url', url);
+      newLine.setAttribute('url', savedRecipe.url);
 
       const newP = document.createElement('p');
-      newP.textContent = url;
+      newP.textContent = savedRecipe.url;
 
       // binding removeURL for demo
       const newButton = document.createElement('button')
-      newButton.value = url;
+      newButton.value = savedRecipe.url;
       newButton.textContent = "remove";
       newButton.addEventListener('click', (event)=>{
-        removeUrlFromSaved(event.currentTarget.value)
+        removeRecipeFromSaved(event.currentTarget.value)
           .then(()=>renderText());
       });
 
@@ -141,15 +147,15 @@ async function renderText() {
       newLine.appendChild(newP);
 
       // keep track of each entry we already have rendered
-      renderedText[url] = newLine;
+      renderedText[savedRecipe.url] = newLine;
       body.appendChild(newLine);
     }
   });
 
   // remove rendered entries that aren't in userInfo
   for (let recipeEntry in renderedText) {
-    const isSaved = !!userInfo.savedRecipes.find((url)=>{
-      return url==recipeEntry;
+    const isSaved = !!userInfo.savedRecipes.find((savedRecipe)=>{
+      return savedRecipe.url==recipeEntry;
     });
 
     if (!isSaved) {
@@ -166,7 +172,7 @@ function bindButton() {
   button.addEventListener('click',(event)=>{
     const field = document.querySelector('input');
 
-    addUrlToSaved(field.value).then(()=>{
+    addRecipeToSaved(field.value).then(()=>{
       renderText();
     });
   });
