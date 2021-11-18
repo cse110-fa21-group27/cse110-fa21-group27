@@ -117,7 +117,7 @@ async function removeRecipeFromSaved(url) {
       // all good!
       resolve(true);
     } catch (error) {
-      // unable to update localStorage, add it back to global variable
+      // Unable to update localStorage, add it back to global variable 
       // and reject the promise
         userInfo.savedRecipes.splice(foundIndex, 0, found);
       console.log("Unable to remove recipe from saved recipes", error);
