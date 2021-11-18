@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", init);
 // temporary init for demo
 async function init() {
   getUserInfo().then(renderText);
-  bindButton();
+    bindButton();
 }
 
 /**
@@ -60,11 +60,11 @@ async function getUserInfo() {
  * @param {String} url - the url for recipe we want to save
  * @returns {Promise}
  */
-async function addRecipeToSaved(url) {
+async function addRecipeToSaved (url) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
-      url: url,
+        url: url,
       checkedIngredients: [],
       checkedSteps: [],
     };
@@ -74,7 +74,7 @@ async function addRecipeToSaved(url) {
       // all good!
       resolve(true);
     } catch (error) {
-      // unable to save to localStorage, remove it from our global variable
+      // Unable to save to localStorage, remove it from our global variable
       // and reject the promise
       userInfo.savedRecipes.splice(newIndex, 1);
       console.log("Unable to add recipe to saved recipes", error);
@@ -99,7 +99,7 @@ async function addRecipeToSaved(url) {
  */
 async function removeRecipeFromSaved(url) {
   return new Promise((resolve, reject) => {
-    let foundIndex = userInfo.savedRecipes.findIndex(
+    const foundIndex = userInfo.savedRecipes.findIndex(
       (savedRecipe) => savedRecipe.url == url
     );
 
@@ -109,7 +109,7 @@ async function removeRecipeFromSaved(url) {
     }
 
     // save just in case we need to add it back
-    let found = userInfo.savedRecipes[foundIndex];
+      let found = userInfo.savedRecipes[foundIndex];
     // remove from userInfo
     userInfo.savedRecipes.splice(foundIndex, 1);
     try {
@@ -136,7 +136,7 @@ async function renderText() {
     if (!(savedRecipe in renderedText)) {
       const newLine = document.createElement("div");
       newLine.classList.add("recipeEntry");
-      newLine.setAttribute("url", savedRecipe.url);
+        newLine.setAttribute("url", savedRecipe.url);
 
       const newP = document.createElement("p");
       newP.textContent = savedRecipe.url;
@@ -176,7 +176,7 @@ async function renderText() {
 /**
  * function demo for binding add button in storageDemo.html
  */
-function bindButton () {
+function bindButton() {
   const button = document.querySelector("button");
 
   button.addEventListener("click", (event) => {
