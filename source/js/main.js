@@ -67,3 +67,8 @@ async function loadRecipes(recipeUrlList) {
       })
   });
 }
+
+async function renderRecipesIntoGlider() {
+  // obtain the glider thingy we want to add into
+  const glider = document.querySelector('glide__slides');
+}
