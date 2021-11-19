@@ -1,4 +1,3 @@
-export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
 
 const userInfo = {};
 const recipeData = {};
@@ -119,3 +118,5 @@ async function removeRecipeFromSaved(url) {
     }
   });
 }
+
+export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
