@@ -1,117 +1,45 @@
 class RecipeCard extends HTMLElement {
   constructor() {
-    // Part 1 Expose - TODO
-
-    // You'll want to attach the shadow DOM here
     super();
     let shadow = this.attachShadow({mode: 'open'});
   }
 
   set data(data) {
-    // This is the CSS that you'll use for your recipe cards
-    const styleElem = document.createElement('style');
+    const stylesElem = document.createElement('style');
     const styles = `
-      * {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      
-      a {
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      
-      article {
-        align-items: center;
-        border: 1px solid rgb(223, 225, 229);
-        border-radius: 8px;
-        display: grid;
-        grid-template-rows: 118px 56px 14px 18px 15px 36px;
-        height: auto;
-        row-gap: 5px;
-        padding: 0 16px 16px 16px;
-        width: 178px;
-      }
-      div.rating {
-        align-items: center;
-        column-gap: 5px;
-        display: flex;
-      }
-      
-      div.rating > img {
-        height: auto;
-        display: inline-block;
-        object-fit: scale-down;
-        width: 78px;
-      }
-      article > img {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        height: 118px;
-        object-fit: cover;
-        margin-left: -16px;
-        width: calc(100% + 32px);
-      }
-      p.ingredients {
-        height: 32px;
-        line-height: 16px;
-        padding-top: 4px;
-        overflow: hidden;
-      }
-      
-      p.organization {
-        color: black !important;
-      }
-      p.title {
-        display: -webkit-box;
-        font-size: 16px;
-        height: 36px;
-        line-height: 18px;
-        overflow: hidden;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-      }
-      p:not(.title), span, time {
-        color: #70757A;
-        font-size: 12px;
-      }
+    .recipe-card {
+      display: grid,
+      grid-template-rows: [image-top] 100px [title-top] 25px [info-top] 30px [directions-label-top] 30px [directions-top] auto [directions-bottom],
+      grid-template-columns: [left] auto [right]
+    }
+    
+    .recipe-photo {
+      grid-row: image-top / title-top,
+      grid-column: left / right
+    }
+
+    .recipe-title {
+      grid-row: title-top / info-top,
+      grid-column: left / right
+    }
+
+    .recipe-info {
+      grid-row: info-top / directions-label-top,
+      grid-column: left / right
+     
+      display: grid,
+      grid-template-rows: [left] auto [right],
+      grid-template-columns: [prep-start] 25% [cook-start] 25% [rating-start] 40% [save-start] 10% [end]
+    }
+
+    .recipe-directions-label {
+      grid-row: directions-label-top / directions-top,
+      grid-column: left / right
+    }
     `;
-    styleElem.innerHTML = styles;
+    stylesElem.innerHTML = styles;
 
-    // Here's the root element that you'll want to attach all of your other elements to
-    const card = document.createElement('article');
-
-    // Some functions that will be helpful here:
-    //    document.createElement()
-    //    document.querySelector()
-    //    element.classList.add()
-    //    element.setAttribute()
-    //    element.appendChild()
-    //    & All of the helper functions below
-
-    // Make sure to attach your root element and styles to the shadow DOM you
-    // created in the constructor()
-
-    // Part 1 Expose - TODO
-
-    let cleanData = {};
-    /* 
-     * cleanData should have
-     * cleanData.thumbnail - link to the photo of recipe
-     * cleanData.title - title of the recipe
-     * cleanData.url - url for the recipe
-     * cleanData.organization - organization of the recipe
-     * cleanData.time - cook time of the recipe
-     * cleanData.ingredients - string of ingredients
-     * 
-     * cleanData.rating is optional and should be
-     * rating.score - review score out of 5
-     * rating.count - number of reviews
-     */
-
+    const cleanData = {};
     // process raw data into cleanData
     cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
     cleanData.title = getRecipeTitle(data);
@@ -129,88 +57,40 @@ class RecipeCard extends HTMLElement {
       }
     }
 
-    // create card from cleanData
+    const card = document.createElement('div');
+    card.classList.add('recipe-card');
+
     const picture = document.createElement('img');
-    picture.setAttribute('src', cleanData.thumbnail);
-    picture.setAttribute('alt', cleanData.title);
+    picture.classList.add('recipe-photo');
     card.appendChild(picture);
-    
-    const title = document.createElement('p');
-    title.classList.add('title');
-    const titleLink = document.createElement('a');
-    titleLink.setAttribute('href', cleanData.url);
-    titleLink.textContent = cleanData.title;
-    title.appendChild(titleLink);
+
+    const title = document.createElement('h2');
+    title.innerText = cleanData.title;
+    title.classList.add('recipe-title');
     card.appendChild(title);
-
-    const organization = document.createElement('p');
-    organization.classList.add('organization');
-    organization.textContent = cleanData.organization;
-    card.appendChild(organization);
-
-    const rating = document.createElement('div');
-    rating.classList.add('rating');
-    if ("rating" in cleanData) {
-      const span = document.createElement('span');
-      span.textContent = cleanData.rating.score;
-      rating.appendChild(span);
-
-      const stars = document.createElement('img');
-      switch(Math.round(cleanData.rating.score)) {
-        case 5:
-          stars.setAttribute('src', 'assets/images/icons/5-star.svg');
-          stars.setAttribute('alt', '5 stars');
-          break;
-        case 4:
-          stars.setAttribute('src', 'assets/images/icons/4-star.svg');
-          stars.setAttribute('alt', '4 stars');
-        case 3:
-          stars.setAttribute('src', 'assets/images/icons/3-star.svg');
-          stars.setAttribute('alt', '3 stars');
-          break;
-        case 2:
-          stars.setAttribute('src', 'assets/images/icons/2-star.svg');
-          stars.setAttribute('alt', '2 stars');
-        case 1:
-          stars.setAttribute('src', 'assets/images/icons/1-star.svg');
-          stars.setAttribute('alt', '1 stars');
-          break;
-        case 0:
-          stars.setAttribute('src', 'assets/images/icons/0-star.svg');
-          stars.setAttribute('alt', '0 stars');
-          break;
-      }
-      rating.appendChild(stars);
-
-      const reviewCount = document.createElement('span');
-      reviewCount.textContent = '('+cleanData.rating.count+')';
-      rating.appendChild(reviewCount);
-    } else {
-      const span = document.createElement('span');
-      span.textContent = 'No Reviews';
-      rating.appendChild(span);
-    }
-    card.appendChild(rating);
-
-    const time = document.createElement('time');
-    time.textContent = cleanData.time;
-    card.appendChild(time);
-
-    const ingredients = document.createElement('p');
-    ingredients.classList.add('ingredients');
-    ingredients.textContent = cleanData.ingredients;
-    card.appendChild(ingredients);
     
-    this.shadowRoot.appendChild(styleElem);
+    const recipeInfo = document.createElement('recipe-info');
+    recipeInfo.data = cleanData;
+    recipeInfo.classList.add('recipe-info');
+    card.appendChild(recipeInfo);
+
+    const directionsLabel = document.createElement('h2');
+    directionsLabel.innerText = "Directions";
+    directionsLabel.classList.add('recipe-directions-label');
+
+    /* TODO: directions list element */
+
+    this.shadowRoot.appendChild(stylesElem);
     this.shadowRoot.appendChild(card);
   }
 }
 
+customElements.define('recipe-card', RecipeCard);
+
 
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
-/***          Below are some functions I used when making          ***/
-/***     the solution, feel free to use them or not, up to you     ***/
+/***          Shout out to the TA's lemme just yoink these         ***/
 /*********************************************************************/
 
 /**
@@ -219,7 +99,7 @@ class RecipeCard extends HTMLElement {
  * @param {String} key the key that you are looking for in the object
  * @returns {*} the value of the found key
  */
-function searchForKey(object, key) {
+ function searchForKey(object, key) {
   var value;
   Object.keys(object).some(function (k) {
     if (k === key) {
@@ -235,27 +115,12 @@ function searchForKey(object, key) {
 }
 
 /**
- * Extract the URL from the given recipe schema JSON object
- * @param {Object} data Raw recipe JSON to find the URL of
- * @returns {String} If found, it returns the URL as a string, otherwise null
- */
-function getUrl(data) {
-  if (data.url) return data.url;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
-    }
-  };
-  return null;
-}
-
-/**
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
  * @returns {String} If found, it retuns the name of the org as a string, otherwise null
  */
-function getOrganization(data) {
+ function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
   if (data['@graph']) {
     for (let i = 0; i < data['@graph'].length; i++) {
@@ -283,6 +148,21 @@ function getRecipeTitle(data) {
     });
   }
   return value;
+}
+
+/**
+ * Extract the URL from the given recipe schema JSON object
+ * @param {Object} data Raw recipe JSON to find the URL of
+ * @returns {String} If found, it returns the URL as a string, otherwise null
+ */
+function getUrl(data) {
+  if (data.url) return data.url;
+  if (data['@graph']) {
+    for (let i = 0; i < data['@graph'].length; i++) {
+      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+    }
+  };
+  return null;
 }
 
 /**
@@ -345,6 +225,3 @@ function createIngredientList(ingredientArr) {
   return finalIngredientList.slice(0, -2);
 }
 
-// Define the Class so you can use it as a custom element.
-// This is critical, leave this here and don't touch it
-customElements.define('recipe-card', RecipeCard);
