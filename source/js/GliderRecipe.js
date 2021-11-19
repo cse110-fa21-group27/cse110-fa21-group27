@@ -1,7 +1,7 @@
 class GliderRecipe extends HTMLElement {
   constructor(){
     super();
-    let shadow = this.attachShadow({mode: "open"});
+    let shadow = this.attachShadow({mode: 'open'});
   }
 
   set data(data) {
@@ -46,18 +46,18 @@ class GliderRecipe extends HTMLElement {
 
     // this is gonna be the root element we'll slap everything else onto
     const entry = document.createElement('li');
+    entry.classList.add('glide__slide');
 
     const picture = document.createElement('img');
     picture.setAttribute('src', cleanData.thumbnail);
     picture.setAttribute('alt', cleanData.title);
+    picture.setAttribute('id', 'rec');
     entry.appendChild(picture);
 
     this.shadowRoot.appendChild(entry);
   }
 }
 
-// define custom element!!
-customElements.define('glider-recipe',GliderRecipe);
 
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
@@ -122,6 +122,21 @@ function getRecipeTitle(data) {
 }
 
 /**
+ * Extract the URL from the given recipe schema JSON object
+ * @param {Object} data Raw recipe JSON to find the URL of
+ * @returns {String} If found, it returns the URL as a string, otherwise null
+ */
+function getUrl(data) {
+  if (data.url) return data.url;
+  if (data['@graph']) {
+    for (let i = 0; i < data['@graph'].length; i++) {
+      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+    }
+  };
+  return null;
+}
+
+/**
  * Converts ISO 8061 time strings to regular english time strings.
  * Not perfect but it works for this lab
  * @param {String} time time string to format
@@ -180,3 +195,7 @@ function createIngredientList(ingredientArr) {
   // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
   return finalIngredientList.slice(0, -2);
 }
+
+
+// define custom element!!
+customElements.define('glider-recipe',GliderRecipe);
