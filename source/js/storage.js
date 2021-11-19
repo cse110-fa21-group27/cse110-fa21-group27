@@ -1,13 +1,6 @@
+
 const userInfo = {};
-const renderedText = {};
-
-window.addEventListener("DOMContentLoaded", init);
-
-// temporary init for demo
-async function init() {
-  getUserInfo().then(renderText);
-    bindButton();
-}
+const recipeData = {};
 
 /**
  * After this function resolves, the userInfo object
@@ -126,64 +119,4 @@ async function removeRecipeFromSaved(url) {
   });
 }
 
-/**
- * function demo for rendering on storageDemo.html
- */
-async function renderText() {
-  const body = document.querySelector("body");
-  // add unrendered entries
-  userInfo.savedRecipes.forEach((savedRecipe) => {
-    if (!(savedRecipe in renderedText)) {
-      const newLine = document.createElement("div");
-      newLine.classList.add("recipeEntry");
-        newLine.setAttribute("url", savedRecipe.url);
-
-      const newP = document.createElement("p");
-      newP.textContent = savedRecipe.url;
-
-      // binding removeURL for demo
-      const newButton = document.createElement("button");
-      newButton.value = savedRecipe.url;
-      newButton.textContent = "remove";
-      newButton.addEventListener("click", (event) => {
-        removeRecipeFromSaved(event.currentTarget.value).then(() =>
-          renderText()
-        );
-      });
-
-      newLine.appendChild(newButton);
-      newLine.appendChild(newP);
-
-      // keep track of each entry we already have rendered
-      renderedText[savedRecipe.url] = newLine;
-      body.appendChild(newLine);
-    }
-  });
-
-  // remove rendered entries that aren't in userInfo
-  for (let recipeEntry in renderedText) {
-    const isSaved = !!userInfo.savedRecipes.find((savedRecipe) => {
-      return savedRecipe.url == recipeEntry;
-    });
-
-    if (!isSaved) {
-      renderedText[recipeEntry].remove();
-      delete renderedText[recipeEntry];
-    }
-  }
-}
-
-/**
- * function demo for binding add button in storageDemo.html
- */
-function bindButton() {
-  const button = document.querySelector("button");
-
-  button.addEventListener("click", (event) => {
-    const field = document.querySelector("input");
-
-    addRecipeToSaved(field.value).then(() => {
-      renderText();
-    });
-  });
-}
+export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
