@@ -4,10 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome to Firebase Hosting</title>
+    <!-- our scripts -->
+    <script src="./js/GliderRecipe.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
+    <script src="./js/storage.js" type="module"></script>
+    <!-- uhh, not our scripts?-->
+    <script src ='https://cdn.jsdelivr.net/npm/@glidejs/glide'></script>
+    
 
-    <!-- update the version number as needed -->
+    <!-- these funky script errors are bothering me, feel free to uncomment when we figure it out - miguel
+
     <script defer src="/__/firebase/9.4.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/9.4.1/firebase-auth-compat.js"></script>
     <script defer src="/__/firebase/9.4.1/firebase-database-compat.js"></script>
     <script defer src="/__/firebase/9.4.1/firebase-firestore-compat.js"></script>
@@ -17,11 +24,8 @@
     <script defer src="/__/firebase/9.4.1/firebase-analytics-compat.js"></script>
     <script defer src="/__/firebase/9.4.1/firebase-remote-config-compat.js"></script>
     <script defer src="/__/firebase/9.4.1/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    -->
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -38,12 +42,13 @@
       }
     </style>
     <!-- homepage header  -->
-    <link rel = 'stylesheet' href="/source/css/styles.css">
+    <link rel='stylesheet' href="/source/css/styles.css">
     <link rel="stylesheet" href="/source/css/glide.core.min.css" />
     <link rel="stylesheet" href="/source/css/glide.theme.min.css" />
     <link rel="stylesheet" href="/source/css/search-box.main.css" />
-    <!-- for the search bar (begin) -->
+    <!-- for the search bar (begin) 
     <script src="https://use.fontawesome.com/82f98a4b47.js"></script>
+    -->
     <!-- for the search bar (end) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,6 +56,7 @@
     <!-- homepage header -->
   </head>
   <body>
+    <!-- funky firebase stuff - miguel
     <div id="message">
       <h2>Welcome</h2>
       <h1>Firebase Hosting Setup Complete</h1>
@@ -97,7 +103,7 @@
         }
       });
     </script>
-
+    -->
     <!-- homepage code -->
     <div class="banner">
       <form action="index.html">
@@ -130,9 +136,11 @@
           <div class="glide">
               <div class="glide__track" data-glide-el="track">
                 <ul class="glide__slides">
+                  <!-- default stuff
                   <li class="glide__slide"><img src="/source/images/food1.jpg" id ='rec' /></li>
                   <li class="glide__slide"><img src="/source/images/food2.jpg" id ='rec' /></li>
                   <li class="glide__slide"><img src="/source/images/food3.jpg" id ='rec'/></li>
+                  -->
                 </ul>
               </div>
               <div class="glide__arrows" data-glide-el="controls">
@@ -145,26 +153,6 @@
                 </div>
             </div>
       </div> 
-      <script src ='https://cdn.jsdelivr.net/npm/@glidejs/glide'></script>
-      <script>
-          const config = {
-              focusAt: 'center', //this line seems to being nothing. i wanted it to maybe like, enable the non-translucence. or something like that
-              type: 'carousel',
-              perView: 3,
-              breakpoints:{
-                  800:
-                  {
-                     perView: 2 
-                  },
-
-                  // peek: {
-                  //     before: 1000,
-                  //     after: 500
-                  // }
-              }
-          };
-          new Glide('.glide', config).mount()
-        </script>
   </div>
   <!-- end of code from glider video -->
   <div class="Popular">
