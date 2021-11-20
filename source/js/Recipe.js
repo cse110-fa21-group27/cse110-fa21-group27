@@ -1,34 +1,47 @@
-class RecipeCard extends HTMLElement {
+class Recipe extends HTMLElement {
   constructor() {
     super();
     let shadow = this.attachShadow({mode: 'open'});
   }
 
   set data(data) {
-    const style=`
-    .recipe-card {
-      width: 300px;
-
+    const stylesElem = document.createElement('style');
+    const styles = `
+    .recipe {
+      width: 50%;
       display: grid;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+      grid-template-rows: [image-top] 100px [title-top] 25px [info-top] 30px [directions-label-top] 30px [directions-top] auto [directions-bottom];
       grid-template-columns: [left] auto [right];
-      background: #FFF6EC;
+      justify-items: stretch;
     }
-
-    .recipe-card > img {
-      height: 225px;
+    
+    .recipe-photo {
+      grid-row: image-top / title-top;
+      grid-column: left / right;
       object-fit: cover;
-      width: 100%;
+      height: 100px;
     }
 
-    .rating-time {
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 50% [middle] 50% [right];
+    .recipe-title {
+      grid-row: title-top / info-top;
+      grid-column: left / right;
+    }
+
+    .recipe-info {
+      grid-row: info-top / directions-label-top;
+      grid-column: left / right;
+     
+      display: grid;
+      grid-template-rows: [left] auto [right];
+      grid-template-columns: [prep-start] 25% [cook-start] 25% [rating-start] 40% [save-start] 10% [end];
+    }
+
+    .recipe-directions-label {
+      grid-row: directions-label-top / directions-top;
+      grid-column: left / right;
     }
     `;
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML=style;
-
+    stylesElem.innerHTML = styles;
 
     const cleanData = {};
     // process raw data into cleanData
@@ -51,45 +64,36 @@ class RecipeCard extends HTMLElement {
       }
     }
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
+    const card = document.createElement('div');
+    card.classList.add('recipe');
 
-    const photo = document.createElement('img');
-    photo.setAttribute('src', cleanData.thumbnail);
-    card.appendChild(photo);
+    const picture = document.createElement('img');
+    picture.classList.add('recipe-photo');
+    picture.setAttribute('src', cleanData.thumbnail);
+    card.appendChild(picture);
 
-    const title = document.createElement('p');
-    title.textContent = cleanData.title;
+    const title = document.createElement('h2');
+    title.innerText = cleanData.title;
+    title.classList.add('recipe-title');
     card.appendChild(title);
+    
+    const recipeInfo = document.createElement('recipe-info');
+    recipeInfo.data = cleanData;
+    recipeInfo.classList.add('recipe-info');
+    card.appendChild(recipeInfo);
 
-    const info = document.createElement('div');
-    info.classList.add('rating-time');
+    const directionsLabel = document.createElement('h2');
+    directionsLabel.innerText = "Directions";
+    directionsLabel.classList.add('recipe-directions-label');
 
-    const rating = document.createElement('p');
-    rating.textContent = cleanData.rating.ratingValue;
-    info.appendChild(rating);
+    /* TODO: directions list element */
 
-    const time = document.createElement('p');
-    if (!!cleanData.prepTime) {
-      time.textContent = cleanData.prepTime;
-    } 
-    if (!!cleanData.cookTime) {
-      time.textContent = cleanData.cookTime;
-    }
-    if (!!cleanData.totalTime) {
-      time.textContent = cleanData.totalTime;
-    }
-    info.appendChild(time);
-
-    card.appendChild(info);
-
-    this.shadowRoot.appendChild(styleElem);
+    this.shadowRoot.appendChild(stylesElem);
     this.shadowRoot.appendChild(card);
   }
-
 }
 
-customElements.define('recipe-card', RecipeCard);
+customElements.define('recipe-full', Recipe);
 
 
 /*********************************************************************/

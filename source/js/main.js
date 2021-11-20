@@ -2,6 +2,7 @@ import { storage } from "./storage.js";
 
 window.addEventListener("DOMContentLoaded",init);
 
+/* gonna ignore glider for now
 const gliderConfig = {
   focusAt: 'center', //this line seems to being nothing. i wanted it to maybe like, enable the non-translucence. or something like that
   type: 'carousel',
@@ -16,6 +17,7 @@ const gliderConfig = {
     // }
   }
 };
+*/
 
 
 /**
@@ -26,12 +28,10 @@ const gliderConfig = {
 async function init() {
   // obtain userInfo from storage
   //storage.getUserInfo();
-  const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json']
+  const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'];
+  await storage.getUserInfo();
   loadRecipes(tempList).then(()=>{
-    renderRecipesIntoGlider();
-    // we want to create glider AFTER we add the recipe elements
-    // doesn't work otherwise
-    new Glide(".glide", gliderConfig).mount();
+    renderSavedRecipes();
   });
 }
 
@@ -89,6 +89,32 @@ async function loadRecipes(recipeUrlList) {
   });
 }
 
+async function renderSavedRecipes() {
+  // go through each url 
+  const list = document.querySelector('.saved-recipes');
+
+  storage.userInfo.savedRecipes.forEach((url)=>{
+    // obtain data
+    const recipeJSON = storage.recipeData[url].data;  
+    const newCard = document.createElement('recipe-card');
+    newCard.data = recipeJSON;
+
+    list.appendChild(newCard);
+  });
+}
+
+/* gonna ignore glider for now
+function bindGliderEntry(gliderEntry, url) {
+  gliderEntry.addEventListener('click',()=>{
+    // just slap it onto body for now
+    const body = document.querySelector('body');
+    const recipeCard = document.createElement('recipe-card');
+    recipeCard.data = storage.recipeData[url].data;
+
+    body.appendChild(recipeCard);
+  })
+}
+
 async function renderRecipesIntoGlider() {
   // obtain the glider thingy we want to add into
   const glider = document.querySelector('.glide__slides');
@@ -100,8 +126,11 @@ async function renderRecipesIntoGlider() {
     newGliderEntry.classList.add('glide__slide');
     newGliderEntry.data = recipeInfo;
 
+
     // we actually want the li in glider-recipe
     const li = newGliderEntry.shadowRoot.querySelector('li');
+    bindGliderEntry(li, url);
     glider.appendChild(li);
   }
 }
+*/
