@@ -89,6 +89,12 @@ async function loadRecipes(recipeUrlList) {
   });
 }
 
+/**
+ * After this function is run, the <recipe-card> elements will be added 
+ * html element in the body with the 'saved-recipes' class.
+ * @async
+ * @function
+ */
 async function renderSavedRecipes() {
   // go through each url 
   const list = document.querySelector('.saved-recipes');
@@ -102,6 +108,8 @@ async function renderSavedRecipes() {
     list.appendChild(newCard);
   });
 }
+
+
 
 /* gonna ignore glider for now
 function bindGliderEntry(gliderEntry, url) {
