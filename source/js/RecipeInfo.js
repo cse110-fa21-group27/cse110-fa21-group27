@@ -1,33 +1,34 @@
-class RecipeCard extends HTMLElement {
-  constructor() {
-    super();
-    let shadow = this.attachShadow({mode: 'open'});
-  }
-
-  set data(data) {
-    const style=`
-    .recipe-card {
-      width: 300px;
-
-      display: grid;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-      grid-template-columns: [left] auto [right];
-
-      background: #FFF6EC;
+class RecipeInfo extends HTMLElement {
+    constructor() {
+      super();
+      let shadow = this.attachShadow({mode: 'open'});
     }
 
-    .recipe-card > img {
-      height: 225px;
-      object-fit: cover;
-      width: 100%;
-    }
+    set data(data) {
+        const style=`
+        .recipe-info {
+          width: 300px;
+    
+          display: grid;
+          grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+          grid-template-columns: [left] auto [right];
+    
+          background: #FFF6EC;
+        }
+    
+        .recipe-info > img {
+          height: 225px;
+          object-fit: cover;
+          width: 100%;
+        }
+    
+        .rating-time {
+          display: grid;
+          grid-template-rows: [top] auto [bottom];
+          grid-template-columns: [left] 50% [middle] 50% [right];
+        }
+        `;
 
-    .rating-time {
-      display: grid;
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 50% [middle] 50% [right];
-    }
-    `;
     const styleElem = document.createElement('style');
     styleElem.innerHTML=style;
 
@@ -41,10 +42,10 @@ class RecipeCard extends HTMLElement {
     let cookTime = searchForKey(data,'cookTime');
     let prepTime = searchForKey(data,'prepTime');
     let totalTime = searchForKey(data,'totalTime');
+    let directionList = searchForKey(data, 'recipeInstructions');
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
-    cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
     let tempRating = searchForKey(data,'aggregateRating');
     if (!!tempRating) {
       cleanData.rating = {
@@ -53,23 +54,23 @@ class RecipeCard extends HTMLElement {
       }
     }
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
+    const info = document.createElement('article');
+    info.classList.add('recipe-info');
 
     const photo = document.createElement('img');
     photo.setAttribute('src', cleanData.thumbnail);
-    card.appendChild(photo);
+    info.appendChild(photo);
 
     const title = document.createElement('p');
     title.textContent = cleanData.title;
-    card.appendChild(title);
+    info.appendChild(title);
 
-    const info = document.createElement('div');
-    info.classList.add('rating-time');
+    const review = document.createElement('div');
+    review.classList.add('rating-time');
 
     const rating = document.createElement('p');
     rating.textContent = `${cleanData.rating.score} stars`;
-    info.appendChild(rating);
+    review.appendChild(rating);
 
     const time = document.createElement('p');
     if (!!cleanData.prepTime) {
@@ -81,17 +82,25 @@ class RecipeCard extends HTMLElement {
     if (!!cleanData.totalTime) {
       time.textContent = cleanData.totalTime;
     }
-    info.appendChild(time);
+    review.appendChild(time);
 
-    card.appendChild(info);
+    info.appendChild(review);
+
+    const list = document.createElement('ol');
+    for (let i = 0; i < directionList.length(); i++) {
+        let listItem = document.createElement('li');
+        listItem.textContent = `${directionList[i]}`;
+        list.appendChild(listItem);
+    }
+    info.appendChild(list);
 
     this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(card);
+    this.shadowRoot.appendChild(info);
   }
 
 }
 
-customElements.define('recipe-card', RecipeCard);
+customElements.define('recipe-info', RecipeInfo);
 
 
 /*********************************************************************/
@@ -230,4 +239,3 @@ function createIngredientList(ingredientArr) {
   // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
   return finalIngredientList.slice(0, -2);
 }
-
