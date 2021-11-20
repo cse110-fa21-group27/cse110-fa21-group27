@@ -120,10 +120,13 @@ async function renderSavedRecipes() {
   // go through each url 
   const list = document.querySelector('.saved-recipes');
 
-  storage.userInfo.savedRecipes.forEach((url)=>{
+  storage.userInfo.savedRecipes.forEach((savedRecipe)=>{
     // obtain data
-    const recipeJSON = storage.recipeData[url].data;  
+    const recipeJSON = storage.recipeData[savedRecipe.url].data;  
     const newCard = document.createElement('recipe-card');
+    // add checkedsteps/checkedingredients to data
+    recipeJSON.checkedIngredients = savedRecipe.checkedIngredients;
+    recipeJSON.checkedSteps = savedRecipe.checkedSteps;
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router

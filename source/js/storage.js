@@ -19,7 +19,23 @@ async function getUserInfo() {
       // give them our temp recipes for now
       if (!storageUserInfoString) {
         storageUserInfo = {
-          savedRecipes: ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'],
+          savedRecipes: [
+            {
+              url: 'json/gyudon.json',
+              checkedIngredients: [],
+              checkedSteps: []
+            },
+            {
+              url: 'json/chicken_tortilla_soup.json',
+              checkedIngredients: [],
+              checkedSteps: []
+            },
+            {
+              url: 'json/chicken_n_dumplings.json',
+              checkedIngredients: [],
+              checkedSteps: []
+            },
+          ]
         };
         window.localStorage.setItem(
           "userInfo",
@@ -58,7 +74,7 @@ async function addRecipeToSaved (url) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
-        url: url,
+      url: url,
       checkedIngredients: [],
       checkedSteps: [],
     };
