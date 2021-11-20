@@ -12,6 +12,7 @@ class RecipeCard extends HTMLElement {
       display: grid;
       grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
       grid-template-columns: [left] auto [right];
+
       background: #FFF6EC;
     }
 
@@ -22,6 +23,7 @@ class RecipeCard extends HTMLElement {
     }
 
     .rating-time {
+      display: grid;
       grid-template-rows: [top] auto [bottom];
       grid-template-columns: [left] 50% [middle] 50% [right];
     }
@@ -44,7 +46,7 @@ class RecipeCard extends HTMLElement {
     cleanData.totalTime = convertTime(totalTime);
     cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
     let tempRating = searchForKey(data,'aggregateRating');
-    if (tempRating) {
+    if (!!tempRating) {
       cleanData.rating = {
         count: tempRating.ratingCount,
         score: tempRating.ratingValue
@@ -66,7 +68,7 @@ class RecipeCard extends HTMLElement {
     info.classList.add('rating-time');
 
     const rating = document.createElement('p');
-    rating.textContent = cleanData.rating.ratingValue;
+    rating.textContent = `${cleanData.rating.score} stars`;
     info.appendChild(rating);
 
     const time = document.createElement('p');

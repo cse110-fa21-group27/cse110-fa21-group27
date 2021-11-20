@@ -1,6 +1,10 @@
 import { storage } from "./storage.js";
+import { Router } from "./Router.js";
 
 window.addEventListener("DOMContentLoaded",init);
+
+// for now, saved recipes is the homepage
+const router = new Router(savedRecipesPage);
 
 /* gonna ignore glider for now
 const gliderConfig = {
@@ -18,6 +22,22 @@ const gliderConfig = {
   }
 };
 */
+
+
+/**
+ * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
+ * @async
+ * @function
+ */
+async function savedRecipesPage() {
+  /* TODO: hide/delete all other pages/views */
+  
+  // make saved-recipes visible
+  const savedRecipeDiv = document.querySelector(".saved-recipe");
+  savedRecipeDiv.setAttribute("hidden", true);
+  renderSavedRecipes();
+}
+
 
 
 /**
@@ -105,11 +125,38 @@ async function renderSavedRecipes() {
     const newCard = document.createElement('recipe-card');
     newCard.data = recipeJSON;
 
+    // add this recipe's page to the router
+    router.addPage(url,() => {
+      // hide the cards
+      document.querySelectorAll('recipe-card').forEach((card)=>{
+        card.setAttribute('hidden',true);
+      });
+      // show the recipe-page
+      const recipePage = document.querySelector('recipe-page');
+      recipePage.removeAttribute('hidden');
+      // set the recipe-page's data into this recipe's JSON 
+      recipePage.data = recipeJSON;
+    });
+    // bind the router page to the card
+    bindRecipeCard(newCard,url);
+
     list.appendChild(newCard);
   });
 }
 
-
+/**
+ * Taken from Lab 7. Binds the click event listener to the card 
+ * HTMLElement so that when it is clicked, the router navigates to 
+ * that corresponding recipe's page
+ * @param {HTMLElement} recipeCard 
+ * @param {string} url 
+ */
+function bindRecipeCard(recipeCard, url) {
+  recipeCard.addEventListener('click', e=>{
+    if (e.path[0].nodeName =='A') return;
+    router.navigate(url);
+  });
+}
 
 /* gonna ignore glider for now
 function bindGliderEntry(gliderEntry, url) {

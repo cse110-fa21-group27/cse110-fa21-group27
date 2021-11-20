@@ -40,7 +40,7 @@ export class Router {
 
     // if this isn't from a back/forward and we're not already on the page,
     // we add it to the history
-    if (!statePopped & window.localtion.hash != hash){
+    if (!statePopped & window.location.hash != hash){
       history.pushState({page: page}, "", hash);
     }
 

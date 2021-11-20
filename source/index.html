@@ -2,15 +2,26 @@
 <html>
   <head>
     <title>Spudly</title>
+    <!-- Web Components -->
     <script src="./js/RecipeCard.js" type="module"></script>
-    <script src="./js/main.js" type="module"></script>
     <script src="./js/storage.js" type="module"></script>
+    
+    <!-- Router -->
+    <script src="./js/Router.js" type="module"></script>
+
+    <!-- css -->
     <link rel='stylesheet' href="./css/styles.css">
+    <!-- main script -->
+    <script src="./js/main.js" type="module"></script>
+
   </head>
   <body>
     <!--nav bar-->
-    <div class="saved-recipes">
+    <main>
+      <section class="saved-recipes">
 
-    </div> 
+      </section> 
+      <recipe-page></recipe-page>
+    </main>
   </body>
 </html>
