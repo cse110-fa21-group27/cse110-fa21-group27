@@ -89,7 +89,7 @@ class RecipeInfo extends HTMLElement {
     const list = document.createElement('ol');
     for (let i = 0; i < directionList.length; i++) {
         let listItem = document.createElement('li');
-        listItem.textContent = `${directionList[i]}`;
+        listItem.textContent = `${directionList[i].text}`;
         list.appendChild(listItem);
     }
     info.appendChild(list);
