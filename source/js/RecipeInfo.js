@@ -87,7 +87,7 @@ class RecipeInfo extends HTMLElement {
     info.appendChild(review);
 
     const list = document.createElement('ol');
-    for (let i = 0; i < directionList.length(); i++) {
+    for (let i = 0; i < directionList.length; i++) {
         let listItem = document.createElement('li');
         listItem.textContent = `${directionList[i]}`;
         list.appendChild(listItem);
