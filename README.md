@@ -1,7 +1,9 @@
 ### Project Description:
 ## Goal: To create a Recipe Book Manager.
 
+
 Our users: beginners that wants something simple to gain confidence.
+
 
 App Functionality:
 - Recipe Exploration
@@ -15,8 +17,10 @@ App Functionality:
 - Selects Certain Recipes
 - Metric/Imperial Conversions
 
+
 Tests:
 - Currently Under Construction - *[view progress](https://github.com/cse110-fa21-group27/cse110-fa21-group27/projects/6)*
+
 
 Documentation:
 - [Meeting Notes](https://github.com/cse110-fa21-group27/cse110-fa21-group27/tree/main/admin/meetings)
