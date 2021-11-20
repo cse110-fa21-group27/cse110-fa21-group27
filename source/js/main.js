@@ -89,6 +89,17 @@ async function loadRecipes(recipeUrlList) {
   });
 }
 
+function bindGliderEntry(gliderEntry, url) {
+  gliderEntry.addEventListener('click',()=>{
+    // just slap it onto body for now
+    const body = document.querySelector('body');
+    const recipeCard = document.createElement('recipe-card');
+    recipeCard.data = storage.recipeData[url].data;
+
+    body.appendChild(recipeCard);
+  })
+}
+
 async function renderRecipesIntoGlider() {
   // obtain the glider thingy we want to add into
   const glider = document.querySelector('.glide__slides');
@@ -100,8 +111,10 @@ async function renderRecipesIntoGlider() {
     newGliderEntry.classList.add('glide__slide');
     newGliderEntry.data = recipeInfo;
 
+
     // we actually want the li in glider-recipe
     const li = newGliderEntry.shadowRoot.querySelector('li');
+    bindGliderEntry(li, url);
     glider.appendChild(li);
   }
 }

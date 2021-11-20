@@ -7,11 +7,11 @@ class RecipeInfo extends HTMLElement {
 
   set data(cleanData) {
     const preptime = document.createElement('p');
-    preptime.innerText = cleanData.time;
+    preptime.innerText = cleanData.prepTime;
     this.shadowRoot.appendChild(preptime);
 
     const cookTime = document.createElement('p');
-    cookTime.innerText = cleanData.time;
+    cookTime.innerText = cleanData.cookTime;
     this.shadowRoot.append(cookTime);
 
     const rating = document.createElement('p');

@@ -8,33 +8,41 @@ class RecipeCard extends HTMLElement {
     const stylesElem = document.createElement('style');
     const styles = `
     .recipe-card {
-      display: grid,
-      grid-template-rows: [image-top] 100px [title-top] 25px [info-top] 30px [directions-label-top] 30px [directions-top] auto [directions-bottom],
-      grid-template-columns: [left] auto [right]
+      width: 50%;
+      display: grid;
+      grid-template-rows: [image-top] 500px [title-top] 25px [info-top] 30px [directions-label-top] 30px [directions-top] auto [directions-bottom];
+      grid-template-columns: [left] auto [right];
+      justify-items: stretch;
+    }
+    
+    .recipe-card-bg {
+      grid-row: title-top / directions-bottom;
+      gird-column: left / right;
+      background: #fff;
     }
     
     .recipe-photo {
-      grid-row: image-top / title-top,
-      grid-column: left / right
+      grid-row: image-top / title-top;
+      grid-column: left / right;
     }
 
     .recipe-title {
-      grid-row: title-top / info-top,
-      grid-column: left / right
+      grid-row: title-top / info-top;
+      grid-column: left / right;
     }
 
     .recipe-info {
-      grid-row: info-top / directions-label-top,
-      grid-column: left / right
+      grid-row: info-top / directions-label-top;
+      grid-column: left / right;
      
-      display: grid,
-      grid-template-rows: [left] auto [right],
-      grid-template-columns: [prep-start] 25% [cook-start] 25% [rating-start] 40% [save-start] 10% [end]
+      display: grid;
+      grid-template-rows: [left] auto [right];
+      grid-template-columns: [prep-start] 25% [cook-start] 25% [rating-start] 40% [save-start] 10% [end];
     }
 
     .recipe-directions-label {
-      grid-row: directions-label-top / directions-top,
-      grid-column: left / right
+      grid-row: directions-label-top / directions-top;
+      grid-column: left / right;
     }
     `;
     stylesElem.innerHTML = styles;
@@ -45,9 +53,12 @@ class RecipeCard extends HTMLElement {
     cleanData.title = getRecipeTitle(data);
     cleanData.url = getUrl(data);
     cleanData.organization = getOrganization(data);
-    let tempTime = searchForKey(data,'cookTime');
-    if (!tempTime) tempTime = searchForKey(data,'totalTime');
-    cleanData.time = convertTime(tempTime);
+    let cookTime = searchForKey(data,'cookTime');
+    let prepTime = searchForKey(data,'prepTime');
+    let totalTime = searchForKey(data,'totalTime');
+    cleanData.cookTime = convertTime(cookTime);
+    cleanData.prepTime = convertTime(prepTime);
+    cleanData.totalTime = convertTime(totalTime);
     cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
     let tempRating = searchForKey(data,'aggregateRating');
     if (tempRating) {
@@ -62,7 +73,12 @@ class RecipeCard extends HTMLElement {
 
     const picture = document.createElement('img');
     picture.classList.add('recipe-photo');
+    picture.setAttribute('src', cleanData.thumbnail);
     card.appendChild(picture);
+
+    const bg = document.createElement('div');
+    bg.classList.add('recipe-card-bg');
+    card.appendChild(bg);
 
     const title = document.createElement('h2');
     title.innerText = cleanData.title;
