@@ -33,7 +33,7 @@ async function savedRecipesPage() {
   /* TODO: hide/delete all other pages/views */
   
   // make saved-recipes visible
-  const savedRecipeDiv = document.querySelector(".saved-recipe");
+  const savedRecipeDiv = document.querySelector(".saved-recipes");
   savedRecipeDiv.setAttribute("hidden", true);
   renderSavedRecipes();
 }
@@ -53,6 +53,7 @@ async function init() {
   loadRecipes(tempList).then(()=>{
     renderSavedRecipes();
   });
+  bindPopState();
 }
 
 /**
@@ -155,6 +156,20 @@ function bindRecipeCard(recipeCard, url) {
   recipeCard.addEventListener('click', e=>{
     if (e.path[0].nodeName =='A') return;
     router.navigate(url);
+  });
+}
+
+/**
+ * this function handles the clicking of back/forward and renders
+ * the corresponding page
+ */
+function bindPopState() {
+  window.addEventListener('popstate', e=>{
+    if(!!e.state) {
+      router.navigate(e.state.page, true);
+    } else {
+      router.navigate('home',true);
+    }
   });
 }
 
