@@ -34,7 +34,7 @@ async function savedRecipesPage() {
   
   // make saved-recipes visible
   const savedRecipeDiv = document.querySelector(".saved-recipes");
-  savedRecipeDiv.setAttribute("hidden", true);
+  savedRecipeDiv.removeAttribute("hidden");
   renderSavedRecipes();
 }
 
@@ -130,8 +130,11 @@ async function renderSavedRecipes() {
     router.addPage(url,() => {
       // hide the cards
       document.querySelectorAll('recipe-card').forEach((card)=>{
-        card.setAttribute('hidden',true);
+        // delete for now TODO: keep track of each card so we don't have to re-render
+        card.remove();
       });
+      // hide saved-recipes
+      document.querySelector('.saved-recipes').setAttribute('hidden',true);
       // show the recipe-page
       const recipePage = document.querySelector('recipe-page');
       recipePage.removeAttribute('hidden');
