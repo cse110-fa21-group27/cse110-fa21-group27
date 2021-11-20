@@ -89,6 +89,7 @@ async function loadRecipes(recipeUrlList) {
   });
 }
 
+/* gonna ignore glider for now
 function bindGliderEntry(gliderEntry, url) {
   gliderEntry.addEventListener('click',()=>{
     // just slap it onto body for now
@@ -118,3 +119,4 @@ async function renderRecipesIntoGlider() {
     glider.appendChild(li);
   }
 }
+*/
