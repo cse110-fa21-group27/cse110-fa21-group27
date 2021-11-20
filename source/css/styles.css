@@ -129,3 +129,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* begin saved Recipe component */
+.saved-recipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

@@ -2,6 +2,7 @@ import { storage } from "./storage.js";
 
 window.addEventListener("DOMContentLoaded",init);
 
+/* gonna ignore glider for now
 const gliderConfig = {
   focusAt: 'center', //this line seems to being nothing. i wanted it to maybe like, enable the non-translucence. or something like that
   type: 'carousel',
@@ -16,6 +17,7 @@ const gliderConfig = {
     // }
   }
 };
+*/
 
 
 /**
@@ -26,12 +28,10 @@ const gliderConfig = {
 async function init() {
   // obtain userInfo from storage
   //storage.getUserInfo();
-  const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json']
+  const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'];
+  await storage.getUserInfo();
   loadRecipes(tempList).then(()=>{
-    renderRecipesIntoGlider();
-    // we want to create glider AFTER we add the recipe elements
-    // doesn't work otherwise
-    new Glide(".glide", gliderConfig).mount();
+    renderSavedRecipes();
   });
 }
 
@@ -86,6 +86,20 @@ async function loadRecipes(recipeUrlList) {
         console.log(error);
         reject();
       })
+  });
+}
+
+async function renderSavedRecipes() {
+  // go through each url 
+  const list = document.querySelector('.saved-recipes');
+
+  storage.userInfo.savedRecipes.forEach((url)=>{
+    // obtain data
+    const recipeJSON = storage.recipeData[url].data;  
+    const newCard = document.createElement('recipe-card');
+    newCard.data = recipeJSON;
+
+    list.appendChild(newCard);
   });
 }
 

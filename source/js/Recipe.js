@@ -93,7 +93,7 @@ class Recipe extends HTMLElement {
   }
 }
 
-customElements.define('recipe', Recipe);
+customElements.define('recipe-full', Recipe);
 
 
 /*********************************************************************/
