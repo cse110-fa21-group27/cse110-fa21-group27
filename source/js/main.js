@@ -26,11 +26,14 @@ const gliderConfig = {
 
 /**
  * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
- * @async
  * @function
  */
-async function savedRecipesPage() {
+function savedRecipesPage() {
   /* TODO: hide/delete all other pages/views */
+  const recipePage = document.querySelector('recipe-page');
+  recipePage.setAttribute('hidden', true);
+  recipePage.remove();
+  console.log(recipePage);
   
   // make saved-recipes visible
   const savedRecipeDiv = document.querySelector(".saved-recipes");
@@ -55,6 +58,7 @@ async function init() {
   });
   bindPopState();
 }
+
 
 /**
  * After this function resolves, storage.recipeData should be updated 
@@ -139,8 +143,9 @@ async function renderSavedRecipes() {
       // hide saved-recipes
       document.querySelector('.saved-recipes').setAttribute('hidden',true);
       // show the recipe-page
-      const recipePage = document.querySelector('recipe-page');
-      recipePage.removeAttribute('hidden');
+      const recipePage = document.createElement('recipe-page');
+      const main = document.querySelector('main');
+      main.appendChild(recipePage);
       // set the recipe-page's data into this recipe's JSON 
       recipePage.data = recipeJSON;
     });
