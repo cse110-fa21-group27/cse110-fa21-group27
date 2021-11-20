@@ -86,11 +86,21 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
+    // Parsing data to create the direction list.
     const list = document.createElement('ol');
     for (let i = 0; i < directionList.length; i++) {
         let listItem = document.createElement('li');
-        listItem.textContent = `${directionList[i].text}`;
+        listItem.textContent = `${directionList[i].name}`;
         list.appendChild(listItem);
+
+        // If there are inner steps, display them as well
+        if (directionList[i].itemListElement != undefined) {
+          for (let j = 0; j < directionList[i].itemListElement.length; j++) {
+            let innerListItem = document.createElement('li');
+            innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
+            list.appendChild(innerListItem);
+          }
+        }
     }
     info.appendChild(list);
 
