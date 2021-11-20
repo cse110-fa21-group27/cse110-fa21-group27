@@ -134,7 +134,7 @@ async function renderSavedRecipes() {
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
-    router.addPage(url,() => {
+    router.addPage(savedRecipe.url,() => {
       // hide the cards
       document.querySelectorAll('recipe-card').forEach((card)=>{
         // delete for now TODO: keep track of each card so we don't have to re-render
@@ -150,7 +150,7 @@ async function renderSavedRecipes() {
       recipePage.data = recipeJSON;
     });
     // bind the router page to the card
-    bindRecipeCard(newCard,url);
+    bindRecipeCard(newCard,savedRecipe.url);
 
     list.appendChild(newCard);
   });
