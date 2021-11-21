@@ -136,4 +136,34 @@ async function removeRecipeFromSaved(url) {
   });
 }
 
+/**
+ * This function fetches an external recipe url and parses it for its recipe
+ * json, which we return when the promise is resolved
+ * @param {string} url 
+ * @returns {Promise}
+ */
+async function retrieveJSONFromPage(url) {
+  return Promise((resolve,reject)=> {
+    fetch(url)
+      .then(response=>{
+        // check if we got the page
+        if (!response.ok) {
+          console.log(`Unable to retrieve ${url}`);
+          reject();
+        }
+        response.text();
+      })
+      // get the page as text
+      .then(text => {
+        // parse it as an html element
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(text, "text/html");
+        // get all scripts with attribute type="application/ld+json"
+        htmlDoc.querySelectorAll('script [type="application/ld+json"')
+        // go through all of them and see which one is our recipe script
+      });
+  });
+}
+
+
 export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
