@@ -1,97 +1,53 @@
-class RecipeCard extends HTMLElement {
+class IngredientsInfo extends HTMLElement {
   constructor() {
     super();
     let shadow = this.attachShadow({mode: 'open'});
   }
 
   set data(data) {
-    const style=`
-    .recipe-card {
-      width: 300px;
+      const style=`
+      
+      `;
 
-      display: grid;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-      grid-template-columns: [left] auto [right];
+  const styleElem = document.createElement('style');
+  styleElem.innerHTML=style;
 
-      background: #FFF6EC;
-    }
+  let ingredientList = createIngredientList(searchForKey(data,'recipeIngredient'));
 
-    .recipe-card > img {
-      height: 225px;
-      object-fit: cover;
-      width: 100%;
-    }
+  const info = document.createElement('article');
+  info.classList.add('ingredients-info');
 
-    .rating-time {
-      display: grid;
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 50% [middle] 50% [right];
-    }
-    `;
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML=style;
+  let ingredients = document.createElement('p');
+  ingredients.textContent = "Ingredients";
+  info.appendChild(ingredients);
 
+  let addToCart = document.createElement('button');
+  addToCart.textContent = "Add To Cart";
+  info.appendChild(addToCart);
 
-    const cleanData = {};
-    // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
-    cleanData.title = getRecipeTitle(data);
-    cleanData.url = getUrl(data);
-    cleanData.organization = getOrganization(data);
-    let cookTime = searchForKey(data,'cookTime');
-    let prepTime = searchForKey(data,'prepTime');
-    let totalTime = searchForKey(data,'totalTime');
-    cleanData.cookTime = convertTime(cookTime);
-    cleanData.prepTime = convertTime(prepTime);
-    cleanData.totalTime = convertTime(totalTime);
-    cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
-    let tempRating = searchForKey(data,'aggregateRating');
-    if (!!tempRating) {
-      cleanData.rating = {
-        count: tempRating.ratingCount,
-        score: tempRating.ratingValue
-      }
-    }
+  let subtractQuantity = document.createElement('button');
+  subtractQuantity.textContent = "-";
+  info.appendChild(subtractQuantity);
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
+  let addQuantity = document.createElement('button');
+  addQuantity.textContent = "+";
+  info.appendChild(addQuantity);
 
-    const photo = document.createElement('img');
-    photo.setAttribute('src', cleanData.thumbnail);
-    card.appendChild(photo);
-
-    const title = document.createElement('p');
-    title.textContent = cleanData.title;
-    card.appendChild(title);
-
-    const info = document.createElement('div');
-    info.classList.add('rating-time');
-
-    const rating = document.createElement('p');
-    rating.textContent = `${cleanData.rating.score} stars`;
-    info.appendChild(rating);
-
-    const time = document.createElement('p');
-    if (!!cleanData.prepTime) {
-      time.textContent = cleanData.prepTime;
-    } 
-    if (!!cleanData.cookTime) {
-      time.textContent = cleanData.cookTime;
-    }
-    if (!!cleanData.totalTime) {
-      time.textContent = cleanData.totalTime;
-    }
-    info.appendChild(time);
-
-    card.appendChild(info);
-
-    this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(card);
+  let list = document.createElement('ul');
+  for (let i = 0; i < ingredientList.length; i++) {
+    let listItem = document.createElement('li');
+    listItem.textContent = ingredientList[i];
+    list.appendChild(listItem);
   }
+  info.appendChild(list);
+
+  this.shadowRoot.appendChild(styleElem);
+  this.shadowRoot.appendChild(info);
+}
 
 }
 
-customElements.define('recipe-card', RecipeCard);
+customElements.define('ingredients-info', IngredientsInfo);
 
 
 /*********************************************************************/
@@ -230,4 +186,3 @@ function createIngredientList(ingredientArr) {
   // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
   return finalIngredientList.slice(0, -2);
 }
-

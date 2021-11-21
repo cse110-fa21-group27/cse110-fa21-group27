@@ -16,9 +16,10 @@ async function getUserInfo() {
       let storageUserInfoString = window.localStorage.getItem("userInfo");
       let storageUserInfo = {};
       // if it doesn't exist, initialize it as a blank user;
+      // give them our temp recipes for now
       if (!storageUserInfoString) {
         storageUserInfo = {
-          savedRecipes: [],
+          savedRecipes: ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'],
         };
         window.localStorage.setItem(
           "userInfo",
