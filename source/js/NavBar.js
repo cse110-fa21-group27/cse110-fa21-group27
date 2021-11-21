@@ -9,7 +9,7 @@ class NavBar extends HTMLElement {
       
       `;
         
-        const navBar = document.createElement('div');
+        const navBar = document.createElement('article');
         // this is the spudly home button
         const navAct = document.createElement('form');
         const navImg = document.createElement('input');
@@ -17,6 +17,7 @@ class NavBar extends HTMLElement {
         //text location/ search navigation
         const navAct2 = document.createElement('form');
         const navText = document.createElement('input');
+        navText.textContent = "Navigation Bar";
         
         //search button/image
         const searchImg = document.createElement('img');
