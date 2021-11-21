@@ -17,7 +17,7 @@ class RecipeInfo extends HTMLElement {
           background: #FFF6EC;
         }
     
-        .recipe-info > img {
+        .thumbnail-photo {
           height: 50vh;
           object-fit: cover;
           width: 50vw;
@@ -36,6 +36,12 @@ class RecipeInfo extends HTMLElement {
           grid-template-rows: [top] auto [bottom];
           grid-template-columns: [left] 50% [middle] 50% [right];
           border: 1px solid orange;
+        }
+
+        .star-image {
+          height: 5vh;
+          width: 5vw;
+          float: right;
         }
 
         .directions {
@@ -60,7 +66,6 @@ class RecipeInfo extends HTMLElement {
     let cookTime = searchForKey(data,'cookTime');
     let prepTime = searchForKey(data,'prepTime');
     let totalTime = searchForKey(data,'totalTime');
-    // let directionList = searchForKey(data, 'recipeInstructions');
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
@@ -76,6 +81,7 @@ class RecipeInfo extends HTMLElement {
     info.classList.add('recipe-info');
 
     const photo = document.createElement('img');
+    photo.classList.add("thumbnail-photo");
     photo.setAttribute('src', cleanData.thumbnail);
     info.appendChild(photo);
 
@@ -101,32 +107,26 @@ class RecipeInfo extends HTMLElement {
 
     const rating = document.createElement('p');
     rating.textContent = `${cleanData.rating.score} stars`;
+    const starPicture = document.createElement('img');
+    starPicture.classList.add("star-image");
+    switch (Math.round(searchForKey(data, 'ratingValue'))) {
+      case 0:
+        starPicture.src = "images/0-star.svg";
+      case 1:
+        starPicture.src = "images/1-star.svg";
+      case 2:
+        starPicture.src = "images/2-star.svg";
+      case 3:
+        starPicture.src = "images/3-star.svg";
+      case 4:
+        starPicture.src = "images/4-star.svg";
+      case 5:
+        starPicture.src = "images/5-star.svg";
+    }
     review.appendChild(rating);
+    review.appendChild(starPicture);
 
     info.appendChild(review);
-    
-    // const directions = document.createElement('p');
-    // directions.classList.add("directions");
-    // directions.textContent = "Directions";
-    // info.appendChild(directions);
-
-    // // Parsing data to create the direction list.
-    // const list = document.createElement('ol');
-    // for (let i = 0; i < directionList.length; i++) {
-    //   let listItem = document.createElement('li');
-    //   listItem.textContent = `${directionList[i].name}`;
-    //   list.appendChild(listItem);
-
-    //   // If there are inner steps, display them as well
-    //   if (directionList[i].itemListElement != undefined) {
-    //     for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-    //       let innerListItem = document.createElement('li');
-    //       innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
-    //       list.appendChild(innerListItem);
-    //     }
-    //   }
-    // }
-    // info.appendChild(list);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
@@ -240,36 +240,4 @@ function convertTime(time) {
   }
 
   return '';
-}
-
-/**
- * Takes in a list of ingredients raw from imported data and returns a neatly
- * formatted comma separated list.
- * @param {Array} ingredientArr The raw unprocessed array of ingredients from the
- *                              imported data
- * @return {String} the string comma separate list of ingredients from the array
- */
-function createIngredientList(ingredientArr) {
-  let finalIngredientList = '';
-
-  /**
-   * Removes the quantity and measurement from an ingredient string.
-   * This isn't perfect, it makes the assumption that there will always be a quantity
-   * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
-   * For the purposes of this lab you don't have to worry about those cases.
-   * @param {String} ingredient the raw ingredient string you'd like to process
-   * @return {String} the ingredient without the measurement & quantity 
-   * (e.g. '1 cup flour' returns 'flour')
-   */
-  function _removeQtyAndMeasurement(ingredient) {
-    return ingredient.split(' ').splice(2).join(' ');
-  }
-
-  ingredientArr.forEach(ingredient => {
-    ingredient = _removeQtyAndMeasurement(ingredient);
-    finalIngredientList += `${ingredient}, `;
-  });
-
-  // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
-  return finalIngredientList.slice(0, -2);
 }
