@@ -16,7 +16,7 @@ class RecipeCard extends HTMLElement {
       background: #FFF6EC;
     }
 
-    .recipe-card > img {
+    .thumbnail-photo {
       height: 225px;
       object-fit: cover;
       width: 100%;
@@ -57,6 +57,7 @@ class RecipeCard extends HTMLElement {
     card.classList.add('recipe-card');
 
     const photo = document.createElement('img');
+    photo.classList.add("thumbnail-photo");
     photo.setAttribute('src', cleanData.thumbnail);
     card.appendChild(photo);
 
@@ -69,7 +70,24 @@ class RecipeCard extends HTMLElement {
 
     const rating = document.createElement('p');
     rating.textContent = `${cleanData.rating.score} stars`;
+    const starPicture = document.createElement('img');
+    starPicture.classList.add("star-image");
+    switch (Math.round(searchForKey(data, 'ratingValue'))) {
+      case 0:
+        starPicture.src = "images/0-star.svg";
+      case 1:
+        starPicture.src = "images/1-star.svg";
+      case 2:
+        starPicture.src = "images/2-star.svg";
+      case 3:
+        starPicture.src = "images/3-star.svg";
+      case 4:
+        starPicture.src = "images/4-star.svg";
+      case 5:
+        starPicture.src = "images/5-star.svg";
+    }
     info.appendChild(rating);
+    info.appendChild(starPicture);
 
     const time = document.createElement('p');
     if (!!cleanData.prepTime) {
