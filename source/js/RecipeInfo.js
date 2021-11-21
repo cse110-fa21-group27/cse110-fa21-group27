@@ -7,8 +7,9 @@ class RecipeInfo extends HTMLElement {
     set data(data) {
         const style=`
         .recipe-info {
-          width: 300px;
-    
+          margin-left: 25vw;
+          margin-right: 25vw;
+          width: 50vw;
           display: grid;
           grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
           grid-template-columns: [left] auto [right];
@@ -17,15 +18,32 @@ class RecipeInfo extends HTMLElement {
         }
     
         .recipe-info > img {
-          height: 225px;
+          height: 50vh;
           object-fit: cover;
-          width: 100%;
+          width: 50vw;
         }
-    
+
+        .title {
+          text-align: center;
+          font-size: 3vh;
+          font-weight: bolder;
+        }
+
         .rating-time {
+          padding-left: 1vw;
+          padding-right: 1vw;
           display: grid;
           grid-template-rows: [top] auto [bottom];
           grid-template-columns: [left] 50% [middle] 50% [right];
+          border: 1px solid orange;
+        }
+
+        .directions {
+          text-align: center;
+          font-size: 2.5vh;
+          font-style: italic;
+          font-weight: bold;
+          padding: none;
         }
         `;
 
@@ -62,45 +80,51 @@ class RecipeInfo extends HTMLElement {
     info.appendChild(photo);
 
     const title = document.createElement('p');
+    title.classList.add('title');
     title.textContent = cleanData.title;
     info.appendChild(title);
 
     const review = document.createElement('div');
     review.classList.add('rating-time');
 
+    const time = document.createElement('p');
+    if (!!cleanData.prepTime) {
+      time.textContent = `Prep Time: ${cleanData.prepTime}`;
+    } 
+    if (!!cleanData.cookTime) {
+      time.textContent = `Cook Time: ${cleanData.cookTime}`;
+    }
+    if (!!cleanData.totalTime) {
+      time.textContent = `Total Time: ${cleanData.totalTime}`;
+    }
+    review.appendChild(time);
+
     const rating = document.createElement('p');
     rating.textContent = `${cleanData.rating.score} stars`;
     review.appendChild(rating);
 
-    const time = document.createElement('p');
-    if (!!cleanData.prepTime) {
-      time.textContent = cleanData.prepTime;
-    } 
-    if (!!cleanData.cookTime) {
-      time.textContent = cleanData.cookTime;
-    }
-    if (!!cleanData.totalTime) {
-      time.textContent = cleanData.totalTime;
-    }
-    review.appendChild(time);
-
     info.appendChild(review);
+    
+    const directions = document.createElement('p');
+    directions.classList.add("directions");
+    directions.textContent = "Directions";
+    info.appendChild(directions);
 
     // Parsing data to create the direction list.
     const list = document.createElement('ol');
     for (let i = 0; i < directionList.length; i++) {
-        let listItem = document.createElement('li');
-        listItem.textContent = `${directionList[i].name}`;
-        list.appendChild(listItem);
+      let listItem = document.createElement('li');
+      listItem.textContent = `${directionList[i].name}`;
+      list.appendChild(listItem);
 
-        // If there are inner steps, display them as well
-        if (directionList[i].itemListElement != undefined) {
-          for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-            let innerListItem = document.createElement('li');
-            innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
-            list.appendChild(innerListItem);
-          }
+      // If there are inner steps, display them as well
+      if (directionList[i].itemListElement != undefined) {
+        for (let j = 0; j < directionList[i].itemListElement.length; j++) {
+          let innerListItem = document.createElement('li');
+          innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
+          list.appendChild(innerListItem);
         }
+      }
     }
     info.appendChild(list);
 
