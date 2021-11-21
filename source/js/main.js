@@ -50,13 +50,9 @@ function savedRecipesPage() {
  */
 async function init() {
   // obtain userInfo from storage
-  //storage.getUserInfo();
-  const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'];
   await storage.getUserInfo();
-  loadRecipes(tempList).then(()=>{
-    renderSavedRecipes();
-  });
   bindPopState();
+  renderSavedRecipes();
 }
 
 
@@ -123,7 +119,6 @@ async function loadRecipes(recipeUrlList) {
 async function renderSavedRecipes() {
   // go through each url 
   const list = document.querySelector('.saved-recipes');
-
   storage.userInfo.savedRecipes.forEach((savedRecipe)=>{
     // obtain data
     const recipeJSON = storage.recipeData[savedRecipe.url].data;  
@@ -154,6 +149,25 @@ async function renderSavedRecipes() {
 
     list.appendChild(newCard);
   });
+
+  // place the add card button
+  const addCard = document.createElement('div');
+  addCard.classList.add('recipe-card');
+  const plusimg = document.createElement('img');
+  plusimg.setAttribute('src', 'https://freesvg.org/img/1464710523.png');
+  addCard.appendChild(plusimg);
+
+  // open up the addRecipe menu
+  addCard.addEventListener('click',()=>{
+    const main = document.querySelector('main');
+    const addRecipe = document.createElement('add-recipe');
+    // let it use our storage.addRecipeToSaved function
+    addRecipe.addRecipeToSaved = storage.addRecipeToSaved;
+    main.appendChild(addRecipe);
+  });
+
+  list.appendChild(addCard);
+
 }
 
 /**

@@ -20,6 +20,7 @@ async function getUserInfo() {
       if (!storageUserInfoString) {
         storageUserInfo = {
           savedRecipes: [
+            /*
             {
               url: 'json/gyudon.json',
               checkedIngredients: [],
@@ -35,6 +36,7 @@ async function getUserInfo() {
               checkedIngredients: [],
               checkedSteps: []
             },
+            */
           ]
         };
         window.localStorage.setItem(
@@ -71,23 +73,33 @@ async function getUserInfo() {
  * @returns {Promise}
  */
 async function addRecipeToSaved (url) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
       url: url,
       checkedIngredients: [],
       checkedSteps: [],
     };
+    // attempt to retrieve JSON
+    let recipeJSON = await retrieveJSONFromPage(url);
+    recipeData[url] = {
+      url: url,
+      data: recipeJSON
+    };
     let newIndex = userInfo.savedRecipes.push(newSavedRecipe);
+
+    // attempt to save to localStorage
     try {
       window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      window.localStorage.setItem("recipes", JSON.stringify(recipeData));
       // all good!
       resolve(true);
     } catch (error) {
       // Unable to save to localStorage, remove it from our global variable
       // and reject the promise
       userInfo.savedRecipes.splice(newIndex, 1);
-      console.log("Unable to add recipe to saved recipes", error);
+      delete recipeData[url];
+      console.log("Unable to add recipe to localStorage", error);
       reject(error);
     }
   });
@@ -142,8 +154,8 @@ async function removeRecipeFromSaved(url) {
  * @param {string} url 
  * @returns {Promise}
  */
-async function retrieveJSONFromPage(url) {
-  return Promise((resolve,reject)=> {
+function retrieveJSONFromPage(url) {
+  return new Promise((resolve,reject)=> {
     fetch(url)
       .then(response=>{
         // check if we got the page
@@ -181,6 +193,11 @@ async function retrieveJSONFromPage(url) {
           resolve(ourRecipe);
         }
 
+      })
+      // error
+      .catch(error=>{
+        console.log(`Unable to retireve ${url}`);
+        reject();
       });
   });
 }

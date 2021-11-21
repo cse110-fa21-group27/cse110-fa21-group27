@@ -134,5 +134,28 @@
 .saved-recipes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+    gap: 2em;
+}
+
+.recipe-card {
+    width: 300px;
+    height: 450px;
+    display: grid;
+    grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+    grid-template-columns: [left] auto [right];
+
+    background: #FFF6EC;
+}
+
+.recipe-card > img {
+    height: 225px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.rating-time {
+    display: grid;
+    grid-template-rows: [top] auto [bottom];
+    grid-template-columns: [left] 50% [middle] 50% [right];
 }
