@@ -7,8 +7,11 @@ class RecipePage extends HTMLElement {
     set data(data) {
         const page = document.createElement('article');
         const info = document.createElement('recipe-info');
+        const directions = document.createElement('directions-info');
         info.data = data;
+        directions.data = data;
         page.appendChild(info);
+        page.appendChild(directions);
 
         this.shadowRoot.appendChild(page);
     }

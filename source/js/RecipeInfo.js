@@ -60,7 +60,7 @@ class RecipeInfo extends HTMLElement {
     let cookTime = searchForKey(data,'cookTime');
     let prepTime = searchForKey(data,'prepTime');
     let totalTime = searchForKey(data,'totalTime');
-    let directionList = searchForKey(data, 'recipeInstructions');
+    // let directionList = searchForKey(data, 'recipeInstructions');
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
@@ -105,28 +105,28 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
     
-    const directions = document.createElement('p');
-    directions.classList.add("directions");
-    directions.textContent = "Directions";
-    info.appendChild(directions);
+    // const directions = document.createElement('p');
+    // directions.classList.add("directions");
+    // directions.textContent = "Directions";
+    // info.appendChild(directions);
 
-    // Parsing data to create the direction list.
-    const list = document.createElement('ol');
-    for (let i = 0; i < directionList.length; i++) {
-      let listItem = document.createElement('li');
-      listItem.textContent = `${directionList[i].name}`;
-      list.appendChild(listItem);
+    // // Parsing data to create the direction list.
+    // const list = document.createElement('ol');
+    // for (let i = 0; i < directionList.length; i++) {
+    //   let listItem = document.createElement('li');
+    //   listItem.textContent = `${directionList[i].name}`;
+    //   list.appendChild(listItem);
 
-      // If there are inner steps, display them as well
-      if (directionList[i].itemListElement != undefined) {
-        for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-          let innerListItem = document.createElement('li');
-          innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
-          list.appendChild(innerListItem);
-        }
-      }
-    }
-    info.appendChild(list);
+    //   // If there are inner steps, display them as well
+    //   if (directionList[i].itemListElement != undefined) {
+    //     for (let j = 0; j < directionList[i].itemListElement.length; j++) {
+    //       let innerListItem = document.createElement('li');
+    //       innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
+    //       list.appendChild(innerListItem);
+    //     }
+    //   }
+    // }
+    // info.appendChild(list);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
