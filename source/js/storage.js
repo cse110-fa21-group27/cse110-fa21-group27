@@ -171,7 +171,7 @@ function retrieveJSONFromPage(url) {
         const parser = new DOMParser();
         const htmlDoc = parser.parseFromString(text, "text/html");
         // get all scripts with attribute type="application/ld+json"
-        const candidates = htmlDoc.querySelectorAll('script [type="application/ld+json]"')
+        const candidates = htmlDoc.querySelectorAll('script[type="application/ld+json]"')
         // go through all of them and see which one is our recipe script
         let ourRecipe = null;
         candidates.forEach((candidateScript)=>{
@@ -196,7 +196,7 @@ function retrieveJSONFromPage(url) {
       })
       // error
       .catch(error=>{
-        console.log(`Unable to retireve ${url}`);
+        console.log(`Unable to retireve ${url}`, error);
         reject();
       });
   });
