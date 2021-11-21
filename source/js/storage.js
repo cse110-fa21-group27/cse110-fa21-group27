@@ -138,7 +138,7 @@ async function removeRecipeFromSaved(url) {
 
 /**
  * This function fetches an external recipe url and parses it for its recipe
- * json, which we return when the promise is resolved
+ * json, which we return when this function resolves.
  * @param {string} url 
  * @returns {Promise}
  */
@@ -159,11 +159,54 @@ async function retrieveJSONFromPage(url) {
         const parser = new DOMParser();
         const htmlDoc = parser.parseFromString(text, "text/html");
         // get all scripts with attribute type="application/ld+json"
-        htmlDoc.querySelectorAll('script [type="application/ld+json"')
+        const candidates = htmlDoc.querySelectorAll('script [type="application/ld+json]"')
         // go through all of them and see which one is our recipe script
+        let ourRecipe = null;
+        candidates.forEach((candidateScript)=>{
+          // parse it into an object
+          const json = JSON.parse(candidateScript.innerHTML);
+
+          if (hasRecipe(json)) {
+            ourRecipe = json;
+          }
+        });
+
+        // if we don't find it then we reject the promise
+        if (!ourRecipe) {
+          console.log(`Woopsies, json not found from ${url}`);
+          reject();
+        }
+        else {
+          // resolve
+          resolve(ourRecipe);
+        }
+
       });
   });
 }
 
+/**
+ * Recursively searches the object
+ * Returns true if the given object contains a recipe inside of it
+ * @param {Object} object - a js object we want to check if it has a recipe in it
+ * @returns {Boolean} 
+ */
+function hasRecipe(object) {
+  // go through its keys
+  Object.keys(object).forEach((key)=>{
+    // if it is of @type Recipe then we're good
+    if (key == "@type") {
+      if (object[key] == "Recipe") {
+        return true;
+      }
+    }
+    // check if it has subobjects and recurse
+    else if (!!object[key] && typeof object[key] === 'object') {
+      return hasRecipe(object[key]);
+    }
+  });
+  // no recipe!!!!
+  return false;
+}
 
 export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
