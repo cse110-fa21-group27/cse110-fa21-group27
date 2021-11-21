@@ -1,116 +1,53 @@
-class RecipeInfo extends HTMLElement {
-    constructor() {
-      super();
-      let shadow = this.attachShadow({mode: 'open'});
-    }
-
-    set data(data) {
-        const style=`
-        .recipe-info {
-          width: 300px;
-    
-          display: grid;
-          grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-          grid-template-columns: [left] auto [right];
-    
-          background: #FFF6EC;
-        }
-    
-        .recipe-info > img {
-          height: 225px;
-          object-fit: cover;
-          width: 100%;
-        }
-    
-        .rating-time {
-          display: grid;
-          grid-template-rows: [top] auto [bottom];
-          grid-template-columns: [left] 50% [middle] 50% [right];
-        }
-        `;
-
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML=style;
-
-
-    const cleanData = {};
-    // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
-    cleanData.title = getRecipeTitle(data);
-    cleanData.url = getUrl(data);
-    cleanData.organization = getOrganization(data);
-    let cookTime = searchForKey(data,'cookTime');
-    let prepTime = searchForKey(data,'prepTime');
-    let totalTime = searchForKey(data,'totalTime');
-    let directionList = searchForKey(data, 'recipeInstructions');
-    cleanData.cookTime = convertTime(cookTime);
-    cleanData.prepTime = convertTime(prepTime);
-    cleanData.totalTime = convertTime(totalTime);
-    let tempRating = searchForKey(data,'aggregateRating');
-    if (!!tempRating) {
-      cleanData.rating = {
-        count: tempRating.ratingCount,
-        score: tempRating.ratingValue
-      }
-    }
-
-    const info = document.createElement('article');
-    info.classList.add('recipe-info');
-
-    const photo = document.createElement('img');
-    photo.setAttribute('src', cleanData.thumbnail);
-    info.appendChild(photo);
-
-    const title = document.createElement('p');
-    title.textContent = cleanData.title;
-    info.appendChild(title);
-
-    const review = document.createElement('div');
-    review.classList.add('rating-time');
-
-    const rating = document.createElement('p');
-    rating.textContent = `${cleanData.rating.score} stars`;
-    review.appendChild(rating);
-
-    const time = document.createElement('p');
-    if (!!cleanData.prepTime) {
-      time.textContent = cleanData.prepTime;
-    } 
-    if (!!cleanData.cookTime) {
-      time.textContent = cleanData.cookTime;
-    }
-    if (!!cleanData.totalTime) {
-      time.textContent = cleanData.totalTime;
-    }
-    review.appendChild(time);
-
-    info.appendChild(review);
-
-    // Parsing data to create the direction list.
-    const list = document.createElement('ol');
-    for (let i = 0; i < directionList.length; i++) {
-        let listItem = document.createElement('li');
-        listItem.textContent = `${directionList[i].name}`;
-        list.appendChild(listItem);
-
-        // If there are inner steps, display them as well
-        if (directionList[i].itemListElement != undefined) {
-          for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-            let innerListItem = document.createElement('li');
-            innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
-            list.appendChild(innerListItem);
-          }
-        }
-    }
-    info.appendChild(list);
-
-    this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(info);
+class IngredientsInfo extends HTMLElement {
+  constructor() {
+    super();
+    let shadow = this.attachShadow({mode: 'open'});
   }
+
+  set data(data) {
+      const style=`
+      
+      `;
+
+  const styleElem = document.createElement('style');
+  styleElem.innerHTML=style;
+
+  let ingredientList = createIngredientList(searchForKey(data,'recipeIngredient'));
+
+  const info = document.createElement('article');
+  info.classList.add('ingredients-info');
+
+  let ingredients = document.createElement('p');
+  ingredients.textContent = "Ingredients";
+  info.appendChild(ingredients);
+
+  let addToCart = document.createElement('button');
+  addToCart.textContent = "Add To Cart";
+  info.appendChild(addToCart);
+
+  let subtractQuantity = document.createElement('button');
+  subtractQuantity.textContent = "-";
+  info.appendChild(subtractQuantity);
+
+  let addQuantity = document.createElement('button');
+  addQuantity.textContent = "+";
+  info.appendChild(addQuantity);
+
+  let list = document.createElement('ul');
+  for (let i = 0; i < ingredientList.length; i++) {
+    let listItem = document.createElement('li');
+    listItem.textContent = ingredientList[i];
+    list.appendChild(listItem);
+  }
+  info.appendChild(list);
+
+  this.shadowRoot.appendChild(styleElem);
+  this.shadowRoot.appendChild(info);
+}
 
 }
 
-customElements.define('recipe-info', RecipeInfo);
+customElements.define('ingredients-info', IngredientsInfo);
 
 
 /*********************************************************************/
