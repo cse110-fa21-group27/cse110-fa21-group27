@@ -13,7 +13,7 @@ const gliderConfig = {
   perView: 3,
   breakpoints:{
     800: {
-      perView: 2 
+      perView: 2
     }
     // peek: {
     //     before: 1000,
@@ -155,7 +155,7 @@ function recipePage(recipeUrl, recipeJSON) {
 async function loadRecipes(recipeUrlList) {
   return new Promise((resolve, reject) => {
     // keep track of each promise we make when using fetch
-    let promises = [];
+    const promises = [];
 
     recipeUrlList.forEach((url) => {
       // add each fetch promise to the array

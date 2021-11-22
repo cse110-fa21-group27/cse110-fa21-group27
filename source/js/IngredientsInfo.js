@@ -1,7 +1,7 @@
 class IngredientsInfo extends HTMLElement {
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
 
   set data(data) {
@@ -102,29 +102,29 @@ class IngredientsInfo extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
-    let ingredientList = searchForKey(data, "recipeIngredient");
+    const ingredientList = searchForKey(data, "recipeIngredient");
 
     const info = document.createElement("div");
     info.classList.add("ingredients-info");
 
-    let ingredients = document.createElement("p");
+    const ingredients = document.createElement("p");
     ingredients.classList.add("ingredients-label");
     ingredients.textContent = "Ingredients";
     info.appendChild(ingredients);
 
-    let line = document.createElement("hr");
+    const line = document.createElement("hr");
     line.classList.add("line");
     info.appendChild(line);
 
-    let form = document.createElement("div");
+    const form = document.createElement("div");
     form.classList.add("form");
 
-    let addToCart = document.createElement("button");
+    const addToCart = document.createElement("button");
     addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";
     form.appendChild(addToCart);
 
-    let subtractQuantity = document.createElement("button");
+    const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", (event) => {
       if (quantity.textContent != 1) {
@@ -134,13 +134,13 @@ class IngredientsInfo extends HTMLElement {
     subtractQuantity.textContent = "-";
     form.appendChild(subtractQuantity);
 
-    let quantity = document.createElement("p");
+    const quantity = document.createElement("p");
     quantity.classList.add("quantity");
     const servings = searchForKey(data, "recipeYield");
     quantity.textContent = servings[0];
     form.appendChild(quantity);
 
-    let addQuantity = document.createElement("button");
+    const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
     addQuantity.addEventListener("click", (event) => {
       quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
@@ -148,14 +148,14 @@ class IngredientsInfo extends HTMLElement {
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
 
-    let list = document.createElement("div");
+    const list = document.createElement("div");
     list.classList.add("ingredients-list");
     for (let i = 0; i < ingredientList.length; i++) {
-      let box = document.createElement("input");
+      const box = document.createElement("input");
       box.type = "checkbox";
-      let listItem = document.createElement("label");
+      const listItem = document.createElement("label");
       listItem.textContent = ingredientList[i];
-      let lineBreak = document.createElement("br");
+      const lineBreak = document.createElement("br");
       list.appendChild(box);
       list.appendChild(listItem);
       list.appendChild(lineBreak);
@@ -170,19 +170,19 @@ class IngredientsInfo extends HTMLElement {
 
 customElements.define("ingredients-info", IngredientsInfo);
 
-/*********************************************************************/
-/***                       Helper Functions:                       ***/
-/***          Shout out to the TA's lemme just yoink these         ***/
-/*********************************************************************/
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
 
 /**
  * Recursively search for a key nested somewhere inside an object
  * @param {Object} object the object with which you'd like to search
  * @param {String} key the key that you are looking for in the object
- * @returns {*} the value of the found key
+ * @return {*} the value of the found key
  */
 function searchForKey(object, key) {
-  var value;
+  let value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
@@ -200,7 +200,7 @@ function searchForKey(object, key) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @returns {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a string, otherwise null
  */
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
@@ -217,7 +217,7 @@ function getOrganization(data) {
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
  * @param {Object} Data Raw recipe JSON to find name of
- * @returns {String} if found, returns the name of recipe as string, otherwise null
+ * @return {String} if found, returns the name of recipe as string, otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
@@ -235,14 +235,15 @@ function getRecipeTitle(data) {
 /**
  * Extract the URL from the given recipe schema JSON object
  * @param {Object} data Raw recipe JSON to find the URL of
- * @returns {String} If found, it returns the URL as a string, otherwise null
+ * @return {String} If found, it returns the URL as a string, otherwise null
  */
 function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article")
+      if (data["@graph"][i]["@type"] == "Article") {
         return data["@graph"][i]["@id"];
+      }
     }
   }
   return null;
@@ -260,7 +261,7 @@ function convertTime(time) {
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split("");
+  const timeArr = time.split("");
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
       if (timeArr[i] == "H") return `${timeStr} hr`;
