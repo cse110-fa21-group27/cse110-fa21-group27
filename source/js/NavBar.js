@@ -83,12 +83,14 @@ class NavBar extends HTMLElement {
     navBar.classList.add("navBar");
 
     // this is the spudly home button/img
-    const navAct = document.createElement("form");
     const spudlyImg = document.createElement("input");
     spudlyImg.type = "image";
     spudlyImg.className = "spudly_png";
     spudlyImg.id = "se_spudly_png";
     spudlyImg.src = "./images/Spudly.png";
+    spudlyImg.addEventListener("click", () => {
+      this.router.navigate("home");
+    });
 
     //search bar
     const navAct2 = document.createElement("form");
@@ -123,8 +125,8 @@ class NavBar extends HTMLElement {
     savedImg.name = "se_saved_png";
     savedImg.src = "./images/saved.png";
 
-    navAct.appendChild(spudlyImg);
-    navBar.appendChild(navAct);
+    //navAct.appendChild(spudlyImg);
+    navBar.appendChild(spudlyImg);
 
     navAct2.appendChild(navText);
     navBar.appendChild(navAct2);

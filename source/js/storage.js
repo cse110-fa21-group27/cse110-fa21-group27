@@ -1,4 +1,3 @@
-
 const userInfo = {};
 const recipeData = {};
 
@@ -16,10 +15,9 @@ async function getUserInfo() {
       let storageUserInfoString = window.localStorage.getItem("userInfo");
       let storageUserInfo = {};
       // if it doesn't exist, initialize it as a blank user;
-      // give them our temp recipes for now
       if (!storageUserInfoString) {
         storageUserInfo = {
-          savedRecipes: ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'],
+          savedRecipes: [],
         };
         window.localStorage.setItem(
           "userInfo",
@@ -44,6 +42,76 @@ async function getUserInfo() {
 }
 
 /**
+ * When the promise returned by this function is resolved,
+ * the recipes stored in local storage should be placed into
+ * the global variable recipeData
+ * @returns {Promise}
+ */
+async function getRecipes() {
+  return new Promise(async (resolve, reject) => {
+    // attempt to retrieve
+    try {
+      let storageRecipesString = window.localStorage.getItem("recipes");
+      let storageRecipes = {};
+      // if it doesn't exist, we fill it with our temp recipes for now
+      if (!storageRecipesString) {
+        // fetch them
+        const list = [
+          "./json/chicken_n_dumplings.json",
+          "./json/chicken_tortilla_soup.json",
+          "./json/gyudon.json",
+        ];
+        let promises = [];
+
+        list.forEach((url) => {
+          promises.push(
+            fetch(url)
+              .then((response) => {
+                return response.json();
+              })
+              .then((json) => {
+                storageRecipes[url] = {
+                  url: url,
+                  data: json,
+                };
+                console.log(storageRecipes);
+              })
+              .catch((error) => {
+                console.log(`Error fetching premadejsons ${error}`);
+              })
+          );
+        });
+        // return this pushed promise
+        resolve(
+          Promise.all(promises).then(() => {
+            window.localStorage.setItem(
+              "recipes",
+              JSON.stringify(storageRecipes)
+            );
+            // update global variable
+            for (const url in storageRecipes) {
+              recipeData[url] = storageRecipes[url];
+            }
+          })
+        );
+      } else {
+        // it does exist, let's just update global variable
+        storageRecipes = JSON.parse(storageRecipesString);
+        // update global variable
+        for (const url in storageRecipes) {
+          recipeData[url] = storageRecipes[url];
+        }
+        // all done!
+        resolve(true);
+      }
+    } catch (error) {
+      console.log(`Unable to retrieve recipes ${error}`);
+      reject(error);
+    }
+  });
+}
+
+/**
  * Adds a url to the user's savedRecipes[] array
  * After it resolves, the userInfo object should be updated and
  * the userInfo in localStorage should also be updated
@@ -54,11 +122,11 @@ async function getUserInfo() {
  * @param {String} url - the url for recipe we want to save
  * @returns {Promise}
  */
-async function addRecipeToSaved (url) {
+async function addRecipeToSaved(url) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
-        url: url,
+      url: url,
       checkedIngredients: [],
       checkedSteps: [],
     };
@@ -103,7 +171,7 @@ async function removeRecipeFromSaved(url) {
     }
 
     // save just in case we need to add it back
-      let found = userInfo.savedRecipes[foundIndex];
+    let found = userInfo.savedRecipes[foundIndex];
     // remove from userInfo
     userInfo.savedRecipes.splice(foundIndex, 1);
     try {
@@ -111,13 +179,105 @@ async function removeRecipeFromSaved(url) {
       // all good!
       resolve(true);
     } catch (error) {
-      // Unable to update localStorage, add it back to global variable 
+      // Unable to update localStorage, add it back to global variable
       // and reject the promise
-        userInfo.savedRecipes.splice(foundIndex, 0, found);
+      userInfo.savedRecipes.splice(foundIndex, 0, found);
       console.log("Unable to remove recipe from saved recipes", error);
       reject(error);
     }
   });
 }
 
-export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
+/**
+ * Should return true if the url is in the user's saved recipes
+ * and false otherwise
+ * @param {string} url
+ * @returns {Boolean}
+ */
+function isSaved(url) {
+  const savedUrls = userInfo.savedRecipes.map((x) => x.url);
+  return savedUrls.includes(url);
+}
+
+/**
+ * This function fetches an external recipe url and parses it for its recipe
+ * json, which we return when this function resolves.
+ * @param {string} url
+ * @returns {Promise}
+ */
+async function retrieveJSONFromPage(url) {
+  return Promise((resolve, reject) => {
+    fetch(url)
+      .then((response) => {
+        // check if we got the page
+        if (!response.ok) {
+          console.log(`Unable to retrieve ${url}`);
+          reject();
+        }
+        response.text();
+      })
+      // get the page as text
+      .then((text) => {
+        // parse it as an html element
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(text, "text/html");
+        // get all scripts with attribute type="application/ld+json"
+        const candidates = htmlDoc.querySelectorAll(
+          'script[type="application/ld+json]"'
+        );
+        // go through all of them and see which one is our recipe script
+        let ourRecipe = null;
+        candidates.forEach((candidateScript) => {
+          // parse it into an object
+          const json = JSON.parse(candidateScript.innerHTML);
+
+          if (hasRecipe(json)) {
+            ourRecipe = json;
+          }
+        });
+
+        // if we don't find it then we reject the promise
+        if (!ourRecipe) {
+          console.log(`Woopsies, json not found from ${url}`);
+          reject();
+        } else {
+          // resolve
+          resolve(ourRecipe);
+        }
+      });
+  });
+}
+
+/**
+ * Recursively searches the object
+ * Returns true if the given object contains a recipe inside of it
+ * @param {Object} object - a js object we want to check if it has a recipe in it
+ * @returns {Boolean}
+ */
+function hasRecipe(object) {
+  // go through its keys
+  Object.keys(object).forEach((key) => {
+    // if it is of @type Recipe then we're good
+    if (key == "@type") {
+      if (object[key] == "Recipe") {
+        return true;
+      }
+    }
+    // check if it has subobjects and recurse
+    else if (!!object[key] && typeof object[key] === "object") {
+      return hasRecipe(object[key]);
+    }
+  });
+  // no recipe!!!!
+  return false;
+}
+
+export const storage = {
+  userInfo,
+  recipeData,
+  getUserInfo,
+  getRecipes,
+  addRecipeToSaved,
+  removeRecipeFromSaved,
+  isSaved,
+};

@@ -152,7 +152,18 @@ class RecipeInfo extends HTMLElement {
 
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
-    saveRecipe.textContent = "Save Recipe";
+    saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
+    saveRecipe.addEventListener("click", () => {
+      if (!this.isSaved) {
+        this.addRecipeToSaved(this.url).then(() => {
+          saveRecipe.textContent = "Unsave Recipe";
+        });
+      } else {
+        this.removeRecipeFromSaved(this.url).then(() => {
+          saveRecipe.textContent = "Save Recipe";
+        });
+      }
+    });
 
     info.appendChild(ingredients);
     info.appendChild(nutrition);
