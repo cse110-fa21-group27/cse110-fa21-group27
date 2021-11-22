@@ -6,7 +6,7 @@
   },
   "extends": ["google"],
   "parserOptions": {
-    "ecmaVersion": 13,
+    "ecmaVersion": 12,
     "sourceType": "module"
   },
   // This overrides google's style on double quotes
