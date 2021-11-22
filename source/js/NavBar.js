@@ -1,7 +1,7 @@
 class NavBar extends HTMLElement {
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
 
   set data(data) {
@@ -75,10 +75,10 @@ class NavBar extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
     /*
-       
+
       */
 
-    //the whole bar itself
+    // the whole bar itself
     const navBar = document.createElement("article");
     navBar.classList.add("navBar");
 
@@ -92,7 +92,7 @@ class NavBar extends HTMLElement {
       this.goHome();
     });
 
-    //search bar
+    // search bar
     const navAct2 = document.createElement("form");
     const navText = document.createElement("input");
     navText.type = "text";
@@ -101,13 +101,13 @@ class NavBar extends HTMLElement {
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
 
-    //search button/image
+    // search button/image
     const searchImg = document.createElement("img");
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
 
-    //shopping cart image/button
+    // shopping cart image/button
     const shoppingAct = document.createElement("form");
     const shoppingImg = document.createElement("input");
     shoppingImg.type = "image";
@@ -116,7 +116,7 @@ class NavBar extends HTMLElement {
     shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
 
-    //saved button/img
+    // saved button/img
     const savedAct = document.createElement("form");
     const savedImg = document.createElement("input");
     savedImg.type = "image";
@@ -125,7 +125,7 @@ class NavBar extends HTMLElement {
     savedImg.name = "se_saved_png";
     savedImg.src = "./images/saved.png";
 
-    //navAct.appendChild(spudlyImg);
+    // navAct.appendChild(spudlyImg);
     navBar.appendChild(spudlyImg);
 
     navAct2.appendChild(navText);

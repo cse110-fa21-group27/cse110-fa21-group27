@@ -1,7 +1,7 @@
 class RecipePage extends HTMLElement {
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
 
   set data(data) {
