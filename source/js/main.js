@@ -30,7 +30,7 @@ const gliderConfig = {
  */
 function savedRecipesPage() {
   const main = document.querySelector('main');
-  /* TODO: hide/delete all other pages/views */
+
   const recipePage = document.querySelector('recipe-page');
   if(!!recipePage) recipePage.remove();
   
@@ -46,6 +46,32 @@ function savedRecipesPage() {
   })
 }
 
+/**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed into this function should be rendered
+ * @function
+ * @param {string} recipeUrl - the url of the recipe the page is showing
+ * @param {Object} recipeJSON - the recipeJSON of the recipe that contains
+ * all its data
+ */
+function recipePage(recipeUrl, recipeJSON) {
+  const main = document.querySelector('main');
+  // delete everyting in main
+  for (let i = 0; i < main.children.length; i++) {
+    main.children.item(i).remove();
+  }
+
+  // show the recipe-page
+  const recipePage = document.createElement('recipe-page');
+  main.appendChild(recipePage);
+  // set the recipe-page's data into this recipe's JSON 
+  recipePage.data = recipeJSON;
+  // update nav-bar
+  renderNavBar({
+    recipeUrl: recipeUrl,
+    isRecipe: true
+  });
+}
 
 
 /**
@@ -154,27 +180,7 @@ async function renderSavedRecipes() {
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
-    router.addPage(savedRecipe.url,() => {
-      // hide the cards
-      document.querySelectorAll('recipe-card').forEach((card)=>{
-        // delete for now TODO: keep track of each card so we don't have to re-render
-        card.remove();
-      });
-      // hide saved-recipes
-      const savedRecipesSection = document.querySelector('.saved-recipes');
-      if (!!savedRecipesSection) savedRecipesSection.remove();
-      // show the recipe-page
-      const recipePage = document.createElement('recipe-page');
-      const main = document.querySelector('main');
-      main.appendChild(recipePage);
-      // set the recipe-page's data into this recipe's JSON 
-      recipePage.data = recipeJSON;
-      // update nav-bar
-      renderNavBar({
-        recipeUrl: savedRecipe.url,
-        isRecipe: true
-      });
-    });
+    router.addPage(savedRecipe.url, recipePage.bind(null,savedRecipe.url,recipeJSON));
     // bind the router page to the card
     bindRecipeCard(newCard,savedRecipe.url);
 
