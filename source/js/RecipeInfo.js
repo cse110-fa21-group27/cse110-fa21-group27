@@ -1,11 +1,11 @@
 class RecipeInfo extends HTMLElement {
-    constructor() {
-      super();
-      let shadow = this.attachShadow({mode: 'open'});
-    }
+  constructor() {
+    super();
+    let shadow = this.attachShadow({ mode: "open" });
+  }
 
-    set data(data) {
-        const style=`
+  set data(data) {
+    const style = `
         .recipe-info {
           margin-left: 25vw;
           margin-right: 25vw;
@@ -58,50 +58,49 @@ class RecipeInfo extends HTMLElement {
         }
         `;
 
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML=style;
-
+    const styleElem = document.createElement("style");
+    styleElem.innerHTML = style;
 
     const cleanData = {};
     // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
+    cleanData.thumbnail = searchForKey(data, "thumbnailUrl");
     cleanData.title = getRecipeTitle(data);
     cleanData.url = getUrl(data);
     cleanData.organization = getOrganization(data);
-    let cookTime = searchForKey(data,'cookTime');
-    let prepTime = searchForKey(data,'prepTime');
-    let totalTime = searchForKey(data,'totalTime');
+    let cookTime = searchForKey(data, "cookTime");
+    let prepTime = searchForKey(data, "prepTime");
+    let totalTime = searchForKey(data, "totalTime");
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
-    let tempRating = searchForKey(data,'aggregateRating');
+    let tempRating = searchForKey(data, "aggregateRating");
     if (!!tempRating) {
       cleanData.rating = {
         count: tempRating.ratingCount,
-        score: tempRating.ratingValue
-      }
+        score: tempRating.ratingValue,
+      };
     }
 
-    const info = document.createElement('article');
-    info.classList.add('recipe-info');
+    const info = document.createElement("article");
+    info.classList.add("recipe-info");
 
-    const photo = document.createElement('img');
+    const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
-    photo.setAttribute('src', cleanData.thumbnail);
+    photo.setAttribute("src", cleanData.thumbnail);
     info.appendChild(photo);
 
-    const title = document.createElement('p');
-    title.classList.add('title');
+    const title = document.createElement("p");
+    title.classList.add("title");
     title.textContent = cleanData.title;
     info.appendChild(title);
 
-    const review = document.createElement('div');
-    review.classList.add('rating-time');
+    const review = document.createElement("div");
+    review.classList.add("rating-time");
 
-    const time = document.createElement('p');
+    const time = document.createElement("p");
     if (!!cleanData.prepTime) {
       time.textContent = `Prep Time: ${cleanData.prepTime}`;
-    } 
+    }
     if (!!cleanData.cookTime) {
       time.textContent = `Cook Time: ${cleanData.cookTime}`;
     }
@@ -110,11 +109,11 @@ class RecipeInfo extends HTMLElement {
     }
     review.appendChild(time);
 
-    const rating = document.createElement('p');
+    const rating = document.createElement("p");
     rating.textContent = `${cleanData.rating.score} stars`;
-    const starPicture = document.createElement('img');
+    const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
-    switch (Math.round(searchForKey(data, 'ratingValue'))) {
+    switch (Math.round(searchForKey(data, "ratingValue"))) {
       case 0:
         starPicture.src = "images/0-star.svg";
       case 1:
@@ -133,36 +132,38 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
-    const ingredients = document.createElement('button');
+    const ingredients = document.createElement("button");
     ingredients.classList.add("button");
     ingredients.textContent = "Show Ingredients";
-    const showIngredients = document.createElement('ingredients-info');
+    const showIngredients = document.createElement("ingredients-info");
     showIngredients.data = data;
-    ingredients.addEventListener('click', (event) => {
+    ingredients.addEventListener("click", (event) => {
       if (ingredients.textContent == "Show Ingredients") {
         info.appendChild(showIngredients);
-        ingredients.textContent = "Hide Ingredients"
-      }
-      else {
+        ingredients.textContent = "Hide Ingredients";
+      } else {
         info.removeChild(showIngredients);
-        ingredients.textContent = "Show Ingredients"
+        ingredients.textContent = "Show Ingredients";
       }
     });
-    const nutrition = document.createElement('button');
+    const nutrition = document.createElement("button");
     nutrition.classList.add("button");
     nutrition.textContent = "Show Nutritions";
 
+    const saveRecipe = document.createElement("button");
+    saveRecipe.classList.add("button");
+    saveRecipe.textContent = "Save Recipe";
+
     info.appendChild(ingredients);
     info.appendChild(nutrition);
+    info.appendChild(saveRecipe);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
   }
-
 }
 
-customElements.define('recipe-info', RecipeInfo);
-
+customElements.define("recipe-info", RecipeInfo);
 
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
@@ -175,14 +176,14 @@ customElements.define('recipe-info', RecipeInfo);
  * @param {String} key the key that you are looking for in the object
  * @returns {*} the value of the found key
  */
- function searchForKey(object, key) {
+function searchForKey(object, key) {
   var value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
       return true;
     }
-    if (object[k] && typeof object[k] === 'object') {
+    if (object[k] && typeof object[k] === "object") {
       value = searchForKey(object[k], key);
       return value !== undefined;
     }
@@ -196,15 +197,15 @@ customElements.define('recipe-info', RecipeInfo);
  * @param {Object} data Raw recipe JSON to find the org string of
  * @returns {String} If found, it retuns the name of the org as a string, otherwise null
  */
- function getOrganization(data) {
+function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Organization') {
-        return data['@graph'][i].name;
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Organization") {
+        return data["@graph"][i].name;
       }
     }
-  };
+  }
   return null;
 }
 
@@ -216,10 +217,10 @@ customElements.define('recipe-info', RecipeInfo);
 function getRecipeTitle(data) {
   if (data.name) return data.name;
   let value = null;
-  if (data['@graph']) {
-    data['@graph'].forEach((obj) => {
-      if (obj['@type'] == 'Recipe') {
-        value = obj['name'];
+  if (data["@graph"]) {
+    data["@graph"].forEach((obj) => {
+      if (obj["@type"] == "Recipe") {
+        value = obj["name"];
       }
     });
   }
@@ -233,11 +234,12 @@ function getRecipeTitle(data) {
  */
 function getUrl(data) {
   if (data.url) return data.url;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Article")
+        return data["@graph"][i]["@id"];
     }
-  };
+  }
   return null;
 }
 
@@ -248,23 +250,23 @@ function getUrl(data) {
  * @return {String} formatted time string
  */
 function convertTime(time) {
-  let timeStr = '';
+  let timeStr = "";
 
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split('');
-  if (time.includes('H')) {
+  let timeArr = time.split("");
+  if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'H') return `${timeStr} hr`;
+      if (timeArr[i] == "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'M') return `${timeStr} min`;
+      if (timeArr[i] == "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
 
-  return '';
+  return "";
 }

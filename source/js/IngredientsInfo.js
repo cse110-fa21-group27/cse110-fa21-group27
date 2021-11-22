@@ -117,45 +117,45 @@ class IngredientsInfo extends HTMLElement {
     info.appendChild(line);
 
     let form = document.createElement("div");
-    form.classList.add('form');
+    form.classList.add("form");
 
     let addToCart = document.createElement("button");
-    addToCart.classList.add('cartButton');
+    addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";
     form.appendChild(addToCart);
 
     let subtractQuantity = document.createElement("button");
-    subtractQuantity.classList.add('subtractButton');
-    subtractQuantity.addEventListener('click', (event) => {
+    subtractQuantity.classList.add("subtractButton");
+    subtractQuantity.addEventListener("click", (event) => {
       if (quantity.textContent != 1) {
-        quantity.textContent = `${quantity.textContent -1}`;
+        quantity.textContent = `${quantity.textContent - 1}`;
       }
     });
     subtractQuantity.textContent = "-";
     form.appendChild(subtractQuantity);
 
     let quantity = document.createElement("p");
-    quantity.classList.add('quantity');
+    quantity.classList.add("quantity");
     const servings = searchForKey(data, "recipeYield");
     quantity.textContent = servings[0];
     form.appendChild(quantity);
 
     let addQuantity = document.createElement("button");
-    addQuantity.classList.add('addButton');
-    addQuantity.addEventListener('click', (event) => {
-        quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
+    addQuantity.classList.add("addButton");
+    addQuantity.addEventListener("click", (event) => {
+      quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
     });
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
 
     let list = document.createElement("div");
-    list.classList.add('ingredients-list');
+    list.classList.add("ingredients-list");
     for (let i = 0; i < ingredientList.length; i++) {
-      let box = document.createElement('input');
+      let box = document.createElement("input");
       box.type = "checkbox";
       let listItem = document.createElement("label");
       listItem.textContent = ingredientList[i];
-      let lineBreak = document.createElement('br');
+      let lineBreak = document.createElement("br");
       list.appendChild(box);
       list.appendChild(listItem);
       list.appendChild(lineBreak);
