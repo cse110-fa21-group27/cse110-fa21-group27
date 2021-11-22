@@ -7,8 +7,63 @@ class Directions extends HTMLElement {
     set data(data) {
         const style=`
         .example {
-
+          margin-left: 25vw;
+          margin-right: 25vw;
+          width: 50vw;
+          display: grid;
+          grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+          grid-template-columns: [left] auto [right];
+          background: #FFF6EC;
         }
+
+        .listItemStyle {
+          margin-left: auto;
+          margin-right: auto;
+          border: 1px solid;
+          border-radius: 25px;
+          height: 1.5em;
+          padding: 3px;
+          overflow: hidden ;
+          background: #FFF6EC;
+      }
+      .listItemStyleShown {
+        border: 1px solid;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto
+        height: auto;
+        padding: 3px;
+        overflow: ;
+        background: #FFF6EC;
+    }
+      .InnerlistItemStyle {
+        margin-left: 3vw;
+        border: 0.5px solid;
+        border-radius: 25px;
+        height: 1.7em;
+        padding: 3px;
+        overflow: hidden;
+        background: #FFF6EC;
+    }
+    .buttonstyle{
+
+    }
+
+    .olStyle{
+      margin-left: 0vw;
+      margin-right: 5vw;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .header{
+      margin-left: auto;
+      margin-right: auto;
+      width: auto
+    }
+
         `;
 
     const styleElem = document.createElement('style');
@@ -22,32 +77,65 @@ class Directions extends HTMLElement {
     const directions = document.createElement('p');
     directions.classList.add("directions");
     directions.textContent = "Directions";
+    directions.classList.add("header");
     wrapper.appendChild(directions);
+
+    // let button_wrapper = document.createElement('button_wrapper');
+    // button_wrapper.classList.add('buttonstyle');
 
     // Parsing data to create the direction list.
     const list = document.createElement('ol');
+    list.classList.add("olStyle");
     for (let i = 0; i < directionList.length; i++) {
-      let listItem = document.createElement('li');
-      listItem.textContent = `${directionList[i].name}`;
+      let listItem = document.createElement('button');
+      let x = i+1;
+      listItem.textContent = `${x +')'+ ' ' + directionList[i].name}`;
+      listItem.classList.add('listItemStyle');
+      listItem.addEventListener('click', event => {
+        if(listItem.classList.contains('listItemStyle')){
+          listItem.classList.remove('listItemStyle');
+          listItem.classList.add('listItemStyleShown');}
+        else{
+          listItem.classList.remove('listItemStyleShown');
+          listItem.classList.add('listItemStyle');
+        }
+      });
+      
       list.appendChild(listItem);
 
       // If there are inner steps, display them as well
       if (directionList[i].itemListElement != undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-          let innerListItem = document.createElement('li');
-          innerListItem.textContent = `${directionList[i].itemListElement[j].text}`;
+          let y = j+1;
+          let innerListItem = document.createElement('button');
+          innerListItem.textContent = `${x + '.' + y +')'+ ' ' +directionList[i].itemListElement[j].text}`;
+          innerListItem.classList.add('listItemStyle'); 
+          innerListItem.addEventListener('click', event => {
+            if(innerListItem.classList.contains('listItemStyle')){
+              innerListItem.classList.remove('listItemStyle');
+              innerListItem.classList.add('listItemStyleShown');}
+            else{
+              innerListItem.classList.remove('listItemStyleShown');
+              innerListItem.classList.add('listItemStyle');
+            }
+          });
           list.appendChild(innerListItem);
         }
       }
     }
     wrapper.appendChild(list);
-
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(wrapper);
   }
+  
 }
 
+
 customElements.define('directions-info', Directions);
+
+
+
+
 
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
