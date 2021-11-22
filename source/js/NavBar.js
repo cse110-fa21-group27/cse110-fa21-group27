@@ -89,7 +89,7 @@ class NavBar extends HTMLElement {
     spudlyImg.id = "se_spudly_png";
     spudlyImg.src = "./images/Spudly.png";
     spudlyImg.addEventListener("click", () => {
-      this.router.navigate("home");
+      this.goHome();
     });
 
     //search bar
