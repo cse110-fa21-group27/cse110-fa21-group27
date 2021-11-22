@@ -171,7 +171,7 @@ function convertTime(time) {
  *                              imported data
  * @return {String} the string comma separate list of ingredients from the array
  */
-function createIngredientList(ingredientArr) {
+function createIngredientList (ingredientArr) {
   let finalIngredientList = '';
 
   /**
