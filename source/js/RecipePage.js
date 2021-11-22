@@ -1,11 +1,11 @@
 class RecipePage extends HTMLElement {
-    constructor() {
-      super();
-      let shadow = this.attachShadow({mode: 'open'});
-    }
+  constructor() {
+    super();
+    let shadow = this.attachShadow({ mode: "open" });
+  }
 
-    set data(data) {
-      const style = `
+  set data(data) {
+    const style = `
       .recipe-page{
         display: grid;
         grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
@@ -45,19 +45,19 @@ class RecipePage extends HTMLElement {
         background-color: blue;
       }
       `;
-        const page = document.createElement('article');
-        const nav = document.createElement('nav-bar');
-        const info = document.createElement('recipe-info');
-        const directions = document.createElement('directions-info');
-        nav.data = data;
-        info.data = data;
-        directions.data = data;
-        page.appendChild(nav);
-        page.appendChild(info);
-        page.appendChild(directions);
+    const page = document.createElement("article");
+    const nav = document.createElement("nav-bar");
+    const info = document.createElement("recipe-info");
+    const directions = document.createElement("directions-info");
+    nav.data = data;
+    info.data = data;
+    directions.data = data;
+    page.appendChild(nav);
+    page.appendChild(info);
+    page.appendChild(directions);
 
-        this.shadowRoot.appendChild(page);
-    }
+    this.shadowRoot.appendChild(page);
+  }
 }
 
-customElements.define('recipe-page', RecipePage);
+customElements.define("recipe-page", RecipePage);

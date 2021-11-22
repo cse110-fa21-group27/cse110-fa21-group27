@@ -10,9 +10,9 @@ class RecipeInfo extends HTMLElement {
           margin-left: 25vw;
           margin-right: 25vw;
           width: 50vw;
-          display: grid;
-          grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-          grid-template-columns: [left] auto [right];
+          // display: grid;
+          // grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+          // grid-template-columns: [left] auto [right];
     
           background: #FFF6EC;
         }
@@ -50,6 +50,11 @@ class RecipeInfo extends HTMLElement {
           font-style: italic;
           font-weight: bold;
           padding: none;
+        }
+
+        button {
+          height: 5vh;
+          width: 10vw;
         }
         `;
 
@@ -127,6 +132,21 @@ class RecipeInfo extends HTMLElement {
     review.appendChild(starPicture);
 
     info.appendChild(review);
+
+    const ingredients = document.createElement('button');
+    ingredients.classList.add("button");
+    ingredients.textContent = "Show Ingredients";
+    const showIngredients = document.createElement('ingredients-info');
+    showIngredients.data = data;
+    ingredients.addEventListener('click', (event) => {
+      info.appendChild(showIngredients);
+    });
+    const nutrition = document.createElement('button');
+    nutrition.classList.add("button");
+    nutrition.textContent = "Show Nutritions";
+
+    info.appendChild(ingredients);
+    info.appendChild(nutrition);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
