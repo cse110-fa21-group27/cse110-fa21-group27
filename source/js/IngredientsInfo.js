@@ -1,54 +1,165 @@
 class IngredientsInfo extends HTMLElement {
   constructor() {
     super();
-    let shadow = this.attachShadow({mode: 'open'});
+    let shadow = this.attachShadow({ mode: "open" });
   }
 
   set data(data) {
-      const style=`
+    const style = `
+        .ingredients-info {
+          position: absolute;
+          width: 20%;
+          height: 66%;
+          top: 20%;
+          left: 2%;
+          background: #FFF6EC;
+      }
       
+      .ingredients-label {
+          position: absolute;
+          left: 22%;
+          top: 9%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 32px;
+          line-height: 62px;
+      }
+
+      .line {
+        margin-top: 36%;
+        width: 90%;
+        text-align: center;
+        color: black;
+      }
+
+      .form > button {
+          position: absolute;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 38px;
+          background: #FFB673;
+      }
+      
+      .cartButton {
+        left: 6%;
+        top: 20%;
+      }
+
+      .addButton {
+        left: 45%;
+        top: 30%;
+        line-height: 30px;
+      }
+
+      .subtractButton {
+        left: 25%;
+        top: 30%;
+        line-height: 30px;
+      }
+
+      .quantity {
+          position:absolute;
+          left:36%;
+          top: 30.5%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 32px;
+          line-height: 30px;
+      }
+      
+      #serving_size {
+          position:absolute;
+          left:12%;
+          top: 38%;
+          width:98%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 20px;
+      }
+      
+      .ingredients-list {
+          position:absolute;
+          left:25%;
+          top: 48%;
+          width:100%;
+          font-family: DM Sans;
+          font-size: 12px;
+          -ms-transform: scale(1.5); 
+          -moz-transform: scale(1.5); 
+          -webkit-transform: scale(1.5); 
+          -o-transform: scale(1.5); 
+          transform: scale(1.5);
+          padding: 10px;
+      }
       `;
 
-  const styleElem = document.createElement('style');
-  styleElem.innerHTML=style;
+    const styleElem = document.createElement("style");
+    styleElem.innerHTML = style;
 
-  let ingredientList = createIngredientList(searchForKey(data,'recipeIngredient'));
+    let ingredientList = searchForKey(data, "recipeIngredient");
 
-  const info = document.createElement('article');
-  info.classList.add('ingredients-info');
+    const info = document.createElement("div");
+    info.classList.add("ingredients-info");
 
-  let ingredients = document.createElement('p');
-  ingredients.textContent = "Ingredients";
-  info.appendChild(ingredients);
+    let ingredients = document.createElement("p");
+    ingredients.classList.add("ingredients-label");
+    ingredients.textContent = "Ingredients";
+    info.appendChild(ingredients);
 
-  let addToCart = document.createElement('button');
-  addToCart.textContent = "Add To Cart";
-  info.appendChild(addToCart);
+    let line = document.createElement("hr");
+    line.classList.add("line");
+    info.appendChild(line);
 
-  let subtractQuantity = document.createElement('button');
-  subtractQuantity.textContent = "-";
-  info.appendChild(subtractQuantity);
+    let form = document.createElement("form");
+    form.classList.add('form');
 
-  let addQuantity = document.createElement('button');
-  addQuantity.textContent = "+";
-  info.appendChild(addQuantity);
+    let addToCart = document.createElement("button");
+    addToCart.classList.add('cartButton');
+    addToCart.textContent = "Add Ingredients To Cart";
+    form.appendChild(addToCart);
 
-  let list = document.createElement('ul');
-  for (let i = 0; i < ingredientList.length; i++) {
-    let listItem = document.createElement('li');
-    listItem.textContent = ingredientList[i];
-    list.appendChild(listItem);
+    let subtractQuantity = document.createElement("button");
+    subtractQuantity.classList.add('subtractButton');
+    subtractQuantity.textContent = "-";
+    form.appendChild(subtractQuantity);
+
+    let quantity = document.createElement("p");
+    quantity.classList.add('quantity');
+    quantity.textContent = "5";
+    form.appendChild(quantity);
+
+    let addQuantity = document.createElement("button");
+    addQuantity.classList.add('addButton');
+    addQuantity.textContent = "+";
+    form.appendChild(addQuantity);
+
+    let list = document.createElement("div");
+    list.classList.add('ingredients-list');
+    for (let i = 0; i < ingredientList.length; i++) {
+      let box = document.createElement('input');
+      box.type = "checkbox";
+      let listItem = document.createElement("label");
+      listItem.textContent = ingredientList[i];
+      let lineBreak = document.createElement('br');
+      list.appendChild(box);
+      list.appendChild(listItem);
+      list.appendChild(lineBreak);
+    }
+    form.appendChild(list);
+    info.appendChild(form);
+
+    this.shadowRoot.appendChild(styleElem);
+    this.shadowRoot.appendChild(info);
   }
-  info.appendChild(list);
-
-  this.shadowRoot.appendChild(styleElem);
-  this.shadowRoot.appendChild(info);
 }
 
-}
-
-customElements.define('ingredients-info', IngredientsInfo);
-
+customElements.define("ingredients-info", IngredientsInfo);
 
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
@@ -61,14 +172,14 @@ customElements.define('ingredients-info', IngredientsInfo);
  * @param {String} key the key that you are looking for in the object
  * @returns {*} the value of the found key
  */
- function searchForKey(object, key) {
+function searchForKey(object, key) {
   var value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
       return true;
     }
-    if (object[k] && typeof object[k] === 'object') {
+    if (object[k] && typeof object[k] === "object") {
       value = searchForKey(object[k], key);
       return value !== undefined;
     }
@@ -82,15 +193,15 @@ customElements.define('ingredients-info', IngredientsInfo);
  * @param {Object} data Raw recipe JSON to find the org string of
  * @returns {String} If found, it retuns the name of the org as a string, otherwise null
  */
- function getOrganization(data) {
+function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Organization') {
-        return data['@graph'][i].name;
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Organization") {
+        return data["@graph"][i].name;
       }
     }
-  };
+  }
   return null;
 }
 
@@ -102,10 +213,10 @@ customElements.define('ingredients-info', IngredientsInfo);
 function getRecipeTitle(data) {
   if (data.name) return data.name;
   let value = null;
-  if (data['@graph']) {
-    data['@graph'].forEach((obj) => {
-      if (obj['@type'] == 'Recipe') {
-        value = obj['name'];
+  if (data["@graph"]) {
+    data["@graph"].forEach((obj) => {
+      if (obj["@type"] == "Recipe") {
+        value = obj["name"];
       }
     });
   }
@@ -119,11 +230,12 @@ function getRecipeTitle(data) {
  */
 function getUrl(data) {
   if (data.url) return data.url;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Article")
+        return data["@graph"][i]["@id"];
     }
-  };
+  }
   return null;
 }
 
@@ -134,25 +246,25 @@ function getUrl(data) {
  * @return {String} formatted time string
  */
 function convertTime(time) {
-  let timeStr = '';
+  let timeStr = "";
 
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split('');
-  if (time.includes('H')) {
+  let timeArr = time.split("");
+  if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'H') return `${timeStr} hr`;
+      if (timeArr[i] == "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'M') return `${timeStr} min`;
+      if (timeArr[i] == "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
 
-  return '';
+  return "";
 }
 
 /**
@@ -163,7 +275,7 @@ function convertTime(time) {
  * @return {String} the string comma separate list of ingredients from the array
  */
 function createIngredientList(ingredientArr) {
-  let finalIngredientList = '';
+  let finalIngredientList = "";
 
   /**
    * Removes the quantity and measurement from an ingredient string.
@@ -171,14 +283,14 @@ function createIngredientList(ingredientArr) {
    * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
    * For the purposes of this lab you don't have to worry about those cases.
    * @param {String} ingredient the raw ingredient string you'd like to process
-   * @return {String} the ingredient without the measurement & quantity 
+   * @return {String} the ingredient without the measurement & quantity
    * (e.g. '1 cup flour' returns 'flour')
    */
   function _removeQtyAndMeasurement(ingredient) {
-    return ingredient.split(' ').splice(2).join(' ');
+    return ingredient.split(" ").splice(2).join(" ");
   }
 
-  ingredientArr.forEach(ingredient => {
+  ingredientArr.forEach((ingredient) => {
     ingredient = _removeQtyAndMeasurement(ingredient);
     finalIngredientList += `${ingredient}, `;
   });

@@ -136,3 +136,10 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+/* end saved Recipes component */
+body {
+    display: grid;
+    grid-template-rows: 10%;
+    grid-template-columns: 100%;
+}
+
