@@ -7,25 +7,54 @@ class RecipeInfo extends HTMLElement {
     set data(data) {
         const style=`
         .recipe-info {
-          width: 300px;
-    
-          display: grid;
-          grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-          grid-template-columns: [left] auto [right];
+          margin-left: 25vw;
+          margin-right: 25vw;
+          width: 50vw;
+          // display: grid;
+          // grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+          // grid-template-columns: [left] auto [right];
     
           background: #FFF6EC;
         }
     
-        .recipe-info > img {
-          height: 225px;
+        .thumbnail-photo {
+          height: 50vh;
           object-fit: cover;
-          width: 100%;
+          width: 50vw;
         }
-    
+
+        .title {
+          text-align: center;
+          font-size: 3vh;
+          font-weight: bolder;
+        }
+
         .rating-time {
+          padding-left: 1vw;
+          padding-right: 1vw;
           display: grid;
           grid-template-rows: [top] auto [bottom];
           grid-template-columns: [left] 50% [middle] 50% [right];
+          border: 1px solid orange;
+        }
+
+        .star-image {
+          height: 5vh;
+          width: 5vw;
+          float: right;
+        }
+
+        .directions {
+          text-align: center;
+          font-size: 2.5vh;
+          font-style: italic;
+          font-weight: bold;
+          padding: none;
+        }
+
+        button {
+          height: 5vh;
+          width: 10vw;
         }
         `;
 
@@ -42,7 +71,6 @@ class RecipeInfo extends HTMLElement {
     let cookTime = searchForKey(data,'cookTime');
     let prepTime = searchForKey(data,'prepTime');
     let totalTime = searchForKey(data,'totalTime');
-    let directionList = searchForKey(data, 'recipeInstructions');
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
@@ -58,41 +86,67 @@ class RecipeInfo extends HTMLElement {
     info.classList.add('recipe-info');
 
     const photo = document.createElement('img');
+    photo.classList.add("thumbnail-photo");
     photo.setAttribute('src', cleanData.thumbnail);
     info.appendChild(photo);
 
     const title = document.createElement('p');
+    title.classList.add('title');
     title.textContent = cleanData.title;
     info.appendChild(title);
 
     const review = document.createElement('div');
     review.classList.add('rating-time');
 
-    const rating = document.createElement('p');
-    rating.textContent = `${cleanData.rating.score} stars`;
-    review.appendChild(rating);
-
     const time = document.createElement('p');
     if (!!cleanData.prepTime) {
-      time.textContent = cleanData.prepTime;
+      time.textContent = `Prep Time: ${cleanData.prepTime}`;
     } 
     if (!!cleanData.cookTime) {
-      time.textContent = cleanData.cookTime;
+      time.textContent = `Cook Time: ${cleanData.cookTime}`;
     }
     if (!!cleanData.totalTime) {
-      time.textContent = cleanData.totalTime;
+      time.textContent = `Total Time: ${cleanData.totalTime}`;
     }
     review.appendChild(time);
 
+    const rating = document.createElement('p');
+    rating.textContent = `${cleanData.rating.score} stars`;
+    const starPicture = document.createElement('img');
+    starPicture.classList.add("star-image");
+    switch (Math.round(searchForKey(data, 'ratingValue'))) {
+      case 0:
+        starPicture.src = "images/0-star.svg";
+      case 1:
+        starPicture.src = "images/1-star.svg";
+      case 2:
+        starPicture.src = "images/2-star.svg";
+      case 3:
+        starPicture.src = "images/3-star.svg";
+      case 4:
+        starPicture.src = "images/4-star.svg";
+      case 5:
+        starPicture.src = "images/5-star.svg";
+    }
+    review.appendChild(rating);
+    review.appendChild(starPicture);
+
     info.appendChild(review);
 
-    const list = document.createElement('ol');
-    for (let i = 0; i < directionList.length(); i++) {
-        let listItem = document.createElement('li');
-        listItem.textContent = `${directionList[i]}`;
-        list.appendChild(listItem);
-    }
-    info.appendChild(list);
+    const ingredients = document.createElement('button');
+    ingredients.classList.add("button");
+    ingredients.textContent = "Show Ingredients";
+    const showIngredients = document.createElement('ingredients-info');
+    showIngredients.data = data;
+    ingredients.addEventListener('click', (event) => {
+      info.appendChild(showIngredients);
+    });
+    const nutrition = document.createElement('button');
+    nutrition.classList.add("button");
+    nutrition.textContent = "Show Nutritions";
+
+    info.appendChild(ingredients);
+    info.appendChild(nutrition);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
@@ -206,36 +260,4 @@ function convertTime(time) {
   }
 
   return '';
-}
-
-/**
- * Takes in a list of ingredients raw from imported data and returns a neatly
- * formatted comma separated list.
- * @param {Array} ingredientArr The raw unprocessed array of ingredients from the
- *                              imported data
- * @return {String} the string comma separate list of ingredients from the array
- */
-function createIngredientList(ingredientArr) {
-  let finalIngredientList = '';
-
-  /**
-   * Removes the quantity and measurement from an ingredient string.
-   * This isn't perfect, it makes the assumption that there will always be a quantity
-   * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
-   * For the purposes of this lab you don't have to worry about those cases.
-   * @param {String} ingredient the raw ingredient string you'd like to process
-   * @return {String} the ingredient without the measurement & quantity 
-   * (e.g. '1 cup flour' returns 'flour')
-   */
-  function _removeQtyAndMeasurement(ingredient) {
-    return ingredient.split(' ').splice(2).join(' ');
-  }
-
-  ingredientArr.forEach(ingredient => {
-    ingredient = _removeQtyAndMeasurement(ingredient);
-    finalIngredientList += `${ingredient}, `;
-  });
-
-  // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
-  return finalIngredientList.slice(0, -2);
 }

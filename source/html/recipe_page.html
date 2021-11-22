@@ -7,37 +7,79 @@
     <title>Document</title>
     <!--css-->
     <link rel="stylesheet" href="../css/recipe_page.css">
+    <!--font family: DM Sans-->
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 </head>
 <body>
-    <!--search bar-->
+    <!-- gonna comment this out for now to shut html validator up, we shouldnt be using this page directly , it's only a template for the components, this is kevin's ingredients html
     <div class="search_bar">
         <form action="index.html">
             <input type="image" class="spudly_png" id="se_spudly_png" name="se_spudly_png" src="../images/Spudly.png">
         </form>
-        <!--#todo-->
         <form action="">
             <input type="text" class="search_text" id="se_search_text" name="se_search_text"
                 placeholder="Find a recipe">
         </form>
 
         <img class="search_png" id="se_search_png" src="../images/search.png">
-        <!--#todo-->
         <form action="">
             <input type="image" class="cart_png" id="se_cart_png" name="se_cart_png" src="../images/cart.png">
         </form>
-        <!--#todo-->
         <form action="">
             <input type="image" class="saved_png" id="se_saved_png" name="se_saved_png" src="../images/saved.png">
         </form>
     </div>
-    <div class = 'recipe-page'>
+    <div class = 'recipe-page'>   
             <div class="item-1"> </div>
             <div class="item-2"> </div>
             <div class="item-3"> </div>
-        </div>
+    </div>
+    <div class="ingredients_box">
+        <div class="ingredients_label">Ingredients</div>
+        <hr style="margin-top:36%;width:90%;text-align:center;color:black;">
+
+        <form id="ingredients_to_cart" action="">
+
+            <button class="recipe_button" id="add_to_cart" name="add_to_cart" style="left: 6%;top: 20%;" onclick="">
+                Add ingredients into your cart
+            </button>
+            
+            <button class="recipe_button" id="-" name="-" style="left: 25%;top: 30%;line-height: 30px;" onclick="">
+                -
+            </button>
+            
+            <div id="ingredients_count">
+                4
+            </div>
+
+            <button class="recipe_button" id="+" name="+" style="left: 45%;top: 30%;line-height: 30px;" onclick="">
+                +
+            </button>
+
+            <button class="recipe_button" id="adjust" name="adjust" style="left: 60%;top: 30%;line-height: 30px;width:30%;" onclick="">
+                Adjust
+            </button>
+
+            <div id="serving_size">
+                The orginial recipe yields for 4 servings
+            </div>
+
+            <div id="ingredients_list">
+                <input type="checkbox" id="ingredient1" name="ingredient1" value="ingredient1">
+                <label for="ingredient1"> &ensp;&ensp;&ensp; Ingredient 1</label><br>
+                <input type="checkbox" id="ingredient2" name="ingredient2" value="ingredient2">
+                <label for="ingredient2"> &ensp;&ensp;&ensp; Ingredient 2</label><br>
+                <input type="checkbox" id="ingredient3" name="ingredient3" value="ingredient3">
+                <label for="ingredient3"> &ensp;&ensp;&ensp; Ingredient 3</label><br>
+                <input type="checkbox" id="ingredient4" name="ingredient4" value="ingredient4">
+                <label for="ingredient4"> &ensp;&ensp;&ensp; Ingredient 4</label><br>
+                <p>**Please insert them from js**</p>
+            </div>
+        </form>
+    </div>
+    -->
     <main class="recipe_body">
         <!--#todo-->
-        
     </main>
 </body>
 </html>
