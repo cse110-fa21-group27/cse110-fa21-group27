@@ -1,4 +1,3 @@
-
 const userInfo = {};
 const recipeData = {};
 
@@ -21,21 +20,21 @@ async function getUserInfo() {
         storageUserInfo = {
           savedRecipes: [
             {
-              url: 'json/gyudon.json',
+              url: "json/gyudon.json",
               checkedIngredients: [],
-              checkedSteps: []
+              checkedSteps: [],
             },
             {
-              url: 'json/chicken_tortilla_soup.json',
+              url: "json/chicken_tortilla_soup.json",
               checkedIngredients: [],
-              checkedSteps: []
+              checkedSteps: [],
             },
             {
-              url: 'json/chicken_n_dumplings.json',
+              url: "json/chicken_n_dumplings.json",
               checkedIngredients: [],
-              checkedSteps: []
+              checkedSteps: [],
             },
-          ]
+          ],
         };
         window.localStorage.setItem(
           "userInfo",
@@ -70,7 +69,7 @@ async function getUserInfo() {
  * @param {String} url - the url for recipe we want to save
  * @returns {Promise}
  */
-async function addRecipeToSaved (url) {
+async function addRecipeToSaved(url) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
@@ -119,7 +118,7 @@ async function removeRecipeFromSaved(url) {
     }
 
     // save just in case we need to add it back
-      let found = userInfo.savedRecipes[foundIndex];
+    let found = userInfo.savedRecipes[foundIndex];
     // remove from userInfo
     userInfo.savedRecipes.splice(foundIndex, 1);
     try {
@@ -127,9 +126,9 @@ async function removeRecipeFromSaved(url) {
       // all good!
       resolve(true);
     } catch (error) {
-      // Unable to update localStorage, add it back to global variable 
+      // Unable to update localStorage, add it back to global variable
       // and reject the promise
-        userInfo.savedRecipes.splice(foundIndex, 0, found);
+      userInfo.savedRecipes.splice(foundIndex, 0, found);
       console.log("Unable to remove recipe from saved recipes", error);
       reject(error);
     }
@@ -139,13 +138,13 @@ async function removeRecipeFromSaved(url) {
 /**
  * This function fetches an external recipe url and parses it for its recipe
  * json, which we return when this function resolves.
- * @param {string} url 
+ * @param {string} url
  * @returns {Promise}
  */
 async function retrieveJSONFromPage(url) {
-  return Promise((resolve,reject)=> {
+  return Promise((resolve, reject) => {
     fetch(url)
-      .then(response=>{
+      .then((response) => {
         // check if we got the page
         if (!response.ok) {
           console.log(`Unable to retrieve ${url}`);
@@ -154,15 +153,17 @@ async function retrieveJSONFromPage(url) {
         response.text();
       })
       // get the page as text
-      .then(text => {
+      .then((text) => {
         // parse it as an html element
         const parser = new DOMParser();
         const htmlDoc = parser.parseFromString(text, "text/html");
         // get all scripts with attribute type="application/ld+json"
-        const candidates = htmlDoc.querySelectorAll('script [type="application/ld+json]"')
+        const candidates = htmlDoc.querySelectorAll(
+          'script [type="application/ld+json]"'
+        );
         // go through all of them and see which one is our recipe script
         let ourRecipe = null;
-        candidates.forEach((candidateScript)=>{
+        candidates.forEach((candidateScript) => {
           // parse it into an object
           const json = JSON.parse(candidateScript.innerHTML);
 
@@ -175,12 +176,10 @@ async function retrieveJSONFromPage(url) {
         if (!ourRecipe) {
           console.log(`Woopsies, json not found from ${url}`);
           reject();
-        }
-        else {
+        } else {
           // resolve
           resolve(ourRecipe);
         }
-
       });
   });
 }
@@ -189,11 +188,11 @@ async function retrieveJSONFromPage(url) {
  * Recursively searches the object
  * Returns true if the given object contains a recipe inside of it
  * @param {Object} object - a js object we want to check if it has a recipe in it
- * @returns {Boolean} 
+ * @returns {Boolean}
  */
 function hasRecipe(object) {
   // go through its keys
-  Object.keys(object).forEach((key)=>{
+  Object.keys(object).forEach((key) => {
     // if it is of @type Recipe then we're good
     if (key == "@type") {
       if (object[key] == "Recipe") {
@@ -201,7 +200,7 @@ function hasRecipe(object) {
       }
     }
     // check if it has subobjects and recurse
-    else if (!!object[key] && typeof object[key] === 'object') {
+    else if (!!object[key] && typeof object[key] === "object") {
       return hasRecipe(object[key]);
     }
   });
@@ -209,4 +208,10 @@ function hasRecipe(object) {
   return false;
 }
 
-export const storage = {userInfo, recipeData, getUserInfo, addRecipeToSaved, removeRecipeFromSaved};
+export const storage = {
+  userInfo,
+  recipeData,
+  getUserInfo,
+  addRecipeToSaved,
+  removeRecipeFromSaved,
+};
