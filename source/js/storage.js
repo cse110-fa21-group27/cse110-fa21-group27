@@ -15,26 +15,9 @@ async function getUserInfo() {
       let storageUserInfoString = window.localStorage.getItem("userInfo");
       let storageUserInfo = {};
       // if it doesn't exist, initialize it as a blank user;
-      // give them our temp recipes for now
       if (!storageUserInfoString) {
         storageUserInfo = {
-          savedRecipes: [
-            {
-              url: "json/gyudon.json",
-              checkedIngredients: [],
-              checkedSteps: [],
-            },
-            {
-              url: "json/chicken_tortilla_soup.json",
-              checkedIngredients: [],
-              checkedSteps: [],
-            },
-            {
-              url: "json/chicken_n_dumplings.json",
-              checkedIngredients: [],
-              checkedSteps: [],
-            },
-          ],
+          savedRecipes: [],
         };
         window.localStorage.setItem(
           "userInfo",
@@ -53,6 +36,76 @@ async function getUserInfo() {
     } catch (error) {
       // uh oh
       console.log("Unable to retrieve userInfo", error);
+      reject(error);
+    }
+  });
+}
+
+/**
+ * When the promise returned by this function is resolved,
+ * the recipes stored in local storage should be placed into
+ * the global variable recipeData
+ * @returns {Promise}
+ */
+async function getRecipes() {
+  return new Promise(async (resolve, reject) => {
+    // attempt to retrieve
+    try {
+      let storageRecipesString = window.localStorage.getItem("recipes");
+      let storageRecipes = {};
+      // if it doesn't exist, we fill it with our temp recipes for now
+      if (!storageRecipesString) {
+        // fetch them
+        const list = [
+          "./json/chicken_n_dumplings.json",
+          "./json/chicken_tortilla_soup.json",
+          "./json/gyudon.json",
+        ];
+        let promises = [];
+
+        list.forEach((url) => {
+          promises.push(
+            fetch(url)
+              .then((response) => {
+                return response.json();
+              })
+              .then((json) => {
+                storageRecipes[url] = {
+                  url: url,
+                  data: json,
+                };
+                console.log(storageRecipes);
+              })
+              .catch((error) => {
+                console.log(`Error fetching premadejsons ${error}`);
+              })
+          );
+        });
+        // return this pushed promise
+        resolve(
+          Promise.all(promises).then(() => {
+            window.localStorage.setItem(
+              "recipes",
+              JSON.stringify(storageRecipes)
+            );
+            // update global variable
+            for (const url in storageRecipes) {
+              recipeData[url] = storageRecipes[url];
+            }
+          })
+        );
+      } else {
+        // it does exist, let's just update global variable
+        storageRecipes = JSON.parse(storageRecipesString);
+        // update global variable
+        for (const url in storageRecipes) {
+          recipeData[url] = storageRecipes[url];
+        }
+        // all done!
+        resolve(true);
+      }
+    } catch (error) {
+      console.log(`Unable to retrieve recipes ${error}`);
       reject(error);
     }
   });
@@ -159,7 +212,7 @@ async function retrieveJSONFromPage(url) {
         const htmlDoc = parser.parseFromString(text, "text/html");
         // get all scripts with attribute type="application/ld+json"
         const candidates = htmlDoc.querySelectorAll(
-          'script [type="application/ld+json]"'
+          'script[type="application/ld+json]"'
         );
         // go through all of them and see which one is our recipe script
         let ourRecipe = null;
@@ -212,6 +265,7 @@ export const storage = {
   userInfo,
   recipeData,
   getUserInfo,
+  getRecipes,
   addRecipeToSaved,
   removeRecipeFromSaved,
 };

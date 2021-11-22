@@ -4,7 +4,7 @@ import { Router } from "./Router.js";
 window.addEventListener("DOMContentLoaded", init);
 
 // for now, saved recipes is the homepage
-const router = new Router(savedRecipesPage);
+const router = new Router(recipesPage);
 
 /* gonna ignore glider for now
 const gliderConfig = {
@@ -22,6 +22,53 @@ const gliderConfig = {
   }
 };
 */
+/**
+ * Initializes everything. It all begins here.
+ * @async
+ * @function
+ */
+async function init() {
+  // obtain userInfo from storage
+  await storage.getUserInfo();
+  // obtain recipes from storage
+  await storage.getRecipes();
+  router.navigate("home");
+  bindPopState();
+}
+
+/**
+ * At the end of this function
+ */
+function recipesPage() {
+  const main = document.querySelector("main");
+  // delete everyting in main
+  main.innerHTML = "";
+  // make a section displaying recipes
+  const recipeSection = document.createElement("section");
+  recipeSection.classList.add("recipes");
+
+  const rlabel = document.createElement("h1");
+  rlabel.innerText = "Recipes";
+  main.appendChild(rlabel);
+
+  main.appendChild(recipeSection);
+  // make saved-recipes visible
+  const savedRecipeSection = document.createElement("section");
+  savedRecipeSection.classList.add("saved-recipes");
+
+  const slabel = document.createElement("h1");
+  slabel.innerText = "Saved Recipes";
+  main.appendChild(slabel);
+
+  main.appendChild(savedRecipeSection);
+
+  renderRecipes(storage.userInfo.savedRecipes, savedRecipeSection);
+  renderRecipes(Object.keys(storage.recipeData), recipeSection);
+  renderNavBar({
+    recipeUrl: null,
+    isRecipe: false,
+  });
+}
 
 /**
  * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
@@ -29,16 +76,14 @@ const gliderConfig = {
  */
 function savedRecipesPage() {
   const main = document.querySelector("main");
-
-  const recipePage = document.querySelector("recipe-page");
-  if (!!recipePage) recipePage.remove();
-
+  // delete everyting in main
+  main.innerHTML = "";
   // make saved-recipes visible
   const savedRecipeSection = document.createElement("section");
   savedRecipeSection.classList.add("saved-recipes");
   main.appendChild(savedRecipeSection);
 
-  renderSavedRecipes();
+  renderRecipes(storage.userInfo.savedRecipes, savedRecipeSection);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -56,13 +101,13 @@ function savedRecipesPage() {
 function recipePage(recipeUrl, recipeJSON) {
   const main = document.querySelector("main");
   // delete everyting in main
-  for (let i = 0; i < main.children.length; i++) {
-    main.children.item(i).remove();
-  }
-
+  main.innerHTML = "";
   // show the recipe-page
   const recipePage = document.createElement("recipe-page");
   main.appendChild(recipePage);
+  // allow it to save recipes
+  recipePage.addRecipeToSaved = storage.addRecipeToSaved;
+  recipePage.url = recipeUrl;
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
   // update nav-bar
@@ -73,30 +118,7 @@ function recipePage(recipeUrl, recipeJSON) {
 }
 
 /**
- * Initializes everything. It all begins here.
- * @async
- * @function
- */
-async function init() {
-  // obtain userInfo from storage
-  //storage.getUserInfo();
-  const tempList = [
-    "json/gyudon.json",
-    "json/chicken_tortilla_soup.json",
-    "json/chicken_n_dumplings.json",
-  ];
-  await storage.getUserInfo();
-  renderNavBar({
-    recipeUrl: null,
-    isRecipe: false,
-  });
-  loadRecipes(tempList).then(() => {
-    router.navigate("home");
-  });
-  bindPopState();
-}
-
-/**
+ * DEPRECATED, replaced by storage.getRecipes()
  * After this function resolves, storage.recipeData should be updated
  * with the url's being the keys to access the fetched data.
  * @async
@@ -162,33 +184,27 @@ function renderNavBar(data) {
 }
 
 /**
- * After this function is run, the <recipe-card> elements will be added
- * html element in the body with the 'saved-recipes' class.
+ * After this function is run, the <recipe-card> elements corresponding
+ * to a url in list will be created and placed into target
  * @async
  * @function
+ * @param {Array<string>} list - array of urls to render
+ * @param {HTMLElement} target - the HTMLElement we want to place the
+ * recipe-card's into
  */
-async function renderSavedRecipes() {
-  // go through each url
-  const list = document.querySelector(".saved-recipes");
-
-  storage.userInfo.savedRecipes.forEach((savedRecipe) => {
+async function renderRecipes(list, target) {
+  list.forEach((recipeUrl) => {
     // obtain data
-    const recipeJSON = storage.recipeData[savedRecipe.url].data;
+    const recipeJSON = storage.recipeData[recipeUrl].data;
     const newCard = document.createElement("recipe-card");
-    // add checkedsteps/checkedingredients to data
-    recipeJSON.checkedIngredients = savedRecipe.checkedIngredients;
-    recipeJSON.checkedSteps = savedRecipe.checkedSteps;
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
-    router.addPage(
-      savedRecipe.url,
-      recipePage.bind(null, savedRecipe.url, recipeJSON)
-    );
+    router.addPage(recipeUrl, recipePage.bind(null, recipeUrl, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, savedRecipe.url);
+    bindRecipeCard(newCard, recipeUrl);
 
-    list.appendChild(newCard);
+    target.appendChild(newCard);
   });
 }
 

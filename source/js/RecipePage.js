@@ -50,6 +50,11 @@ class RecipePage extends HTMLElement {
     const info = document.createElement("recipe-info");
     const directions = document.createElement("directions-info");
     nav.data = data;
+    // allow info to save recipes
+    info.addRecipeToSaved = this.addRecipeToSaved;
+    // pass recipeurl to info
+    info.url = this.url;
+    // pass data to info
     info.data = data;
     directions.data = data;
     page.appendChild(nav);

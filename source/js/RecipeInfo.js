@@ -153,6 +153,9 @@ class RecipeInfo extends HTMLElement {
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
     saveRecipe.textContent = "Save Recipe";
+    saveRecipe.addEventListener("click", () => {
+      this.addRecipeToSaved(this.url);
+    });
 
     info.appendChild(ingredients);
     info.appendChild(nutrition);
