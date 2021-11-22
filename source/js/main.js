@@ -62,7 +62,12 @@ function recipesPage() {
 
   main.appendChild(savedRecipeSection);
 
-  renderRecipes(storage.userInfo.savedRecipes, savedRecipeSection);
+  renderRecipes(
+    storage.userInfo.savedRecipes.map((savedRecipe) => {
+      return savedRecipe.url;
+    }),
+    savedRecipeSection
+  );
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
   renderNavBar({
     recipeUrl: null,
@@ -83,7 +88,12 @@ function savedRecipesPage() {
   savedRecipeSection.classList.add("saved-recipes");
   main.appendChild(savedRecipeSection);
 
-  renderRecipes(storage.userInfo.savedRecipes, savedRecipeSection);
+  renderRecipes(
+    storage.userInfo.savedRecipes.map((savedRecipe) => {
+      savedRecipe.url;
+    }),
+    savedRecipeSection
+  );
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -193,6 +203,7 @@ function renderNavBar(data) {
  * recipe-card's into
  */
 async function renderRecipes(list, target) {
+  console.log(list);
   list.forEach((recipeUrl) => {
     // obtain data
     const recipeJSON = storage.recipeData[recipeUrl].data;
