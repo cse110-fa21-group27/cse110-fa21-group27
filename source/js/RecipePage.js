@@ -46,10 +46,8 @@ class RecipePage extends HTMLElement {
       }
       `;
     const page = document.createElement("article");
-    const nav = document.createElement("nav-bar");
     const info = document.createElement("recipe-info");
     const directions = document.createElement("directions-info");
-    nav.data = data;
     // allow info to save recipes
     info.addRecipeToSaved = this.addRecipeToSaved;
     info.removeRecipeFromSaved = this.removeRecipeFromSaved;
@@ -59,7 +57,6 @@ class RecipePage extends HTMLElement {
     // pass data to info
     info.data = data;
     directions.data = data;
-    page.appendChild(nav);
     page.appendChild(info);
     page.appendChild(directions);
 

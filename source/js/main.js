@@ -36,6 +36,9 @@ async function init() {
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
+    goHome: () => {
+      router.navigate("home");
+    },
   });
   bindPopState();
 }
@@ -203,7 +206,10 @@ async function loadRecipes(recipeUrlList) {
 function renderNavBar(data) {
   // it should already be there, we just need to give it the data to force it to re-render itself appropriately
   const bar = document.querySelector("nav-bar");
-  bar.router = router;
+  bar.goHome = () => {
+    router.navigate("home");
+  };
+  console.log(data);
   bar.data = data;
 }
 
