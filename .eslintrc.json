@@ -9,6 +9,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  // This overrides google's style on double quotes
+  // and linebreak style (cuz windows puts \r\n not
+  // just \n :())
   "rules": {
     "quotes": ["error", "double"],
     "linebreak-style": "off"
