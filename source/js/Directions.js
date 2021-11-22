@@ -78,6 +78,7 @@ customElements.define('directions-info', Directions);
   /**
    * Similar to getUrl(), this function extracts the organizations name from the
    * schema JSON object. It's not in a standard location so this function helps.
+   *
    * @param {Object} data Raw recipe JSON to find the org string of
    * @returns {String} If found, it retuns the name of the org as a string, otherwise null
    */
