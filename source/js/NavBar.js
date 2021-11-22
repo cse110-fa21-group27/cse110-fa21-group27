@@ -25,6 +25,26 @@ class NavBar extends HTMLElement {
         top: 10%;
     }
 
+    .navText{
+        position: absolute;
+        width: 40%;
+        height: 66%;
+        left: 30%;
+        top: 15%;
+    
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 28px;
+        display: flex;
+        align-items: center;
+    
+        color: #000000;
+        background: #FFBB71;
+        border-color: #FFFFFF;
+    }
+
     .searchImg {
         position: absolute;
         width: 4%;
