@@ -139,7 +139,14 @@ class RecipeInfo extends HTMLElement {
     const showIngredients = document.createElement('ingredients-info');
     showIngredients.data = data;
     ingredients.addEventListener('click', (event) => {
-      info.appendChild(showIngredients);
+      if (ingredients.textContent == "Show Ingredients") {
+        info.appendChild(showIngredients);
+        ingredients.textContent = "Hide Ingredients"
+      }
+      else {
+        info.removeChild(showIngredients);
+        ingredients.textContent = "Show Ingredients"
+      }
     });
     const nutrition = document.createElement('button');
     nutrition.classList.add("button");

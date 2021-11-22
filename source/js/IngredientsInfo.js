@@ -39,7 +39,7 @@ class IngredientsInfo extends HTMLElement {
           font-style: normal;
           font-weight: normal;
           font-size: 18px;
-          line-height: 38px;
+          height: 8%;
           background: #FFB673;
       }
       
@@ -51,19 +51,19 @@ class IngredientsInfo extends HTMLElement {
       .addButton {
         left: 45%;
         top: 30%;
-        line-height: 30px;
+        height: 8%;
       }
 
       .subtractButton {
         left: 25%;
         top: 30%;
-        line-height: 30px;
+        height: 5%;
       }
 
       .quantity {
           position:absolute;
           left:36%;
-          top: 30.5%;
+          top: 25%;
           font-family: DM Sans;
           font-style: normal;
           font-weight: normal;
@@ -85,9 +85,9 @@ class IngredientsInfo extends HTMLElement {
       
       .ingredients-list {
           position:absolute;
-          left:25%;
+          left: 20%;
           top: 48%;
-          width:100%;
+          width: 60%;
           font-family: DM Sans;
           font-size: 12px;
           -ms-transform: scale(1.5); 
@@ -116,7 +116,7 @@ class IngredientsInfo extends HTMLElement {
     line.classList.add("line");
     info.appendChild(line);
 
-    let form = document.createElement("form");
+    let form = document.createElement("div");
     form.classList.add('form');
 
     let addToCart = document.createElement("button");
@@ -126,16 +126,25 @@ class IngredientsInfo extends HTMLElement {
 
     let subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add('subtractButton');
+    subtractQuantity.addEventListener('click', (event) => {
+      if (quantity.textContent != 1) {
+        quantity.textContent = `${quantity.textContent -1}`;
+      }
+    });
     subtractQuantity.textContent = "-";
     form.appendChild(subtractQuantity);
 
     let quantity = document.createElement("p");
     quantity.classList.add('quantity');
-    quantity.textContent = "5";
+    const servings = searchForKey(data, "recipeYield");
+    quantity.textContent = servings[0];
     form.appendChild(quantity);
 
     let addQuantity = document.createElement("button");
     addQuantity.classList.add('addButton');
+    addQuantity.addEventListener('click', (event) => {
+        quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
+    });
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
 
