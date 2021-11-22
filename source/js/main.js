@@ -33,6 +33,10 @@ async function init() {
   // obtain recipes from storage
   await storage.getRecipes();
   router.navigate("home");
+  renderNavBar({
+    recipeUrl: null,
+    isRecipe: false,
+  });
   bindPopState();
 }
 
@@ -61,18 +65,21 @@ function recipesPage() {
   main.appendChild(slabel);
 
   main.appendChild(savedRecipeSection);
-
+  // render the cards for saved recipes
   renderRecipes(
     storage.userInfo.savedRecipes.map((savedRecipe) => {
       return savedRecipe.url;
     }),
     savedRecipeSection
   );
+  // render the cards for just recipes
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
+  /*
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
   });
+  */
 }
 
 /**
@@ -94,10 +101,12 @@ function savedRecipesPage() {
     }),
     savedRecipeSection
   );
+  /*
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
   });
+  */
 }
 
 /**
@@ -115,16 +124,20 @@ function recipePage(recipeUrl, recipeJSON) {
   // show the recipe-page
   const recipePage = document.createElement("recipe-page");
   main.appendChild(recipePage);
-  // allow it to save recipes
+  // allow it to save and remove recipes
   recipePage.addRecipeToSaved = storage.addRecipeToSaved;
+  recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
   recipePage.url = recipeUrl;
+  recipePage.isSaved = storage.isSaved(recipeUrl);
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
   // update nav-bar
+  /*
   renderNavBar({
     recipeUrl: recipeUrl,
     isRecipe: true,
   });
+  */
 }
 
 /**
@@ -190,6 +203,7 @@ async function loadRecipes(recipeUrlList) {
 function renderNavBar(data) {
   // it should already be there, we just need to give it the data to force it to re-render itself appropriately
   const bar = document.querySelector("nav-bar");
+  bar.router = router;
   bar.data = data;
 }
 
@@ -203,7 +217,6 @@ function renderNavBar(data) {
  * recipe-card's into
  */
 async function renderRecipes(list, target) {
-  console.log(list);
   list.forEach((recipeUrl) => {
     // obtain data
     const recipeJSON = storage.recipeData[recipeUrl].data;

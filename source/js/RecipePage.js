@@ -52,6 +52,8 @@ class RecipePage extends HTMLElement {
     nav.data = data;
     // allow info to save recipes
     info.addRecipeToSaved = this.addRecipeToSaved;
+    info.removeRecipeFromSaved = this.removeRecipeFromSaved;
+    info.isSaved = this.isSaved;
     // pass recipeurl to info
     info.url = this.url;
     // pass data to info

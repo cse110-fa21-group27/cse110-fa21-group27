@@ -42,6 +42,7 @@ export class Router {
     // we add it to the history
     if (!statePopped & (window.location.hash != hash)) {
       history.pushState({ page: page }, "", hash);
+      window.location.hash = hash;
     }
 
     // run the function that changes the page

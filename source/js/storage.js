@@ -189,6 +189,17 @@ async function removeRecipeFromSaved(url) {
 }
 
 /**
+ * Should return true if the url is in the user's saved recipes
+ * and false otherwise
+ * @param {string} url
+ * @returns {Boolean}
+ */
+function isSaved(url) {
+  const savedUrls = userInfo.savedRecipes.map((x) => x.url);
+  return savedUrls.includes(url);
+}
+
+/**
  * This function fetches an external recipe url and parses it for its recipe
  * json, which we return when this function resolves.
  * @param {string} url
@@ -268,4 +279,5 @@ export const storage = {
   getRecipes,
   addRecipeToSaved,
   removeRecipeFromSaved,
+  isSaved,
 };
