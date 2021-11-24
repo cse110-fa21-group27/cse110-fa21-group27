@@ -6,7 +6,7 @@ class Directions extends HTMLElement {
 
     set data(data) {
         const style=`
-        .example {
+        .background {
           margin-left: 25vw;
           margin-right: 25vw;
           width: 50vw;
@@ -19,50 +19,78 @@ class Directions extends HTMLElement {
         .listItemStyle {
           margin-left: auto;
           margin-right: auto;
-          border: 1px solid;
+          border: 2px solid orange;
           border-radius: 25px;
-          height: 1.5em;
+          height: 1.7em;
           padding: 3px;
           overflow: hidden ;
           background: #FFF6EC;
-      }
-      .listItemStyleShown {
-        border: 1px solid;
-        border-radius: 25px;
-        margin-left: auto;
-        margin-right: auto;
-        width: auto
-        height: auto;
-        padding: 3px;
-        overflow: ;
-        background: #FFF6EC;
-    }
-      .InnerlistItemStyle {
-        margin-left: 3vw;
-        border: 0.5px solid;
-        border-radius: 25px;
-        height: 1.7em;
-        padding: 3px;
-        overflow: hidden;
-        background: #FFF6EC;
-    }
-    .buttonstyle{
+        }
 
-    }
-
-    .olStyle{
-      margin-left: 0vw;
-      margin-right: 5vw;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+        .listItemStyleShown {
+          border: 1px solid orange;
+          border-radius: 25px;
+          margin-left: auto;
+          margin-right: auto;
+          width: auto
+          height: auto;
+          padding: 3px;
+          background: #FFF6EC;
+        }
     
-    .header{
-      margin-left: auto;
-      margin-right: auto;
-      width: auto
-    }
+        .buttonstyle{
+          margin-left: 0.7em;
+          width: auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          gap: 10px; 
+        }
+
+        .listItemStyle:hover {
+          cursor: pointer;
+          filter: brightness(96%);
+        }
+
+        .listItemStyleShown:hover {
+          cursor: pointer;
+          filter: brightness(96%);
+        }
+
+        .downArrow{
+          margin-top: 0.1em;
+          margin-right: 0.7em;
+          width: 1em;
+          height: 1em;
+        }
+        .upArrow{
+          margin-top: 0.1em;
+          margin-right: 0.7em;
+          width: 2em;
+          height: 2em;
+        }
+        
+        .text{
+          margin-top: auto;
+          margin-bottom: 0.5em;
+          text-align: left;          
+        }
+
+        .olStyle{
+          margin-left: 0vw;
+          margin-right: 5vw;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+    
+        .header{
+          font-style: italic;
+          font-size: 2em;
+          margin-left: auto;
+          margin-right: auto;
+          width: auto
+        }
 
         `;
 
@@ -72,7 +100,7 @@ class Directions extends HTMLElement {
     let directionList = searchForKey(data, 'recipeInstructions');
 
     const wrapper = document.createElement('article');
-    wrapper.classList.add('example');
+    wrapper.classList.add('background');
 
     const directions = document.createElement('p');
     directions.classList.add("directions");
@@ -87,40 +115,74 @@ class Directions extends HTMLElement {
     const list = document.createElement('ol');
     list.classList.add("olStyle");
     for (let i = 0; i < directionList.length; i++) {
-      let listItem = document.createElement('button');
+      let button = document.createElement('button');
       let x = i+1;
-      listItem.textContent = `${x +')'+ ' ' + directionList[i].name}`;
-      listItem.classList.add('listItemStyle');
-      listItem.addEventListener('click', event => {
-        if(listItem.classList.contains('listItemStyle')){
-          listItem.classList.remove('listItemStyle');
-          listItem.classList.add('listItemStyleShown');}
+      let wrapper = document.createElement('div');
+      wrapper.classList.add('buttonstyle');
+      let text = document.createElement('p');
+      let down_arrow = document.createElement('img');
+      down_arrow.setAttribute('src', './images/arrow-down.png');
+      let up_arrow = document.createElement('img');
+      up_arrow.setAttribute('src', './images/arrowUp.png');
+      down_arrow.classList.add('downArrow');
+      up_arrow.classList.add('upArrow');
+      text.textContent = `${x +')'+ ' ' + directionList[i].name}`;
+      text.classList.add('text');
+      wrapper.appendChild(text);
+      wrapper.appendChild(down_arrow);
+      button.appendChild(wrapper);
+      button.classList.add('listItemStyle');
+      button.addEventListener('click', event => {
+        if(button.classList.contains('listItemStyle')){
+          button.classList.remove('listItemStyle');
+          button.classList.add('listItemStyleShown');
+          wrapper.removeChild(down_arrow);
+          wrapper.appendChild(up_arrow);
+        }
         else{
-          listItem.classList.remove('listItemStyleShown');
-          listItem.classList.add('listItemStyle');
+          button.classList.remove('listItemStyleShown');
+          button.classList.add('listItemStyle');
+          wrapper.removeChild(up_arrow);
+          wrapper.appendChild(down_arrow);
         }
       });
       
-      list.appendChild(listItem);
+      list.appendChild(button);
 
       // If there are inner steps, display them as well
       if (directionList[i].itemListElement != undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
           let y = j+1;
-          let innerListItem = document.createElement('button');
-          innerListItem.textContent = `${x + '.' + y +')'+ ' ' +directionList[i].itemListElement[j].text}`;
-          innerListItem.classList.add('listItemStyle'); 
-          innerListItem.addEventListener('click', event => {
-            if(innerListItem.classList.contains('listItemStyle')){
-              innerListItem.classList.remove('listItemStyle');
-              innerListItem.classList.add('listItemStyleShown');}
-            else{
-              innerListItem.classList.remove('listItemStyleShown');
-              innerListItem.classList.add('listItemStyle');
-            }
-          });
-          list.appendChild(innerListItem);
+          let button = document.createElement('button');
+          let wrapper = document.createElement('div');
+          wrapper.classList.add('buttonstyle');
+          let text = document.createElement('p');
+          let down_arrow = document.createElement('img');
+          down_arrow.setAttribute('src', './images/arrow-down.png');
+          down_arrow.classList.add('downArrow');
+          text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
+          text.classList.add('text');
+          wrapper.appendChild(text);
+          wrapper.appendChild(down_arrow);
+          button.appendChild(wrapper);
+          //event listener to expand the directions.
+          button.classList.add('listItemStyle');
+          button.addEventListener('click', event => {
+          if(button.classList.contains('listItemStyle')){
+            button.classList.remove('listItemStyle');
+            button.classList.add('listItemStyleShown');
+            wrapper.removeChild(down_arrow);
+            wrapper.appendChild(up_arrow);
+          }else{
+          button.classList.remove('listItemStyleShown');
+          button.classList.add('listItemStyle');
+          wrapper.removeChild(up_arrow);
+          wrapper.appendChild(down_arrow);
         }
+      });
+      
+        list.appendChild(button);
+    }
       }
     }
     wrapper.appendChild(list);
