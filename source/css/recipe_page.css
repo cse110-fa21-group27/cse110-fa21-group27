@@ -1,72 +1,72 @@
 /*search bar*/
 .search_bar {
-    position: absolute;
-    width: 100%;
-    height: 10%;
-    left: 0%;
-    top: 0%;
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  left: 0%;
+  top: 0%;
 
-    background: #FFBB71;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: #ffbb71;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .spudly_png {
-    position: absolute;
-    width: 15%;
-    height: 80%;
-    left: 2%;
-    top: 10%;
+  position: absolute;
+  width: 15%;
+  height: 80%;
+  left: 2%;
+  top: 10%;
 }
 
 .search_text {
-    position: absolute;
-    width: 40%;
-    height: 66%;
-    left: 30%;
-    top: 15%;
+  position: absolute;
+  width: 40%;
+  height: 66%;
+  left: 30%;
+  top: 15%;
 
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    display: flex;
-    align-items: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
 
-    color: #000000;
-    background: #FFBB71;
-    border-color: #FFFFFF;
+  color: #000000;
+  background: #ffbb71;
+  border-color: #ffffff;
 }
 
 .search_png {
-    position: absolute;
-    width: 4%;
-    height: 70%;
-    left: 65%;
-    top: 20%;
+  position: absolute;
+  width: 4%;
+  height: 70%;
+  left: 65%;
+  top: 20%;
 }
 
 .cart_png {
-    position: absolute;
-    left: 88%;
-    right: 6.88%;
-    top: 20%;
-    width: 4%;
-    height: 70%;
+  position: absolute;
+  left: 88%;
+  right: 6.88%;
+  top: 20%;
+  width: 4%;
+  height: 70%;
 }
 
 .saved_png {
-    position: absolute;
-    left: 95%;
-    right: 2.01%;
-    top: 20%;
-    width: 3.2%;
-    height: 70%;
+  position: absolute;
+  left: 95%;
+  right: 2.01%;
+  top: 20%;
+  width: 3.2%;
+  height: 70%;
 }
-
-.recipe-page{
-    display: grid;
-    grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
+/*recipe body*/
+.recipe-page {
+  display: grid;
+  grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
   /* e.g. 
       1fr 1fr
       minmax(10px, 1fr) 3fr
@@ -79,26 +79,89 @@
       100px 1fr max-content
   */
 }
-.item-1 {
-    grid-column-start: leftmost;
-    grid-column-end: endOfIng;
-    grid-row-start: 3;
-    grid-row-end: auto;
-    background-color: black;
-  }
+/*kevin: removed item-1 and added ingredients_box and inner classes*/
+.ingredients_box {
+  position: absolute;
+  width: 20%;
+  height: 66%;
+  top: 20%;
+  left: 2%;
+  background: #fff6ec;
+}
 
-  .item-2 {
-    grid-column-start: endOfIng;
-    grid-column-end: endOfRecipe;
-    grid-row-start: 2;
-    grid-row-end: 4;
-    background-color: forestgreen;
-  }
+.ingredients_label {
+  position: absolute;
+  left: 22%;
+  top: 9%;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 62px;
+}
+.recipe_button {
+  position: absolute;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 38px;
+  background: #ffb673;
+}
 
-  .item-3{
-    grid-column-start: endOfRecipe;
-    grid-column-end: rightmost;
-    grid-row-start: 3;
-    grid-row-end: auto;
-    background-color: blue;
-  }
+#ingredients_count {
+  position: absolute;
+  left: 36%;
+  top: 30.5%;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 30px;
+}
+
+#serving_size {
+  position: absolute;
+  left: 12%;
+  top: 38%;
+  width: 98%;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+#ingredients_list {
+  position: absolute;
+  left: 25%;
+  top: 48%;
+  width: 100%;
+  font-family: DM Sans;
+  -ms-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  padding: 10px;
+}
+
+#ingredients_list input {
+  margin-bottom: 2%;
+}
+
+.item-2 {
+  grid-column-start: endOfIng;
+  grid-column-end: endOfRecipe;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  background-color: forestgreen;
+}
+
+.item-3 {
+  grid-column-start: endOfRecipe;
+  grid-column-end: rightmost;
+  grid-row-start: 3;
+  grid-row-end: auto;
+  background-color: blue;
+}
