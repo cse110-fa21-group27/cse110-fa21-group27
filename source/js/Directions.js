@@ -176,6 +176,10 @@ class Directions extends HTMLElement {
           up_arrow.setAttribute('src', './images/arrowUp.png');
           up_arrow.classList.add('upArrow');
           down_arrow.classList.add('downArrow');
+          let cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.classList.add('checkbox');
+          wrapper.appendChild(cb);
           text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
           text.classList.add('text');
           wrapper.appendChild(text);
