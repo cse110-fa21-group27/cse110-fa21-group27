@@ -7,8 +7,8 @@ class Directions extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
   }
 
-    set data(data) {
-        const style=`
+  set data(data) {
+    const style = `
         .background {
           margin-left: 25vw;
           margin-right: 25vw;
@@ -109,9 +109,8 @@ class Directions extends HTMLElement {
 
     const directionList = searchForKey(data, "recipeInstructions");
 
-    const wrapper = document.createElement('article');
-    wrapper.classList.add('background');
-
+    const wrapper = document.createElement("article");
+    wrapper.classList.add("background");
 
     const directions = document.createElement("p");
     directions.classList.add("directions");
@@ -123,104 +122,104 @@ class Directions extends HTMLElement {
     // button_wrapper.classList.add('buttonstyle');
 
     // Parsing data to create the direction list.
-    const list = document.createElement('ol');
+    const list = document.createElement("ol");
     list.classList.add("olStyle");
     for (let i = 0; i < directionList.length; i++) {
-      let button = document.createElement('button');
-      let x = i+1;
-      let wrapper = document.createElement('div');
-      wrapper.classList.add('buttonstyle');
-      let text = document.createElement('p');
-      let down_arrow = document.createElement('img');
-      down_arrow.setAttribute('src', './images/arrow-down.png');
-      let up_arrow = document.createElement('img');
-      up_arrow.setAttribute('src', './images/arrowUp.png');
-      down_arrow.classList.add('downArrow');
-      up_arrow.classList.add('upArrow');
-      let cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.classList.add('checkbox');
+      const button = document.createElement("button");
+      const x = i + 1;
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("buttonstyle");
+      const text = document.createElement("p");
+      const down_arrow = document.createElement("img");
+      down_arrow.setAttribute("src", "./images/arrow-down.png");
+      const up_arrow = document.createElement("img");
+      up_arrow.setAttribute("src", "./images/arrowUp.png");
+      down_arrow.classList.add("downArrow");
+      up_arrow.classList.add("upArrow");
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.classList.add("checkbox");
       wrapper.appendChild(cb);
-      text.textContent = `${x +')'+ ' ' + directionList[i].name}`;
-      text.classList.add('text');
+      text.textContent = `${x + ")" + " " + directionList[i].name}`;
+      text.classList.add("text");
       wrapper.appendChild(text);
       wrapper.appendChild(down_arrow);
       button.appendChild(wrapper);
-      button.classList.add('listItemStyle');
-      
-      button.addEventListener('click', event => {
-        if(button.classList.contains('listItemStyle')){
-          button.classList.remove('listItemStyle');
-          button.classList.add('listItemStyleShown');
+      button.classList.add("listItemStyle");
+
+      button.addEventListener("click", (event) => {
+        if (button.classList.contains("listItemStyle")) {
+          button.classList.remove("listItemStyle");
+          button.classList.add("listItemStyleShown");
           wrapper.removeChild(down_arrow);
           wrapper.appendChild(up_arrow);
-        }
-        else{
-          button.classList.remove('listItemStyleShown');
-          button.classList.add('listItemStyle');
+        } else {
+          button.classList.remove("listItemStyleShown");
+          button.classList.add("listItemStyle");
           wrapper.removeChild(up_arrow);
           wrapper.appendChild(down_arrow);
         }
       });
-      
+
       list.appendChild(button);
 
       // If there are inner steps, display them as well
       if (directionList[i].itemListElement != undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
-          let y = j+1;
-          let button = document.createElement('button');
-          let wrapper = document.createElement('div');
-          wrapper.classList.add('buttonstyle');
-          let text = document.createElement('p');
-          let down_arrow = document.createElement('img');
-          down_arrow.setAttribute('src', './images/arrow-down.png');
-          let up_arrow = document.createElement('img');
-          up_arrow.setAttribute('src', './images/arrowUp.png');
-          up_arrow.classList.add('upArrow');
-          down_arrow.classList.add('downArrow');
-          let cb = document.createElement('input');
-          cb.type = 'checkbox';
-          cb.classList.add('checkbox');
+          const y = j + 1;
+          const button = document.createElement("button");
+          const wrapper = document.createElement("div");
+          wrapper.classList.add("buttonstyle");
+          const text = document.createElement("p");
+          const down_arrow = document.createElement("img");
+          down_arrow.setAttribute("src", "./images/arrow-down.png");
+          const up_arrow = document.createElement("img");
+          up_arrow.setAttribute("src", "./images/arrowUp.png");
+          up_arrow.classList.add("upArrow");
+          down_arrow.classList.add("downArrow");
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.classList.add("checkbox");
           wrapper.appendChild(cb);
-          text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
-          text.classList.add('text');
+          text.textContent = `${
+            x + "." + y + ")" + " " + directionList[i].itemListElement[j].text
+          }`;
+          text.classList.add("text");
           wrapper.appendChild(text);
           wrapper.appendChild(down_arrow);
           button.appendChild(wrapper);
-          //event listener to expand the directions.
-          button.classList.add('listItemStyle');
-          button.addEventListener('click', event => {
-          if(button.classList.contains('listItemStyle')){
-            button.classList.remove('listItemStyle');
-            button.classList.add('listItemStyleShown');
-            wrapper.removeChild(down_arrow);
-            wrapper.appendChild(up_arrow);
-          }else{
-          button.classList.remove('listItemStyleShown');
-          button.classList.add('listItemStyle');
-          wrapper.removeChild(up_arrow);
-          wrapper.appendChild(down_arrow);
+          // event listener to expand the directions.
+          button.classList.add("listItemStyle");
+          button.addEventListener("click", (event) => {
+            if (button.classList.contains("listItemStyle")) {
+              button.classList.remove("listItemStyle");
+              button.classList.add("listItemStyleShown");
+              wrapper.removeChild(down_arrow);
+              wrapper.appendChild(up_arrow);
+            } else {
+              button.classList.remove("listItemStyleShown");
+              button.classList.add("listItemStyle");
+              wrapper.removeChild(up_arrow);
+              wrapper.appendChild(down_arrow);
+            }
+          });
+
+          list.appendChild(button);
         }
-      });
-      
-        list.appendChild(button);
-    }
       }
     }
     wrapper.appendChild(list);
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(wrapper);
   }
-  
 }
 
-customElements.define('directions-info', Directions);
+customElements.define("directions-info", Directions);
 
-/*********************************************************************/
-/***                       Helper Functions:                       ***/
-/***          Shout out to the TA's lemme just yoink these         ***/
-/*********************************************************************/
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
 
 /**
  * Recursively search for a key nested somewhere inside an object
