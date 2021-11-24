@@ -41,9 +41,10 @@ class Directions extends HTMLElement {
         .buttonstyle{
           margin-left: 0.7em;
           width: auto;
-          display: flex;
-          flex-direction: row;
+          display: grid;
+          grid-template-columns: 10px auto auto
           justify-content: flex-start;
+          align-items: top;
           gap: 10px; 
         }
 
@@ -58,22 +59,23 @@ class Directions extends HTMLElement {
         }
 
         .downArrow{
-          margin-top: 0.1em;
+          grid-column: 3;
+          
           margin-right: 0.7em;
           width: 1em;
           height: 1em;
         }
         .upArrow{
-          margin-top: 0.1em;
+          grid-column:3;
           margin-right: 0.7em;
           width: 2em;
           height: 2em;
         }
         
         .text{
-          margin-top: auto;
-          margin-bottom: 0.5em;
-          text-align: left;          
+          grid-column:2;
+          text-align: left;   
+          margin-block: 0 0;       
         }
 
         .olStyle{
@@ -90,6 +92,12 @@ class Directions extends HTMLElement {
           margin-left: auto;
           margin-right: auto;
           width: auto
+        }
+
+        .checkbox{
+          grid-column:1;
+          margin: 0;
+
         }
 
         `;
@@ -126,12 +134,17 @@ class Directions extends HTMLElement {
       up_arrow.setAttribute('src', './images/arrowUp.png');
       down_arrow.classList.add('downArrow');
       up_arrow.classList.add('upArrow');
+      let cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.classList.add('checkbox');
+      wrapper.appendChild(cb);
       text.textContent = `${x +')'+ ' ' + directionList[i].name}`;
       text.classList.add('text');
       wrapper.appendChild(text);
       wrapper.appendChild(down_arrow);
       button.appendChild(wrapper);
       button.classList.add('listItemStyle');
+      
       button.addEventListener('click', event => {
         if(button.classList.contains('listItemStyle')){
           button.classList.remove('listItemStyle');
