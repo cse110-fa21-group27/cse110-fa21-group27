@@ -159,6 +159,9 @@ class Directions extends HTMLElement {
           let text = document.createElement('p');
           let down_arrow = document.createElement('img');
           down_arrow.setAttribute('src', './images/arrow-down.png');
+          let up_arrow = document.createElement('img');
+          up_arrow.setAttribute('src', './images/arrowUp.png');
+          up_arrow.classList.add('upArrow');
           down_arrow.classList.add('downArrow');
           text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
           text.classList.add('text');
