@@ -151,7 +151,7 @@ class Directions extends HTMLElement {
       direction.appendChild(text_button);
       direction.classList.add("direction");
       wrapper.classList.add("buttonstyle");
-      let text = document.createElement("p");
+      const text = document.createElement("p");
       let down_arrow = document.createElement("img");
       down_arrow.setAttribute("src", "./images/arrow-down.png");
       let up_arrow = document.createElement("img");
