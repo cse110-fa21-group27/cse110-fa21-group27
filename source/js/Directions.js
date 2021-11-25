@@ -142,7 +142,7 @@ class Directions extends HTMLElement {
       let direction = document.createElement("div");
       let x = i+1;
       let text_button = document.createElement('button');
-      let wrapper = document.createElement("div");
+      const wrapper = document.createElement("div");
       text_button.appendChild(wrapper);
       let cb = document.createElement("input");
       cb.type = "checkbox";
