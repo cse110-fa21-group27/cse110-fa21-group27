@@ -227,7 +227,7 @@ class Directions extends HTMLElement {
             }
           });
       
-        list.appendChild(direction);
+          list.appendChild(direction);
     }
       }
     }
