@@ -180,43 +180,43 @@ class Directions extends HTMLElement {
     const list = document.createElement("ol");
     list.classList.add("olStyle");
     for (let i = 0; i &lt; directionList.length; i++) {
-      let direction = document.createElement('div');
+      let direction = document.createElement("div");
       let x = i+1;
       let text_button = document.createElement('button');
-      let wrapper = document.createElement('div');
+      let wrapper = document.createElement("div");
       text_button.appendChild(wrapper);
-      let cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.classList.add('checkbox');
+      let cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.classList.add("checkbox");
       direction.appendChild(cb);
       direction.appendChild(text_button);
-      direction.classList.add('direction');
-      wrapper.classList.add('buttonstyle');
-      let text = document.createElement('p');
-      let down_arrow = document.createElement('img');
-      down_arrow.setAttribute('src', './images/arrow-down.png');
-      let up_arrow = document.createElement('img');
-      up_arrow.setAttribute('src', './images/arrowUp.png');
-      down_arrow.classList.add('downArrow');
-      up_arrow.classList.add('upArrow');
+      direction.classList.add("direction");
+      wrapper.classList.add("buttonstyle");
+      let text = document.createElement("p");
+      let down_arrow = document.createElement("img");
+      down_arrow.setAttribute("src", "./images/arrow-down.png");
+      let up_arrow = document.createElement("img");
+      up_arrow.setAttribute("src", "./images/arrowUp.png");
+      down_arrow.classList.add("downArrow");
+      up_arrow.classList.add("upArrow");
       
-      text.textContent = `${x +')'+ ' ' + directionList[i].name}`;
-      text.classList.add('text');
+      text.textContent = `${x +")"+ " " + directionList[i].name}`;
+      text.classList.add("text");
       wrapper.appendChild(text);
       wrapper.appendChild(down_arrow);
       text_button.appendChild(wrapper);
-      text_button.classList.add('listItemStyle');
+      text_button.classList.add("listItemStyle");
       
-      text_button.addEventListener('click', event => {
-        if(text_button.classList.contains('listItemStyle')){
-          text_button.classList.remove('listItemStyle');
-          text_button.classList.add('listItemStyleShown');
+      text_button.addEventListener("click", event => {
+        if(text_button.classList.contains("listItemStyle")){
+          text_button.classList.remove("listItemStyle");
+          text_button.classList.add("listItemStyleShown");
           wrapper.removeChild(down_arrow);
           wrapper.appendChild(up_arrow);
         }
         else{
-          text_button.classList.remove('listItemStyleShown');
-          text_button.classList.add('listItemStyle');
+          text_button.classList.remove("listItemStyleShown");
+          text_button.classList.add("listItemStyle");
           wrapper.removeChild(up_arrow);
           wrapper.appendChild(down_arrow);
         }
@@ -227,42 +227,42 @@ class Directions extends HTMLElement {
       // If there are inner steps, display them as well
       if (directionList[i].itemListElement != undefined) {
         for (let j = 0; j &lt; directionList[i].itemListElement.length; j++) {
-          let direction = document.createElement('div');
+          let direction = document.createElement("div");
           let y = j+1;
           let text_button = document.createElement('button');
-          let wrapper = document.createElement('div');
+          let wrapper = document.createElement("div");
           text_button.appendChild(wrapper);
-          let cb = document.createElement('input');
-          cb.type = 'checkbox';
-          cb.classList.add('checkbox');
+          let cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.classList.add("checkbox");
           direction.appendChild(cb);
           direction.appendChild(text_button);
-          direction.classList.add('direction');
-          wrapper.classList.add('buttonstyle');
-          let text = document.createElement('p');
-          let down_arrow = document.createElement('img');
-          down_arrow.setAttribute('src', './images/arrow-down.png');
-          let up_arrow = document.createElement('img');
-          up_arrow.setAttribute('src', './images/arrowUp.png');
-          down_arrow.classList.add('downArrow');
-          up_arrow.classList.add('upArrow');
-          text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
-          text.classList.add('text');
+          direction.classList.add("direction");
+          wrapper.classList.add("buttonstyle");
+          let text = document.createElement("p");
+          let down_arrow = document.createElement("img");
+          down_arrow.setAttribute("src", "./images/arrow-down.png");
+          let up_arrow = document.createElement("img");
+          up_arrow.setAttribute("src", "./images/arrowUp.png");
+          down_arrow.classList.add("downArrow");
+          up_arrow.classList.add("upArrow");
+      
+          text.textContent = `${x + "." + y +")"+ " " + directionList[i].itemListElement[j].text}`;
+          text.classList.add("text");
           wrapper.appendChild(text);
           wrapper.appendChild(down_arrow);
           text_button.appendChild(wrapper);
-          text_button.classList.add('listItemStyle');
-          
-          text_button.addEventListener('click', event => {
-            if(text_button.classList.contains('listItemStyle')){
-              text_button.classList.remove('listItemStyle');
-              text_button.classList.add('listItemStyleShown');
+          text_button.classList.add("listItemStyle");
+          text_button.addEventListener("click", event => {
+            if(text_button.classList.contains("listItemStyle")){
+              text_button.classList.remove("listItemStyle");
+              text_button.classList.add("listItemStyleShown");
               wrapper.removeChild(down_arrow);
               wrapper.appendChild(up_arrow);
             }
             else{
-              text_button.classList.remove('listItemStyleShown');
-              text_button.classList.add('listItemStyle');
+              text_button.classList.remove("listItemStyleShown");
+              text_button.classList.add("listItemStyle");
               wrapper.removeChild(up_arrow);
               wrapper.appendChild(down_arrow);
             }
@@ -432,7 +432,7 @@ function createIngredientList(ingredientArr) {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Thu Nov 25 2021 07:54:23 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Thu Nov 25 2021 08:08:11 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
