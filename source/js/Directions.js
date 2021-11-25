@@ -152,7 +152,7 @@ class Directions extends HTMLElement {
       direction.classList.add("direction");
       wrapper.classList.add("buttonstyle");
       const text = document.createElement("p");
-      let down_arrow = document.createElement("img");
+      const down_arrow = document.createElement("img");
       down_arrow.setAttribute("src", "./images/arrow-down.png");
       const up_arrow = document.createElement("img");
       up_arrow.setAttribute("src", "./images/arrowUp.png");
