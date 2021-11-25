@@ -140,7 +140,7 @@ class Directions extends HTMLElement {
     list.classList.add("olStyle");
     for (let i = 0; i < directionList.length; i++) {
       const direction = document.createElement("div");
-      let x = i+1;
+      const x = i+1;
       let text_button = document.createElement('button');
       const wrapper = document.createElement("div");
       text_button.appendChild(wrapper);
