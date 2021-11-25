@@ -158,7 +158,6 @@ class Directions extends HTMLElement {
       up_arrow.setAttribute("src", "./images/arrowUp.png");
       down_arrow.classList.add("downArrow");
       up_arrow.classList.add("upArrow");
-      
       text.textContent = `${x +")"+ " " + directionList[i].name}`;
       text.classList.add("text");
       wrapper.appendChild(text);
