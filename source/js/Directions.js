@@ -173,7 +173,7 @@ class Directions extends HTMLElement {
           wrapper.removeChild(down_arrow);
           wrapper.appendChild(up_arrow);
         }
-        else{
+        else {
           text_button.classList.remove("listItemStyleShown");
           text_button.classList.add("listItemStyle");
           wrapper.removeChild(up_arrow);
