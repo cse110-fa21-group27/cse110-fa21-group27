@@ -167,7 +167,7 @@ class Directions extends HTMLElement {
       text_button.classList.add("listItemStyle");
       
       text_button.addEventListener("click", event => {
-        if(text_button.classList.contains("listItemStyle")){
+        if (text_button.classList.contains("listItemStyle")){
           text_button.classList.remove("listItemStyle");
           text_button.classList.add("listItemStyleShown");
           wrapper.removeChild(down_arrow);
