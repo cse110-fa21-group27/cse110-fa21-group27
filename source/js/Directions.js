@@ -141,7 +141,7 @@ class Directions extends HTMLElement {
     for (let i = 0; i < directionList.length; i++) {
       const direction = document.createElement("div");
       const x = i+1;
-      let text_button = document.createElement('button');
+      const text_button = document.createElement('button');
       const wrapper = document.createElement("div");
       text_button.appendChild(wrapper);
       const cb = document.createElement("input");
