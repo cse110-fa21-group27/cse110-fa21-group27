@@ -154,7 +154,7 @@ class Directions extends HTMLElement {
       const text = document.createElement("p");
       let down_arrow = document.createElement("img");
       down_arrow.setAttribute("src", "./images/arrow-down.png");
-      let up_arrow = document.createElement("img");
+      const up_arrow = document.createElement("img");
       up_arrow.setAttribute("src", "./images/arrowUp.png");
       down_arrow.classList.add("downArrow");
       up_arrow.classList.add("upArrow");
