@@ -15,20 +15,33 @@ class Directions extends HTMLElement {
           grid-template-columns: [left] auto [right];
           background: #FFF6EC;
         }
-
-        .listItemStyle {
+        .direction{
+          display: flex;
+          justify-content: flex-start;
+          align-items: top;
           margin-left: auto;
           margin-right: auto;
           border: 2px solid orange;
           border-radius: 25px;
-          height: 1.7em;
+          padding: 3px;
+          background: #FFF6EC;
+          gap: 10px; 
+        }
+        .listItemStyle {
+          grid-column:2;
+          margin-left: auto;
+          margin-right: auto;
+          border: 0px solid transparent;
+          border-radius: 25px;
+          height: 1.5em;
           padding: 3px;
           overflow: hidden ;
           background: #FFF6EC;
         }
 
         .listItemStyleShown {
-          border: 1px solid orange;
+          grid-column:2;
+          border: 0px solid transparent;
           border-radius: 25px;
           margin-left: auto;
           margin-right: auto;
@@ -42,7 +55,7 @@ class Directions extends HTMLElement {
           margin-left: 0.7em;
           width: auto;
           display: grid;
-          grid-template-columns: 10px auto auto
+          grid-template-columns: 10px auto auto;
           justify-content: flex-start;
           align-items: top;
           gap: 10px; 
@@ -60,7 +73,6 @@ class Directions extends HTMLElement {
 
         .downArrow{
           grid-column: 3;
-          
           margin-right: 0.7em;
           width: 1em;
           height: 1em;
@@ -95,9 +107,10 @@ class Directions extends HTMLElement {
         }
 
         .checkbox{
-          grid-column:1;
           margin: 0;
-
+          margin-left: 1em;
+          margin-top: 0.3em;
+        
         }
 
         `;
@@ -123,9 +136,17 @@ class Directions extends HTMLElement {
     const list = document.createElement('ol');
     list.classList.add("olStyle");
     for (let i = 0; i < directionList.length; i++) {
-      let button = document.createElement('button');
+      let direction = document.createElement('div');
       let x = i+1;
+      let text_button = document.createElement('button');
       let wrapper = document.createElement('div');
+      text_button.appendChild(wrapper);
+      let cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.classList.add('checkbox');
+      direction.appendChild(cb);
+      direction.appendChild(text_button);
+      direction.classList.add('direction');
       wrapper.classList.add('buttonstyle');
       let text = document.createElement('p');
       let down_arrow = document.createElement('img');
@@ -134,74 +155,76 @@ class Directions extends HTMLElement {
       up_arrow.setAttribute('src', './images/arrowUp.png');
       down_arrow.classList.add('downArrow');
       up_arrow.classList.add('upArrow');
-      let cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.classList.add('checkbox');
-      wrapper.appendChild(cb);
+      
       text.textContent = `${x +')'+ ' ' + directionList[i].name}`;
       text.classList.add('text');
       wrapper.appendChild(text);
       wrapper.appendChild(down_arrow);
-      button.appendChild(wrapper);
-      button.classList.add('listItemStyle');
+      text_button.appendChild(wrapper);
+      text_button.classList.add('listItemStyle');
       
-      button.addEventListener('click', event => {
-        if(button.classList.contains('listItemStyle')){
-          button.classList.remove('listItemStyle');
-          button.classList.add('listItemStyleShown');
+      text_button.addEventListener('click', event => {
+        if(text_button.classList.contains('listItemStyle')){
+          text_button.classList.remove('listItemStyle');
+          text_button.classList.add('listItemStyleShown');
           wrapper.removeChild(down_arrow);
           wrapper.appendChild(up_arrow);
         }
         else{
-          button.classList.remove('listItemStyleShown');
-          button.classList.add('listItemStyle');
+          text_button.classList.remove('listItemStyleShown');
+          text_button.classList.add('listItemStyle');
           wrapper.removeChild(up_arrow);
           wrapper.appendChild(down_arrow);
         }
       });
       
-      list.appendChild(button);
-
+      list.appendChild(direction);
+     
       // If there are inner steps, display them as well
       if (directionList[i].itemListElement != undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
+          let direction = document.createElement('div');
           let y = j+1;
-          let button = document.createElement('button');
+          let text_button = document.createElement('button');
           let wrapper = document.createElement('div');
+          text_button.appendChild(wrapper);
+          let cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.classList.add('checkbox');
+          direction.appendChild(cb);
+          direction.appendChild(text_button);
+          direction.classList.add('direction');
           wrapper.classList.add('buttonstyle');
           let text = document.createElement('p');
           let down_arrow = document.createElement('img');
           down_arrow.setAttribute('src', './images/arrow-down.png');
           let up_arrow = document.createElement('img');
           up_arrow.setAttribute('src', './images/arrowUp.png');
-          up_arrow.classList.add('upArrow');
           down_arrow.classList.add('downArrow');
-          let cb = document.createElement('input');
-          cb.type = 'checkbox';
-          cb.classList.add('checkbox');
-          wrapper.appendChild(cb);
+          up_arrow.classList.add('upArrow');
           text.textContent = `${x + '.' + y +')'+ ' ' + directionList[i].itemListElement[j].text}`;
           text.classList.add('text');
           wrapper.appendChild(text);
           wrapper.appendChild(down_arrow);
-          button.appendChild(wrapper);
-          //event listener to expand the directions.
-          button.classList.add('listItemStyle');
-          button.addEventListener('click', event => {
-          if(button.classList.contains('listItemStyle')){
-            button.classList.remove('listItemStyle');
-            button.classList.add('listItemStyleShown');
-            wrapper.removeChild(down_arrow);
-            wrapper.appendChild(up_arrow);
-          }else{
-          button.classList.remove('listItemStyleShown');
-          button.classList.add('listItemStyle');
-          wrapper.removeChild(up_arrow);
-          wrapper.appendChild(down_arrow);
-        }
-      });
+          text_button.appendChild(wrapper);
+          text_button.classList.add('listItemStyle');
+          
+          text_button.addEventListener('click', event => {
+            if(text_button.classList.contains('listItemStyle')){
+              text_button.classList.remove('listItemStyle');
+              text_button.classList.add('listItemStyleShown');
+              wrapper.removeChild(down_arrow);
+              wrapper.appendChild(up_arrow);
+            }
+            else{
+              text_button.classList.remove('listItemStyleShown');
+              text_button.classList.add('listItemStyle');
+              wrapper.removeChild(up_arrow);
+              wrapper.appendChild(down_arrow);
+            }
+          });
       
-        list.appendChild(button);
+        list.appendChild(direction);
     }
       }
     }
