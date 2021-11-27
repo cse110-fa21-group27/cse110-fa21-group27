@@ -1,5 +1,5 @@
 /**
- * TODO
+ * directions component
  */
 class Directions extends HTMLElement {
   constructor() {
@@ -113,27 +113,26 @@ class Directions extends HTMLElement {
           margin: 0;
           margin-left: 1em;
           margin-top: 0.3em;
-        
         }
-
         `;
-
+      
+    //css
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
-
+    
     const directionList = searchForKey(data, "recipeInstructions");
-
+    
+    //background frame
     const wrapper = document.createElement("article");
     wrapper.classList.add("background");
 
+    //directions header "Directions"
     const directions = document.createElement("p");
     directions.classList.add("directions");
     directions.textContent = "Directions";
     directions.classList.add("header");
     wrapper.appendChild(directions);
 
-    // let button_wrapper = document.createElement('button_wrapper');
-    // button_wrapper.classList.add('buttonstyle');
 
     // Parsing data to create the direction list.
     const list = document.createElement("ol");
@@ -165,6 +164,10 @@ class Directions extends HTMLElement {
       textButton.appendChild(wrapper);
       textButton.classList.add("listItemStyle");
 
+      /**
+       * Button click event listener to expand and compress 
+       * directions. 
+       */
       textButton.addEventListener("click", (event) => {
         if (textButton.classList.contains("listItemStyle")) {
           textButton.classList.remove("listItemStyle");
@@ -203,7 +206,6 @@ class Directions extends HTMLElement {
           upArrow.setAttribute("src", "./images/arrowUp.png");
           downArrow.classList.add("downArrow");
           upArrow.classList.add("upArrow");
-
           text.textContent = `${
             x + "." + y + ")" + " " + directionList[i].itemListElement[j].text
           }`;
@@ -212,6 +214,10 @@ class Directions extends HTMLElement {
           wrapper.appendChild(downArrow);
           textButton.appendChild(wrapper);
           textButton.classList.add("listItemStyle");
+          /**
+          * Button click event listener to expand and compress 
+          * directions. 
+          */
           textButton.addEventListener("click", (event) => {
             if (textButton.classList.contains("listItemStyle")) {
               textButton.classList.remove("listItemStyle");
@@ -225,7 +231,6 @@ class Directions extends HTMLElement {
               wrapper.appendChild(downArrow);
             }
           });
-
           list.appendChild(direction);
         }
       }
