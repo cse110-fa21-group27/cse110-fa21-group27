@@ -6,7 +6,9 @@ class Directions extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /**
+   * 
+   */
   set data(data) {
     const style = `
         .background {
