@@ -111,8 +111,8 @@ class NavBar extends HTMLElement {
     shoppingImg.type = "image";
     shoppingImg.className = "cart_png";
     shoppingImg.id = "se_cart_png";
-    shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
+    shoppingImg.name = "se_cart_png";
 
     //saved button/img
     const savedAct = document.createElement("form");
