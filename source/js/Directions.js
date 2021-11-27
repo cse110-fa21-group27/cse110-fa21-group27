@@ -7,7 +7,7 @@ class Directions extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
-   * 
+   *
    */
   set data(data) {
     const style = `
@@ -253,7 +253,7 @@ customElements.define("directions-info", Directions);
  */
 function searchForKey(object, key) {
   let value;
-  Object.keys(object).some(function(k) {
+  Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
       return true;

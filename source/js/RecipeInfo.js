@@ -12,6 +12,8 @@ class RecipeInfo extends HTMLElement {
    * @param {Object} data - The recipe json file
    */
   set data(data) {
+    
+    // Creates CSS for the Recipe Info Component
     const style = `
         .recipe-info {
           margin-left: 25vw;
