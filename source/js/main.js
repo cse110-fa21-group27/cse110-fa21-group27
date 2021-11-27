@@ -29,16 +29,21 @@ const gliderConfig = {
  * @function
  */
 function savedRecipesPage() {
+  const main = document.querySelector('main');
   /* TODO: hide/delete all other pages/views */
   const recipePage = document.querySelector('recipe-page');
-  recipePage.setAttribute('hidden', true);
-  recipePage.remove();
-  console.log(recipePage);
+  if(!!recipePage) recipePage.remove();
   
   // make saved-recipes visible
-  const savedRecipeDiv = document.querySelector(".saved-recipes");
-  savedRecipeDiv.removeAttribute("hidden");
+  const savedRecipeSection = document.createElement('section');
+  savedRecipeSection.classList.add('saved-recipes')
+  main.appendChild(savedRecipeSection);
+
   renderSavedRecipes();
+  renderNavBar({
+    recipeUrl: null,
+    isRecipe: false
+  })
 }
 
 
@@ -53,8 +58,12 @@ async function init() {
   //storage.getUserInfo();
   const tempList = ['json/gyudon.json','json/chicken_tortilla_soup.json','json/chicken_n_dumplings.json'];
   await storage.getUserInfo();
+  renderNavBar({
+    recipeUrl: null,
+    isRecipe: false
+  });
   loadRecipes(tempList).then(()=>{
-    renderSavedRecipes();
+    router.navigate('home');
   });
   bindPopState();
 }
@@ -115,6 +124,17 @@ async function loadRecipes(recipeUrlList) {
 }
 
 /**
+ * This function renders the <nav-bar> with the appropriate data
+ * @param {Object} data - object containing information about the current
+ * state of the page. 
+ */
+function renderNavBar(data) {
+  // it should already be there, we just need to give it the data to force it to re-render itself appropriately
+  const bar = document.querySelector('nav-bar');
+  bar.data = data;
+}
+
+/**
  * After this function is run, the <recipe-card> elements will be added 
  * html element in the body with the 'saved-recipes' class.
  * @async
@@ -132,19 +152,20 @@ async function renderSavedRecipes() {
 
     // add this recipe's page to the router
     router.addPage(url,() => {
-      // hide the cards
-      document.querySelectorAll('recipe-card').forEach((card)=>{
-        // delete for now TODO: keep track of each card so we don't have to re-render
-        card.remove();
-      });
       // hide saved-recipes
-      document.querySelector('.saved-recipes').setAttribute('hidden',true);
+      const savedRecipesSection = document.querySelector('.saved-recipes');
+      if (!!savedRecipesSection) savedRecipesSection.remove();
       // show the recipe-page
       const recipePage = document.createElement('recipe-page');
       const main = document.querySelector('main');
       main.appendChild(recipePage);
       // set the recipe-page's data into this recipe's JSON 
       recipePage.data = recipeJSON;
+      // update nav-bar
+      renderNavBar({
+        recipeUrl: url,
+        isRecipe: true
+      });
     });
     // bind the router page to the card
     bindRecipeCard(newCard,url);
