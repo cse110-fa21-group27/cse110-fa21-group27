@@ -17,7 +17,7 @@ class NavBar extends HTMLElement {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 
-    .spudlyImg{
+    .spudly_png{
         position: absolute;
         width: 15%;
         height: 80%;
@@ -25,7 +25,7 @@ class NavBar extends HTMLElement {
         top: 10%;
     }
 
-    .navText{
+    .search_text{
         position: absolute;
         width: 40%;
         height: 66%;
@@ -45,7 +45,7 @@ class NavBar extends HTMLElement {
         border-color: #FFFFFF;
     }
 
-    .searchImg {
+    .search_png {
         position: absolute;
         width: 4%;
         height: 70%;
@@ -53,7 +53,7 @@ class NavBar extends HTMLElement {
         top: 20%;
     }
 
-    .shoppingImg {
+    .cart_png {
         position: absolute;
         left: 88%;
         right: 6.88%;
@@ -61,6 +61,15 @@ class NavBar extends HTMLElement {
         width: 4%;
         height: 70%;
     }
+
+    .saved_png {
+      position: absolute;
+      left: 95%;
+      right: 2.01%;
+      top: 20%;
+      width: 3.2%;
+      height: 70%;
+  }
 }
       `;
     const styleElem = document.createElement("style");
@@ -76,7 +85,6 @@ class NavBar extends HTMLElement {
     // this is the spudly home button/img
     const navAct = document.createElement("form");
     const spudlyImg = document.createElement("input");
-    spudlyImg.classList.add("spudlyImg");
     spudlyImg.type = "image";
     spudlyImg.className = "spudly_png";
     spudlyImg.id = "se_spudly_png";
@@ -85,7 +93,6 @@ class NavBar extends HTMLElement {
     //search bar
     const navAct2 = document.createElement("form");
     const navText = document.createElement("input");
-    navText.classList.add("navText");
     navText.type = "text";
     navText.className = "search_text";
     navText.id = "se_search_text";
@@ -94,7 +101,6 @@ class NavBar extends HTMLElement {
 
     //search button/image
     const searchImg = document.createElement("img");
-    searchImg.classList.add("searchImg");
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
@@ -102,17 +108,15 @@ class NavBar extends HTMLElement {
     //shopping cart image/button
     const shoppingAct = document.createElement("form");
     const shoppingImg = document.createElement("input");
-    shoppingImg.classList.add("shoppingImg");
     shoppingImg.type = "image";
     shoppingImg.className = "cart_png";
     shoppingImg.id = "se_cart_png";
-    shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
+    shoppingImg.name = "se_cart_png";
 
     //saved button/img
     const savedAct = document.createElement("form");
     const savedImg = document.createElement("input");
-    savedImg.classList.add("savedImg");
     savedImg.type = "image";
     savedImg.className = "saved_png";
     savedImg.id = "se_saved_png";
