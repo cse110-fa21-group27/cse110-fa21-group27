@@ -1,9 +1,13 @@
+/** glider component. hopeful that it will hold recipe cards in a pretty way.*/
 class GliderRecipe extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /**
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
     const cleanData = {};
     /**

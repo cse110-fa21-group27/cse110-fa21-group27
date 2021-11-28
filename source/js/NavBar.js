@@ -1,9 +1,13 @@
+/** this is the navbar component for all pages */
 class NavBar extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /** we did not know how to get this navbar without using the data func even tho it tech shouldnt need it
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
     const style = `
     .navBar {
@@ -74,9 +78,6 @@ class NavBar extends HTMLElement {
       `;
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
-    /*
-
-      */
 
     // the whole bar itself
     const navBar = document.createElement("article");
@@ -113,8 +114,8 @@ class NavBar extends HTMLElement {
     shoppingImg.type = "image";
     shoppingImg.className = "cart_png";
     shoppingImg.id = "se_cart_png";
-    shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
+    shoppingImg.name = "se_cart_png";
 
     // saved button/img
     const savedAct = document.createElement("form");
