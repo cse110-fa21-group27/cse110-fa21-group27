@@ -153,7 +153,7 @@ class IngredientsInfo extends HTMLElement {
       const box = document.createElement("input");
       box.type = "checkbox";
       const listItem = document.createElement("label");
-      listItem.textContent = ingredientList[i].name;
+      listItem.textContent = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
       const lineBreak = document.createElement("br");
       list.appendChild(box);
       list.appendChild(listItem);
@@ -168,8 +168,3 @@ class IngredientsInfo extends HTMLElement {
 }
 
 customElements.define("ingredients-info", IngredientsInfo);
-
-/** *******************************************************************/
-/** *                       Helper Functions:                       ***/
-/** *          Shout out to the TA's lemme just yoink these         ***/
-/** *******************************************************************/
