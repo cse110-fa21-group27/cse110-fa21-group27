@@ -32,13 +32,11 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
+  router.addPage('roadmap-page',RoadmapPage);
   router.navigate("home");
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
-    goHome: () => {
-      router.navigate("home");
-    },
   });
   bindPopState();
 }
@@ -144,6 +142,26 @@ function recipePage(recipeUrl, recipeJSON) {
 }
 
 /**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed into this function should be rendered
+ * @function
+ */
+ function RoadmapPage() {
+  const main = document.querySelector("main");
+  // delete everyting in main
+  main.innerHTML = "";
+  // show the roadmap page
+  const roadmapPage = document.createElement("roadmap-page");
+  main.appendChild(roadmapPage);
+  /*
+  renderNavBar({
+    recipeUrl: recipeUrl,
+    isRecipe: true,
+  });
+  */
+}
+
+/**
  * DEPRECATED, replaced by storage.getRecipes()
  * After this function resolves, storage.recipeData should be updated
  * with the url's being the keys to access the fetched data.
@@ -208,6 +226,9 @@ function renderNavBar(data) {
   const bar = document.querySelector("nav-bar");
   bar.goHome = () => {
     router.navigate("home");
+  };
+  bar.goRoadmap = () => {
+    router.navigate("roadmap-page");
   };
   console.log(data);
   bar.data = data;

@@ -127,13 +127,16 @@ class NavBar extends HTMLElement {
     shoppingImg.src = "./images/cart.png";
 
     // roadmap button/img
-    const roadmapAct= document.createElement("form");
+    const roadmapAct= document.createElement("button");
     const roadmapImg = document.createElement("input");
     roadmapImg.type = "image";
     roadmapImg.className = "roadmap_png";
     roadmapImg.id = "se_roadmap_png";
     roadmapImg.name = "se_roadmap_png";
     roadmapImg.src = "./images/cook_icon.png";
+    roadmapAct.addEventListener("click", (event) => {
+        this.goRoadmap();
+    });
 
     // saved button/img
     const savedAct = document.createElement("form");
