@@ -76,7 +76,7 @@ function recipesPage() {
     savedRecipeSection
   );
   // render the cards for just recipes TODO: #169
-  // renderRecipes(Object.keys(storage.recipeData), recipeSection);
+  renderRecipes(Object.keys(storage.recipeData), recipeSection);
   /*
   renderNavBar({
     recipeUrl: null,
@@ -155,7 +155,6 @@ function renderNavBar(data) {
   bar.goHome = () => {
     router.navigate("home");
   };
-  console.log(data);
   bar.data = data;
 }
 
