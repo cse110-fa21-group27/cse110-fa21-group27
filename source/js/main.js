@@ -13,7 +13,7 @@ const gliderConfig = {
   perView: 3,
   breakpoints:{
     800: {
-      perView: 2 
+      perView: 2
     }
     // peek: {
     //     before: 1000,
@@ -149,13 +149,13 @@ function recipePage(recipeUrl, recipeJSON) {
  * with the url's being the keys to access the fetched data.
  * @async
  * @function
- * @param {Array[string]} recipeUrlList
+ * @param {String[]} recipeUrlList
  * @returns {Promise}
  */
 async function loadRecipes(recipeUrlList) {
   return new Promise((resolve, reject) => {
     // keep track of each promise we make when using fetch
-    let promises = [];
+    const promises = [];
 
     recipeUrlList.forEach((url) => {
       // add each fetch promise to the array
@@ -218,7 +218,7 @@ function renderNavBar(data) {
  * to a url in list will be created and placed into target
  * @async
  * @function
- * @param {Array<string>} list - array of urls to render
+ * @param {String[]} list - array of urls to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
  * recipe-card's into
  */

@@ -1,19 +1,24 @@
+/** Class that creates a Recipe Info HTML Component */
 class RecipeInfo extends HTMLElement {
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
 
+  /**
+   * Populates the Recipe Info HTML Component with information from the recipe
+   * json file and displays it with some CSS styling.
+   * @param {Object} data - The recipe json file
+   */
   set data(data) {
+    
+    // Creates CSS for the Recipe Info Component
     const style = `
         .recipe-info {
           margin-left: 25vw;
           margin-right: 25vw;
           width: 50vw;
-          // display: grid;
-          // grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-          // grid-template-columns: [left] auto [right];
-    
           background: #FFF6EC;
         }
     
@@ -67,13 +72,13 @@ class RecipeInfo extends HTMLElement {
     cleanData.title = getRecipeTitle(data);
     cleanData.url = getUrl(data);
     cleanData.organization = getOrganization(data);
-    let cookTime = searchForKey(data, "cookTime");
-    let prepTime = searchForKey(data, "prepTime");
-    let totalTime = searchForKey(data, "totalTime");
+    const cookTime = searchForKey(data, "cookTime");
+    const prepTime = searchForKey(data, "prepTime");
+    const totalTime = searchForKey(data, "totalTime");
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
-    let tempRating = searchForKey(data, "aggregateRating");
+    const tempRating = searchForKey(data, "aggregateRating");
     if (!!tempRating) {
       cleanData.rating = {
         count: tempRating.ratingCount,
@@ -176,19 +181,19 @@ class RecipeInfo extends HTMLElement {
 
 customElements.define("recipe-info", RecipeInfo);
 
-/*********************************************************************/
-/***                       Helper Functions:                       ***/
-/***          Shout out to the TA's lemme just yoink these         ***/
-/*********************************************************************/
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
 
 /**
  * Recursively search for a key nested somewhere inside an object
  * @param {Object} object the object with which you'd like to search
  * @param {String} key the key that you are looking for in the object
- * @returns {*} the value of the found key
+ * @return {*} the value of the found key
  */
 function searchForKey(object, key) {
-  var value;
+  let value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
@@ -206,7 +211,8 @@ function searchForKey(object, key) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @returns {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a string,
+ * otherwise null
  */
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
@@ -222,8 +228,9 @@ function getOrganization(data) {
 
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
- * @param {Object} Data Raw recipe JSON to find name of
- * @returns {String} if found, returns the name of recipe as string, otherwise null
+ * @param {Object} data Raw recipe JSON to find name of
+ * @return {String} if found, returns the name of recipe as string,
+ * otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
@@ -241,14 +248,15 @@ function getRecipeTitle(data) {
 /**
  * Extract the URL from the given recipe schema JSON object
  * @param {Object} data Raw recipe JSON to find the URL of
- * @returns {String} If found, it returns the URL as a string, otherwise null
+ * @return {String} If found, it returns the URL as a string, otherwise null
  */
 function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article")
+      if (data["@graph"][i]["@type"] == "Article") {
         return data["@graph"][i]["@id"];
+      }
     }
   }
   return null;
@@ -266,7 +274,7 @@ function convertTime(time) {
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split("");
+  const timeArr = time.split("");
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
       if (timeArr[i] == "H") return `${timeStr} hr`;
