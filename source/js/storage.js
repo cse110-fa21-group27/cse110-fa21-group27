@@ -99,8 +99,8 @@ async function getRecipes() {
         // it does exist, let's just update global variable
         storageRecipes = JSON.parse(storageRecipesString);
         // update global variable
-        for (const url in storageRecipes) {
-          recipeData[url] = storageRecipes[url];
+        for (const id in storageRecipes) {
+          recipeData[id] = storageRecipes[id];
         }
         // all done!
         resolve(true);

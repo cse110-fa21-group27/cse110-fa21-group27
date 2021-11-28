@@ -86,6 +86,7 @@ function recipesPage() {
 }
 
 /**
+ * OUTDATED (unused)
  * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
  * @function
  */
