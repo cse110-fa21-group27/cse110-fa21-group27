@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>RecipeInfo - Documentation</title>
+    <title>RecipePage.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,339 +29,101 @@
 
 <div id="main">
     
-    <h1 class="page-title">RecipeInfo</h1>
+    <h1 class="page-title">RecipePage.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        RecipeInfo
-        </h2>
-        
-            <div class="class-description">Upon construction, this custom webcomponent is empty.
-When its .data property is set, the webcomponent is filled
-in with the recipe data passed into .data
-
-This assumes the following properties are set before .data</div>
-        
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled 
+ * in with the recipe data passed into .data
+ * 
+ * This assumes the following properties are set before .data
+ * @property {Function} addRecipeToSaved 
+ * @property {Function} removeRecipeFromSaved
+ * @property {Boolean} isSaved
+ * @property {string} id - the id for the recipe page this component is displaying
+ */
+class RecipePage extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: "open" });
+  }
+  /** 
+   * passes the data object that has the recipe json file
+   * @param {object} data - the recipe json file
+   */
+  set data(data) {
+    const style = `
+      .recipe-page{
+        display: grid;
+        grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
+      /* e.g. 
+          1fr 1fr
+          minmax(10px, 1fr) 3fr
+          repeat(5, 1fr)
+          50px auto 100px 1fr
+      */
+      grid-template-rows: 25% 75% 400px;
+      /* e.g. 
+          min-content 1fr min-content
+          100px 1fr max-content
+      */
+    }
+    .item-1 {
+        grid-column-start: leftmost;
+        grid-column-end: endOfIng;
+        grid-row-start: 3;
+        grid-row-end: auto;
+        background-color: black;
+      }
     
-</header>
-
-<article>
-    <div class="container-overview">
+      .item-2 {
+        grid-column-start: endOfIng;
+        grid-column-end: endOfRecipe;
+        grid-row-start: 2;
+        grid-row-end: 4;
+        background-color: forestgreen;
+      }
     
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="RecipeInfo"><span class="type-signature"></span>new RecipeInfo<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Constructs the Component and allows access to the shadow
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>addRecipeToSaved</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>removeRecipeFromSaved</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>isSaved</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Boolean</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the id for the recipe page this component is displaying</td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RecipeInfo.js.html">RecipeInfo.js</a>, <a href="RecipeInfo.js.html#line14">line 14</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="data"><span class="type-signature"></span>data<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Populates the Recipe Info HTML Component with information from the recipe
-json file and displays it with some CSS styling.
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RecipeInfo.js.html">RecipeInfo.js</a>, <a href="RecipeInfo.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-</div>
-
-        
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+      .item-3{
+        grid-column-start: endOfRecipe;
+        grid-column-end: rightmost;
+        grid-row-start: 3;
+        grid-row-end: auto;
+        background-color: blue;
+      }
+      `;
+    const page = document.createElement("article");
+    const info = document.createElement("recipe-info");
+    const directions = document.createElement("directions-info");
+    // allow info to save recipes
+    info.addRecipeToSaved = this.addRecipeToSaved;
+    info.removeRecipeFromSaved = this.removeRecipeFromSaved;
+    info.isSaved = this.isSaved;
+    // pass recipeId to info
+    info.id = this.id;
+    // pass data to info
+    info.data = data;
+    directions.data = data;
+    page.appendChild(info);
+    page.appendChild(directions);
+
+    this.shadowRoot.appendChild(page);
+  }
+}
+
+customElements.define("recipe-page", RecipePage);
+</code></pre>
+        </article>
+    </section>
 
 
 
