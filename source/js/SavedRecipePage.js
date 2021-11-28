@@ -36,6 +36,12 @@ class SavedRecipePage extends HTMLElement {
       }
     });
 
+    const removeCollection = document.createElement("button");
+    removeCollection.textContent = "Remove Collection";
+    removeCollection.addEventListener("click", () => {
+      // Remove Selected Collection?
+    });
+
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(page);
   }
