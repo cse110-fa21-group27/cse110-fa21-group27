@@ -1,7 +1,9 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -60,7 +62,7 @@ Coursework in other classes have limited the time I am able to work on the proje
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since yesterday?
 I created a color scheme, and I found some logos . I also start designing the search page on figma.

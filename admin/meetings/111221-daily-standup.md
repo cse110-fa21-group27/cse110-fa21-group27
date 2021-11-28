@@ -1,7 +1,9 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -60,7 +62,7 @@ other classes
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since Wednesday?
 Yesterday I started working on recipe cart design.

@@ -62,7 +62,7 @@ Yeah
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since yesterday?
 Didn't have time from math hw
