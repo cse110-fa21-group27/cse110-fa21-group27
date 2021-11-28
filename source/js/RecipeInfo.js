@@ -1,4 +1,14 @@
-/** Class that creates a Recipe Info HTML Component */
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled 
+ * in with the recipe data passed into .data
+ * 
+ * This assumes the following properties are set before .data
+ * @property {Function} addRecipeToSaved 
+ * @property {Function} removeRecipeFromSaved
+ * @property {Boolean} isSaved
+ * @property {string} id - the id for the recipe page this component is displaying
+ */
 class RecipeInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
@@ -160,11 +170,13 @@ class RecipeInfo extends HTMLElement {
     saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
     saveRecipe.addEventListener("click", () => {
       if (!this.isSaved) {
-        this.addRecipeToSaved(this.url).then(() => {
+        this.addRecipeToSaved(this.id).then(() => {
+          this.isSaved = true;
           saveRecipe.textContent = "Unsave Recipe";
         });
       } else {
-        this.removeRecipeFromSaved(this.url).then(() => {
+        this.removeRecipeFromSaved(this.id).then(() => {
+          this.isSaved = false;
           saveRecipe.textContent = "Save Recipe";
         });
       }
