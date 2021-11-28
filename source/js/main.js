@@ -69,11 +69,11 @@ function recipesPage() {
   // render the cards for saved recipes
   renderRecipes(
     storage.userInfo.savedRecipes.map((savedRecipe) => {
-      return savedRecipe.url;
+      return savedRecipe.id;
     }),
     savedRecipeSection
   );
-  // render the cards for just recipes
+  // render the cards for just recipes TODO: #169
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
   /*
   renderNavBar({
@@ -84,6 +84,7 @@ function recipesPage() {
 }
 
 /**
+ * OUTDATED (unused)
  * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
  * @function
  */
@@ -114,11 +115,11 @@ function savedRecipesPage() {
  * At the end of this function, all of the pages should be removed
  * and the corresponding recipe-page passed into this function should be rendered
  * @function
- * @param {string} recipeUrl - the url of the recipe the page is showing
+ * @param {string} recipeId - the id of the recipe the page is showing
  * @param {Object} recipeJSON - the recipeJSON of the recipe that contains
  * all its data
  */
-function recipePage(recipeUrl, recipeJSON) {
+function recipePage(recipeId, recipeJSON) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
@@ -128,8 +129,8 @@ function recipePage(recipeUrl, recipeJSON) {
   // allow it to save and remove recipes
   recipePage.addRecipeToSaved = storage.addRecipeToSaved;
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
-  recipePage.url = recipeUrl;
-  recipePage.isSaved = storage.isSaved(recipeUrl);
+  recipePage.id = recipeId;
+  recipePage.isSaved = storage.isSaved(recipeId);
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
   // update nav-bar
@@ -236,24 +237,24 @@ function renderNavBar(data) {
 
 /**
  * After this function is run, the <recipe-card> elements corresponding
- * to a url in list will be created and placed into target
+ * to an id in list will be created and placed into target
  * @async
  * @function
- * @param {String[]} list - array of urls to render
+ * @param {String[]} list - array of ids to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
  * recipe-card's into
  */
 async function renderRecipes(list, target) {
-  list.forEach((recipeUrl) => {
+  list.forEach((recipeId) => {
     // obtain data
-    const recipeJSON = storage.recipeData[recipeUrl].data;
+    const recipeJSON = storage.recipeData[recipeId].data;
     const newCard = document.createElement("recipe-card");
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
-    router.addPage(recipeUrl, recipePage.bind(null, recipeUrl, recipeJSON));
+    router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, recipeUrl);
+    bindRecipeCard(newCard, recipeId);
 
     target.appendChild(newCard);
   });
@@ -264,12 +265,12 @@ async function renderRecipes(list, target) {
  * HTMLElement so that when it is clicked, the router navigates to
  * that corresponding recipe's page
  * @param {HTMLElement} recipeCard
- * @param {string} url
+ * @param {string} recipeId
  */
-function bindRecipeCard(recipeCard, url) {
+function bindRecipeCard(recipeCard, recipeId) {
   recipeCard.addEventListener("click", (e) => {
     if (e.path[0].nodeName == "A") return;
-    router.navigate(url);
+    router.navigate(recipeId);
   });
 }
 
