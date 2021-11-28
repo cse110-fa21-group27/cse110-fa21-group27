@@ -56,11 +56,7 @@ async function getRecipes() {
       // if it doesn't exist, we fill it with our temp recipes for now
       if (!storageRecipesString) {
         // fetch them
-        const list = [
-          "./json/chicken_n_dumplings.json",
-          "./json/chicken_tortilla_soup.json",
-          "./json/gyudon.json",
-        ];
+        const list = ["./json/recipes.json"];
         let promises = [];
 
         list.forEach((url) => {
@@ -70,10 +66,15 @@ async function getRecipes() {
                 return response.json();
               })
               .then((json) => {
-                storageRecipes[url] = {
-                  url: url,
-                  data: json,
-                };
+                console.log(json.recipes);
+                json.recipes.forEach((recipe) => {
+                  let id = recipe.id;
+                  storageRecipes[id] = {
+                    id: id,
+                    data: recipe
+                  };
+                });
+
                 console.log(storageRecipes);
               })
               .catch((error) => {
@@ -89,8 +90,8 @@ async function getRecipes() {
               JSON.stringify(storageRecipes)
             );
             // update global variable
-            for (const url in storageRecipes) {
-              recipeData[url] = storageRecipes[url];
+            for (const id in storageRecipes) {
+              recipeData[id] = storageRecipes[id];
             }
           })
         );
