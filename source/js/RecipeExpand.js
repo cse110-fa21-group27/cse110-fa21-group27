@@ -1,5 +1,6 @@
-// RecipeExpand.js
+/** his is the recipeExpand for all pages that use it*/
 class RecipeExpand extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -145,6 +146,7 @@ class RecipeExpand extends HTMLElement {
   /**
    * Sets the recipe that will be used inside the <recipe-expand> element.
    * Overwrites the previous recipe, fair warning.
+   * @param {object} data - json recipie data
    */
   set data(data) {
     this.json = data;

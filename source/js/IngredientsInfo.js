@@ -1,9 +1,13 @@
+/** this is the ingredientsIfo component */
 class IngredientsInfo extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /** passes the data object that has the recipe json file
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
     const style = `
         .ingredients-info {
