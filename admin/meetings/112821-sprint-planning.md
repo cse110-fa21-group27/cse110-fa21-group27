@@ -6,15 +6,11 @@
 
 <!-- Remove the people not attending. -->
 
-- Arturo Amaya
-- Aryan Malik
 - Delia McGrath
 - Dilara Marasli
 - Kevin Yu
 - Miguel Sanchez
 - Steven Christensen
-- Steven Schaeffer
-- Tiffany Chang
 - Tucker Frandsen
 
 Location: Zoom
