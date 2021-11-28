@@ -1,4 +1,14 @@
-/** Class that creates a Recipe Info HTML Component */
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
+ *
+ * This assumes the following properties are set before .data
+ * @property {Function} addRecipeToSaved
+ * @property {Function} removeRecipeFromSaved
+ * @property {Boolean} isSaved
+ * @property {string} id - the id for the recipe page this component is displaying
+ */
 class RecipeInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
@@ -12,7 +22,6 @@ class RecipeInfo extends HTMLElement {
    * @param {Object} data - The recipe json file
    */
   set data(data) {
-    
     // Creates CSS for the Recipe Info Component
     const style = `
         .recipe-info {
@@ -66,71 +75,49 @@ class RecipeInfo extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
-    const cleanData = {};
-    // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data, "thumbnailUrl");
-    cleanData.title = getRecipeTitle(data);
-    cleanData.url = getUrl(data);
-    cleanData.organization = getOrganization(data);
-    const cookTime = searchForKey(data, "cookTime");
-    const prepTime = searchForKey(data, "prepTime");
-    const totalTime = searchForKey(data, "totalTime");
-    cleanData.cookTime = convertTime(cookTime);
-    cleanData.prepTime = convertTime(prepTime);
-    cleanData.totalTime = convertTime(totalTime);
-    const tempRating = searchForKey(data, "aggregateRating");
-    if (!!tempRating) {
-      cleanData.rating = {
-        count: tempRating.ratingCount,
-        score: tempRating.ratingValue,
-      };
-    }
-
     const info = document.createElement("article");
     info.classList.add("recipe-info");
 
     const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
-    photo.setAttribute("src", cleanData.thumbnail);
+    photo.setAttribute("src", data.image);
     info.appendChild(photo);
 
     const title = document.createElement("p");
     title.classList.add("title");
-    title.textContent = cleanData.title;
+    title.textContent = data.title;
     info.appendChild(title);
 
     const review = document.createElement("div");
     review.classList.add("rating-time");
 
     const time = document.createElement("p");
-    if (!!cleanData.prepTime) {
-      time.textContent = `Prep Time: ${cleanData.prepTime}`;
-    }
-    if (!!cleanData.cookTime) {
-      time.textContent = `Cook Time: ${cleanData.cookTime}`;
-    }
-    if (!!cleanData.totalTime) {
-      time.textContent = `Total Time: ${cleanData.totalTime}`;
-    }
+    time.textContent = `${data.readyInMinutes} mins`;
     review.appendChild(time);
 
     const rating = document.createElement("p");
-    rating.textContent = `${cleanData.rating.score} stars`;
+    rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
     const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
-    switch (Math.round(searchForKey(data, "ratingValue"))) {
+    switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
       case 0:
         starPicture.src = "images/0-star.svg";
+        break;
       case 1:
         starPicture.src = "images/1-star.svg";
+        break;
       case 2:
         starPicture.src = "images/2-star.svg";
+        break;
       case 3:
         starPicture.src = "images/3-star.svg";
+        break;
       case 4:
         starPicture.src = "images/4-star.svg";
+        break;
       case 5:
         starPicture.src = "images/5-star.svg";
+        break;
     }
     review.appendChild(rating);
     review.appendChild(starPicture);
@@ -160,11 +147,13 @@ class RecipeInfo extends HTMLElement {
     saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
     saveRecipe.addEventListener("click", () => {
       if (!this.isSaved) {
-        this.addRecipeToSaved(this.url).then(() => {
+        this.addRecipeToSaved(this.id).then(() => {
+          this.isSaved = true;
           saveRecipe.textContent = "Unsave Recipe";
         });
       } else {
-        this.removeRecipeFromSaved(this.url).then(() => {
+        this.removeRecipeFromSaved(this.id).then(() => {
+          this.isSaved = false;
           saveRecipe.textContent = "Save Recipe";
         });
       }
@@ -180,112 +169,3 @@ class RecipeInfo extends HTMLElement {
 }
 
 customElements.define("recipe-info", RecipeInfo);
-
-/** *******************************************************************/
-/** *                       Helper Functions:                       ***/
-/** *          Shout out to the TA's lemme just yoink these         ***/
-/** *******************************************************************/
-
-/**
- * Recursively search for a key nested somewhere inside an object
- * @param {Object} object the object with which you'd like to search
- * @param {String} key the key that you are looking for in the object
- * @return {*} the value of the found key
- */
-function searchForKey(object, key) {
-  let value;
-  Object.keys(object).some(function (k) {
-    if (k === key) {
-      value = object[k];
-      return true;
-    }
-    if (object[k] && typeof object[k] === "object") {
-      value = searchForKey(object[k], key);
-      return value !== undefined;
-    }
-  });
-  return value;
-}
-
-/**
- * Similar to getUrl(), this function extracts the organizations name from the
- * schema JSON object. It's not in a standard location so this function helps.
- * @param {Object} data Raw recipe JSON to find the org string of
- * @return {String} If found, it retuns the name of the org as a string,
- * otherwise null
- */
-function getOrganization(data) {
-  if (data.publisher?.name) return data.publisher?.name;
-  if (data["@graph"]) {
-    for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Organization") {
-        return data["@graph"][i].name;
-      }
-    }
-  }
-  return null;
-}
-
-/**
- * Similar to getOrganization(), this extracts recipe name from raw JSON
- * @param {Object} data Raw recipe JSON to find name of
- * @return {String} if found, returns the name of recipe as string,
- * otherwise null
- */
-function getRecipeTitle(data) {
-  if (data.name) return data.name;
-  let value = null;
-  if (data["@graph"]) {
-    data["@graph"].forEach((obj) => {
-      if (obj["@type"] == "Recipe") {
-        value = obj["name"];
-      }
-    });
-  }
-  return value;
-}
-
-/**
- * Extract the URL from the given recipe schema JSON object
- * @param {Object} data Raw recipe JSON to find the URL of
- * @return {String} If found, it returns the URL as a string, otherwise null
- */
-function getUrl(data) {
-  if (data.url) return data.url;
-  if (data["@graph"]) {
-    for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article") {
-        return data["@graph"][i]["@id"];
-      }
-    }
-  }
-  return null;
-}
-
-/**
- * Converts ISO 8061 time strings to regular english time strings.
- * Not perfect but it works for this lab
- * @param {String} time time string to format
- * @return {String} formatted time string
- */
-function convertTime(time) {
-  let timeStr = "";
-
-  // Remove the 'PT'
-  time = time.slice(2);
-
-  const timeArr = time.split("");
-  if (time.includes("H")) {
-    for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "H") return `${timeStr} hr`;
-      timeStr += timeArr[i];
-    }
-  } else {
-    for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "M") return `${timeStr} min`;
-      timeStr += timeArr[i];
-    }
-  }
-
-  return "";
-}
