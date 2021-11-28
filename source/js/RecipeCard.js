@@ -1,11 +1,15 @@
+/** this is the recipeCard component for all pages */
 class RecipeCard extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
-    let shadow = this.attachShadow({mode: 'open'});
+    const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /** passes the data object that has the recipe json file
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
-    const style=`
+    const style = `
     .recipe-card {
       width: 300px;
 
@@ -28,51 +32,52 @@ class RecipeCard extends HTMLElement {
       grid-template-columns: [left] 50% [middle] 50% [right];
     }
     `;
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML=style;
-
+    const styleElem = document.createElement("style");
+    styleElem.innerHTML = style;
 
     const cleanData = {};
     // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
+    cleanData.thumbnail = searchForKey(data, "thumbnailUrl");
     cleanData.title = getRecipeTitle(data);
     cleanData.url = getUrl(data);
     cleanData.organization = getOrganization(data);
-    let cookTime = searchForKey(data,'cookTime');
-    let prepTime = searchForKey(data,'prepTime');
-    let totalTime = searchForKey(data,'totalTime');
+    const cookTime = searchForKey(data, "cookTime");
+    const prepTime = searchForKey(data, "prepTime");
+    const totalTime = searchForKey(data, "totalTime");
     cleanData.cookTime = convertTime(cookTime);
     cleanData.prepTime = convertTime(prepTime);
     cleanData.totalTime = convertTime(totalTime);
-    cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
-    let tempRating = searchForKey(data,'aggregateRating');
+    cleanData.ingredients = createIngredientList(
+      searchForKey(data, "recipeIngredient")
+    );
+    const tempRating = searchForKey(data, "aggregateRating");
     if (!!tempRating) {
       cleanData.rating = {
         count: tempRating.ratingCount,
-        score: tempRating.ratingValue
-      }
+        score: tempRating.ratingValue,
+      };
     }
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
+    const card = document.createElement("article");
+    card.classList.add("recipe-card");
 
-    const photo = document.createElement('img');
+    const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
-    photo.setAttribute('src', cleanData.thumbnail);
+    photo.setAttribute("src", cleanData.thumbnail);
     card.appendChild(photo);
 
-    const title = document.createElement('p');
+    const title = document.createElement("p");
     title.textContent = cleanData.title;
     card.appendChild(title);
 
-    const info = document.createElement('div');
-    info.classList.add('rating-time');
+    const info = document.createElement("div");
+    info.classList.add("rating-time");
 
-    const rating = document.createElement('p');
+    const rating = document.createElement("p");
     rating.textContent = `${cleanData.rating.score} stars`;
-    const starPicture = document.createElement('img');
+    const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
-    switch (Math.round(searchForKey(data, 'ratingValue'))) {
+    switch (Math.round(searchForKey(data, "ratingValue"))) {
       case 0:
         starPicture.src = "images/0-star.svg";
       case 1:
@@ -89,10 +94,10 @@ class RecipeCard extends HTMLElement {
     info.appendChild(rating);
     info.appendChild(starPicture);
 
-    const time = document.createElement('p');
+    const time = document.createElement("p");
     if (!!cleanData.prepTime) {
       time.textContent = cleanData.prepTime;
-    } 
+    }
     if (!!cleanData.cookTime) {
       time.textContent = cleanData.cookTime;
     }
@@ -106,31 +111,29 @@ class RecipeCard extends HTMLElement {
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(card);
   }
-
 }
 
-customElements.define('recipe-card', RecipeCard);
+customElements.define("recipe-card", RecipeCard);
 
-
-/*********************************************************************/
-/***                       Helper Functions:                       ***/
-/***          Shout out to the TA's lemme just yoink these         ***/
-/*********************************************************************/
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
 
 /**
  * Recursively search for a key nested somewhere inside an object
  * @param {Object} object the object with which you'd like to search
  * @param {String} key the key that you are looking for in the object
- * @returns {*} the value of the found key
+ * @return {*} the value of the found key
  */
- function searchForKey(object, key) {
-  var value;
+function searchForKey(object, key) {
+  let value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
       return true;
     }
-    if (object[k] && typeof object[k] === 'object') {
+    if (object[k] && typeof object[k] === "object") {
       value = searchForKey(object[k], key);
       return value !== undefined;
     }
@@ -142,32 +145,32 @@ customElements.define('recipe-card', RecipeCard);
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @returns {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a string, otherwise null
  */
- function getOrganization(data) {
+function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Organization') {
-        return data['@graph'][i].name;
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Organization") {
+        return data["@graph"][i].name;
       }
     }
-  };
+  }
   return null;
 }
 
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
  * @param {Object} Data Raw recipe JSON to find name of
- * @returns {String} if found, returns the name of recipe as string, otherwise null
+ * @return {String} if found, returns the name of recipe as string, otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
   let value = null;
-  if (data['@graph']) {
-    data['@graph'].forEach((obj) => {
-      if (obj['@type'] == 'Recipe') {
-        value = obj['name'];
+  if (data["@graph"]) {
+    data["@graph"].forEach((obj) => {
+      if (obj["@type"] == "Recipe") {
+        value = obj["name"];
       }
     });
   }
@@ -177,15 +180,16 @@ function getRecipeTitle(data) {
 /**
  * Extract the URL from the given recipe schema JSON object
  * @param {Object} data Raw recipe JSON to find the URL of
- * @returns {String} If found, it returns the URL as a string, otherwise null
+ * @return {String} If found, it returns the URL as a string, otherwise null
  */
 function getUrl(data) {
   if (data.url) return data.url;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Article")
+        return data["@graph"][i]["@id"];
     }
-  };
+  }
   return null;
 }
 
@@ -196,25 +200,25 @@ function getUrl(data) {
  * @return {String} formatted time string
  */
 function convertTime(time) {
-  let timeStr = '';
+  let timeStr = "";
 
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split('');
-  if (time.includes('H')) {
+  const timeArr = time.split("");
+  if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'H') return `${timeStr} hr`;
+      if (timeArr[i] == "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'M') return `${timeStr} min`;
+      if (timeArr[i] == "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
 
-  return '';
+  return "";
 }
 
 /**
@@ -225,7 +229,7 @@ function convertTime(time) {
  * @return {String} the string comma separate list of ingredients from the array
  */
 function createIngredientList(ingredientArr) {
-  let finalIngredientList = '';
+  let finalIngredientList = "";
 
   /**
    * Removes the quantity and measurement from an ingredient string.
@@ -233,14 +237,14 @@ function createIngredientList(ingredientArr) {
    * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
    * For the purposes of this lab you don't have to worry about those cases.
    * @param {String} ingredient the raw ingredient string you'd like to process
-   * @return {String} the ingredient without the measurement & quantity 
+   * @return {String} the ingredient without the measurement & quantity
    * (e.g. '1 cup flour' returns 'flour')
    */
   function _removeQtyAndMeasurement(ingredient) {
-    return ingredient.split(' ').splice(2).join(' ');
+    return ingredient.split(" ").splice(2).join(" ");
   }
 
-  ingredientArr.forEach(ingredient => {
+  ingredientArr.forEach((ingredient) => {
     ingredient = _removeQtyAndMeasurement(ingredient);
     finalIngredientList += `${ingredient}, `;
   });
@@ -248,4 +252,3 @@ function createIngredientList(ingredientArr) {
   // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
   return finalIngredientList.slice(0, -2);
 }
-
