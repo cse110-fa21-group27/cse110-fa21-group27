@@ -70,6 +70,16 @@ class NavBar extends HTMLElement {
       width: 3.2%;
       height: 70%;
   }
+  .roadmap_png {
+    position: absolute;
+    left: 81%;
+    right: 10.88%;
+    top: 20%;
+    width: 4%;
+    height: 72%;
+    background: white;
+    border-radius: 10em;
+  }
 }
       `;
     const styleElem = document.createElement("style");
@@ -116,6 +126,15 @@ class NavBar extends HTMLElement {
     shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
 
+    // roadmap button/img
+    const roadmapAct= document.createElement("form");
+    const roadmapImg = document.createElement("input");
+    roadmapImg.type = "image";
+    roadmapImg.className = "roadmap_png";
+    roadmapImg.id = "se_roadmap_png";
+    roadmapImg.name = "se_roadmap_png";
+    roadmapImg.src = "./images/cook_icon.png";
+
     // saved button/img
     const savedAct = document.createElement("form");
     const savedImg = document.createElement("input");
@@ -132,6 +151,12 @@ class NavBar extends HTMLElement {
     navBar.appendChild(navAct2);
 
     navBar.appendChild(searchImg);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
 
     shoppingAct.appendChild(shoppingImg);
     navBar.appendChild(shoppingAct);
