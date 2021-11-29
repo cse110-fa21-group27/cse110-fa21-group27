@@ -265,3 +265,5 @@ function searchForKey(object, key) {
   });
   return value;
 }
+
+module.exports = { Directions };

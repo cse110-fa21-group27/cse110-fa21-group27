@@ -464,8 +464,8 @@ const sampleRecipe1 = {
 };
 
 test("create a directions object", () => {
-  const directions = window.document.createElement("directions-info");
-  // directions.data = sampleRecipe1;
+  const directions = document.createElement("directions-info");
+  directions.data = sampleRecipe1;
   expect(directions).toBe(
     "1) Rinse and drain the kidney beans, cut the sundried tomatoes, and tear the slice of cheese into small pieces."
   );
