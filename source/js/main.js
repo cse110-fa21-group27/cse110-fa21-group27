@@ -33,12 +33,10 @@ async function init() {
   // obtain recipes from storage
   await storage.getRecipes();
   router.navigate("home");
+  router.addPage("savedRecipes", savedRecipesPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
-    goHome: () => {
-      router.navigate("home");
-    },
   });
   bindPopState();
 }
@@ -59,34 +57,11 @@ function recipesPage() {
   main.appendChild(rlabel);
 
   main.appendChild(recipeSection);
-  // make saved-recipes visible
-  const savedRecipeSection = document.createElement("section");
-  savedRecipeSection.classList.add("saved-recipes");
-
-  const slabel = document.createElement("h1");
-  slabel.innerText = "Saved Recipes";
-  main.appendChild(slabel);
-
-  main.appendChild(savedRecipeSection);
-  // render the cards for saved recipes
-  renderRecipes(
-    storage.userInfo.savedRecipes.map((savedRecipe) => {
-      return savedRecipe.id;
-    }),
-    savedRecipeSection
-  );
-  // render the cards for just recipes TODO: #169
+  // render the cards for just recipes
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
-  /*
-  renderNavBar({
-    recipeUrl: null,
-    isRecipe: false,
-  });
-  */
 }
 
 /**
- * OUTDATED (unused)
  * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
  * @function
  */
@@ -95,22 +70,9 @@ function savedRecipesPage() {
   // delete everyting in main
   main.innerHTML = "";
   // make saved-recipes visible
-  const savedRecipeSection = document.createElement("section");
+  const savedRecipeSection = document.createElement("saved-recipe-page");
   savedRecipeSection.classList.add("saved-recipes");
   main.appendChild(savedRecipeSection);
-
-  renderRecipes(
-    storage.userInfo.savedRecipes.map((savedRecipe) => {
-      savedRecipe.url;
-    }),
-    savedRecipeSection
-  );
-  /*
-  renderNavBar({
-    recipeUrl: null,
-    isRecipe: false,
-  });
-  */
 }
 
 /**
@@ -135,13 +97,6 @@ function recipePage(recipeId, recipeJSON) {
   recipePage.isSaved = storage.isSaved(recipeId);
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
-  // update nav-bar
-  /*
-  renderNavBar({
-    recipeUrl: recipeUrl,
-    isRecipe: true,
-  });
-  */
 }
 
 /**
@@ -154,6 +109,9 @@ function renderNavBar(data) {
   const bar = document.querySelector("nav-bar");
   bar.goHome = () => {
     router.navigate("home");
+  };
+  bar.goToSaved = () => {
+    router.navigate("savedRecipes");
   };
   bar.data = data;
 }
