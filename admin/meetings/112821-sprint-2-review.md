@@ -4,8 +4,6 @@
 
 ### Attendance
 
-Synchronous
-
 - Delia McGrath
 - Dilara Marasli
 - Kevin Yu
@@ -13,9 +11,7 @@ Synchronous
 - Steven Christensen
 - Tucker Frandsen
 
-Asynchronous 
-
-- 
+- Aryan Malik
 
 Location: Zoom
 Date: 11/28/21
@@ -42,7 +38,9 @@ Sprint Review
   - Connect HTML with the javascript
   - Work on the search page 
 - Aryan
-  - Unknown. Delia fill in.
+  - Touching up the front-end
+  - Convert old html/css code into pure js 
+  - Stay up-to-date on the backend code to understand and prepare to jump in
 - Steven C.
   - Figuring out and identifying critical framework
   - Worked on Nav Bar, Road Map, and Search Component
