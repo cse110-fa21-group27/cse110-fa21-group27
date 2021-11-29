@@ -239,29 +239,3 @@ class Directions extends HTMLElement {
 }
 
 customElements.define("directions-info", Directions);
-
-/** *******************************************************************/
-/** *                       Helper Functions:                       ***/
-/** *          Shout out to the TA's lemme just yoink these         ***/
-/** *******************************************************************/
-
-/**
- * Recursively search for a key nested somewhere inside an object
- * @param {Object} object the object with which you'd like to search
- * @param {String} key the key that you are looking for in the object
- * @return {*} the value of the found key
- */
-function searchForKey(object, key) {
-  let value;
-  Object.keys(object).some(function (k) {
-    if (k === key) {
-      value = object[k];
-      return true;
-    }
-    if (object[k] && typeof object[k] === "object") {
-      value = searchForKey(object[k], key);
-      return value !== undefined;
-    }
-  });
-  return value;
-}
