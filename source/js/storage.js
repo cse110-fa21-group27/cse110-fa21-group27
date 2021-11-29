@@ -71,7 +71,7 @@ async function getRecipes() {
                   let id = recipe.id;
                   storageRecipes[id] = {
                     id: id,
-                    data: recipe
+                    data: recipe,
                   };
                 });
 
@@ -108,6 +108,47 @@ async function getRecipes() {
     } catch (error) {
       console.log(`Unable to retrieve recipes ${error}`);
       reject(error);
+    }
+  });
+}
+
+/**
+ * This function iterates through the recipeData variable
+ * and looks for recipes matching the given options variable
+ * This assumes getRecipes() has been called
+ * @async
+ * @param {Object} options should contain search terms as well as any
+ * other options (e.g. sort/filtering)
+ * Currently only supports just query string
+ * @returns {Promise}
+ */
+async function search(options) {
+  return new Promise((resolve, reject) => {
+    try {
+      // initialize results array
+      let results = [];
+      // split up the search terms into an array
+      const searchTerms = options.query.toLowerCase().split(" ");
+      // iterate through recipeData
+      for (const recipeId in recipeData) {
+        let hit = false;
+        for (const term in searchTerms) {
+          // see if its name contains one of the search terms
+          if (recipeData[recipeId].title.toLowerCase().contains(term)) {
+            hit = true;
+          }
+        }
+
+        if (hit) {
+          results.push(recipeId);
+        }
+      }
+      // done
+      resolve(results);
+    } catch (error) {
+      // uh oh
+      console.log(`Error searching for ${options}, ${error}`);
+      reject();
     }
   });
 }
@@ -200,7 +241,7 @@ function isSaved(recipeId) {
   return savedIds.includes(recipeId);
 }
 
-/** 
+/**
  * ON HOLD (UNTESTED)
  * This function fetches an external recipe url and parses it for its recipe
  * json, which we return when this function resolves.
