@@ -4,7 +4,7 @@
 
 ### Attendance
 
-<!-- Remove the people not attending. -->
+Synchronous
 
 - Delia McGrath
 - Dilara Marasli
@@ -13,9 +13,13 @@
 - Steven Christensen
 - Tucker Frandsen
 
+Asynchronous 
+
+- 
+
 Location: Zoom
 Date: 11/28/21
-Time: 2PM
+Time: 14:00
 
 ### Agenda
 
@@ -35,6 +39,8 @@ Sprint Review
   - Unknown. Delia fill in.
 - Kevin
   - Recipe page and ingredients component
+  - Connect HTML with the javascript
+  - Work on the search page 
 - Aryan
   - Unknown. Delia fill in.
 - Steven C.
@@ -42,10 +48,14 @@ Sprint Review
   - Worked on Nav Bar, Road Map, and Search Component
   - Helped with data storage into local Storage
 - Miguel
-  - Unknown. Delia fill in.
+  - Putting components into the HTML file
+  - Make a simple storage backend based on local storage
+  - Link the storage to the components so they interact with it
+  - Start working with spoonacular/ start integrating it with the app
 - Delia
   - Been taking care of organizing the daily standups
   - Lots of presentations to show off progress
+  - Work on the Navbar with frontend
   - Lots of meetings with people to discuss ideas and project directions
 - Tucker
   - Worked on data scraping
@@ -57,6 +67,5 @@ Sprint Review
 
 ### AUDIO WILL BE IN THIS FOLDER LABELED SPRINT_REVIEW_2_AUDIO.m4a
 
-Meeting concluded at 2:25PM.
+Meeting concluded at 14:25PM.
 
-<!-- REMINDER TO SAVE THE TEMPLATE AS (mmddyy-topic.md)-->
