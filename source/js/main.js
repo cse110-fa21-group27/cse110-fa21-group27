@@ -153,7 +153,11 @@ function recipePage(recipeId, recipeJSON) {
   main.innerHTML = "";
   // show the roadmap page
   const roadmapPage = document.createElement("roadmap-page");
+  
   main.appendChild(roadmapPage);
+
+  
+
   /*
   renderNavBar({
     recipeUrl: recipeUrl,
