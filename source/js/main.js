@@ -33,12 +33,10 @@ async function init() {
   // obtain recipes from storage
   await storage.getRecipes();
   router.navigate("home");
+  router.addPage("savedRecipes", savedRecipesPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
-    goHome: () => {
-      router.navigate("home");
-    },
   });
   bindPopState();
 }
@@ -59,30 +57,8 @@ function recipesPage() {
   main.appendChild(rlabel);
 
   main.appendChild(recipeSection);
-  // make saved-recipes visible
-  const savedRecipeSection = document.createElement("section");
-  savedRecipeSection.classList.add("saved-recipes");
-
-  const slabel = document.createElement("h1");
-  slabel.innerText = "Saved Recipes";
-  main.appendChild(slabel);
-
-  main.appendChild(savedRecipeSection);
-  // render the cards for saved recipes
-  renderRecipes(
-    storage.userInfo.savedRecipes.map((savedRecipe) => {
-      return savedRecipe.url;
-    }),
-    savedRecipeSection
-  );
   // render the cards for just recipes
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
-  /*
-  renderNavBar({
-    recipeUrl: null,
-    isRecipe: false,
-  });
-  */
 }
 
 /**
@@ -94,33 +70,26 @@ function savedRecipesPage() {
   // delete everyting in main
   main.innerHTML = "";
   // make saved-recipes visible
-  const savedRecipeSection = document.createElement("section");
-  savedRecipeSection.classList.add("saved-recipes");
-  main.appendChild(savedRecipeSection);
-
-  renderRecipes(
-    storage.userInfo.savedRecipes.map((savedRecipe) => {
-      savedRecipe.url;
-    }),
-    savedRecipeSection
-  );
-  /*
-  renderNavBar({
-    recipeUrl: null,
-    isRecipe: false,
+  const savedPage = document.createElement("saved-recipes");
+  // pass the renderrecipes function
+  savedPage.renderRecipes = renderRecipes;
+  // give it an array of recipeids for data
+  savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
+    return savedRecipe.id;
   });
-  */
+
+  main.appendChild(savedPage);
 }
 
 /**
  * At the end of this function, all of the pages should be removed
  * and the corresponding recipe-page passed into this function should be rendered
  * @function
- * @param {string} recipeUrl - the url of the recipe the page is showing
+ * @param {string} recipeId - the id of the recipe the page is showing
  * @param {Object} recipeJSON - the recipeJSON of the recipe that contains
  * all its data
  */
-function recipePage(recipeUrl, recipeJSON) {
+function recipePage(recipeId, recipeJSON) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
@@ -130,72 +99,10 @@ function recipePage(recipeUrl, recipeJSON) {
   // allow it to save and remove recipes
   recipePage.addRecipeToSaved = storage.addRecipeToSaved;
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
-  recipePage.url = recipeUrl;
-  recipePage.isSaved = storage.isSaved(recipeUrl);
+  recipePage.id = recipeId;
+  recipePage.isSaved = storage.isSaved(recipeId);
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
-  // update nav-bar
-  /*
-  renderNavBar({
-    recipeUrl: recipeUrl,
-    isRecipe: true,
-  });
-  */
-}
-
-/**
- * DEPRECATED, replaced by storage.getRecipes()
- * After this function resolves, storage.recipeData should be updated
- * with the url's being the keys to access the fetched data.
- * @async
- * @function
- * @param {String[]} recipeUrlList
- * @returns {Promise}
- */
-async function loadRecipes(recipeUrlList) {
-  return new Promise((resolve, reject) => {
-    // keep track of each promise we make when using fetch
-    const promises = [];
-
-    recipeUrlList.forEach((url) => {
-      // add each fetch promise to the array
-      promises.push(
-        fetch(url)
-          // catch any errors in fetching (network problems or whatever)
-          .catch((error) => {
-            console.log(`Problem fetching ${url}`, error);
-            reject(error);
-          })
-          // check if we get a proper response
-          // fetch() still resolves even if it's a 404
-          .then((response) => {
-            if (!response.ok) {
-              console.log(`Problem fetching ${url}, status ${response.status}`);
-              reject(response);
-            }
-
-            return response.json();
-          })
-          // response.json() is a promise
-          .then((data) => {
-            storage.recipeData[url] = {
-              url: url,
-              data: data,
-            };
-          })
-      );
-    });
-
-    // resolve once the entire promise array is resolved
-    Promise.all(promises)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        reject();
-      });
-  });
 }
 
 /**
@@ -209,30 +116,32 @@ function renderNavBar(data) {
   bar.goHome = () => {
     router.navigate("home");
   };
-  console.log(data);
+  bar.goToSaved = () => {
+    router.navigate("savedRecipes");
+  };
   bar.data = data;
 }
 
 /**
  * After this function is run, the <recipe-card> elements corresponding
- * to a url in list will be created and placed into target
+ * to an id in list will be created and placed into target
  * @async
  * @function
- * @param {String[]} list - array of urls to render
+ * @param {String[]} list - array of ids to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
  * recipe-card's into
  */
 async function renderRecipes(list, target) {
-  list.forEach((recipeUrl) => {
+  list.forEach((recipeId) => {
     // obtain data
-    const recipeJSON = storage.recipeData[recipeUrl].data;
+    const recipeJSON = storage.recipeData[recipeId].data;
     const newCard = document.createElement("recipe-card");
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
-    router.addPage(recipeUrl, recipePage.bind(null, recipeUrl, recipeJSON));
+    router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, recipeUrl);
+    bindRecipeCard(newCard, recipeId);
 
     target.appendChild(newCard);
   });
@@ -243,12 +152,12 @@ async function renderRecipes(list, target) {
  * HTMLElement so that when it is clicked, the router navigates to
  * that corresponding recipe's page
  * @param {HTMLElement} recipeCard
- * @param {string} url
+ * @param {string} recipeId
  */
-function bindRecipeCard(recipeCard, url) {
+function bindRecipeCard(recipeCard, recipeId) {
   recipeCard.addEventListener("click", (e) => {
     if (e.path[0].nodeName == "A") return;
-    router.navigate(url);
+    router.navigate(recipeId);
   });
 }
 

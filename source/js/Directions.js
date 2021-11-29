@@ -123,7 +123,7 @@ class Directions extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
-    const directionList = searchForKey(data, "recipeInstructions");
+    const directionList = data.analyzedInstructions[0].steps;
 
     const wrapper = document.createElement("article");
     wrapper.classList.add("background");
@@ -160,7 +160,7 @@ class Directions extends HTMLElement {
       upArrow.setAttribute("src", "./images/arrowUp.png");
       downArrow.classList.add("downArrow");
       upArrow.classList.add("upArrow");
-      text.textContent = `${x + ")" + " " + directionList[i].name}`;
+      text.textContent = `${x + ")" + " " + directionList[i].step}`;
       text.classList.add("text");
       wrapper.appendChild(text);
       wrapper.appendChild(downArrow);

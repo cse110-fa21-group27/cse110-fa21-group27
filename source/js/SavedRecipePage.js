@@ -1,4 +1,7 @@
-/** Class that creates a Saved Recipe Page HTML Component */
+/**
+ * This assumes that the following properties are passed into this object before .data is called or set
+ * @property {function} renderRecipes
+ */
 class SavedRecipePage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
@@ -9,42 +12,35 @@ class SavedRecipePage extends HTMLElement {
   /**
    * Populates the Saved Recipe Page HTML Component with information from the
    * recipe json file and displays it with some CSS styling.
-   * @param {Object} data - Unknown at this point
+   * @param {String[]} data - array of recipeids
    */
   set data(data) {
+    this.shadowRoot.innerHTML = "";
     const style = `
     button {
       height: 5vh;
       width: 10vw;
+    }
+    .saved-recipes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
     }`;
 
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
-    const page = document.createElement("article");
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-    input.textContent = "Collection Name";
-    form.appendChild(input);
+    const page = document.createElement("section");
+    page.classList.add("saved-recipes");
+    const h = document.createElement("h1");
+    h.textContent = "Saved Recipes";
+    this.shadowRoot.appendChild(h);
 
-    const newCollection = document.createElement("button");
-    newCollection.textContent = "Create new Collection";
-    newCollection.addEventListener("click", () => {
-      if (input.textContent != "Collection Name" && input.textContent != "") {
-        // Create new Collection
-        // Somehow add saved recipes to it
-      }
-    });
-
-    const removeCollection = document.createElement("button");
-    removeCollection.textContent = "Remove Collection";
-    removeCollection.addEventListener("click", () => {
-      // Remove Selected Collection?
-    });
+    this.renderRecipes(data, page);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(page);
   }
 }
 
-customElements.define("saved-recipe-page", SavedRecipePage);
+customElements.define("saved-recipes", SavedRecipePage);
