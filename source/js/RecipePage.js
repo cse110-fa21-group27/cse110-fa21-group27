@@ -1,9 +1,24 @@
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled 
+ * in with the recipe data passed into .data
+ * 
+ * This assumes the following properties are set before .data
+ * @property {Function} addRecipeToSaved 
+ * @property {Function} removeRecipeFromSaved
+ * @property {Boolean} isSaved
+ * @property {string} id - the id for the recipe page this component is displaying
+ */
 class RecipePage extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /** 
+   * passes the data object that has the recipe json file
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
     const style = `
       .recipe-page{
@@ -52,8 +67,8 @@ class RecipePage extends HTMLElement {
     info.addRecipeToSaved = this.addRecipeToSaved;
     info.removeRecipeFromSaved = this.removeRecipeFromSaved;
     info.isSaved = this.isSaved;
-    // pass recipeurl to info
-    info.url = this.url;
+    // pass recipeId to info
+    info.id = this.id;
     // pass data to info
     info.data = data;
     directions.data = data;

@@ -1,17 +1,20 @@
+/** glider component. hopeful that it will hold recipe cards in a pretty way.*/
 class GliderRecipe extends HTMLElement {
-  constructor(){
+  /** constructs the component and allows access to the shadow */
+  constructor() {
     super();
-    let shadow = this.attachShadow({mode: 'open'});
+    const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /**
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
-
-    let cleanData = {};
-    /** 
-     * Making a more organized object for getting 
+    const cleanData = {};
+    /**
+     * Making a more organized object for getting
      * the info from messy recipe json. Might not end up using all of it,
      * I just yoinked this from my lab code
-     * 
+     *
      * cleanData should have
      * cleanData.thumbnail - link to the photo of recipe
      * cleanData.title - title of the recipe
@@ -19,65 +22,66 @@ class GliderRecipe extends HTMLElement {
      * cleanData.organization - organization of the recipe
      * cleanData.time - cook time of the recipe
      * cleanData.ingredients - string of ingredients
-     * 
+     *
      * cleanData.rating is optional and should be
      * rating.score - review score out of 5
      * rating.count - number of reviews
      */
 
     // process raw data into cleanData
-    cleanData.thumbnail = searchForKey(data,'thumbnailUrl');
+    cleanData.thumbnail = searchForKey(data, "thumbnailUrl");
     cleanData.title = getRecipeTitle(data);
     cleanData.url = getUrl(data);
     cleanData.organization = getOrganization(data);
-    let tempTime = searchForKey(data,'cookTime');
-    if (!tempTime) tempTime = searchForKey(data,'totalTime');
+    let tempTime = searchForKey(data, "cookTime");
+    if (!tempTime) tempTime = searchForKey(data, "totalTime");
     cleanData.time = convertTime(tempTime);
-    cleanData.ingredients = createIngredientList(searchForKey(data,'recipeIngredient'));
-    let tempRating = searchForKey(data,'aggregateRating');
+    cleanData.ingredients = createIngredientList(
+      searchForKey(data, "recipeIngredient")
+    );
+    const tempRating = searchForKey(data, "aggregateRating");
     if (tempRating) {
       cleanData.rating = {
         count: tempRating.ratingCount,
-        score: tempRating.ratingValue
-      }
+        score: tempRating.ratingValue,
+      };
     }
 
     // alright cool we got everything, time to actually build it
 
     // this is gonna be the root element we'll slap everything else onto
-    const entry = document.createElement('li');
-    entry.classList.add('glide__slide');
+    const entry = document.createElement("li");
+    entry.classList.add("glide__slide");
 
-    const picture = document.createElement('img');
-    picture.setAttribute('src', cleanData.thumbnail);
-    picture.setAttribute('alt', cleanData.title);
-    picture.setAttribute('id', 'rec');
+    const picture = document.createElement("img");
+    picture.setAttribute("src", cleanData.thumbnail);
+    picture.setAttribute("alt", cleanData.title);
+    picture.setAttribute("id", "rec");
     entry.appendChild(picture);
 
     this.shadowRoot.appendChild(entry);
   }
 }
 
-
-/*********************************************************************/
-/***                       Helper Functions:                       ***/
-/***          Shout out to the TA's lemme just yoink these         ***/
-/*********************************************************************/
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
 
 /**
  * Recursively search for a key nested somewhere inside an object
  * @param {Object} object the object with which you'd like to search
  * @param {String} key the key that you are looking for in the object
- * @returns {*} the value of the found key
+ * @return {*} the value of the found key
  */
- function searchForKey(object, key) {
-  var value;
+function searchForKey(object, key) {
+  let value;
   Object.keys(object).some(function (k) {
     if (k === key) {
       value = object[k];
       return true;
     }
-    if (object[k] && typeof object[k] === 'object') {
+    if (object[k] && typeof object[k] === "object") {
       value = searchForKey(object[k], key);
       return value !== undefined;
     }
@@ -89,32 +93,32 @@ class GliderRecipe extends HTMLElement {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @returns {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a string, otherwise null
  */
- function getOrganization(data) {
+function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Organization') {
-        return data['@graph'][i].name;
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Organization") {
+        return data["@graph"][i].name;
       }
     }
-  };
+  }
   return null;
 }
 
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
  * @param {Object} Data Raw recipe JSON to find name of
- * @returns {String} if found, returns the name of recipe as string, otherwise null
+ * @return {String} if found, returns the name of recipe as string, otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
   let value = null;
-  if (data['@graph']) {
-    data['@graph'].forEach((obj) => {
-      if (obj['@type'] == 'Recipe') {
-        value = obj['name'];
+  if (data["@graph"]) {
+    data["@graph"].forEach((obj) => {
+      if (obj["@type"] == "Recipe") {
+        value = obj["name"];
       }
     });
   }
@@ -124,15 +128,16 @@ function getRecipeTitle(data) {
 /**
  * Extract the URL from the given recipe schema JSON object
  * @param {Object} data Raw recipe JSON to find the URL of
- * @returns {String} If found, it returns the URL as a string, otherwise null
+ * @return {String} If found, it returns the URL as a string, otherwise null
  */
 function getUrl(data) {
   if (data.url) return data.url;
-  if (data['@graph']) {
-    for (let i = 0; i < data['@graph'].length; i++) {
-      if (data['@graph'][i]['@type'] == 'Article') return data['@graph'][i]['@id'];
+  if (data["@graph"]) {
+    for (let i = 0; i < data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] == "Article")
+        return data["@graph"][i]["@id"];
     }
-  };
+  }
   return null;
 }
 
@@ -143,25 +148,25 @@ function getUrl(data) {
  * @return {String} formatted time string
  */
 function convertTime(time) {
-  let timeStr = '';
+  let timeStr = "";
 
   // Remove the 'PT'
   time = time.slice(2);
 
-  let timeArr = time.split('');
-  if (time.includes('H')) {
+  const timeArr = time.split("");
+  if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'H') return `${timeStr} hr`;
+      if (timeArr[i] == "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == 'M') return `${timeStr} min`;
+      if (timeArr[i] == "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
 
-  return '';
+  return "";
 }
 
 /**
@@ -171,8 +176,8 @@ function convertTime(time) {
  *                              imported data
  * @return {String} the string comma separate list of ingredients from the array
  */
-function createIngredientList (ingredientArr) {
-  let finalIngredientList = '';
+function createIngredientList(ingredientArr) {
+  let finalIngredientList = "";
 
   /**
    * Removes the quantity and measurement from an ingredient string.
@@ -180,14 +185,14 @@ function createIngredientList (ingredientArr) {
    * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
    * For the purposes of this lab you don't have to worry about those cases.
    * @param {String} ingredient the raw ingredient string you'd like to process
-   * @return {String} the ingredient without the measurement & quantity 
+   * @return {String} the ingredient without the measurement & quantity
    * (e.g. '1 cup flour' returns 'flour')
    */
   function _removeQtyAndMeasurement(ingredient) {
-    return ingredient.split(' ').splice(2).join(' ');
+    return ingredient.split(" ").splice(2).join(" ");
   }
 
-  ingredientArr.forEach(ingredient => {
+  ingredientArr.forEach((ingredient) => {
     ingredient = _removeQtyAndMeasurement(ingredient);
     finalIngredientList += `${ingredient}, `;
   });
@@ -196,6 +201,5 @@ function createIngredientList (ingredientArr) {
   return finalIngredientList.slice(0, -2);
 }
 
-
 // define custom element!!
-customElements.define('glider-recipe',GliderRecipe);
+customElements.define("glider-recipe", GliderRecipe);

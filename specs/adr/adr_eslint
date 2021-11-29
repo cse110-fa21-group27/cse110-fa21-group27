@@ -1,0 +1,37 @@
+# ESLint on VSCode
+
+- Status: Accepted
+- Deciders: Steven Schaeffer, Arturo Amaya
+- Date: 2021-11-22
+
+## Context and Problem Statement
+
+How can we catch more errors at the source of development so that linting takes less time overall?  
+We need at least some form of linting on developers' local environments to catch more errors at the source.  
+Codacy catches lots of errors, but it is not great at fixing such errors.  
+Also, Codacy reports style errors which reflects an inaccurate number of fatal issues with our code.
+
+## Considered Options
+
+- option 1: fix flag, Codacy
+- option 2: use less linting
+- option 3: add ESLint to local development environment
+
+## Decision Outcome
+
+Chosen option: option 3  
+Reasoning: makes linting more efficient in a local environment
+
+### Positive Consequences
+
+- catch more errors when they are easy to fix in the moment
+- faster than Codacy
+
+### Negative Consequences
+
+- redundant when coupled with Codacy (which runs integrated ESLint checks)
+
+## Links
+
+- https://github.com/cse110-fa21-group27/cse110-fa21-group27/tree/main/specs/adr/adr_eslint
+- https://github.com/cse110-fa21-group27/cse110-fa21-group27/pull/150

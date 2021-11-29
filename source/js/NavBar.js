@@ -1,9 +1,13 @@
+/** this is the navbar component for all pages */
 class NavBar extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
-    let shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
   }
-
+  /** we did not know how to get this navbar without using the data func even tho it tech shouldnt need it
+   * @param {object} data - the recipe json file
+   */
   set data(data) {
     const style = `
     .navBar {
@@ -74,11 +78,8 @@ class NavBar extends HTMLElement {
       `;
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
-    /*
-       
-      */
 
-    //the whole bar itself
+    // the whole bar itself
     const navBar = document.createElement("article");
     navBar.classList.add("navBar");
 
@@ -92,7 +93,7 @@ class NavBar extends HTMLElement {
       this.goHome();
     });
 
-    //search bar
+    // search bar
     const navAct2 = document.createElement("form");
     const navText = document.createElement("input");
     navText.type = "text";
@@ -101,22 +102,22 @@ class NavBar extends HTMLElement {
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
 
-    //search button/image
+    // search button/image
     const searchImg = document.createElement("img");
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
 
-    //shopping cart image/button
+    // shopping cart image/button
     const shoppingAct = document.createElement("form");
     const shoppingImg = document.createElement("input");
     shoppingImg.type = "image";
     shoppingImg.className = "cart_png";
     shoppingImg.id = "se_cart_png";
-    shoppingImg.name = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
+    shoppingImg.name = "se_cart_png";
 
-    //saved button/img
+    // saved button/img
     const savedAct = document.createElement("form");
     const savedImg = document.createElement("input");
     savedImg.type = "image";
@@ -125,7 +126,7 @@ class NavBar extends HTMLElement {
     savedImg.name = "se_saved_png";
     savedImg.src = "./images/saved.png";
 
-    //navAct.appendChild(spudlyImg);
+    // navAct.appendChild(spudlyImg);
     navBar.appendChild(spudlyImg);
 
     navAct2.appendChild(navText);
