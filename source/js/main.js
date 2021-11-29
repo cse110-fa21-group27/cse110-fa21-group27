@@ -32,7 +32,8 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
-  router.addPage('roadmap-page',RoadmapPage);
+  router.addPage("roadmap-page", RoadmapPage);
+  router.addPage("search-page", SearchPage);
   router.navigate("home");
   renderNavBar({
     recipeUrl: null,
@@ -147,16 +148,36 @@ function recipePage(recipeId, recipeJSON) {
  * and the corresponding recipe-page passed into this function should be rendered
  * @function
  */
- function RoadmapPage() {
+function RoadmapPage() {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
   // show the roadmap page
   const roadmapPage = document.createElement("roadmap-page");
-  
+
   main.appendChild(roadmapPage);
 
-  
+  /*
+  renderNavBar({
+    recipeUrl: recipeUrl,
+    isRecipe: true,
+  });
+  */
+}
+
+/**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed into this function should be rendered
+ * @function
+ */
+function SearchPage() {
+  const main = document.querySelector("main");
+  // delete everyting in main
+  main.innerHTML = "";
+  // show the roadmap page
+  const searchPage = document.createElement("search-page");
+
+  main.appendChild(searchPage);
 
   /*
   renderNavBar({
@@ -234,6 +255,9 @@ function renderNavBar(data) {
   };
   bar.goRoadmap = () => {
     router.navigate("roadmap-page");
+  };
+  bar.goSearchPage = () => {
+    router.navigate("search-page");
   };
   console.log(data);
   bar.data = data;
