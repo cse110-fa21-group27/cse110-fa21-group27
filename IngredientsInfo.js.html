@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>RecipeCard.js - Documentation</title>
+    <title>IngredientsInfo.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">RecipeCard.js</h1>
+    <h1 class="page-title">IngredientsInfo.js</h1>
     
 
     
@@ -44,7 +44,7 @@
  * When its .data property is set, the webcomponent is filled
  * in with the recipe data passed into .data
  */
-class RecipeCard extends HTMLElement {
+class IngredientsInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
@@ -52,103 +52,194 @@ class RecipeCard extends HTMLElement {
   }
 
   /**
-   * Populates the Recipe Card HTML Component with information from the recipe
+   * Populates the Ingredient Info HTML Component with information from the recipe
    * json file and displays it with some CSS styling.
    * @param {Object} data - The recipe json
    */
   set data(data) {
     // Creates CSS for the Recipe Info Component
     const style = `
-    .recipe-card {
-      width: 300px;
+        .ingredients-info {
+          position: absolute;
+          width: 20%;
+          height: 66%;
+          top: 20%;
+          left: 2%;
+          background: #FFF6EC;
+      }
+      
+      .ingredients-label {
+          position: absolute;
+          left: 22%;
+          top: 9%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 32px;
+          line-height: 62px;
+      }
 
-      display: grid;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
-      grid-template-columns: [left] auto [right];
+      .line {
+        margin-top: 36%;
+        width: 90%;
+        text-align: center;
+        color: black;
+      }
 
-      background: #FFF6EC;
-    }
+      .form > button {
+          position: absolute;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          height: 8%;
+          background: #FFB673;
+      }
+      
+      .cartButton {
+        left: 6%;
+        top: 20%;
+      }
 
-    .thumbnail-photo {
-      height: 225px;
-      object-fit: cover;
-      width: 100%;
-    }
+      .addButton {
+        left: 45%;
+        top: 30%;
+        height: 8%;
+      }
 
-    .rating-time {
-      display: grid;
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 50% [middle] 50% [right];
-    }
-    `;
+      .subtractButton {
+        left: 25%;
+        top: 30%;
+        height: 5%;
+      }
+
+      .quantity {
+          position:absolute;
+          left:36%;
+          top: 25%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 32px;
+          line-height: 30px;
+      }
+      
+      #serving_size {
+          position:absolute;
+          left:12%;
+          top: 38%;
+          width:98%;
+          font-family: DM Sans;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 20px;
+      }
+      
+      .ingredients-list {
+          position:absolute;
+          left: 20%;
+          top: 48%;
+          width: 60%;
+          font-family: DM Sans;
+          font-size: 12px;
+          -ms-transform: scale(1.5); 
+          -moz-transform: scale(1.5); 
+          -webkit-transform: scale(1.5); 
+          -o-transform: scale(1.5); 
+          transform: scale(1.5);
+          padding: 10px;
+      }
+      `;
 
     // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
+    // Grabs the Ingredients from data
+    const ingredientList = data.extendedIngredients;
+
     // Creating an Overall Container
-    const card = document.createElement("article");
-    card.classList.add("recipe-card");
-
-    // Adding the Recipe Photo
-    const photo = document.createElement("img");
-    photo.classList.add("thumbnail-photo");
-    photo.setAttribute("src", data.image);
-    card.appendChild(photo);
-
-    // Adding the Recipe Title
-    const title = document.createElement("p");
-    title.textContent = data.title;
-    card.appendChild(title);
-
-    // Adding a Container called Info
     const info = document.createElement("div");
-    info.classList.add("rating-time");
+    info.classList.add("ingredients-info");
 
-    // Adding the Rating to Info
-    const rating = document.createElement("p");
-    rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
+    // Creating the Ingredients Title
+    const ingredients = document.createElement("p");
+    ingredients.classList.add("ingredients-label");
+    ingredients.textContent = "Ingredients";
+    info.appendChild(ingredients);
 
-    // Adding the Star Picture to Info
-    const starPicture = document.createElement("img");
-    starPicture.classList.add("star-image");
-    switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
-      case 0:
-        starPicture.src = "images/0-star.svg";
-        break;
-      case 1:
-        starPicture.src = "images/1-star.svg";
-        break;
-      case 2:
-        starPicture.src = "images/2-star.svg";
-        break;
-      case 3:
-        starPicture.src = "images/3-star.svg";
-        break;
-      case 4:
-        starPicture.src = "images/4-star.svg";
-        break;
-      case 5:
-        starPicture.src = "images/5-star.svg";
-        break;
+    // Creating a Stylish Line Break to separate the Title from the Rest
+    const line = document.createElement("hr");
+    line.classList.add("line");
+    info.appendChild(line);
+
+    // Creating an Inner Container
+    const form = document.createElement("div");
+    form.classList.add("form");
+
+    // Adding a Add Ingredients To Cart Button with Event Listener that will
+    // call a function to add/remove the Ingredients to Grocery Cart (Not Implemented)
+    const addToCart = document.createElement("button");
+    addToCart.classList.add("cartButton");
+    addToCart.textContent = "Add Ingredients To Cart";
+    form.appendChild(addToCart);
+
+    // Adding a Subtract Button with Event Listener that will
+    // decrement the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
+    const subtractQuantity = document.createElement("button");
+    subtractQuantity.classList.add("subtractButton");
+    subtractQuantity.addEventListener("click", (event) => {
+      if (quantity.textContent != 1) {
+        quantity.textContent = `${quantity.textContent - 1}`;
+      }
+    });
+    subtractQuantity.textContent = "-";
+    form.appendChild(subtractQuantity);
+
+    // Creating a current display of the number of Servings the Recipe
+    // will make based on the current number of Ingredients
+    const quantity = document.createElement("p");
+    quantity.classList.add("quantity");
+    quantity.textContent = data.servings;
+    form.appendChild(quantity);
+
+    // Adding a Add Button with Event Listener that will
+    // increment the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
+    const addQuantity = document.createElement("button");
+    addQuantity.classList.add("addButton");
+    addQuantity.addEventListener("click", (event) => {
+      quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
+    });
+    addQuantity.textContent = "+";
+    form.appendChild(addQuantity);
+
+    // Creating the list of ingredients with checkboxes to allow the user
+    // to only select some ingredients to add to Grocery List (Not Implemented)
+    const list = document.createElement("div");
+    list.classList.add("ingredients-list");
+    for (let i = 0; i &lt; ingredientList.length; i++) {
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      const listItem = document.createElement("label");
+      listItem.textContent = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      const lineBreak = document.createElement("br");
+      list.appendChild(box);
+      list.appendChild(listItem);
+      list.appendChild(lineBreak);
     }
-    info.appendChild(rating);
-    info.appendChild(starPicture);
-
-    const time = document.createElement("p");
-    time.textContent = `${data.readyInMinutes} mins`;
-
-    info.appendChild(time);
-
-    card.appendChild(info);
+    form.appendChild(list);
+    info.appendChild(form);
 
     this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(card);
+    this.shadowRoot.appendChild(info);
   }
 }
 
-// Creating a custom Recipe-Card Element
-customElements.define("recipe-card", RecipeCard);
+// Creating a custom Ingredients-Info Element
+customElements.define("ingredients-info", IngredientsInfo);
 </code></pre>
         </article>
     </section>
