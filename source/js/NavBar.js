@@ -113,10 +113,15 @@ class NavBar extends HTMLElement {
     navText.placeholder = "Find a recipe";
 
     // search button/image
+    const searchAct = document.createElement("button");
     const searchImg = document.createElement("img");
+    searchImg.type = "image";
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
+    searchAct.addEventListener("click", (event) => {
+      this.goSearchPage();
+    });
 
     // shopping cart image/button
     const shoppingAct = document.createElement("form");
@@ -128,7 +133,7 @@ class NavBar extends HTMLElement {
     shoppingImg.name = "se_cart_png";
 
     // roadmap button/img
-    const roadmapAct= document.createElement("button");
+    const roadmapAct = document.createElement("button");
     const roadmapImg = document.createElement("input");
     roadmapImg.type = "image";
     roadmapImg.className = "roadmap_png";
@@ -136,7 +141,7 @@ class NavBar extends HTMLElement {
     roadmapImg.name = "se_roadmap_png";
     roadmapImg.src = "./images/cook_icon.png";
     roadmapAct.addEventListener("click", (event) => {
-        this.goRoadmap();
+      this.goRoadmap();
     });
 
     // saved button/img
@@ -154,7 +159,8 @@ class NavBar extends HTMLElement {
     navAct2.appendChild(navText);
     navBar.appendChild(navAct2);
 
-    navBar.appendChild(searchImg);
+    searchAct.appendChild(searchImg);
+    navBar.appendChild(searchAct);
 
     roadmapAct.appendChild(roadmapImg);
     navBar.appendChild(roadmapAct);
