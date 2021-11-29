@@ -1,4 +1,4 @@
-module.exports = { convertTime };
+module.exports = { convertTime, getOrganization };
 //require("jsdom-global")();
 
 class GliderRecipe extends HTMLElement {
