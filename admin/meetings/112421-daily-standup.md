@@ -62,7 +62,7 @@ projects from other courses
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since yesterday?
 Finished the directions component and created a pull request

@@ -1,8 +1,11 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 <!-- Remove people that did not respond. -->
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -15,7 +18,7 @@
 - Tucker Frandsen
 
 Location: Remote via Geekbot
-Date: 
+Date:
 Time: 10:00
 
 ### Reports:
@@ -40,7 +43,7 @@ Time: 10:00
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 <!-- paste response here. -->
 

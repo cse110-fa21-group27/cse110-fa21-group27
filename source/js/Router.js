@@ -1,4 +1,4 @@
-// This is just my Router from lab7 - miguel
+/** this is the Router from lab 7 */
 export class Router {
   static routes = {};
 

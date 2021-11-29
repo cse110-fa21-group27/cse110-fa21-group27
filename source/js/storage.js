@@ -56,11 +56,7 @@ async function getRecipes() {
       // if it doesn't exist, we fill it with our temp recipes for now
       if (!storageRecipesString) {
         // fetch them
-        const list = [
-          "./json/chicken_n_dumplings.json",
-          "./json/chicken_tortilla_soup.json",
-          "./json/gyudon.json",
-        ];
+        const list = ["./json/recipes.json"];
         let promises = [];
 
         list.forEach((url) => {
@@ -70,10 +66,15 @@ async function getRecipes() {
                 return response.json();
               })
               .then((json) => {
-                storageRecipes[url] = {
-                  url: url,
-                  data: json,
-                };
+                console.log(json.recipes);
+                json.recipes.forEach((recipe) => {
+                  let id = recipe.id;
+                  storageRecipes[id] = {
+                    id: id,
+                    data: recipe
+                  };
+                });
+
                 console.log(storageRecipes);
               })
               .catch((error) => {
@@ -89,8 +90,8 @@ async function getRecipes() {
               JSON.stringify(storageRecipes)
             );
             // update global variable
-            for (const url in storageRecipes) {
-              recipeData[url] = storageRecipes[url];
+            for (const id in storageRecipes) {
+              recipeData[id] = storageRecipes[id];
             }
           })
         );
@@ -98,8 +99,8 @@ async function getRecipes() {
         // it does exist, let's just update global variable
         storageRecipes = JSON.parse(storageRecipesString);
         // update global variable
-        for (const url in storageRecipes) {
-          recipeData[url] = storageRecipes[url];
+        for (const id in storageRecipes) {
+          recipeData[id] = storageRecipes[id];
         }
         // all done!
         resolve(true);
@@ -112,21 +113,21 @@ async function getRecipes() {
 }
 
 /**
- * Adds a url to the user's savedRecipes[] array
+ * Adds a recipe to the user's savedRecipes[] array
  * After it resolves, the userInfo object should be updated and
  * the userInfo in localStorage should also be updated
  *
  * Should only reject if we can't update localStorage for some reason
  * @async
  * @function
- * @param {String} url - the url for recipe we want to save
+ * @param {String} recipeId - the spoonacular reicpeid for recipe we want to save
  * @returns {Promise}
  */
-async function addRecipeToSaved(url) {
+async function addRecipeToSaved(recipeId) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
-      url: url,
+      id: recipeId,
       checkedIngredients: [],
       checkedSteps: [],
     };
@@ -146,23 +147,23 @@ async function addRecipeToSaved(url) {
 }
 
 /**
- * Should remove url from the user's savedRecipes[] array.
+ * Should remove recipe from the user's savedRecipes[] array.
  * After it resolves, the userInfo object should be updated.
  * the userInfo in localStorage should also be updated.
  *
- * The promise will still resolve even if url didn't exist in the array
+ * The promise will still resolve even if recipeId didn't exist in the array
  * beforehand
  *
  * Should only reject if there's a problem with the above operations.
  * @async
  * @function
- * @param {String} url - the url for the recipe we want to remove
+ * @param {String} recipeId - the url for the recipe we want to remove
  * @returns {Promise}
  */
-async function removeRecipeFromSaved(url) {
+async function removeRecipeFromSaved(recipeId) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.savedRecipes.findIndex(
-      (savedRecipe) => savedRecipe.url == url
+      (savedRecipe) => savedRecipe.id == recipeId
     );
 
     if (!foundIndex) {
@@ -189,17 +190,18 @@ async function removeRecipeFromSaved(url) {
 }
 
 /**
- * Should return true if the url is in the user's saved recipes
+ * Should return true if the recipe is in the user's saved recipes
  * and false otherwise
- * @param {string} url
+ * @param {string} recipeId
  * @returns {Boolean}
  */
-function isSaved(url) {
-  const savedUrls = userInfo.savedRecipes.map((x) => x.url);
-  return savedUrls.includes(url);
+function isSaved(recipeId) {
+  const savedIds = userInfo.savedRecipes.map((x) => x.id);
+  return savedIds.includes(recipeId);
 }
 
-/**
+/** 
+ * ON HOLD (UNTESTED)
  * This function fetches an external recipe url and parses it for its recipe
  * json, which we return when this function resolves.
  * @param {string} url
@@ -249,6 +251,7 @@ async function retrieveJSONFromPage(url) {
 }
 
 /**
+ * UNTESTED
  * Recursively searches the object
  * Returns true if the given object contains a recipe inside of it
  * @param {Object} object - a js object we want to check if it has a recipe in it

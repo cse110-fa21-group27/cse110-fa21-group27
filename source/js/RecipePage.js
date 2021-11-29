@@ -1,60 +1,45 @@
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
+ *
+ * This assumes the following properties are set before .data
+ * @property {Function} addRecipeToSaved
+ * @property {Function} removeRecipeFromSaved
+ * @property {Boolean} isSaved
+ * @property {string} id - The id for the recipe displayed
+ */
 class RecipePage extends HTMLElement {
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
 
+  /**
+   * Creates the Recipe-Info and Directions-Info Elements and passes the
+   * data object that has the recipe json file.
+   * @param {object} data - The recipe json
+   */
   set data(data) {
-    const style = `
-      .recipe-page{
-        display: grid;
-        grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
-      /* e.g. 
-          1fr 1fr
-          minmax(10px, 1fr) 3fr
-          repeat(5, 1fr)
-          50px auto 100px 1fr
-      */
-      grid-template-rows: 25% 75% 400px;
-      /* e.g. 
-          min-content 1fr min-content
-          100px 1fr max-content
-      */
-    }
-    .item-1 {
-        grid-column-start: leftmost;
-        grid-column-end: endOfIng;
-        grid-row-start: 3;
-        grid-row-end: auto;
-        background-color: black;
-      }
-    
-      .item-2 {
-        grid-column-start: endOfIng;
-        grid-column-end: endOfRecipe;
-        grid-row-start: 2;
-        grid-row-end: 4;
-        background-color: forestgreen;
-      }
-    
-      .item-3{
-        grid-column-start: endOfRecipe;
-        grid-column-end: rightmost;
-        grid-row-start: 3;
-        grid-row-end: auto;
-        background-color: blue;
-      }
-      `;
+    // Creating an Overall Container
     const page = document.createElement("article");
+
+    // Creating a Recipe-Info Element from RecipeInfo.js
     const info = document.createElement("recipe-info");
+
+    // Creating a Directions-Info Element from Directions.js
     const directions = document.createElement("directions-info");
-    // allow info to save recipes
+
+    // Allowing the User to save Recipe from this Recipe Page
     info.addRecipeToSaved = this.addRecipeToSaved;
     info.removeRecipeFromSaved = this.removeRecipeFromSaved;
     info.isSaved = this.isSaved;
-    // pass recipeurl to info
-    info.url = this.url;
-    // pass data to info
+    // pass recipeId to info
+    info.id = this.id;
+
+    // Passing in Data to Recipe-Info and Directions-Info Elements to
+    // Populate the Page
     info.data = data;
     directions.data = data;
     page.appendChild(info);
@@ -64,4 +49,5 @@ class RecipePage extends HTMLElement {
   }
 }
 
+// Creating a custom Recipe-Page Element
 customElements.define("recipe-page", RecipePage);

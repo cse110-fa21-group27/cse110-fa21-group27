@@ -1,7 +1,9 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 - Arturo Amaya
 - Delia McGrath
 - Kevin Yu
