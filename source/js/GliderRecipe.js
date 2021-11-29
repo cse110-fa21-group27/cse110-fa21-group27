@@ -1,3 +1,6 @@
+module.exports = { convertTime };
+//require("jsdom-global")();
+
 class GliderRecipe extends HTMLElement {
   constructor() {
     super();
@@ -162,7 +165,7 @@ function convertTime(time) {
     }
   }
 
-  return "";
+  return timeStr;
 }
 
 /**

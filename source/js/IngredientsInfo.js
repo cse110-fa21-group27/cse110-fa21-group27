@@ -262,6 +262,7 @@ function convertTime(time) {
   time = time.slice(2);
 
   const timeArr = time.split("");
+  console.log(timeArr);
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
       if (timeArr[i] == "H") return `${timeStr} hr`;
@@ -274,7 +275,7 @@ function convertTime(time) {
     }
   }
 
-  return "";
+  return timeStr;
 }
 
 /**
