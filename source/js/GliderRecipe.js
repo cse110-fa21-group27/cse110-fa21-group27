@@ -1,6 +1,7 @@
-module.exports = { convertTime, getOrganization };
+module.exports = { convertTime, getOrganization, getRecipeTitle };
 //require("jsdom-global")();
 
+/** glider component. hopeful that it will hold recipe cards in a pretty way.*/
 class GliderRecipe extends HTMLElement {
   constructor() {
     super();

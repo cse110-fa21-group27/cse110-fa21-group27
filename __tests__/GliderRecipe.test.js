@@ -495,9 +495,23 @@ test("get Organization from sample data 2 from Allrecipes. \n THIS DOES NOT HAVE
 test("get Organization from sample data 3 from Simply Recipes", () => {
   expect(GliderRecipe.getOrganization(sampleData3)).toBe("Simply Recipes");
 });
+
 /**
  * TODO: getRecipeTitle data
  */
+test("get recipe title from sample data 1 from Delish. Should be Spooky Ghost Cookies", () => {
+  expect(GliderRecipe.getRecipeTitle(sampleData1)).toBe("Spooky Ghost Cookies");
+});
+
+test("get recipe title from sample data 2 from Allrecipes. Should be Tennessee Meatloaf", () => {
+  expect(GliderRecipe.getRecipeTitle(sampleData2)).toBe("Tennessee Meatloaf");
+});
+
+test("get reipce title from sample data 3 from Simply Recipes. Should be Southwestern Vegetarian Casserole", () => {
+  expect(GliderRecipe.getRecipeTitle(sampleData3)).toBe(
+    "Southwestern Vegetarian Casserole"
+  );
+});
 
 /**
  * TODO: getURL
