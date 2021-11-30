@@ -163,13 +163,15 @@ async function search(options) {
  * @async
  * @function
  * @param {String} recipeId - the spoonacular reicpeid for recipe we want to save
+ * @param {String} recipeName - the recipe name for recipe we want to save
  * @returns {Promise}
  */
-async function addRecipeToSaved(recipeId) {
+async function addRecipeToSaved(recipeId, recipeName) {
   return new Promise((resolve, reject) => {
     // create new recipe object
     let newSavedRecipe = {
       id: recipeId,
+      name: recipeName,
       checkedIngredients: [],
       checkedSteps: [],
     };
