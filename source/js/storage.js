@@ -244,9 +244,11 @@ async function removeRecipeFromSaved(recipeId) {
  */
 async function addCollection(collectionName) {
   return new Promise((resolve, reject) => {
+    // grab the current number of collections
+    let collectionNumber = userInfo.collections.length;
     // create new collection object
     let newCollection = {
-      collectionId: 0,
+      collectionId: collectionNumber,
       name: collectionName,
       ids: [],
     };
@@ -488,4 +490,8 @@ export const storage = {
   addRecipeToSaved,
   removeRecipeFromSaved,
   isSaved,
+  addCollection,
+  removeCollection,
+  addToCollection,
+  removeFromCollection,
 };

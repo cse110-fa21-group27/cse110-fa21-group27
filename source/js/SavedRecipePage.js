@@ -1,6 +1,10 @@
 /**
  * This assumes that the following properties are passed into this object before .data is called or set
  * @property {function} renderRecipes
+ * @property {function} addCollection
+ * @property {function} removeCollection
+ * @property {function} addToCollection
+ * @property {function} removeFromCollection
  */
 class SavedRecipePage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
@@ -22,13 +26,13 @@ class SavedRecipePage extends HTMLElement {
       width: 10vw;
     }
 
-    form {
+    div {
       height: 50vh;
       width: 50vw;
       margin-left: 25vw;
       margin-right: 25vw;
       margin-top: 25vh;
-      background: red;
+      background: grey;
     }
 
     .saved-recipes {
@@ -46,13 +50,16 @@ class SavedRecipePage extends HTMLElement {
 
     const addButton = document.createElement("button");
     addButton.textContent = "Create New Collection";
+
+    // Create the form for the user to create a new collection
     addButton.addEventListener("click", () => {
-      let form = document.createElement("form");
+      let form = document.createElement("div");
       let name = document.createElement("input");
       name.type = "text";
-      name.text = "New Collection";
+      name.value = "New Collection";
       form.appendChild(name);
       console.log(data);
+      // Add options to add each of the user's saved recipes
       for (let i = 0; i < data.length; i++) {
         let input = document.createElement("input");
         input.type = "checkbox";
@@ -67,12 +74,23 @@ class SavedRecipePage extends HTMLElement {
         form.appendChild(lineBreak);
       }
 
+      // Button to create the collection
       let createButton = document.createElement("button");
       createButton.textContent = "Create Collection";
+      // Create the collection, add the recipes, and delete the form
       createButton.addEventListener("click", () => {
-        let removeForm = document.querySelector("form");
-        this.shadowRoot.removeChild(removeForm);
+        this.addCollection(name.value);
+        let checkboxArray = form.querySelectorAll("input");
+        for (let i = 0; i < checkboxArray.length; i++) {
+          // There is an extra input for the user to input collection name, 
+          // all the other inputs need to be checked for a checkmark from user
+          if (checkboxArray[i].checked) {
+            this.addToCollection(data[i-1], name.value);
+          }
+        }
+        this.shadowRoot.removeChild(form);
       });
+
       form.appendChild(createButton);
       this.shadowRoot.appendChild(form);
     });
