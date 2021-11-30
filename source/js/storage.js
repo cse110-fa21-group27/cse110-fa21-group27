@@ -308,7 +308,91 @@ async function removeCollection(collectionName) {
   });
 }
 
+/**
+ * Adds a recipe to a collection specified by the user
+ * After it resolves, the userInfo object should be updated and
+ * the userInfo in localStorage should also be updated
+ *
+ * Should reject if the collection name is incorrect or if 
+ * we can't update localStorage for some reason
+ * @async
+ * @function
+ * @param {String} recipeId - The Recipe Id that we want to add to the collection
+ * @param {String} collectionName - the user's name for the collection
+ * @returns {Promise}
+ */
+ async function addToCollection(recipeId, collectionName) {
+  return new Promise((resolve, reject) => {
+    const foundIndex = userInfo.collections.findIndex(
+      (savedCollection) => savedCollection.name == collectionName
+    );
 
+    if (!foundIndex) {
+      // collection does not exist
+      reject("Collection does not exist");
+    }
+
+    let newIndex = userInfo.collections[foundIndex].ids.push(recipeId);
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // all good!
+      resolve(true);
+    } catch (error) {
+      // Unable to save to localStorage, remove it from our global variable
+      // and reject the promise
+      userInfo.collections[foundIndex].ids.splice(newIndex, 1);
+      console.log("Unable to add recipe id to collection", error);
+      reject(error);
+    }
+  });
+}
+
+/**
+ * Removes a recipe collection specified by the user
+ * After it resolves, the userInfo object should be updated.
+ * the userInfo in localStorage should also be updated.
+ *
+ * The promise will still resolve even if the recipe id didn't exist in the 
+ * collection id array beforehand
+ *
+ * Should only reject if there's a problem with the above operations.
+ * @async
+ * @function 
+ * @param {String} recipeId - The Recipe Id that we want to remove from the collection
+ * @param {String} collectionName - the collection's name to remove
+ * @returns {Promise}
+ */
+ async function removeFromCollection(recipeId, collectionName) {
+  return new Promise((resolve, reject) => {
+    const foundCollectionIndex = userInfo.collections.findIndex(
+      (savedCollection) => savedCollection.name == collectionName
+    );
+    const foundRecipeIndex = userInfo.collections[foundCollectionIndex].ids.findIndex(
+      (savedRecipeId) => savedRecipeId == recipeId
+    );
+
+    if (!foundRecipeIndex) {
+      // already not in array, resolve!
+      resolve(true);
+    }
+
+    // save just in case we need to add it back
+    let found = userInfo.collections[foundCollectionIndex].ids[foundRecipeIndex];
+    // remove from userInfo
+    userInfo.collections[foundCollectionIndex].ids.splice(foundRecipeIndex, 1);
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // all good!
+      resolve(true);
+    } catch (error) {
+      // Unable to update localStorage, add it back to global variable
+      // and reject the promise
+      userInfo.collections[foundCollectionIndex].ids.splice(foundRecipeIndex, 0, found);
+      console.log("Unable to remove recipe id from saved collections", error);
+      reject(error);
+    }
+  });
+}
 
 /**
  * Should return true if the recipe is in the user's saved recipes
