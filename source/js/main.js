@@ -79,9 +79,10 @@ function savedRecipesPage() {
   savedPage.addToCollection = storage.addToCollection;
   savedPage.removeFromCollection = storage.removeFromCollection;
   // give it an array of recipeids for data
-  savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
-    return savedRecipe.id;
-  });
+  savedPage.data = storage.userInfo.savedRecipes;
+  // savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
+  //   return savedRecipe.id;
+  // });
 
   main.appendChild(savedPage);
 }

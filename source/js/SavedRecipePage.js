@@ -16,7 +16,7 @@ class SavedRecipePage extends HTMLElement {
   /**
    * Populates the Saved Recipe Page HTML Component with information from the
    * recipe json file and displays it with some CSS styling.
-   * @param {String[]} data - array of recipeids
+   * @param {String[]} data - array of saved recipes
    */
   set data(data) {
     this.shadowRoot.innerHTML = "";
@@ -58,7 +58,6 @@ class SavedRecipePage extends HTMLElement {
       name.type = "text";
       name.value = "New Collection";
       form.appendChild(name);
-      console.log(data);
       // Add options to add each of the user's saved recipes
       for (let i = 0; i < data.length; i++) {
         let input = document.createElement("input");
@@ -66,9 +65,7 @@ class SavedRecipePage extends HTMLElement {
         input.classList.add("checkbox");
         form.appendChild(input);
         let text = document.createElement("p");
-        let id = data[i];
-        console.log(id);
-        text.textContent = "Recipe ID: " + id;
+        text.textContent = "Recipe Name: " + data[i].name;
         form.appendChild(text);
         let lineBreak = document.createElement("br");
         form.appendChild(lineBreak);
@@ -85,13 +82,21 @@ class SavedRecipePage extends HTMLElement {
           // There is an extra input for the user to input collection name, 
           // all the other inputs need to be checked for a checkmark from user
           if (checkboxArray[i].checked) {
-            this.addToCollection(data[i-1], name.value);
+            this.addToCollection(data[i-1].id, name.value);
           }
         }
         this.shadowRoot.removeChild(form);
       });
 
+      // Button to remove the form without creating the collection
+      let neverMindButton = document.createElement("button");
+      neverMindButton.textContent = "Don't Create Collection";
+      neverMindButton.addEventListener("click", () => {
+        this.shadowRoot.removeChild(form);
+      });
+
       form.appendChild(createButton);
+      form.appendChild(neverMindButton);
       this.shadowRoot.appendChild(form);
     });
     this.shadowRoot.appendChild(addButton);
@@ -113,7 +118,12 @@ class SavedRecipePage extends HTMLElement {
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
 
-    this.renderRecipes(data, page);
+    let idList = [];
+    for (let i = 0; i < data.length; i++) {
+      idList.push(data[i].id);
+    }
+    this.renderRecipes(idList, page);
+    // RENDER A NEW COLLECTION
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(page);
