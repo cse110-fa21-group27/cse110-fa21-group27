@@ -11,22 +11,20 @@ describe("Basic user flow for Website", () => {
     });
     page.once("load", () => {
       console.log("pageloaded!");
-      page.screenshot({ path: "screenshot.png" });
     });
   });
 
-  // Next, check to make sure that all 20 <product-item> elements have loaded
-  it("Initial Home Page - Check for 20 product items", async () => {
+  // Next, check to make sure that all 264 <recipe-card> elements have loaded
+  it("Initial Home Page - Check for 264 recipecards", async () => {
+    // NOTE: DELAY. ADD TO ALL TESTS
     await delay(4000);
-    console.log("Checking for 20 product items...");
-    // Query select all of the <product-item> elements and return the length of that array
-    const numProducts = await page.$$eval("recipe-card", (prodItems) => {
-      //page.screenshot({ path: "screenshot3.png" });
+    console.log("Checking for 264 product items...");
+    // Query select all of the <recipe-card> elements and return the length of that array
+    const numCards = await page.$$eval("recipe-card", (prodItems) => {
       return prodItems.length;
     });
-    page.screenshot({ path: "screenshot2.png" });
-    // Expect there that array from earlier to be of length 20, meaning 20 <product-item> elements where found
-    expect(numProducts).toBe(20);
+    // Expect that array from earlier to be of length 264, meaning 264 <recipe-card> elements were found
+    expect(numCards).toBe(264);
   });
 
   // Check to make sure that all 20 <product-item> elements have data in them
