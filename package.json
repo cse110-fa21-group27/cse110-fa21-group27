@@ -2,10 +2,6 @@
   "name": "Group_27_CRUD_Buds",
   "version": "1.0.0",
   "description": "A Group of students just trying to survive CSE 110",
-  "scripts": {
-    "test": "jest",
-    "build": ""
-  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
@@ -16,7 +12,11 @@
     "jest-puppeteer": "^6.0.2",
     "jsdom": "18.1.1",
     "jsdom-global": "3.0.2",
-    "puppeteer": "^12.0.0"
+    "puppeteer": "^12.0.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": ""
   },
   "jest": {
     "preset": "jest-puppeteer",
