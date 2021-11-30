@@ -21,6 +21,16 @@ class SavedRecipePage extends HTMLElement {
       height: 5vh;
       width: 10vw;
     }
+
+    form {
+      height: 50vh;
+      width: 50vw;
+      margin-left: 25vw;
+      margin-right: 25vw;
+      margin-top: 25vh;
+      background: red;
+    }
+
     .saved-recipes {
       display: flex;
       flex-wrap: wrap;
@@ -30,16 +40,67 @@ class SavedRecipePage extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
+    const h = document.createElement("h1");
+    h.textContent = "All Saved Recipes";
+    this.shadowRoot.appendChild(h);
+
+    const addButton = document.createElement("button");
+    addButton.textContent = "Create New Collection";
+    addButton.addEventListener("click", () => {
+      let form = document.createElement("form");
+      let name = document.createElement("input");
+      name.type = "text";
+      name.text = "New Collection";
+      form.appendChild(name);
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        let input = document.createElement("input");
+        input.type = "checkbox";
+        input.classList.add("checkbox");
+        form.appendChild(input);
+        let text = document.createElement("p");
+        let id = data[i];
+        console.log(id);
+        text.textContent = "Recipe ID: " + id;
+        form.appendChild(text);
+        let lineBreak = document.createElement("br");
+        form.appendChild(lineBreak);
+      }
+
+      let createButton = document.createElement("button");
+      createButton.textContent = "Create Collection";
+      createButton.addEventListener("click", () => {
+        let removeForm = document.querySelector("form");
+        this.shadowRoot.removeChild(removeForm);
+      });
+      form.appendChild(createButton);
+      this.shadowRoot.appendChild(form);
+    });
+    this.shadowRoot.appendChild(addButton);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete Collection";
+    deleteButton.addEventListener("click", () => {
+      let form = document.createElement("form");
+      let name = document.createElement("input");
+      name.type = "text";
+      let input = document.createElement("input");
+      input.type = "checkbox";
+      input.classList.add("checkbox");
+      let text = document.createElement("p");
+      text.textContent = "";
+    });
+    this.shadowRoot.appendChild(deleteButton);
+
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
-    const h = document.createElement("h1");
-    h.textContent = "Saved Recipes";
-    this.shadowRoot.appendChild(h);
 
     this.renderRecipes(data, page);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(page);
+
+    this.shadowRoot.appendChild(document.createElement("hr"));
   }
 }
 
