@@ -11,7 +11,9 @@
 - Steven Christensen
 - Tucker Frandsen
 
+- Arturo Amaya
 - Aryan Malik
+- Steven Schaeffer
 
 Location: Zoom
 Date: 11/28/21
@@ -30,9 +32,16 @@ Sprint Review
   - Designed the rest of the page layouts in Figma
   - Directions and Road Map Component
 - Arturo
-  - Unknown. Delia fill in.
+  - Streamlined the pipeline
+  - Ensured codacy was checking important things, not just double spacing
+  - Gave everyone the possibility to use ESLint to streamline local coding
+  - Added JSDocs to the pipeline to ensure the code is well documented.
+  - Began to implement some unit tests.
 - Steven S.
-  - Unknown. Delia fill in.
+  - Develop the pipeline 
+  - Creating unit tests, implementing code formatters, linters, error tracking, deployment, and documentation
+  - Working with tools such as ESLint, Codacy, JSDocs, and Firebase
+  - Focus on protecting project repository so broken/misformatted code will never be merged
 - Kevin
   - Recipe page and ingredients component
   - Connect HTML with the javascript
