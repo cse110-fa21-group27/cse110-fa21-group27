@@ -125,6 +125,10 @@ class NavBar extends HTMLElement {
     savedImg.id = "se_saved_png";
     savedImg.name = "se_saved_png";
     savedImg.src = "./images/saved.png";
+    savedImg.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.goToSaved();
+    });
 
     // navAct.appendChild(spudlyImg);
     navBar.appendChild(spudlyImg);

@@ -129,11 +129,6 @@
 }
 
 /* begin saved Recipe component */
-.saved-recipes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-}
 .recipes {
   position: static;
   display: flex;
