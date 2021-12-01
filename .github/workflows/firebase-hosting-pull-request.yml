@@ -7,6 +7,8 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
+    outputs: 
+      output1: ${{steps.outputs.url}}
     steps:
       - uses: actions/checkout@v2
       - run: (npm ci && npm run build)
@@ -15,3 +17,8 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPUDLY_F0411 }}'
           projectId: spudly-f0411
+  job2:
+    runs-on: ubuntu-latest
+    needs: build_and_preview
+    steps:
+      - run: echo ${{needs.build_and_preview.outputs.output1}}
