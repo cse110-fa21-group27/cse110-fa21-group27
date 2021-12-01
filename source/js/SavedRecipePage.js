@@ -72,7 +72,7 @@ class SavedRecipePage extends HTMLElement {
         form.appendChild(lineBreak);
       }
 
-      // Create an array of recipe ids for the collections to render later
+      // Create an array of recipe ids to render the new collection
       let idArray = [];
       // Button to create the collection
       let createButton = document.createElement("button");
@@ -110,9 +110,8 @@ class SavedRecipePage extends HTMLElement {
     // Create the form for the user to delete collections
     deleteButton.addEventListener("click", () => {
       let form = document.createElement("div");
-      let name = document.createElement("input");
-      name.type = "text";
-      name.value = "Delete Collection";
+      let name = document.createElement("p");
+      name.textContent = "Delete Collection";
       form.appendChild(name);
       
       // Add options to remove each of the user's collections
@@ -127,6 +126,34 @@ class SavedRecipePage extends HTMLElement {
         let lineBreak = document.createElement("br");
         form.appendChild(lineBreak);
       }
+
+      // Create an array of collection ids to delete
+      let collectionArray = [];
+      // Button to delete the collections
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete Collections";
+      // Select the collections, delete them, and delete the form
+      deleteButton.addEventListener("click", () => {
+        // this.addCollection(name.value);
+        let checkboxArray = form.querySelectorAll("input");
+        for (let i = 0; i < checkboxArray.length; i++) {
+          // Checks which collections were checked and deletes them
+          if (checkboxArray[i].checked) {
+            this.removeCollection(userInfo.collections[i].name);
+          }
+        }
+        this.shadowRoot.removeChild(form);
+      });
+
+      // Button to remove the form without creating the collection
+      let neverMindButton = document.createElement("button");
+      neverMindButton.textContent = "Don't Delete Collections";
+      neverMindButton.addEventListener("click", () => {
+        this.shadowRoot.removeChild(form);
+      });
+
+      form.appendChild(deleteButton);
+      form.appendChild(neverMindButton);
       this.shadowRoot.appendChild(form);
     });
     this.shadowRoot.appendChild(deleteButton);
@@ -144,6 +171,7 @@ class SavedRecipePage extends HTMLElement {
     this.shadowRoot.appendChild(page);
     this.shadowRoot.appendChild(document.createElement("hr"));
     
+    // Displaying previously created collections
     for (let i = 0; i < userInfo.collections.length; i++) {
       // Collection name
       let headerName = document.createElement("h1");
