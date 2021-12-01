@@ -4,7 +4,6 @@
 name: Node Testing
 
 on:
-  on:
   schedule:
     # * is a special character in YAML so you have to quote this string. Runs once at 5:30 and 17:30 UTC everyday
     - cron:  '30 5,17 * * *'
