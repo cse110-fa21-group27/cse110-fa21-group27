@@ -123,14 +123,41 @@ describe("Basic user flow for Website", () => {
       timeText == "" ||
       starsimgSrc == "https://spudly-f0411.web.app/undefined"
     );
-
+    await page.goBack();
     expect(populated).toBe(true);
   }, 20000);
 
+  // Click a recipe and then come back
+  it("click a recipe and then come back", async () => {
+    console.log("going to click a recipe and then come back");
+    await delay(4000);
+
+    const numCardspre = await page.$$eval("recipe-card", (prodItems) => {
+      return prodItems.length;
+    });
+
+    const prodItems = await page.$$("recipe-card");
+    // click a recipe page!
+    await prodItems[0].click();
+
+    // There should be 0 recipe cards now
+    const numCards = await page.$$eval("recipe-card", (prodItems) => {
+      return prodItems.length;
+    });
+
+    await page.goBack();
+
+    const numCardspos = await page.$$eval("recipe-card", (prodItems) => {
+      return prodItems.length;
+    });
+
+    expect(numCardspre).toBe(264);
+    expect(numCards).toBe(0);
+    expect(numCardspos).toBe(264);
+  }, 20000);
   // TODO TESTS
   /**
    * Click a recipe and see the rest of the reipce page
-   * Click a recipe and then come back
    * CLick a recipe and then click the show ingredients button
    * Click a recipe and click the show nutritions button
    * Click a recipe and click save
