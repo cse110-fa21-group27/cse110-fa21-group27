@@ -37,10 +37,12 @@ describe("Basic user flow for Website", () => {
     // Start as true, if any don't have data, swap to false
     let allArePopulated = true;
     let plainValue, img, imgSrc, p, innerText;
+
     // Query select all of the <recipe-card> elements
     const prodItems = await page.$$("recipe-card");
     //await page.screenshot({ path: "scrrenshot57.png" });
 
+    // loop through and check them all
     for (let i = 0; i < prodItems.length; i++) {
       // console.log(`Checking recipe card ${i + 1}/${prodItems.length}`);
 
@@ -67,10 +69,62 @@ describe("Basic user flow for Website", () => {
     }
     // Expect allArePopulated to still be true
     expect(allArePopulated).toBe(true);
+  }, 20000);
 
-    // TODO - Step 1
-    // Right now this function is only checking the first <recipe-card> it found, make it so that
-    // it checks every <recipe-card> it found
+  it("Click a recipe", async () => {
+    console.log("going to click a recipe");
+    await delay(4000);
+
+    // pick out all the recipes
+    const prodItems = await page.$$("recipe-card");
+
+    // click a recipe page!
+    await prodItems[0].click();
+    // await page.screenshot({ path: "scrrenshot57.png" });
+
+    // Navigate to where we can access the img and title.
+    let prodItem = await page.$("recipe-page");
+    let prodItemSR = await prodItem.getProperty("shadowRoot");
+    let prodItemRInfo = await prodItemSR.$("recipe-info");
+    let prodItemartRInfoSR = await prodItemRInfo.getProperty("shadowRoot");
+
+    // Get the imagesrc, the title and the rating-time
+    let img = await prodItemartRInfoSR.$("img");
+    let imgSrc = await img.getProperty("src");
+    let title = await prodItemartRInfoSR.$("p");
+    let titleText = await title.getProperty("innerText");
+    let ratingTime = await prodItemartRInfoSR.$$(".rating-time p");
+    let rating = ratingTime[1];
+    let time = ratingTime[0];
+    let starsimg = await prodItemartRInfoSR.$(".rating-time img");
+    let ratingText = await rating.getProperty("innerText");
+    let timeText = await time.getProperty("innerText");
+    let starsimgSrc = await starsimg.getProperty("src");
+
+    // Convert to readable
+    titleText = await titleText.jsonValue();
+    let plainValue = await imgSrc.jsonValue();
+    ratingText = await ratingText.jsonValue();
+    timeText = await timeText.jsonValue();
+    starsimgSrc = await starsimgSrc.jsonValue();
+
+    //console.log("")
+    console.log(titleText);
+    console.log(plainValue);
+    console.log(ratingText);
+    console.log(timeText);
+    console.log(starsimgSrc);
+
+    let populated = true;
+    populated = !(
+      titleText == "" ||
+      plainValue == "https://spudly-f0411.web.app/undefined" ||
+      ratingText == "" ||
+      timeText == "" ||
+      starsimgSrc == "https://spudly-f0411.web.app/undefined"
+    );
+
+    expect(populated).toBe(true);
   }, 20000);
   /*
   // Check to make sure that when you click "Add to Cart" on the first <recipe-card> that
