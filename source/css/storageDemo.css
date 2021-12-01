@@ -1,11 +1,3 @@
-@font-face {
-  font-family: font;
-  src: URL('font.ttf') format('truetype');
-}
-*{
-  font-family: font;
-}
-
 div.recipeEntry {
   display: flex;
   flex-direction: row;
