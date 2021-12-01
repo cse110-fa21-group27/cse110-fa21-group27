@@ -11,7 +11,7 @@
 
 /* end header CSS */
 @font-face {
-  font-family: custom-font;
+  font-family: 'custom-font';
   src: url('font.ttf') format('truetype');
 }
 
