@@ -132,7 +132,6 @@
 
 /* begin saved Recipe component */
 .saved-recipes {
-  font-family: font;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
