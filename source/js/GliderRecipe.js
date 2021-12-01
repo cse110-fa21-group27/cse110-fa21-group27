@@ -1,3 +1,6 @@
+
+module.exports = { convertTime, getOrganization, getRecipeTitle };
+
 /** glider component. hopeful that it will hold recipe cards in a pretty way.*/
 class GliderRecipe extends HTMLElement {
   /** constructs the component and allows access to the shadow */
@@ -166,7 +169,7 @@ function convertTime(time) {
     }
   }
 
-  return "";
+  return timeStr;
 }
 
 /**
