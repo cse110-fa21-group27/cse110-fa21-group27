@@ -126,6 +126,23 @@ describe("Basic user flow for Website", () => {
 
     expect(populated).toBe(true);
   }, 20000);
+
+  // TODO TESTS
+  /**
+   * Click a recipe and see the rest of the reipce page
+   * Click a recipe and then come back
+   * CLick a recipe and then click the show ingredients button
+   * Click a recipe and click the show nutritions button
+   * Click a recipe and click save
+   * Click a recipe, save, come back and check how many recipes there are, including saved
+   * Click a recipe. save, leave the page and then come back and check its the same
+   * Open all the directions
+   * Check all the boxes
+   * Check that the name button works
+   * Check that the search bar works
+   * ADD MORE AS THE PAGE DEVELOPS
+   */
+
   /*
   // Check to make sure that when you click "Add to Cart" on the first <recipe-card> that
   // the button swaps to "Remove from Cart"
