@@ -8,7 +8,8 @@ class NavBar extends HTMLElement {
   /** we did not know how to get this navbar without using the data func even tho it tech shouldnt need it
    * @param {object} data - the recipe json file
    */
-  set data(data) {` 
+  set data(data) {
+    const style =` 
     @font-face {
       font-family: font;
       src: URL('font.ttf') format('truetype');
