@@ -34,7 +34,7 @@ class IngredientsInfo extends HTMLElement {
       
       .ingredients-label {
           position: absolute;
-          text-align: center;
+          text-align: left;
           left: 22%;
           top: 0%;
           font-family: font;
@@ -80,6 +80,7 @@ class IngredientsInfo extends HTMLElement {
       }
 
       .quantity {
+          text-align: left;
           position:absolute;
           left:45%;
           top: 26%;
@@ -91,6 +92,7 @@ class IngredientsInfo extends HTMLElement {
       }
       
       #serving_size {
+        
           position:absolute;
           left:12%;
           top: 38%;
@@ -103,7 +105,8 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .ingredients-list {
-        
+          
+          text-align: left;
           position:absolute;
           left: 20%;
           top: 48%;

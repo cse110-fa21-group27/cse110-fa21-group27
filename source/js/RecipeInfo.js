@@ -23,7 +23,7 @@ class RecipeInfo extends HTMLElement {
    */
   set data(data) {
     // Creates CSS for the Recipe Info Component
-    const style = `
+    const styleRecipe = `
 
     @font-face {
       font-family: font;
@@ -31,8 +31,8 @@ class RecipeInfo extends HTMLElement {
     }
 
         .recipe-info {
-          margin-left: 25vw;
-          margin-right: 25vw;
+          margin-left: auto;
+          margin-right: auto;
           width: 50vw;
           background: #FFF6EC;
           
@@ -52,12 +52,16 @@ class RecipeInfo extends HTMLElement {
         }
 
         .rating-time {
+          border: 1px solid orange;
+          font-size: 20px;
           padding-left: 1vw;
           padding-right: 1vw;
-          display: grid;
-          grid-template-rows: [top] auto [bottom];
-          grid-template-columns: [left] 50% [middle] 50% [right];
-          border: 1px solid orange;
+          margin-left: auto;
+          display: inline-flex;
+          
+          justify-content: space-between;
+          flex-direction: row;
+          width: 800px;
         }
 
         .star-image {
@@ -75,6 +79,7 @@ class RecipeInfo extends HTMLElement {
         }
 
         button {
+          font-family: font;
           height: 5vh;
           width: 10vw;
         }
@@ -83,7 +88,7 @@ class RecipeInfo extends HTMLElement {
 
     // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
-    styleElem.innerHTML = style;
+    styleElem.innerHTML = styleRecipe;
 
     // Creating an Overall Container
     const info = document.createElement("article");

@@ -23,6 +23,9 @@ class RecipeCard extends HTMLElement {
       src: URL('font.ttf') format('truetype');
     }
     .recipe-card {
+
+      margin-right: auto;
+      margin-left: 25%;
       width: 350px;
       display: grid;
       justify-content: center;
@@ -43,17 +46,18 @@ class RecipeCard extends HTMLElement {
     }
 
     .rating-time {
+      font-size: 15px;
+      display: flex;
+      flex-direction: row;
+      margin-left: 22%;
       
-      display: grid;
-      
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 30% [middle] 50% [right];
-    }
-
-    article {
+      display: inline-flex;
       justify-content: center;
-      font-family: font;
+      justify-content: space-around;
+          
+      width:190px;
     }
+    
     `;
 
     // Adds the style sheet to the shadow

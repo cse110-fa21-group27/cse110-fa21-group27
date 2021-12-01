@@ -151,3 +151,13 @@ input[type="checkbox"] {
   width: 60%;
   background-color: cadetblue; /*temp holder*/
 }
+body {
+  font-family: font;
+  text-align: center;
+  display: grid;
+  margin-left: 12%;
+  margin-right: 12%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 100px;
+  grid-template-columns: 100%;
+}

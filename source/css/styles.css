@@ -133,6 +133,7 @@
 
 /* begin saved Recipe component */
 .saved-recipes {
+  font-family: font;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
@@ -145,7 +146,11 @@
 }
 /* end saved Recipes component */
 body {
+  font-family: font;
+  text-align: center;
+  margin: auto;
   display: grid;
   grid-template-rows: 100px;
   grid-template-columns: 100%;
+  grid-gap: 15px 5px;
 }
