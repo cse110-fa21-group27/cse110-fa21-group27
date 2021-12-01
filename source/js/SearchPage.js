@@ -60,7 +60,7 @@ class SearchPage extends HTMLElement {
       }
 
       .input {
-        width: 30%;
+        width: 90%;
       }
       
       #apply {
@@ -132,7 +132,7 @@ class SearchPage extends HTMLElement {
     const label_3 = document.createElement("div");
     label_3.classList.add("label");
     label_3.style.top = '60%';
-    label_3.innerHTML = "";
+    label_3.innerHTML = "Vegetarian";
     filter.appendChild(label_3);
 
     //form 1
@@ -142,26 +142,26 @@ class SearchPage extends HTMLElement {
 
     const input_1 = document.createElement("input");
     input_1.classList.add("input");
-    input_1.list = "input_list_1";
+    input_1.setAttribute("list", "input_list_1");
     input_1.id = "input_1";
     input_1.name = "input_1";
 
-    const input_list_1 = document.createElement("datalist");
-    input_list_1.id = "input_list_1";
+    const data_list_1 = document.createElement("datalist");
+    data_list_1.id = "input_list_1";
     const option_1 = document.createElement("option");
     option_1.value = "4 or more stars";
-    input_list_1.appendChild(option_1);
+    data_list_1.appendChild(option_1);
     const option_2 = document.createElement("option");
     option_2.value = "3 or more stars";
-    input_list_1.appendChild(option_2);
+    data_list_1.appendChild(option_2);
     const option_3 = document.createElement("option");
     option_3.value = "2 or more stars";
-    input_list_1.appendChild(option_3);
+    data_list_1.appendChild(option_3);
     const option_4 = document.createElement("option");
     option_4.value = "1 or more stars";
-    input_list_1.appendChild(option_4);
+    data_list_1.appendChild(option_4);
 
-    input_1.appendChild(input_list_1);
+    input_1.appendChild(data_list_1);
     form_1.appendChild(input_1);
     filter.appendChild(form_1);
 
@@ -172,23 +172,23 @@ class SearchPage extends HTMLElement {
 
     const input_2 = document.createElement("input");
     input_2.classList.add("input");
-    input_2.list = "input_list_2";
+    input_2.setAttribute("list", "input_list_2");
     input_2.id = "input_2";
     input_2.name = "input_2";
 
-    const input_list_2 = document.createElement("datalist");
-    input_list_2.id = "input_list_2";
+    const data_list_2 = document.createElement("datalist");
+    data_list_2.id = "input_list_2";
     const option_5 = document.createElement("option");
     option_5.value = "15 minutes or less";
-    input_list_2.appendChild(option_5);
+    data_list_2.appendChild(option_5);
     const option_6 = document.createElement("option");
     option_6.value = "30 minutes or less";
-    input_list_2.appendChild(option_6);
+    data_list_2.appendChild(option_6);
     const option_7 = document.createElement("option");
     option_7.value = "45 minutes or less";
-    input_list_2.appendChild(option_7);
+    data_list_2.appendChild(option_7);
     
-    input_2.appendChild(input_list_2);
+    input_2.appendChild(data_list_2);
     form_2.appendChild(input_2);
     filter.appendChild(form_2);
 
@@ -199,23 +199,20 @@ class SearchPage extends HTMLElement {
 
     const input_3 = document.createElement("input");
     input_3.classList.add("input");
-    input_3.list = "input_list_3";
+    input_3.setAttribute("list", "input_list_3");
     input_3.id = "input_3";
     input_3.name = "input_3";
 
-    const input_list_3 = document.createElement("datalist");
-    input_list_3.id = "input_list_3";
+    const data_list_3 = document.createElement("datalist");
+    data_list_3.id = "input_list_3";
     const option_8 = document.createElement("option");
-    option_8.value = "";
-    input_list_3.appendChild(option_8);
+    option_8.value = "Vegetarian";
+    data_list_3.appendChild(option_8);
     const option_9 = document.createElement("option");
-    option_9.value = "";
-    input_list_3.appendChild(option_9);
-    const option_10 = document.createElement("option");
-    option_10.value = "";
-    input_list_3.appendChild(option_10);
+    option_9.value = "Not vegetarian";
+    data_list_3.appendChild(option_9);
     
-    input_3.appendChild(input_list_3);
+    input_3.appendChild(data_list_3);
     form_3.appendChild(input_3);
     filter.appendChild(form_3);
 
