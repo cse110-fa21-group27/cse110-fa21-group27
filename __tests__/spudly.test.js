@@ -109,11 +109,11 @@ describe("Basic user flow for Website", () => {
     starsimgSrc = await starsimgSrc.jsonValue();
 
     //console.log("")
-    console.log(titleText);
-    console.log(plainValue);
-    console.log(ratingText);
-    console.log(timeText);
-    console.log(starsimgSrc);
+    //console.log(titleText);
+    //console.log(plainValue);
+    //console.log(ratingText);
+    //console.log(timeText);
+    //console.log(starsimgSrc);
 
     let populated = true;
     populated = !(
