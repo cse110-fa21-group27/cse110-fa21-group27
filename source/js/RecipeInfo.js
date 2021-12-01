@@ -174,7 +174,7 @@ class RecipeInfo extends HTMLElement {
     saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
     saveRecipe.addEventListener("click", () => {
       if (!this.isSaved) {
-        this.addRecipeToSaved(this.id).then(() => {
+        this.addRecipeToSaved(this.id, data.title).then(() => {
           this.isSaved = true;
           saveRecipe.textContent = "Unsave Recipe";
         });

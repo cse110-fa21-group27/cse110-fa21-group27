@@ -138,6 +138,7 @@
   flex-wrap: wrap;
   gap: 1em;
 }
+
 .recipes {
   position: static;
   display: flex;
