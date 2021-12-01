@@ -10,6 +10,11 @@ class RecipeExpand extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
+      @font-face {
+      font-family: font;
+        src: URL('font.ttf') format('truetype');
+      }
+      
         article {
           background-color: white;
           box-shadow: 0 0 10px rgb(0 0 0 / 15%);
@@ -73,6 +78,7 @@ class RecipeExpand extends HTMLElement {
           color: black;
           font-style: normal;
           font-weight: 600;
+          
         }
         header img.thumbnail {
           aspect-ratio: 1;

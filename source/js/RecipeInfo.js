@@ -24,11 +24,18 @@ class RecipeInfo extends HTMLElement {
   set data(data) {
     // Creates CSS for the Recipe Info Component
     const style = `
+
+    @font-face {
+      font-family: font;
+      src: URL('font.ttf') format('truetype');
+    }
+
         .recipe-info {
           margin-left: 25vw;
           margin-right: 25vw;
           width: 50vw;
           background: #FFF6EC;
+          
         }
     
         .thumbnail-photo {
@@ -41,6 +48,7 @@ class RecipeInfo extends HTMLElement {
           text-align: center;
           font-size: 3vh;
           font-weight: bolder;
+          font-family: font;
         }
 
         .rating-time {
@@ -53,14 +61,14 @@ class RecipeInfo extends HTMLElement {
         }
 
         .star-image {
-          height: 5vh;
-          width: 5vw;
-          float: right;
+          height: 6vh;
+          width: 6vw;
+          float: center;
         }
 
         .directions {
-          text-align: center;
-          font-size: 2.5vh;
+          text-align: left;
+          font-size: 3.5vh;
           font-style: italic;
           font-weight: bold;
           padding: none;
@@ -70,6 +78,7 @@ class RecipeInfo extends HTMLElement {
           height: 5vh;
           width: 10vw;
         }
+      
         `;
 
     // Adds the style sheet to the shadow
@@ -151,12 +160,12 @@ class RecipeInfo extends HTMLElement {
     });
 
     // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
-    // Nutrition will contain the list of Nutrition for the Recipe 
+    // Nutrition will contain the list of Nutrition for the Recipe
     const nutrition = document.createElement("button");
     nutrition.classList.add("button");
     nutrition.textContent = "Show Nutritions";
 
-    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the 
+    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the
     // Recipe to the User's Saved Recipes
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");

@@ -10,6 +10,11 @@ class NavBar extends HTMLElement {
    */
   set data(data) {
     const style = `
+    @font-face {
+      font-family: font;
+        src: URL('font.ttf') format('truetype');
+      }
+      
     .navBar {
         position: absolute;
         width: 100%;
@@ -36,7 +41,7 @@ class NavBar extends HTMLElement {
         left: 30%;
         top: 15%;
     
-        font-family: Roboto;
+        font-family: font;
         font-style: normal;
         font-weight: normal;
         font-size: 24px;

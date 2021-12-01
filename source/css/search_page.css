@@ -1,4 +1,9 @@
 /*search bar*/
+@font-face {
+  font-family: font;
+  src: URL("font.ttf") format('truetype');
+}
+
 .search_bar {
   position: absolute;
   width: 100%;
@@ -25,7 +30,7 @@
   left: 30%;
   top: 15%;
 
-  font-family: Roboto;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -79,7 +84,7 @@
   position: absolute;
   left: 3%;
   top: 1%;
-  font-family: DM Sans;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 58px;
@@ -90,7 +95,7 @@
   position: absolute;
   left: 55%;
   top: 1%;
-  font-family: DM Sans;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -102,7 +107,7 @@
   position: absolute;
   left: 1%;
 
-  font-family: DM Sans;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 42px;
@@ -130,7 +135,7 @@ input[type="checkbox"] {
   left: 30%;
   top: 85%;
   width: 40%;
-  font-family: DM Sans;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;

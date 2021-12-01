@@ -1,5 +1,9 @@
-* {
-  font-family: "Open Sans", sans-serif;
+@font-face {
+  font-family: font;
+  src: URL('font.ttf') format('truetype');
+}
+*{
+  font-family: font;
 }
 
 div.recipeEntry {

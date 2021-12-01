@@ -9,7 +9,10 @@
   color: gold;
 }
 /* end header CSS */
-
+@font-face {
+  font-family: font;
+  src: URL('font.ttf') format('truetype');
+}
 /* begin image slider CSS */
 .slide-container {
   width: 800px;
@@ -64,7 +67,7 @@
   left: 2%;
   top: 10%;
 
-  font-family: DM Sans;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 64px;

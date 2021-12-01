@@ -18,20 +18,26 @@ class IngredientsInfo extends HTMLElement {
   set data(data) {
     // Creates CSS for the Recipe Info Component
     const style = `
-        .ingredients-info {
+    @font-face {
+      font-family: font;
+      src: URL('font.ttf') format('truetype');
+    }
+    .ingredients-info {
           position: absolute;
           width: 20%;
           height: 66%;
           top: 20%;
           left: 2%;
           background: #FFF6EC;
-      }
+    
+        }
       
       .ingredients-label {
           position: absolute;
+          text-align: center;
           left: 22%;
-          top: 9%;
-          font-family: DM Sans;
+          top: 0%;
+          font-family: font;
           font-style: normal;
           font-weight: normal;
           font-size: 32px;
@@ -47,7 +53,7 @@ class IngredientsInfo extends HTMLElement {
 
       .form > button {
           position: absolute;
-          font-family: DM Sans;
+          font-family: font;
           font-style: normal;
           font-weight: normal;
           font-size: 18px;
@@ -56,27 +62,28 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .cartButton {
-        left: 6%;
+
+        left: 14%;
         top: 20%;
       }
 
       .addButton {
-        left: 45%;
+        left: 55%;
         top: 30%;
         height: 8%;
       }
 
       .subtractButton {
-        left: 25%;
+        left: 35%;
         top: 30%;
         height: 5%;
       }
 
       .quantity {
           position:absolute;
-          left:36%;
-          top: 25%;
-          font-family: DM Sans;
+          left:45%;
+          top: 26%;
+          font-family: font;
           font-style: normal;
           font-weight: normal;
           font-size: 32px;
@@ -88,7 +95,7 @@ class IngredientsInfo extends HTMLElement {
           left:12%;
           top: 38%;
           width:98%;
-          font-family: DM Sans;
+          font-family: font;
           font-style: normal;
           font-weight: normal;
           font-size: 12px;
@@ -96,11 +103,12 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .ingredients-list {
+        
           position:absolute;
           left: 20%;
           top: 48%;
           width: 60%;
-          font-family: DM Sans;
+          font-family: font;
           font-size: 12px;
           -ms-transform: scale(1.5); 
           -moz-transform: scale(1.5); 

@@ -11,6 +11,11 @@ class Directions extends HTMLElement {
    */
   set data(data) {
     const style = `
+    @font-face {
+      font-family: font;
+      src: URL('font.ttf') format('truetype');
+    }
+
         .background {
           margin-left: 25vw;
           margin-right: 25vw;
@@ -19,8 +24,10 @@ class Directions extends HTMLElement {
           grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
           grid-template-columns: [left] auto [right];
           background: #FFF6EC;
+          padding-bottom: 2.5%;
         }
         .direction{
+          
           display: flex;
           justify-content: flex-start;
           align-items: top;
@@ -28,11 +35,13 @@ class Directions extends HTMLElement {
           margin-right: auto;
           border: 2px solid orange;
           border-radius: 25px;
-          padding: 3px;
+          padding: 10px;
           background: #FFF6EC;
           gap: 10px; 
+          
         }
         .listItemStyle {
+          
           grid-column:2;
           margin-left: auto;
           margin-right: auto;
@@ -52,11 +61,16 @@ class Directions extends HTMLElement {
           margin-right: auto;
           width: auto
           height: auto;
-          padding: 3px;
+          padding: 40px;
           background: #FFF6EC;
         }
-    
+    /*
+    * not to be confused with the buttons at the top of the page
+    * below is the containers
+    * per each recipe instructions
+    */
         .buttonstyle{
+
           margin-left: 0.7em;
           width: auto;
           display: grid;
@@ -92,7 +106,8 @@ class Directions extends HTMLElement {
         .text{
           grid-column:2;
           text-align: left;   
-          margin-block: 0 0;       
+          margin-block: 0 0; 
+          font-family: font;      
         }
 
         .olStyle{
@@ -104,6 +119,7 @@ class Directions extends HTMLElement {
         }
     
         .header{
+          font-family: font;
           font-style: italic;
           font-size: 2em;
           margin-left: auto;

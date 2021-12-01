@@ -1,4 +1,8 @@
 /*search bar*/
+@font-face {
+  font-family: font;
+  src: URL('font.ttf') format('truetype');
+}
 .search_bar {
   position: absolute;
   width: 100%;
@@ -25,7 +29,7 @@
   left: 30%;
   top: 15%;
 
-  font-family: Roboto;
+  font-family: font;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
