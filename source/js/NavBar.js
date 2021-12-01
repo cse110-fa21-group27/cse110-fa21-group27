@@ -103,14 +103,14 @@ class NavBar extends HTMLElement {
     navText.placeholder = "Find a recipe";
 
     // search button/image
-    //change img to form so it is able to click - kevin 11/29
-    const searchImg = document.createElement("form");
-    const searchImgClick = document.createElement("input");
-    searchImgClick.type = "image";
-    searchImgClick.className = "search_png";
-    searchImgClick.id = "se_search_png";
-    searchImgClick.name = "se_search_png";
-    searchImgClick.src = "./images/search.png";
+    const searchImg = document.createElement("input");
+    searchImg.type = "image";
+    searchImg.className = "search_png";
+    searchImg.id = "se_search_png";
+    searchImg.src = "./images/search.png";
+    searchImg.addEventListener("click", (e) => {
+      this.goSearchPage();
+    });
 
     // shopping cart image/button
     const shoppingAct = document.createElement("form");
@@ -140,7 +140,6 @@ class NavBar extends HTMLElement {
     navAct2.appendChild(navText);
     navBar.appendChild(navAct2);
 
-    searchImg.appendChild(searchImgClick);
     navBar.appendChild(searchImg);
 
     shoppingAct.appendChild(shoppingImg);
@@ -151,18 +150,6 @@ class NavBar extends HTMLElement {
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(navBar);
-
-    // search feature - kevin
-    // navAct2.addEventListener('submit', (e) => {
-    //   e.preventDefault();
-    //   window.location = `${window.location.origin}/source/index.html?searchRecipe=${navText.value}`;
-    //   constructSearchPage();
-    // });
-    // searchImg.addEventListener('click', (e) => {
-    //     e.preventDefault();
-    //     window.location = `${window.location.origin}/source/index.html?searchRecipe=${navText.value}`;
-    //     constructSearchPage();
-    //   });
   }
 }
 
