@@ -22,42 +22,39 @@ class RecipeCard extends HTMLElement {
       font-family: font;
       src: URL('font.ttf') format('truetype');
     }
+    
     .recipe-card {
-
       margin-right: auto;
       margin-left: 25%;
       width: 350px;
       display: grid;
       justify-content: center;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
       grid-template-columns: [left] auto [right];
       background: #FFF6EC;
     }
-
-    .title{
+    
+    .title {
       grid-template-rows: [top] auto [bottom];
       font-family: font;
     }
-
+    
     .thumbnail-photo {
       height: 205px;
       object-fit: cover;
       width: 100%;
     }
-
+    
     .rating-time {
       font-size: 15px;
       display: flex;
       flex-direction: row;
       margin-left: 22%;
-      
       display: inline-flex;
       justify-content: center;
       justify-content: space-around;
-          
-      width:190px;
+      width: 190px;
     }
-    
     `;
 
     // Adds the style sheet to the shadow

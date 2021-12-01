@@ -13,11 +13,10 @@ class SavedRecipePage extends HTMLElement {
    */
   set data(data) {
     const style = `
-    button {
-      
-      height: 5vh;
-      width: 10vw;
-    }`;
+      button {
+        height: 5vh;
+        width: 10vw;
+      }`;
 
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;

@@ -29,61 +29,58 @@ class RecipeInfo extends HTMLElement {
       font-family: font;
       src: URL('font.ttf') format('truetype');
     }
-
-        .recipe-info {
-          margin-left: auto;
-          margin-right: auto;
-          width: 50vw;
-          background: #FFF6EC;
-          
-        }
     
-        .thumbnail-photo {
-          height: 50vh;
-          object-fit: cover;
-          width: 50vw;
-        }
-
-        .title {
-          text-align: center;
-          font-size: 3vh;
-          font-weight: bolder;
-          font-family: font;
-        }
-
-        .rating-time {
-          border: 1px solid orange;
-          font-size: 20px;
-          padding-left: 1vw;
-          padding-right: 1vw;
-          margin-left: auto;
-          display: inline-flex;
-          
-          justify-content: space-between;
-          flex-direction: row;
-          width: 800px;
-        }
-
-        .star-image {
-          height: 6vh;
-          width: 6vw;
-          float: center;
-        }
-
-        .directions {
-          text-align: left;
-          font-size: 3.5vh;
-          font-style: italic;
-          font-weight: bold;
-          padding: none;
-        }
-
-        button {
-          font-family: font;
-          height: 5vh;
-          width: 10vw;
-        }
-      
+    .recipe-info {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50vw;
+      background: #FFF6EC;
+    }
+    
+    .thumbnail-photo {
+      height: 50vh;
+      object-fit: cover;
+      width: 50vw;
+    }
+    
+    .title {
+      text-align: center;
+      font-size: 3vh;
+      font-weight: bolder;
+      font-family: font;
+    }
+    
+    .rating-time {
+      border: 1px solid orange;
+      font-size: 20px;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      margin-left: auto;
+      display: inline-flex;
+      justify-content: space-between;
+      flex-direction: row;
+      width: 800px;
+    }
+    
+    .star-image {
+      height: 6vh;
+      width: 6vw;
+      float: center;
+    }
+    
+    .directions {
+      text-align: left;
+      font-size: 3.5vh;
+      font-style: italic;
+      font-weight: bold;
+      padding: none;
+    }
+    
+    button {
+      font-family: font;
+      height: 5vh;
+      width: 10vw;
+    }
         `;
 
     // Adds the style sheet to the shadow
