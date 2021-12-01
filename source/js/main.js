@@ -34,6 +34,7 @@ async function init() {
   await storage.getRecipes();
   router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
+  router.addPage("search-page", SearchPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -59,6 +60,20 @@ function recipesPage() {
   main.appendChild(recipeSection);
   // render the cards for just recipes
   renderRecipes(Object.keys(storage.recipeData), recipeSection);
+}
+
+/**
+ * This function would replace the main with the search page including the filter and the body
+ */
+function SearchPage() {
+  const main = document.querySelector("main");
+  // delete everyting in main
+  main.innerHTML = "";
+  // make a section displaying recipes
+  const searchPage = document.createElement("search-page");
+  searchPage.data = "";
+
+  main.appendChild(searchPage);
 }
 
 /**
@@ -118,6 +133,9 @@ function renderNavBar(data) {
   };
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
+  };
+  bar.goSearchPage = () => {
+    router.navigate("search-page");
   };
   bar.data = data;
 }
