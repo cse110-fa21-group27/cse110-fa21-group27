@@ -1,14 +1,22 @@
-/** this is the recipeCard component for all pages */
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
+ */
 class RecipeCard extends HTMLElement {
-  /** constructs the component and allows access to the shadow */
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
-  /** passes the data object that has the recipe json file
-   * @param {object} data - the recipe json file
+
+  /**
+   * Populates the Recipe Card HTML Component with information from the recipe
+   * json file and displays it with some CSS styling.
+   * @param {Object} data - The recipe json
    */
   set data(data) {
+    // Creates CSS for the Recipe Info Component
     const style = `
     .recipe-card {
       width: 300px;
@@ -32,26 +40,35 @@ class RecipeCard extends HTMLElement {
       grid-template-columns: [left] 50% [middle] 50% [right];
     }
     `;
+
+    // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
+    // Creating an Overall Container
     const card = document.createElement("article");
     card.classList.add("recipe-card");
 
+    // Adding the Recipe Photo
     const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
     photo.setAttribute("src", data.image);
     card.appendChild(photo);
 
+    // Adding the Recipe Title
     const title = document.createElement("p");
     title.textContent = data.title;
     card.appendChild(title);
 
+    // Adding a Container called Info
     const info = document.createElement("div");
     info.classList.add("rating-time");
 
+    // Adding the Rating to Info
     const rating = document.createElement("p");
     rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
+
+    // Adding the Star Picture to Info
     const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
     switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
@@ -89,4 +106,5 @@ class RecipeCard extends HTMLElement {
   }
 }
 
+// Creating a custom Recipe-Card Element
 customElements.define("recipe-card", RecipeCard);

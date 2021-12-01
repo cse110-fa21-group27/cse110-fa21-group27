@@ -1,10 +1,22 @@
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
+ */
 class IngredientsInfo extends HTMLElement {
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
   }
 
+  /**
+   * Populates the Ingredient Info HTML Component with information from the recipe
+   * json file and displays it with some CSS styling.
+   * @param {Object} data - The recipe json
+   */
   set data(data) {
+    // Creates CSS for the Recipe Info Component
     const style = `
         .ingredients-info {
           position: absolute;
@@ -99,31 +111,42 @@ class IngredientsInfo extends HTMLElement {
       }
       `;
 
+    // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
+    // Grabs the Ingredients from data
     const ingredientList = data.extendedIngredients;
 
+    // Creating an Overall Container
     const info = document.createElement("div");
     info.classList.add("ingredients-info");
 
+    // Creating the Ingredients Title
     const ingredients = document.createElement("p");
     ingredients.classList.add("ingredients-label");
     ingredients.textContent = "Ingredients";
     info.appendChild(ingredients);
 
+    // Creating a Stylish Line Break to separate the Title from the Rest
     const line = document.createElement("hr");
     line.classList.add("line");
     info.appendChild(line);
 
+    // Creating an Inner Container
     const form = document.createElement("div");
     form.classList.add("form");
 
+    // Adding a Add Ingredients To Cart Button with Event Listener that will
+    // call a function to add/remove the Ingredients to Grocery Cart (Not Implemented)
     const addToCart = document.createElement("button");
     addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";
     form.appendChild(addToCart);
 
+    // Adding a Subtract Button with Event Listener that will
+    // decrement the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", (event) => {
@@ -134,11 +157,16 @@ class IngredientsInfo extends HTMLElement {
     subtractQuantity.textContent = "-";
     form.appendChild(subtractQuantity);
 
+    // Creating a current display of the number of Servings the Recipe
+    // will make based on the current number of Ingredients
     const quantity = document.createElement("p");
     quantity.classList.add("quantity");
     quantity.textContent = data.servings;
     form.appendChild(quantity);
 
+    // Adding a Add Button with Event Listener that will
+    // increment the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
     addQuantity.addEventListener("click", (event) => {
@@ -147,6 +175,8 @@ class IngredientsInfo extends HTMLElement {
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
 
+    // Creating the list of ingredients with checkboxes to allow the user
+    // to only select some ingredients to add to Grocery List (Not Implemented)
     const list = document.createElement("div");
     list.classList.add("ingredients-list");
     for (let i = 0; i < ingredientList.length; i++) {
@@ -167,4 +197,5 @@ class IngredientsInfo extends HTMLElement {
   }
 }
 
+// Creating a custom Ingredients-Info Element
 customElements.define("ingredients-info", IngredientsInfo);

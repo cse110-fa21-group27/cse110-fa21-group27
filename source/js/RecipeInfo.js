@@ -7,7 +7,7 @@
  * @property {Function} addRecipeToSaved
  * @property {Function} removeRecipeFromSaved
  * @property {Boolean} isSaved
- * @property {string} id - the id for the recipe page this component is displaying
+ * @property {string} id - The id for the recipe displayed
  */
 class RecipeInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
@@ -19,7 +19,7 @@ class RecipeInfo extends HTMLElement {
   /**
    * Populates the Recipe Info HTML Component with information from the recipe
    * json file and displays it with some CSS styling.
-   * @param {Object} data - The recipe json file
+   * @param {Object} data - The recipe json
    */
   set data(data) {
     // Creates CSS for the Recipe Info Component
@@ -72,31 +72,40 @@ class RecipeInfo extends HTMLElement {
         }
         `;
 
+    // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
+    // Creating an Overall Container
     const info = document.createElement("article");
     info.classList.add("recipe-info");
 
+    // Adding the Recipe Photo
     const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
     photo.setAttribute("src", data.image);
     info.appendChild(photo);
 
+    // Adding the Recipe Title
     const title = document.createElement("p");
     title.classList.add("title");
     title.textContent = data.title;
     info.appendChild(title);
 
+    // Adding a Container called Review
     const review = document.createElement("div");
     review.classList.add("rating-time");
 
+    // Adding the Time to make the Recipe to  Review
     const time = document.createElement("p");
     time.textContent = `${data.readyInMinutes} mins`;
     review.appendChild(time);
 
+    // Adding the Rating of the Recipe to  Review
     const rating = document.createElement("p");
     rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
+
+    // Adding the Star Picture to  Review
     const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
     switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
@@ -124,6 +133,8 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
+    // Adding an Ingredients Button with Event Listener to display Ingredients-Info Element
+    // Ingredients Info will contain the list of Ingredients and Quanitities
     const ingredients = document.createElement("button");
     ingredients.classList.add("button");
     ingredients.textContent = "Show Ingredients";
@@ -138,10 +149,15 @@ class RecipeInfo extends HTMLElement {
         ingredients.textContent = "Show Ingredients";
       }
     });
+
+    // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
+    // Nutrition will contain the list of Nutrition for the Recipe 
     const nutrition = document.createElement("button");
     nutrition.classList.add("button");
     nutrition.textContent = "Show Nutritions";
 
+    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the 
+    // Recipe to the User's Saved Recipes
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
     saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
@@ -168,4 +184,5 @@ class RecipeInfo extends HTMLElement {
   }
 }
 
+// Creating a custom Recipe-Info Element
 customElements.define("recipe-info", RecipeInfo);

@@ -1,8 +1,11 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Sprint Planning Meeting
 
 ### Attendance
+
 <!-- Remove the people not attending. -->
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -18,12 +21,14 @@ Date: 11/7/21
 Time: 2PM
 
 ### Agenda
+
 New Business:
+
 - Daily standups
   - Geekbot
   - Quick template to fill out each day at a certain time
   - Bigger meeting at end of week/sprint to discuss what was accomplished/problems
-  - Everyone will 
+  - Everyone will
 - Code format
   - Our project has to look like it was written by one person
   - Camelcase
@@ -46,4 +51,5 @@ New Business:
 - First team ADR decision
 
 Meeting concluded at 3:30PM.
+
 <!-- REMINDER TO SAVE THE TEMPLATE AS (mmddyy-topic.md)-->
