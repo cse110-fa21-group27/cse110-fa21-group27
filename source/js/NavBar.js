@@ -101,6 +101,10 @@ class NavBar extends HTMLElement {
     navText.id = "se_search_text";
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
+    navAct2.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.goSearchPage();
+    });
 
     // search button/image
     const searchImg = document.createElement("input");
