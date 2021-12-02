@@ -21,16 +21,17 @@ class NavBar extends HTMLElement {
       height: 10%;
       left: 0%;
       top: 0%;
-      background: red;
+      /* this is the main banner */
+      background: #302B27;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
     
     .spudly_png {
       position: absolute;
-      width: 15%;
-      height: 80%;
+      width: 14%;
+      height: 90%;
       left: 2%;
-      top: 10%;
+      top: 5%;
     }
     
     .search_text {
@@ -43,11 +44,12 @@ class NavBar extends HTMLElement {
       font-style: normal;
       font-weight: normal;
       font-size: 24px;
+      font-color: black;
       line-height: 28px;
       display: flex;
       align-items: center;
       color: #FFFFFF;
-      background: purple;
+      background: black;
       border-color: white;
     }
     

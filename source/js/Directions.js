@@ -7,8 +7,13 @@ class Directions extends HTMLElement {
   set data(data) {
     const style = `
       @font-face {
-        font-family: font;
-        src: URL('font.ttf') format('truetype');
+        font-family: 'font';
+        src: url('font.ttf') format('truetype');
+      }
+
+      @font-face {
+        font-family: 'boldFont';
+        src: url('semiBold.ttf') format('truetype');
       }
       
       .background {
@@ -18,8 +23,12 @@ class Directions extends HTMLElement {
         display: grid;
         grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
         grid-template-columns: [left] auto [right];
-        background: #715DCE;
+        background: #2f4035;
         padding-bottom: 2.5%;
+        border: 10px solid #302B27;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
+        color: white;
       }
       
       .direction {
@@ -28,10 +37,12 @@ class Directions extends HTMLElement {
         align-items: top;
         margin-left: auto;
         margin-right: auto;
-        border: 2px solid orange;
+        border: 2px solid #b1c9b5;
         border-radius: 25px;
         padding: 10px;
-        background: #FFF6EC;
+        
+
+        background: #655B53;
         gap: 10px;
       }
       
@@ -44,10 +55,13 @@ class Directions extends HTMLElement {
         height: 1.5em;
         padding: 3px;
         overflow: hidden;
-        background: #FFF6EC;
+        background: #655B53;
+
+        font-size: 18px;
       }
       
       .listItemStyleShown {
+        font-size: 30px;
         grid-column: 2;
         border: 0px solid transparent;
         border-radius: 25px;
@@ -55,7 +69,7 @@ class Directions extends HTMLElement {
         margin-right: auto;
         width: auto height: auto;
         padding: 40px;
-        background: #FFF6EC;
+        background: #655B53;
       }
       
       
@@ -73,6 +87,7 @@ class Directions extends HTMLElement {
         justify-content: flex-start;
         align-items: top;
         gap: 10px;
+        color: #FFEFEB;
       }
       
       .listItemStyle:hover {
@@ -90,6 +105,7 @@ class Directions extends HTMLElement {
         margin-right: 0.7em;
         width: 1em;
         height: 1em;
+        
       }
       
       .upArrow {
@@ -112,21 +128,22 @@ class Directions extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        
       }
       
       .header {
-        font-family: font;
-        font-style: italic;
+        font-family: boldFont;
+        font-weight: 1em;
         font-size: 2em;
         margin-left: auto;
         margin-right: auto;
-        width: auto
+        width: auto;
       }
       
       .checkbox {
-        margin: 0;
-        margin-left: 1em;
-        margin-top: 0.3em;
+        zoom: 3;
+        width:auto;
+        height:auto;
       }
     `;
 

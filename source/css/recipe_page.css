@@ -32,7 +32,7 @@
   align-items: center;
 
   color: #000000;
-  background: #ffbb71;
+  background:black;
   border-color: #ffffff;
 }
 
@@ -84,7 +84,7 @@
   height: 66%;
   top: 20%;
   left: 2%;
-  background: #fff6ec;
+  background: #ff8800;
 }
 
 .ingredients_label {

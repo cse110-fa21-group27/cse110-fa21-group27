@@ -1,7 +1,7 @@
 /* begin header CSS */
 .Recommended {
   text-align: center;
-  color: gold;
+  color: rgb(122, 255, 159);
 }
 
 .Popular {
@@ -11,7 +11,7 @@
 /* end header CSS */
 @font-face {
   font-family: 'font';
-  src: URL('font.ttf') format('truetype');
+  src: url('font.ttf') format('truetype');
 }
 /* begin image slider CSS */
 .slide-container {
@@ -74,7 +74,7 @@
   font-size: 64px;
   line-height: 83px;
 
-  color: #ffffff;
+  color: #c50000;
 }
 
 #search_png {
@@ -148,7 +148,7 @@
 }
 /* end saved Recipes component */
 body {
-  background: #9b7da7;
+  background: #78A58A;
   font-family: font;
   text-align: center;
   margin: auto;

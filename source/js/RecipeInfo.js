@@ -26,32 +26,46 @@ class RecipeInfo extends HTMLElement {
     const styleRecipe = `
 
     @font-face {
-      font-family: font;
-      src: URL('font.ttf') format('truetype');
+      font-family: 'font';
+      src: url('font.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'boldFont';
+      src: url('semiBold.ttf') format('truetype');
     }
     
     .recipe-info {
       margin-left: auto;
       margin-right: auto;
       width: 50vw;
-      background: #FFF6EC;
+      background: #5b8775;
+      border: 10px solid #302B27;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
     }
     
     .thumbnail-photo {
       height: 50vh;
       object-fit: cover;
       width: 50vw;
+      border-bottom: 20px solid #302B27;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
     }
     
     .title {
+      color: #FFEFEB;
       text-align: center;
       font-size: 3vh;
       font-weight: bolder;
-      font-family: font;
+      font-family: boldFont;
+      
     }
     
     .rating-time {
-      border: 5px solid orange;
+      background: #b1c9b5;
+      border: 5px solid #395645;
       font-size: 20px;
       padding-right: -3px;
       display: inline-flex;
@@ -67,15 +81,16 @@ class RecipeInfo extends HTMLElement {
     }
     
     .directions {
+      color: white;
       text-align: left;
-      font-size: 3.5vh;
+      font-size: 5vh;
       font-style: italic;
-      font-weight: bold;
+      font-family: boldFont;
       padding: none;
     }
     
     button {
-      font-family: font;
+      font-family: boldFont;
       height: 5vh;
       width: 10vw;
     }

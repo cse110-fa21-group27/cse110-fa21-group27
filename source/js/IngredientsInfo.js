@@ -25,6 +25,7 @@ class IngredientsInfo extends HTMLElement {
       
       .ingredients-info {
         position: absolute;
+        
         width: 20%;
         height: 66%;
         top: 20%;
@@ -33,10 +34,7 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .ingredients-label {
-        display: flex;
-        justify: left;
-        text-align: left;
-        left: 22%;
+        left: 30%;
         top: 0%;
         font-family: font;
         font-style: normal;
@@ -46,7 +44,7 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .line {
-        margin-top: 36%;
+        margin-top: 160px;
         width: 90%;
         text-align: center;
         color: black;
@@ -59,21 +57,25 @@ class IngredientsInfo extends HTMLElement {
         font-weight: normal;
         font-size: 18px;
         height: 8%;
-        background: #FFB673;
+        right: 14%;
+        background: #427820;
+        color: white;
       }
       
       .cartButton {
-        left: 14%;
+        margin:auto;
+        left: 17%;
         top: 20%;
       }
       
       .addButton {
+        margin-right: 75%;
         left: 55%;
         top: 30%;
-        height: 8%;
       }
       
       .subtractButton {
+        margin-right: 95%;
         left: 35%;
         top: 30%;
         height: 5%;
@@ -107,7 +109,7 @@ class IngredientsInfo extends HTMLElement {
         text-align: left;
         position: absolute;
         left: 20%;
-        top: 48%;
+        top: 325px;
         width: 60%;
         font-family: font;
         font-size: 12px;
@@ -116,7 +118,7 @@ class IngredientsInfo extends HTMLElement {
         -webkit-transform: scale(1.5);
         -o-transform: scale(1.5);
         transform: scale(1.5);
-        padding: 10px;
+        padding: 10%;
       }
     `;
 
