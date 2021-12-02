@@ -87,7 +87,10 @@ class SavedRecipePage extends HTMLElement {
           // all the other inputs need to be checked for a checkmark from user
           if (checkboxArray[i].checked) {
             this.addToCollection(userInfo.savedRecipes[i-1].id, name.value);
-            idArray.push(userInfo.savedRecipes[i-1].id);
+            // Only display the first three recipes
+            if (idArray.length < 3) {
+              idArray.push(userInfo.savedRecipes[i-1].id);
+            }
           }
         }
         
@@ -102,7 +105,10 @@ class SavedRecipePage extends HTMLElement {
         // Render the cards.
         this.renderRecipes(idArray, collection).then(() => {
           this.shadowRoot.appendChild(collection);
+          this.shadowRoot.appendChild(document.createElement("hr"));
         });
+
+        
 
         this.shadowRoot.removeChild(form);
       });
@@ -142,18 +148,32 @@ class SavedRecipePage extends HTMLElement {
         form.appendChild(lineBreak);
       }
 
+      // Grab the sections/headers/brs
+      let sectionArray = this.shadowRoot.querySelectorAll("section");
+      console.log(sectionArray);
+      let headerArray = this.shadowRoot.querySelectorAll("h1");
+      console.log(headerArray);
+      let lineArray = this.shadowRoot.querySelectorAll("hr");
+      console.log(lineArray);
       // Button to delete the collections
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete Collections";
       // Select the collections, delete them, and delete the form
       deleteButton.addEventListener("click", () => {
         let checkboxArray = form.querySelectorAll("input");
+        // It deletes in reverse order to make sure there are no index problems
         for (let i = checkboxArray.length-1; i >= 0 ; i--) {
           // Checks which collections were checked and deletes them
           if (checkboxArray[i].checked) {
             this.removeCollection(userInfo.collections[i].name);
+            // Adjusting by one so that we don't delete saved-recipes
+            this.shadowRoot.removeChild(sectionArray[i+1]);
+            this.shadowRoot.removeChild(headerArray[i+1]);
+            this.shadowRoot.removeChild(lineArray[i+1]);
           }
         }
+
+
         this.shadowRoot.removeChild(form);
       });
 
