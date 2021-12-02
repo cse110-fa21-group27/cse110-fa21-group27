@@ -65,13 +65,13 @@ function recipesPage() {
 /**
  * This function would replace the main with the search page including the filter and the body
  */
-function SearchPage() {
+function SearchPage(results) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
-  searchPage.data = "";
+  searchPage.data = results;
 
   main.appendChild(searchPage);
 }
