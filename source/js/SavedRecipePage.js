@@ -90,6 +90,18 @@ class SavedRecipePage extends HTMLElement {
           }
         }
         this.shadowRoot.removeChild(form);
+
+        // // Collection name
+        // let headerName = document.createElement("h1");
+        // headerName.textContent = name.value;
+        // this.shadowRoot.appendChild(headerName);
+        // // Create the section to render the colletion recipe cards
+        // let collection = document.createElement("section");
+        // collection.classList.add("saved-recipes");
+        // this.renderRecipes(idArray, collection).then(() => {
+        //   this.shadowRoot.appendChild(collection);
+        // });
+        
       });
 
       // Button to remove the form without creating the collection
@@ -127,14 +139,11 @@ class SavedRecipePage extends HTMLElement {
         form.appendChild(lineBreak);
       }
 
-      // Create an array of collection ids to delete
-      let collectionArray = [];
       // Button to delete the collections
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete Collections";
       // Select the collections, delete them, and delete the form
       deleteButton.addEventListener("click", () => {
-        // this.addCollection(name.value);
         let checkboxArray = form.querySelectorAll("input");
         for (let i = 0; i < checkboxArray.length; i++) {
           // Checks which collections were checked and deletes them
@@ -160,10 +169,13 @@ class SavedRecipePage extends HTMLElement {
 
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
-
+    
     let idList = [];
     for (let i = 0; i < userInfo.savedRecipes.length; i++) {
-      idList.push(userInfo.savedRecipes[i].id);
+      //Only display 3 recipes
+      if (i < 3) {
+        idList.push(userInfo.savedRecipes[i].id);
+      } 
     }
     this.renderRecipes(idList, page);
 
@@ -181,18 +193,37 @@ class SavedRecipePage extends HTMLElement {
       let collection = document.createElement("section");
       collection.classList.add("saved-recipes");
 
+      // Create the collection page
+      collection.addEventListener('click', () => {
+        const main = document.querySelector("main");
+        // delete everyting in main
+        main.innerHTML = "";
+        // make user-collection visible
+        const userCollection = document.createElement("user-collection");
+        // pass the renderrecipes function
+        userCollection.renderRecipes = this.renderRecipes;
+        // pass the collections functions
+        userCollection.addToCollection = this.addToCollection;
+        userCollection.removeFromCollection = this.removeFromCollection;
+        // give it the array of userInfo for data
+        userCollection.data = userInfo.collections[i];
+        main.appendChild(userCollection);
+      });
+
       // Getting the ids from the collection
       let idArray = [];
       for (let j = 0; j < userInfo.collections[i].ids.length; j++) {
-        idArray.push(userInfo.collections[i].ids[j]);
+        // Only display 3 recipes
+        if (j < 3) {
+          idArray.push(userInfo.collections[i].ids[j]);
+        }
       }
+
       // Render the collection
       this.renderRecipes(idArray, collection);
       this.shadowRoot.appendChild(collection);
       this.shadowRoot.appendChild(document.createElement("hr"));
-    }
-    
-    
+    }   
   }
 }
 
