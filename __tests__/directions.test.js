@@ -464,9 +464,9 @@ const sampleRecipe1 = {
 };
 
 test("placeholder test for now", () => {
-  /*const directions = document.createElement("directions-info");
+  const directions = document.createElement("directions-info");
   directions.data = sampleRecipe1;
-  expect(directions).toBe(
+  expect(directions.shadowRoot).toBe(
     "1) Rinse and drain the kidney beans, cut the sundried tomatoes, and tear the slice of cheese into small pieces."
-  );*/
+  );
 });

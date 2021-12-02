@@ -1,9 +1,9 @@
+function delay(time) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time);
+  });
+}
 describe("Basic user flow for Website", () => {
-  function delay(time) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, time);
-    });
-  }
   // First, visit the lab 8 website
   beforeAll(async () => {
     await page.goto("https://spudly-f0411.web.app/", {
@@ -154,6 +154,64 @@ describe("Basic user flow for Website", () => {
     expect(numCardspre).toBe(264);
     expect(numCards).toBe(0);
     expect(numCardspos).toBe(264);
+  }, 20000);
+
+  // Click on a recipe and then check the rest of the recipe content
+  // Rest of the recipe is: directions info:
+  // article with a p with directions header
+  // ol with divs
+  //    input type checkbox
+  //    button class listItemStyle
+  //        p class text with instructions
+  //        img src ./images/arrow-down.png
+  it("click a recipe and see the directions are populated", async () => {
+    console.log("going to click a recipe and check the directions content");
+    await delay(4000);
+
+    let populated = true;
+    const prodItems = await page.$$("recipe-card");
+    await prodItems[0].click();
+    let prodItem = await page.$("recipe-page");
+    let prodItemSR = await prodItem.getProperty("shadowRoot");
+    let prodItemDInfo = await prodItemSR.$("directions-info");
+    let prodItemDinfoSR = await prodItemDInfo.getProperty("shadowRoot");
+
+    // Get the directions header
+    let directionsHead = await prodItemDinfoSR.$("p");
+    let dirHeadText = await directionsHead.getProperty("innerText");
+    dirHeadText = await dirHeadText.jsonValue();
+    console.log(dirHeadText);
+
+    // Get the ol
+    let olLength = await prodItemDinfoSR.$$eval(".direction", (prodItems) => {
+      return prodItems.length;
+    });
+    //let olLength = await ol.getProperty("length");
+    //olLength = await olLength.jsonValue();
+    console.log(olLength);
+    // Skip straight to the text in the directions
+    let olItems = await prodItemDinfoSR.$$(".text");
+    let downArrow = await prodItemDinfoSR.$$("img");
+
+    let olText, downArrSrc;
+    for (let i = 0; i < olLength; i++) {
+      olText = await olItems[i].getProperty("innerText");
+      olText = await olText.jsonValue();
+      console.log(olText);
+      downArrSrc = await downArrow[i].getProperty("src");
+      downArrSrc = await downArrSrc.jsonValue();
+      console.log(downArrSrc);
+      if (
+        olText == "" ||
+        dirHeadText != "Directions" ||
+        downArrSrc != "https://spudly-f0411.web.app/images/arrow-down.png"
+      ) {
+        populated = false;
+      }
+    }
+
+    await page.goBack();
+    expect(populated).toBe(true);
   }, 20000);
   // TODO TESTS
   /**

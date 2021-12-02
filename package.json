@@ -16,10 +16,13 @@
   },
   "scripts": {
     "test": "jest",
-    "build": ""
+    "test2": "cypress open"
   },
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
+  },
+  "dependencies": {
+    "cypress": "^9.1.0"
   }
 }

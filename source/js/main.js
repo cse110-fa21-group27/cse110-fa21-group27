@@ -148,7 +148,6 @@ async function renderRecipes(list, target) {
     router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
     bindRecipeCard(newCard, recipeId);
-
     target.appendChild(newCard);
   });
 }
