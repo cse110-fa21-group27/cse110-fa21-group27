@@ -21,7 +21,7 @@ class NavBar extends HTMLElement {
       height: 10%;
       left: 0%;
       top: 0%;
-      background: #FFBB71;
+      background: red;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
     
@@ -46,9 +46,9 @@ class NavBar extends HTMLElement {
       line-height: 28px;
       display: flex;
       align-items: center;
-      color: #000000;
-      background: #FFBB71;
-      border-color: #FFFFFF;
+      color: #FFFFFF;
+      background: purple;
+      border-color: white;
     }
     
     .search_png {

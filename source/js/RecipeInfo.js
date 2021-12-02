@@ -51,15 +51,13 @@ class RecipeInfo extends HTMLElement {
     }
     
     .rating-time {
-      border: 1px solid orange;
+      border: 5px solid orange;
       font-size: 20px;
-      padding-left: 1vw;
-      padding-right: 1vw;
-      margin-left: auto;
+      padding-right: -3px;
       display: inline-flex;
       justify-content: space-between;
       flex-direction: row;
-      width: 800px;
+      width: 98%;
     }
     
     .star-image {

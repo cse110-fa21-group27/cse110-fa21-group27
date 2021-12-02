@@ -19,7 +19,7 @@ class IngredientsInfo extends HTMLElement {
     // Creates CSS for the Recipe Info Component
     const style = `
       @font-face {
-        font-family: font;
+        font-family: 'font';
         src: URL('font.ttf') format('truetype');
       }
       
@@ -33,7 +33,8 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .ingredients-label {
-        position: absolute;
+        display: flex;
+        justify: left;
         text-align: left;
         left: 22%;
         top: 0%;

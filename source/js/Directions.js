@@ -18,7 +18,7 @@ class Directions extends HTMLElement {
         display: grid;
         grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
         grid-template-columns: [left] auto [right];
-        background: #FFF6EC;
+        background: #715DCE;
         padding-bottom: 2.5%;
       }
       

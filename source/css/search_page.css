@@ -127,7 +127,7 @@ input[type="checkbox"] {
   font-weight: normal;
   font-size: 24px;
   line-height: 62px;
-  background-color: #ffbb71;
+  background-color: #fbf5f5;
 }
 /*search body*/
 .search_body {
@@ -136,10 +136,11 @@ input[type="checkbox"] {
   top: 20%;
   height: 70%;
   width: 60%;
-  background-color: cadetblue; /*temp holder*/
+  background-color: rgb(253, 255, 255); /*temp holder*/
 }
 
 body {
+  
   text-align: center;
   display: grid;
   margin-left: 12%;

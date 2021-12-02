@@ -19,7 +19,7 @@ class RecipeCard extends HTMLElement {
     // Creates CSS for the Recipe Info Component
     const style = `
     @font-face {
-      font-family: font;
+      font-family: 'font';
       src: URL('font.ttf') format('truetype');
     }
     
@@ -31,7 +31,11 @@ class RecipeCard extends HTMLElement {
       justify-content: center;
       grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
       grid-template-columns: [left] auto [right];
-      background: #FFF6EC;
+      background: #715DCE;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
     
     .title {
@@ -40,6 +44,7 @@ class RecipeCard extends HTMLElement {
     }
     
     .thumbnail-photo {
+      margin: auto;
       height: 205px;
       object-fit: cover;
       width: 100%;
