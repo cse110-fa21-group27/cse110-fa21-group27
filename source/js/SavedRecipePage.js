@@ -108,8 +108,6 @@ class SavedRecipePage extends HTMLElement {
           this.shadowRoot.appendChild(document.createElement("hr"));
         });
 
-        
-
         this.shadowRoot.removeChild(form);
       });
 
@@ -192,15 +190,36 @@ class SavedRecipePage extends HTMLElement {
 
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
+
     
+    
+    let idShortList = [];
     let idList = [];
     for (let i = 0; i < userInfo.savedRecipes.length; i++) {
       //Only display 3 recipes
       if (i < 3) {
-        idList.push(userInfo.savedRecipes[i].id);
+        idShortList.push(userInfo.savedRecipes[i].id);
       } 
+      idList.push(userInfo.savedRecipes[i].id);
     }
-    this.renderRecipes(idList, page);
+    this.renderRecipes(idShortList, page);
+    
+    // Create the collection page for saved-recipes
+    page.addEventListener('click', () => {
+      const main = document.querySelector("main");
+      // delete everyting in main
+      main.innerHTML = "";
+      // make user-collection visible
+      const userCollection = document.createElement("user-collection");
+      // pass the renderrecipes function
+      userCollection.renderRecipes = this.renderRecipes;
+      // pass the collections functions
+      userCollection.addToCollection = this.addToCollection;
+      userCollection.removeFromCollection = this.removeFromCollection;
+      // give it the array of userInfo for data
+      userCollection.data = idList;
+      main.appendChild(userCollection);
+    });
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(page);
