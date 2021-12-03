@@ -104,12 +104,20 @@ class NavBar extends HTMLElement {
     navText.id = "se_search_text";
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
+    navAct2.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.goSearchPage();
+    });
 
     // search button/image
-    const searchImg = document.createElement("img");
+    const searchImg = document.createElement("input");
+    searchImg.type = "image";
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
+    searchImg.addEventListener("click", (e) => {
+      this.goSearchPage();
+    });
 
     // shopping cart image/button
     const shoppingAct = document.createElement("form");
