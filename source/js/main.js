@@ -142,6 +142,10 @@ function RoadmapPage() {
 
   main.appendChild(roadmapPage);
 
+  roadmapPage.goRecipe = (recipeId) => {
+    router.navigate(recipeId);
+  };
+
   /*
   renderNavBar({
     recipeUrl: recipeUrl,
@@ -219,6 +223,7 @@ function renderNavBar(data) {
   bar.goRoadmap = () => {
     router.navigate("roadmap-page");
   };
+  
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
