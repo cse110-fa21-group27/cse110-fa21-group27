@@ -7,7 +7,7 @@
  * @property {Function} addRecipeToSaved
  * @property {Function} removeRecipeFromSaved
  * @property {Boolean} isSaved
- * @property {string} id - the id for the recipe page this component is displaying
+ * @property {string} id - The id for the recipe displayed
  */
 class RecipeInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
@@ -19,84 +19,118 @@ class RecipeInfo extends HTMLElement {
   /**
    * Populates the Recipe Info HTML Component with information from the recipe
    * json file and displays it with some CSS styling.
-   * @param {Object} data - The recipe json file
+   * @param {Object} data - The recipe json
    */
   set data(data) {
     // Creates CSS for the Recipe Info Component
-    const style = `
-        .recipe-info {
-          margin-left: 25vw;
-          margin-right: 25vw;
-          width: 50vw;
-          background: #FFF6EC;
-        }
+    const styleRecipe = `
+
+    @font-face {
+      font-family: 'font';
+      src: local('font.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'boldFont';
+      src: url('semiBold.ttf') format('truetype');
+    }
     
-        .thumbnail-photo {
-          height: 50vh;
-          object-fit: cover;
-          width: 50vw;
-        }
+    .recipe-info {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50vw;
+      background: #5b8775;
+      border: 10px solid #302B27;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
+    }
+    
+    .thumbnail-photo {
+      height: 50vh;
+      object-fit: cover;
+      width: 50vw;
+      border-bottom: 20px solid #302B27;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
+    }
+    
+    .title {
+      font-family: font;
+      color: #FFEFEB;
+      text-align: center;
+      font-size: 3vh;
+      font-weight: bolder;
+      font-family: font;
 
-        .title {
-          text-align: center;
-          font-size: 3vh;
-          font-weight: bolder;
-        }
-
-        .rating-time {
-          padding-left: 1vw;
-          padding-right: 1vw;
-          display: grid;
-          grid-template-rows: [top] auto [bottom];
-          grid-template-columns: [left] 50% [middle] 50% [right];
-          border: 1px solid orange;
-        }
-
-        .star-image {
-          height: 5vh;
-          width: 5vw;
-          float: right;
-        }
-
-        .directions {
-          text-align: center;
-          font-size: 2.5vh;
-          font-style: italic;
-          font-weight: bold;
-          padding: none;
-        }
-
-        button {
-          height: 5vh;
-          width: 10vw;
-        }
+    }
+    
+    .rating-time {
+      background: #b1c9b5;
+      border: 5px solid #395645;
+      font-family: font;
+      font-size: 20px;
+      padding-right: -3px;
+      display: inline-flex;
+      justify-content: space-between;
+      flex-direction: row;
+      width: 98%;
+    }
+    
+    .star-image {
+      height: 6vh;
+      width: 6vw;
+      float: center;
+    }
+    
+    .directions {
+      color: white;
+      text-align: left;
+      font-size: 5vh;
+      font-style: italic;
+      font-family: font;
+      padding: none;
+    }
+    
+    button {
+      height: 5vh;
+      width: 10vw;
+    }
         `;
 
+    // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
-    styleElem.innerHTML = style;
+    styleElem.innerHTML = styleRecipe;
 
+    // Creating an Overall Container
     const info = document.createElement("article");
     info.classList.add("recipe-info");
 
+    // Adding the Recipe Photo
     const photo = document.createElement("img");
     photo.classList.add("thumbnail-photo");
     photo.setAttribute("src", data.image);
     info.appendChild(photo);
 
+    // Adding the Recipe Title
     const title = document.createElement("p");
     title.classList.add("title");
     title.textContent = data.title;
     info.appendChild(title);
 
+    // Adding a Container called Review
     const review = document.createElement("div");
     review.classList.add("rating-time");
 
+    // Adding the Time to make the Recipe to  Review
     const time = document.createElement("p");
     time.textContent = `${data.readyInMinutes} mins`;
     review.appendChild(time);
 
+    // Adding the Rating of the Recipe to  Review
     const rating = document.createElement("p");
     rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
+
+    // Adding the Star Picture to  Review
     const starPicture = document.createElement("img");
     starPicture.classList.add("star-image");
     switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
@@ -124,6 +158,8 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
+    // Adding an Ingredients Button with Event Listener to display Ingredients-Info Element
+    // Ingredients Info will contain the list of Ingredients and Quanitities
     const ingredients = document.createElement("button");
     ingredients.classList.add("button");
     ingredients.textContent = "Show Ingredients";
@@ -138,16 +174,21 @@ class RecipeInfo extends HTMLElement {
         ingredients.textContent = "Show Ingredients";
       }
     });
+
+    // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
+    // Nutrition will contain the list of Nutrition for the Recipe
     const nutrition = document.createElement("button");
     nutrition.classList.add("button");
     nutrition.textContent = "Show Nutritions";
 
+    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the
+    // Recipe to the User's Saved Recipes
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
     saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
     saveRecipe.addEventListener("click", () => {
       if (!this.isSaved) {
-        this.addRecipeToSaved(this.id).then(() => {
+        this.addRecipeToSaved(this.id, data.title).then(() => {
           this.isSaved = true;
           saveRecipe.textContent = "Unsave Recipe";
         });
@@ -168,4 +209,5 @@ class RecipeInfo extends HTMLElement {
   }
 }
 
+// Creating a custom Recipe-Info Element
 customElements.define("recipe-info", RecipeInfo);
