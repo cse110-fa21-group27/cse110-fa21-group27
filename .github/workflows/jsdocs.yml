@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - run: npm install
-      - run: npm audit fix
+        with:
+          persist-credentials: false
       - name: Build
         uses: andstor/jsdoc-action@v1
         with:
