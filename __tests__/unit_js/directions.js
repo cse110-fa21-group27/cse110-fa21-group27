@@ -470,4 +470,4 @@ direc.data = recipe1;
 const body = document.querySelector("body");
 body.appendChild(direc);
 
-module.exports = { recipe1 };
+export default { recipe1 };

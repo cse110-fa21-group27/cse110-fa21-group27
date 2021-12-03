@@ -1,8 +1,9 @@
 const { cyan } = require("chalk");
 const { createDocument } = require("parse5/lib/tree-adapters/default");
 const magicNumbers = require("./magictestNumbers");
-const recipe1 = require("./../../__tests__/unit_js/directions");
-const numSteps = recipe1.recipe1.analyzedInstructions[0].steps.length;
+const recipe = require("./../../__tests__/unit_js/directions");
+console.log(recipe);
+const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
 
 // https://on.cypress.io/writing-first-test
 describe("Open Page", { timeout: 10000 }, () => {
@@ -35,6 +36,7 @@ describe("Open Page", { timeout: 10000 }, () => {
       });
   });
 
+  // Check all the directions steps
   for (let i = 0; i < numSteps; i++) {
     it(`check that instruction ${i} is non-empty`, () => {
       cy.get("directions-info")
@@ -44,9 +46,19 @@ describe("Open Page", { timeout: 10000 }, () => {
           expect($el).to.not.be.equal("");
         });
     });
+
+    it(`check that instruction ${i} is correctly parsed`, () => {
+      cy.get("directions-info")
+        .shadow()
+        .find(".text")
+        .then(($el) => {
+          expect($el[i].innerHTML).to.be.equal(
+            `${i + 1}) ` + recipe.recipe1.analyzedInstructions[0].steps[i].step
+          );
+        });
+    });
   }
   // check that the instructions have been correctly parsed out
-  // check that the instructions are non-0
   // check that there's a checkbox for each
   // check that there's a down-arrow src for each
   // check that clicking the button does stuff (DEFINE STUFF)
