@@ -192,7 +192,7 @@ function bindRecipeCard(recipeCard, recipeId) {
 function bindPopState() {
   window.addEventListener("popstate", (e) => {
     if (!!e.state) {
-      router.navigate(e.state.page, true);
+      router.navigate(e.state.page, true, e.state.options);
     } else {
       router.navigate("home", true);
     }
