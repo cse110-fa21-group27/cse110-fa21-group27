@@ -8,7 +8,7 @@ class Directions extends HTMLElement {
     const style = `
       @font-face {
         font-family: 'font';
-        src: url('font.ttf') format('truetype');
+        src: local('font.ttf') format('truetype');
       }
 
       @font-face {
@@ -40,7 +40,7 @@ class Directions extends HTMLElement {
         border: 2px solid #b1c9b5;
         border-radius: 25px;
         padding: 10px;
-        
+        family-font: boldFont;
 
         background: #655B53;
         gap: 10px;
@@ -119,7 +119,6 @@ class Directions extends HTMLElement {
         grid-column: 2;
         text-align: left;
         margin-block: 0 0;
-        font-family: font;
       }
       
       .olStyle {
@@ -132,7 +131,6 @@ class Directions extends HTMLElement {
       }
       
       .header {
-        font-family: boldFont;
         font-weight: 1em;
         font-size: 2em;
         margin-left: auto;

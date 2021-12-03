@@ -27,7 +27,7 @@ class RecipeInfo extends HTMLElement {
 
     @font-face {
       font-family: 'font';
-      src: url('font.ttf') format('truetype');
+      src: local('font.ttf') format('truetype');
     }
 
     @font-face {
@@ -55,17 +55,19 @@ class RecipeInfo extends HTMLElement {
     }
     
     .title {
+      font-family: font;
       color: #FFEFEB;
       text-align: center;
       font-size: 3vh;
       font-weight: bolder;
-      font-family: boldFont;
-      
+      font-family: font;
+
     }
     
     .rating-time {
       background: #b1c9b5;
       border: 5px solid #395645;
+      font-family: font;
       font-size: 20px;
       padding-right: -3px;
       display: inline-flex;
@@ -85,12 +87,11 @@ class RecipeInfo extends HTMLElement {
       text-align: left;
       font-size: 5vh;
       font-style: italic;
-      font-family: boldFont;
+      font-family: font;
       padding: none;
     }
     
     button {
-      font-family: boldFont;
       height: 5vh;
       width: 10vw;
     }

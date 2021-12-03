@@ -25,7 +25,7 @@ class IngredientsInfo extends HTMLElement {
       
       .ingredients-info {
         position: absolute;
-        
+        font-family: font;
         width: 20%;
         height: 66%;
         top: 20%;
@@ -36,7 +36,6 @@ class IngredientsInfo extends HTMLElement {
       .ingredients-label {
         left: 30%;
         top: 0%;
-        font-family: font;
         font-style: normal;
         font-weight: normal;
         font-size: 32px;
@@ -86,7 +85,6 @@ class IngredientsInfo extends HTMLElement {
         position: absolute;
         left: 45%;
         top: 26%;
-        font-family: font;
         font-style: normal;
         font-weight: normal;
         font-size: 32px;
@@ -98,7 +96,6 @@ class IngredientsInfo extends HTMLElement {
         left: 12%;
         top: 38%;
         width: 98%;
-        font-family: font;
         font-style: normal;
         font-weight: normal;
         font-size: 12px;

@@ -126,6 +126,7 @@
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-family: custom-font;
 }
 
 /* begin saved Recipe component */
@@ -141,10 +142,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  font-family: custom-font;
 }
 /* end saved Recipes component */
 body {
-  background: #78A58A;
+  background: #99ebff;
   font-family: custom-font;
   text-align: center;
   margin: auto;

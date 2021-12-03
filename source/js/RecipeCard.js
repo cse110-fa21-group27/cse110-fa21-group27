@@ -38,12 +38,12 @@ class RecipeCard extends HTMLElement {
       justify-content: center;
       grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
       grid-template-columns: [left] auto [right];
-      background: #2f4035;
+      background: #004152;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
-      border: 10px solid #302B27;
+      border: 10px solid #004152;
     }
     
     .title {
