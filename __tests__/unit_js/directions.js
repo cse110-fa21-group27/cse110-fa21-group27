@@ -464,10 +464,14 @@ const recipe1 = {
     "https://spoonacular.com/oreo-cookie-balls-snowman-715439",
 };
 
-const direc = document.createElement("directions-info");
-direc.setAttribute("id", "directions");
-direc.data = recipe1;
+//const recipeset = JSON.parse(data);
+//const randomnumber = Math.random() * Object.keys(recipes).length;
+//console.log(recipes[0]);
+
+const direc1 = document.createElement("directions-info");
+direc1.setAttribute("id", "directions1");
+direc1.data = recipe1;
 const body = document.querySelector("body");
-body.appendChild(direc);
+body.appendChild(direc1);
 
 export default { recipe1 };
