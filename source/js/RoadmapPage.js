@@ -3,31 +3,75 @@ class RoadmapPage extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     const style = `
-        .container {
-          margin-top: 20vw;
+        .wrapper{
+          margin-top: 7%;
+          display: flex;
+          flex-direction: column;
+          gap: 50px;
+        }
+        .wrapper2{
+          width: 30%;
+          margin-top: 3%;
+          margin-left: auto;
+          margin-right: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          background: white;
+          border: 10px solid #5ba459;
+          border-radius: 0.5em;
+        }
+        .container1 {
           display: block;
           margin-left: auto;
           margin-right: auto;
-          width: 90vw;
-          border: 2em solid #FFF6EC;
-          border-radius: 10em;
+          width: 98%;
+          height: 30%;
+          align-items: center;
+          border: 10px solid orange;
+          border-radius: 1em;
+          border-style: solid none solid solid ;
+          background: #FFF6EC ;
         }
-        .progress_container{
-          display: flex;
-          flex-direction: row-wrap;
-          gap: 0em;
+        .container2 {
+          display: block;
           margin-left: auto;
           margin-right: auto;
+          width: 98%;
+          height: 30%;
+          align-items: center;
+          border: 10px solid orange;
+          border-radius: 1em;
+          border-style: solid solid solid none ;
+          background: #FFF6EC;
+        }
+        .progress_container1{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 0em;
+          margin-left: auto;
+          margin-right: 0em;
           width: 90vw;
           background: #FFF6EC;
         }
-        
 
+        .progress_container2{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 0em;
+          margin-left: 0em;
+          margin-right: 0em;
+          width: 90vw;
+          background: #FFF6EC;
+        }
         .rectangle{
           display: flex;
           flex-direction: column;
           gap: 0.5em;
           width: 20%;
+          height: auto;
           background: white;
           border: 2px solid orange;
           border-radius: 0.5em;
@@ -45,9 +89,16 @@ class RoadmapPage extends HTMLElement {
           display: flex;
           align-items: center;
           width: 20%;
-          background: white;
+          background: transparent;
           
         }
+        .rectangle_line_connect{
+          display: flex;
+          align-items: center;
+          width:auto
+          background: transparent;
+        }
+
         .image{
           margin-top: 0.2em;
           margin-left: auto;
@@ -103,17 +154,32 @@ class RoadmapPage extends HTMLElement {
           width: 2em;
           height: 2em;
         }
+
+        .gordon{
+          width: 100%;
+          height: 90%;
+        }
+        .congrat_text{
+          font-size: 24px;
+        }
+
       }
 
         `;
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
     
+    const wrapper = document.createElement("article");
+    wrapper.classList.add("wrapper");
+
     const container = document.createElement("div");
-    container.classList.add("container");
+    container.classList.add("container1");
     const progress_container = document.createElement("div");
-    progress_container.classList.add("progress_container");
+    progress_container.classList.add("progress_container1");
     container.appendChild(progress_container);
+    wrapper.appendChild(container);
+
+
     
    
     // 1 rectangle object
@@ -141,16 +207,19 @@ class RoadmapPage extends HTMLElement {
     text11.innerText = "View Recipe";
     button11.appendChild(text11);
     rectangle1.appendChild(button11);
+    button11.addEventListener("click", (event) => {
+      const recipeJSON = recipeData["149425"].data;
+      const recipeId = "149425";
+      recipePage(recipeId, recipeJSON);
+    });
 
     //1 button object
     const button12 = document.createElement("button");
     button12.classList.add("button2");
-    const text12 = document.createElement("text");
-    let check_img = document.createElement("img");
-    check_img.setAttribute("src", "./images/round_done.png");
-    check_img.classList.add("checkmark");
-    button12.appendChild(text12);
-    button12.appendChild(check_img);
+    let check_img1 = document.createElement("img");
+    check_img1.setAttribute("src", "./images/round_done.png");
+    check_img1.classList.add("checkmark");
+    button12.appendChild(check_img1);
     rectangle1.appendChild(button12);
     button12.addEventListener("click", (event) => {
       if (rectangle1.classList.contains("rectangle")) {
@@ -210,14 +279,33 @@ class RoadmapPage extends HTMLElement {
     text21.innerText = "View Recipe";
     button21.appendChild(text21);
     rectangle3.appendChild(button21);
-
+    
     //2 button object
     const button22 = document.createElement("button");
     button22.classList.add("button2");
-    const text22 = document.createElement("text");
-    text22.innerText = "Completed";
-    button22.appendChild(text22);
+    let check_img2 = document.createElement("img");
+    check_img2.setAttribute("src", "./images/round_done.png");
+    check_img2.classList.add("checkmark");
+    button22.appendChild(check_img2);
     rectangle3.appendChild(button22);
+    button22.addEventListener("click", (event) => {
+      if (rectangle3.classList.contains("rectangle")) {
+        rectangle3.classList.remove("rectangle");
+        rectangle3.classList.add("rectangle-after");
+        button22.classList.remove("button2");
+        button22.classList.add("button2-after");
+        line2.classList.remove("line");
+        line2.classList.add("line-after");
+      } else {
+        rectangle3.classList.add("rectangle");
+        rectangle3.classList.remove("rectangle-after");
+        button22.classList.add("button2");
+        button22.classList.remove("button2-after");
+        line2.classList.add("line");
+        line2.classList.remove("line-after");
+      }
+    });
+
 
     //2 step number object
     const step2 = document.createElement("text");
@@ -263,10 +351,29 @@ class RoadmapPage extends HTMLElement {
     //3 button object
     const button32 = document.createElement("button");
     button32.classList.add("button2");
-    const text32 = document.createElement("text");
-    text32.innerText = "Completed";
-    button32.appendChild(text32);
+    let check_img3 = document.createElement("img");
+    check_img3.setAttribute("src", "./images/round_done.png");
+    check_img3.classList.add("checkmark");
+    button32.appendChild(check_img3);
     rectangle5.appendChild(button32);
+    button32.addEventListener("click", (event) => {
+      if (rectangle5.classList.contains("rectangle")) {
+        rectangle5.classList.remove("rectangle");
+        rectangle5.classList.add("rectangle-after");
+        button32.classList.remove("button2");
+        button32.classList.add("button2-after");
+        line3.classList.remove("line");
+        line3.classList.add("line-after");
+      } else {
+        rectangle5.classList.add("rectangle");
+        rectangle5.classList.remove("rectangle-after");
+        button32.classList.add("button2");
+        button32.classList.remove("button2-after");
+        line3.classList.add("line");
+        line3.classList.remove("line-after");
+      }
+    });
+
 
     //3 step number object
     const step3 = document.createElement("text");
@@ -312,10 +419,29 @@ class RoadmapPage extends HTMLElement {
     //4 button object
     const button42 = document.createElement("button");
     button42.classList.add("button2");
-    const text42 = document.createElement("text");
-    text42.innerText = "Completed";
-    button42.appendChild(text42);
+    let check_img4 = document.createElement("img");
+    check_img4.setAttribute("src", "./images/round_done.png");
+    check_img4.classList.add("checkmark");
+    button42.appendChild(check_img4);
     rectangle7.appendChild(button42);
+    button42.addEventListener("click", (event) => {
+      if (rectangle7.classList.contains("rectangle")) {
+        rectangle7.classList.remove("rectangle");
+        rectangle7.classList.add("rectangle-after");
+        button42.classList.remove("button2");
+        button42.classList.add("button2-after");
+        line4.classList.remove("line");
+        line4.classList.add("line-after");
+      } else {
+        rectangle7.classList.add("rectangle");
+        rectangle7.classList.remove("rectangle-after");
+        button42.classList.add("button2");
+        button42.classList.remove("button2-after");
+        line4.classList.add("line");
+        line4.classList.remove("line-after");
+      }
+    });
+
 
     //4 step number object
     const step4 = document.createElement("text");
@@ -350,7 +476,7 @@ class RoadmapPage extends HTMLElement {
     rectangle9.appendChild(title5);
 
 
-    //4 button object
+    //5 button object
     const button51 = document.createElement("button");
     button51.classList.add("button1");
     const text51 = document.createElement("text");
@@ -358,32 +484,407 @@ class RoadmapPage extends HTMLElement {
     button51.appendChild(text51);
     rectangle9.appendChild(button51);
 
-    //4 button object
+    //5 button object
     const button52 = document.createElement("button");
     button52.classList.add("button2");
-    const text52 = document.createElement("text");
-    text52.innerText = "Completed";
-    button52.appendChild(text52);
+    let check_img5 = document.createElement("img");
+    check_img5.setAttribute("src", "./images/round_done.png");
+    check_img5.classList.add("checkmark");
+    button52.appendChild(check_img5);
     rectangle9.appendChild(button52);
+    button52.addEventListener("click", (event) => {
+      if (rectangle9.classList.contains("rectangle")) {
+        rectangle9.classList.remove("rectangle");
+        rectangle9.classList.add("rectangle-after");
+        button52.classList.remove("button2");
+        button52.classList.add("button2-after");
+        line5.classList.remove("line");
+        line5.classList.add("line-after");
+      } else {
+        rectangle9.classList.add("rectangle");
+        rectangle9.classList.remove("rectangle-after");
+        button52.classList.add("button2");
+        button52.classList.remove("button2-after");
+        line5.classList.add("line");
+        line5.classList.remove("line-after");
+      }
+    });
 
-    //4 step number object
+    //5 step number object
     const step5 = document.createElement("text");
     step5.innerText = "Step 5";
     step5.classList.add("step");
     rectangle9.appendChild(step5);
     
 
-    //4 line object
+    
+
+    /**
+     * Second layer of the tutorial
+     */
+
+    const container2 = document.createElement("div");
+    container2.classList.add("container2");
+    const progress_container2 = document.createElement("div");
+    progress_container2.classList.add("progress_container2");
+    container2.appendChild(progress_container2);
+    wrapper.appendChild(container2);
+
+    //5 line object
     const rectangle10 = document.createElement("div");
     rectangle10.classList.add("rectangle_line");
     const line5 = document.createElement("hr");
     line5.classList.add("line");
     rectangle10.appendChild(line5);
-    progress_container.appendChild(rectangle10);
+    progress_container2.appendChild(rectangle10);
+    
+   
+    // 2 1 rectangle object
+    const rectangle21 = document.createElement("div");
+    rectangle21.classList.add("rectangle");
+    progress_container2.appendChild(rectangle21);
+    
+    //2 1 image object
+    const image21 = document.createElement("img");
+    image21.setAttribute("src", "./images/scramble.png");
+    image21.classList.add("image");
+    rectangle21.appendChild(image21);
+
+    // 2 1 title object
+    const title21 = document.createElement("text");
+    title21.innerText = "Scrambled Eggs";
+    title21.classList.add("title");
+    rectangle21.appendChild(title21);
 
 
+    //2 1 button object
+    const button211 = document.createElement("button");
+    button211.classList.add("button1");
+    const text211 = document.createElement("text");
+    text211.innerText = "View Recipe";
+    button211.appendChild(text211);
+    rectangle21.appendChild(button211);
 
-    this.shadowRoot.appendChild(container);
+    //2 1 button object
+    const button212 = document.createElement("button");
+    button212.classList.add("button2");
+    let check_img21 = document.createElement("img");
+    check_img21.setAttribute("src", "./images/round_done.png");
+    check_img21.classList.add("checkmark");
+    button212.appendChild(check_img21);
+    rectangle21.appendChild(button212);
+    button212.addEventListener("click", (event) => {
+      if (rectangle21.classList.contains("rectangle")) {
+        rectangle21.classList.remove("rectangle");
+        rectangle21.classList.add("rectangle-after");
+        button212.classList.remove("button2");
+        button212.classList.add("button2-after");
+        line21.classList.remove("line");
+        line21.classList.add("line-after");
+      } else {
+        rectangle21.classList.add("rectangle");
+        rectangle21.classList.remove("rectangle-after");
+        button212.classList.add("button2");
+        button212.classList.remove("button2-after");
+        line21.classList.add("line");
+        line21.classList.remove("line-after");
+      }
+    });
+
+    //2 1 step number object
+    const step6 = document.createElement("text");
+    step6.innerText = "Step 6";
+    step6.classList.add("step");
+    rectangle21.appendChild(step6);
+    
+
+    //2 1 line object
+    const rectangle22 = document.createElement("div");
+    rectangle22.classList.add("rectangle_line");
+    const line21 = document.createElement("hr");
+    line21.classList.add("line");
+    rectangle22.appendChild(line21);
+    progress_container2.appendChild(rectangle22);
+    
+    //2 2 rectangle object
+    const rectangle23 = document.createElement("div");
+    rectangle23.classList.add("rectangle");
+    progress_container2.appendChild(rectangle23);
+    
+    //2 2 image object
+    const image22 = document.createElement("img");
+    image22.setAttribute("src", "./images/pancake.png");
+    image22.classList.add("image");
+    rectangle23.appendChild(image22);
+
+    //2 2 title object
+    const title22 = document.createElement("text");
+    title22.innerText = "Pancake";
+    title22.classList.add("title");
+    rectangle23.appendChild(title22);
+
+
+    //2 2 1 button object - view recipe button
+    const button221 = document.createElement("button");
+    button221.classList.add("button1");
+    const text221 = document.createElement("text");
+    text221.innerText = "View Recipe";
+    button221.appendChild(text221);
+    rectangle23.appendChild(button221);
+    
+    //2 2 2 button object - completed button
+    const button222 = document.createElement("button");
+    button222.classList.add("button2");
+    let check_img22 = document.createElement("img");
+    check_img22.setAttribute("src", "./images/round_done.png");
+    check_img22.classList.add("checkmark");
+    button222.appendChild(check_img22);
+    rectangle23.appendChild(button222);
+    button222.addEventListener("click", (event) => {
+      if (rectangle23.classList.contains("rectangle")) {
+        rectangle23.classList.remove("rectangle");
+        rectangle23.classList.add("rectangle-after");
+        button222.classList.remove("button2");
+        button222.classList.add("button2-after");
+        line22.classList.remove("line");
+        line22.classList.add("line-after");
+      } else {
+        rectangle23.classList.add("rectangle");
+        rectangle23.classList.remove("rectangle-after");
+        button222.classList.add("button2");
+        button222.classList.remove("button2-after");
+        line22.classList.add("line");
+        line22.classList.remove("line-after");
+      }
+    });
+
+
+    //2 2 step number object
+    const step7 = document.createElement("text");
+    step7.innerText = "Step 7";
+    step7.classList.add("step");
+    rectangle23.appendChild(step7);
+    
+
+    //2 2 line object
+    const rectangle24 = document.createElement("div");
+    rectangle24.classList.add("rectangle_line");
+    const line22 = document.createElement("hr");
+    line22.classList.add("line");
+    rectangle24.appendChild(line22);
+    progress_container2.appendChild(rectangle24);
+
+    //2 3 rectangle object
+    const rectangle25 = document.createElement("div");
+    rectangle25.classList.add("rectangle");
+    progress_container2.appendChild(rectangle25);
+    
+    //2 3 image object
+    const image23 = document.createElement("img");
+    image23.setAttribute("src", "./images/salad.png");
+    image23.classList.add("image");
+    rectangle25.appendChild(image23);
+
+    //2 3 title object
+    const title23 = document.createElement("text");
+    title23.innerText = "Salad";
+    title23.classList.add("title");
+    rectangle25.appendChild(title23);
+
+
+    //3 button object
+    const button231 = document.createElement("button");
+    button231.classList.add("button1");
+    const text231 = document.createElement("text");
+    text231.innerText = "View Recipe";
+    button231.appendChild(text231);
+    rectangle25.appendChild(button231);
+
+    //3 button object
+    const button232 = document.createElement("button");
+    button232.classList.add("button2");
+    let check_img23 = document.createElement("img");
+    check_img23.setAttribute("src", "./images/round_done.png");
+    check_img23.classList.add("checkmark");
+    button232.appendChild(check_img23);
+    rectangle25.appendChild(button232);
+    button232.addEventListener("click", (event) => {
+      if (rectangle25.classList.contains("rectangle")) {
+        rectangle25.classList.remove("rectangle");
+        rectangle25.classList.add("rectangle-after");
+        button232.classList.remove("button2");
+        button232.classList.add("button2-after");
+        line23.classList.remove("line");
+        line23.classList.add("line-after");
+      } else {
+        rectangle25.classList.add("rectangle");
+        rectangle25.classList.remove("rectangle-after");
+        button232.classList.add("button2");
+        button232.classList.remove("button2-after");
+        line23.classList.add("line");
+        line23.classList.remove("line-after");
+      }
+    });
+
+
+    //2 3 step number object
+    const step8 = document.createElement("text");
+    step8.innerText = "Step 8";
+    step8.classList.add("step");
+    rectangle25.appendChild(step8);
+    
+
+    //2 3 line object
+    const rectangle26 = document.createElement("div");
+    rectangle26.classList.add("rectangle_line");
+    const line23 = document.createElement("hr");
+    line23.classList.add("line");
+    rectangle26.appendChild(line23);
+    progress_container2.appendChild(rectangle26);
+    
+    //2 4 rectangle object
+    const rectangle27 = document.createElement("div");
+    rectangle27.classList.add("rectangle");
+    progress_container2.appendChild(rectangle27);
+    
+    //2 4 image object
+    const image24 = document.createElement("img");
+    image24.setAttribute("src", "./images/hamburger.png");
+    image24.classList.add("image");
+    rectangle27.appendChild(image24);
+
+    //2 4 title object
+    const title24 = document.createElement("text");
+    title24.innerText = "Hamburger";
+    title24.classList.add("title");
+    rectangle27.appendChild(title24);
+
+
+    //2 4 button object
+    const button241 = document.createElement("button");
+    button241.classList.add("button1");
+    const text241 = document.createElement("text");
+    text241.innerText = "View Recipe";
+    button241.appendChild(text241);
+    rectangle27.appendChild(button241);
+
+    //2 4 button object
+    const button242 = document.createElement("button");
+    button242.classList.add("button2");
+    let check_img24 = document.createElement("img");
+    check_img24.setAttribute("src", "./images/round_done.png");
+    check_img24.classList.add("checkmark");
+    button242.appendChild(check_img24);
+    rectangle27.appendChild(button242);
+    button242.addEventListener("click", (event) => {
+      if (rectangle27.classList.contains("rectangle")) {
+        rectangle27.classList.remove("rectangle");
+        rectangle27.classList.add("rectangle-after");
+        button242.classList.remove("button2");
+        button242.classList.add("button2-after");
+        line24.classList.remove("line");
+        line24.classList.add("line-after");
+      } else {
+        rectangle27.classList.add("rectangle");
+        rectangle27.classList.remove("rectangle-after");
+        button242.classList.add("button2");
+        button242.classList.remove("button2-after");
+        line24.classList.add("line");
+        line24.classList.remove("line-after");
+      }
+    });
+
+
+    //2 4 step number object
+    const step9 = document.createElement("text");
+    step9.innerText = "Step 9";
+    step9.classList.add("step");
+    rectangle27.appendChild(step9);
+    
+
+    //2 4 line object
+    const rectangle28 = document.createElement("div");
+    rectangle28.classList.add("rectangle_line");
+    const line24 = document.createElement("hr");
+    line24.classList.add("line");
+    rectangle28.appendChild(line24);
+    progress_container2.appendChild(rectangle28);
+
+    //2 5 rectangle object
+    const rectangle29 = document.createElement("div");
+    rectangle29.classList.add("rectangle");
+    progress_container2.appendChild(rectangle29);
+    
+    //2 5 image object
+    const image25 = document.createElement("img");
+    image25.setAttribute("src", "./images/hamburger.png");
+    image25.classList.add("image");
+    rectangle29.appendChild(image25);
+
+    //2 5 title object
+    const title25 = document.createElement("text");
+    title25.innerText = "Hamburger";
+    title25.classList.add("title");
+    rectangle29.appendChild(title25);
+
+
+    //2 5 button object
+    const button251 = document.createElement("button");
+    button251.classList.add("button1");
+    const text251 = document.createElement("text");
+    text251.innerText = "View Recipe";
+    button251.appendChild(text251);
+    rectangle29.appendChild(button251);
+
+    //2 5 button object
+    const button252 = document.createElement("button");
+    button252.classList.add("button2");
+    let check_img25 = document.createElement("img");
+    check_img25.setAttribute("src", "./images/round_done.png");
+    check_img25.classList.add("checkmark");
+    button252.appendChild(check_img25);
+    rectangle29.appendChild(button252);
+    button252.addEventListener("click", (event) => {
+      if (rectangle29.classList.contains("rectangle")) {
+        rectangle29.classList.remove("rectangle");
+        rectangle29.classList.add("rectangle-after");
+        button252.classList.remove("button2");
+        button252.classList.add("button2-after");
+        this.shadowRoot.removeChild(wrapper);
+        this.shadowRoot.appendChild(wrapper2);
+        this.shadowRoot.appendChild(wrapper);
+
+      } else {
+        rectangle29.classList.add("rectangle");
+        rectangle29.classList.remove("rectangle-after");
+        button252.classList.add("button2");
+        button252.classList.remove("button2-after");
+        this.shadowRoot.removeChild(wrapper2);
+      }
+    });
+
+    //2 5 step number object
+    const step10 = document.createElement("text");
+    step10.innerText = "Step 10";
+    step10.classList.add("step");
+    rectangle29.appendChild(step10);
+    
+
+    const wrapper2 = document.createElement("article");
+    wrapper2.classList.add("wrapper2");
+
+    //after step 10 completed
+    const congrat_image = document.createElement("img");
+    congrat_image.setAttribute("src", "./images/gordon_happy_image.jpeg");
+    congrat_image.classList.add("gordon");
+    wrapper2.appendChild(congrat_image);
+    const congrat_text = document.createElement("text");
+    congrat_text.innerText = "Congratulations you completed the tutorial!";
+    congrat_text.classList.add("congrat_text");
+    wrapper2.appendChild(congrat_text);
+
+    
+    this.shadowRoot.appendChild(wrapper);
     this.shadowRoot.appendChild(styleElem);
   }
 
