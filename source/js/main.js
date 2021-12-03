@@ -71,6 +71,7 @@ function SearchPage(results) {
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
+  searchPage.renderRecipes = renderRecipes;
   searchPage.data = results;
 
   main.appendChild(searchPage);
@@ -140,8 +141,9 @@ function renderNavBar(data) {
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = () => {
-    router.navigate("search-page");
+  bar.goSearchPage = async (query) => {
+    const results = storage.search({ query: query });
+    router.navigate("search-page", false, results);
   };
   bar.data = data;
 }
