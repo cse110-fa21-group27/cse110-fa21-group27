@@ -135,6 +135,24 @@ describe(
           .find("img")
           .then(($el) => {
             expect($el[i].src).to.be.contain("/images/arrowUp.png");
+            $el[i].click();
+          });
+      });
+
+      it(`check that clicking changes the class (and therefore style) of the text of instruction ${i}`, () => {
+        cy.get("directions-info")
+          .shadow()
+          .find("button")
+          .then(($el) => {
+            expect($el[i].className).to.be.equal("listItemStyle");
+            $el[i].click();
+          });
+        cy.get("directions-info")
+          .shadow()
+          .find("button")
+          .then(($el) => {
+            expect($el[i].className).to.be.equal("listItemStyleShown");
+            $el[i].click();
           });
       });
     }

@@ -14,7 +14,7 @@ function delay(time) {
 }
 
 // https://on.cypress.io/writing-first-test
-describe("Open Page", { timeout: 10000 }, () => {
+describe("Test the home page", { timeout: 10000 }, () => {
   it("Opens index.html", () => {
     cy.visit("./source/index.html");
   });
