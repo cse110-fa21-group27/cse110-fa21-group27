@@ -465,7 +465,9 @@ const recipe1 = {
 };
 
 const direc = document.createElement("directions-info");
-direc.setAttribute("id", "potato");
+direc.setAttribute("id", "directions");
 direc.data = recipe1;
 const body = document.querySelector("body");
 body.appendChild(direc);
+
+module.exports = { recipe1 };
