@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      - run: ls -la
       - name: Build
         uses: andstor/jsdoc-action@v1
         with:
