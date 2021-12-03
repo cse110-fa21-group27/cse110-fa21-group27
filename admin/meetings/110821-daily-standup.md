@@ -1,7 +1,9 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -57,7 +59,7 @@ No
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since yesterday?
 Yesterday I checked out some figma tutorials.
@@ -69,7 +71,6 @@ Anything blocking your progress?
 No.
 
 <hr />
-
 
 #### Kevin Yu
 
@@ -137,6 +138,7 @@ I have 6 hours of class straight today so mostly just lack of time.
 <hr />
 
 #### Tucker Frandsen
+
 What did you do since yesterday?
 I organized the first sprint planning meeting and orchestrated the first ADR.
 
@@ -145,6 +147,7 @@ I will research the CI/CD pipeline using Github Actions to help streamline testi
 
 Anything blocking your progress?
 No.
+
 <hr />
 
 Meeting concluded by 17:00.

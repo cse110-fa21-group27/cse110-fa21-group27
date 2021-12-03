@@ -1,7 +1,9 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Daily Standup
 
 ### Attendance
+
 - Arturo Amaya
 - Delia McGrath
 - Dilara Marasli
@@ -46,7 +48,7 @@ Lots of projects and other classes are vying for my time
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since yesterday?
 look at some design ideas from allrecipes websites

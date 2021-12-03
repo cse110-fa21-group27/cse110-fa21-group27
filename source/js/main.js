@@ -88,10 +88,16 @@ function savedRecipesPage() {
   const savedPage = document.createElement("saved-recipes");
   // pass the renderrecipes function
   savedPage.renderRecipes = renderRecipes;
-  // give it an array of recipeids for data
-  savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
-    return savedRecipe.id;
-  });
+  // pass the collections functions
+  savedPage.addCollection = storage.addCollection;
+  savedPage.removeCollection = storage.removeCollection;
+  savedPage.addToCollection = storage.addToCollection;
+  savedPage.removeFromCollection = storage.removeFromCollection;
+  // give it the array of userInfo for data
+  savedPage.data = storage.userInfo;
+  // savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
+  //   return savedRecipe.id;
+  // });
 
   main.appendChild(savedPage);
 }

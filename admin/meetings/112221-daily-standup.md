@@ -62,7 +62,7 @@ Other classes and projects
 
 <hr />
 
-#### Dilara Marasli 
+#### Dilara Marasli
 
 What did you do since Wednesday?
 Done with design, I worked in the directions it's functional but css part is hard
