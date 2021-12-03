@@ -18,6 +18,7 @@ describe("Basic user flow for Website", () => {
   it("Initial Home Page - Check for 264 recipecards", async () => {
     // NOTE: DELAY. ADD TO ALL TESTS
     await delay(4000);
+
     console.log("Checking for 264 product items...");
     // Query select all of the <recipe-card> elements and return the length of that array
     await page.screenshot({ path: "scrrenshot57.png" });
