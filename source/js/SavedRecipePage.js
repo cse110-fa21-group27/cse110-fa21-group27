@@ -48,7 +48,6 @@ class SavedRecipePage extends HTMLElement {
 
     const h = document.createElement("h1");
     h.textContent = "All Saved Recipes";
-    this.shadowRoot.appendChild(h);
 
     const addButton = document.createElement("button");
     addButton.textContent = "Create New Collection";
@@ -170,8 +169,6 @@ class SavedRecipePage extends HTMLElement {
             this.shadowRoot.removeChild(lineArray[i+1]);
           }
         }
-
-
         this.shadowRoot.removeChild(form);
       });
 
@@ -190,39 +187,14 @@ class SavedRecipePage extends HTMLElement {
 
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
-
-    
-    
-    let idShortList = [];
+    // Loading the saved recipes into an array to pass to render recipes
     let idList = [];
     for (let i = 0; i < userInfo.savedRecipes.length; i++) {
-      //Only display 3 recipes
-      if (i < 3) {
-        idShortList.push(userInfo.savedRecipes[i].id);
-      } 
       idList.push(userInfo.savedRecipes[i].id);
     }
-    this.renderRecipes(idShortList, page);
-    
-    // Create the collection page for saved-recipes
-    page.addEventListener('click', () => {
-      const main = document.querySelector("main");
-      // delete everyting in main
-      main.innerHTML = "";
-      // make user-collection visible
-      const userCollection = document.createElement("user-collection");
-      // pass the renderrecipes function
-      userCollection.renderRecipes = this.renderRecipes;
-      // pass the collections functions
-      userCollection.addToCollection = this.addToCollection;
-      userCollection.removeFromCollection = this.removeFromCollection;
-      // give it the array of userInfo for data
-      userCollection.data = idList;
-      main.appendChild(userCollection);
-    });
+    this.renderRecipes(idList, page);
 
     this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(page);
     this.shadowRoot.appendChild(document.createElement("hr"));
        
     // Displaying previously created collections
@@ -247,8 +219,13 @@ class SavedRecipePage extends HTMLElement {
         // pass the collections functions
         userCollection.addToCollection = this.addToCollection;
         userCollection.removeFromCollection = this.removeFromCollection;
+        // Create an object to pass in the information that collections will need
+        let data = {
+          collection: userInfo.collections[i],
+          savedRecipes: userInfo.savedRecipes 
+        }
         // give it the array of userInfo for data
-        userCollection.data = userInfo.collections[i];
+        userCollection.data = data;
         main.appendChild(userCollection);
       });
 
@@ -266,6 +243,8 @@ class SavedRecipePage extends HTMLElement {
       this.shadowRoot.appendChild(collection);
       this.shadowRoot.appendChild(document.createElement("hr"));
     }
+    this.shadowRoot.appendChild(h);
+    this.shadowRoot.appendChild(page);
   }
 }
 

@@ -14,10 +14,10 @@
     /**
      * Populates the User Collection HTML Component with information from the
      * recipe json file and displays it with some CSS styling.
-     * @param {String[]} collections - collection object that contains information 
-     * about the recipes inside it
+     * @param {Object} data - object that contains information 
+     * about the collection in question and all the user's saved recipes
      */
-    set data(collections) {
+    set data(data) {
       this.shadowRoot.innerHTML = "";
       const style = `
       button {
@@ -35,18 +35,42 @@
       styleElem.innerHTML = style;
 
       let headerName = document.createElement("h1");
-      headerName.textContent = collections.name;
+      headerName.textContent = data.collection.name;
       this.shadowRoot.appendChild(headerName);
 
       let addButton = document.createElement("button");
       addButton.textContent = "Add Recipes";
       this.shadowRoot.appendChild(addButton);
+
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "Remove Recipes";
+      // Create the form for the user to delete collections
+      deleteButton.addEventListener('click', () => {
+        let form = document.createElement("div");
+        let name = document.createElement("p");
+        name.textContent = "Remove Recipes";
+        form.appendChild(name);
+        
+        // Add options to remove each of the user's recipes in this collection
+        for (let i = 0; i < data.collection.ids.length; i++) {
+          let input = document.createElement("input");
+          input.type = "checkbox";
+          input.classList.add("checkbox");
+          form.appendChild(input);
+          let text = document.createElement("p");
+          text.textContent = "Recipe: " + data.collection.ids[i];
+          form.appendChild(text);
+          let lineBreak = document.createElement("br");
+          form.appendChild(lineBreak);
+        }
+
+        this.shadowRoot.appendChild(form);
+      });
+
       this.shadowRoot.appendChild(deleteButton);
 
       const div = document.createElement("div");
-      this.renderRecipes(collections.ids, div);
+      this.renderRecipes(data.collection.ids, div);
 
       this.shadowRoot.appendChild(div);
       this.shadowRoot.appendChild(styleElem);
