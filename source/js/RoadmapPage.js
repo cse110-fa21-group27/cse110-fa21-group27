@@ -3,6 +3,15 @@ class RoadmapPage extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     const style = `
+        .header-wrapper{
+
+        }
+        .header-first{
+          font-size
+        }
+        .header-second{
+          font-size
+        }
         .wrapper{
           margin-top: 7%;
           display: flex;
@@ -106,8 +115,8 @@ class RoadmapPage extends HTMLElement {
           background: white;
           border: solid orange;
           border-radius: 10em;
-          width: 50%;
-          height: 50%;
+          width: 9em;
+          height: 9em;
         }
         .title{
           margin-left: auto;
@@ -168,6 +177,18 @@ class RoadmapPage extends HTMLElement {
         `;
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
+
+    const header = document.createElement("div");
+    header.classList.add("header-wrapper");
+    const h1 =  document.createElement("h1");
+    h1.classList.add("header-first");
+    h1.innerText="10 Cooking Basics Everyone Should Know";
+    header.appendChild(h1);
+    const h2 =  document.createElement("h1");
+    h2.classList.add("header-first");
+    h2.innerText="How Many Have You Mastered?";
+    header.appendChild(h2);
+
     
     const wrapper = document.createElement("article");
     wrapper.classList.add("wrapper");
@@ -261,7 +282,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 image object
     const image2 = document.createElement("img");
-    image2.setAttribute("src", "./images/pancake.png");
+    image2.setAttribute("src", "./images/omelet.png");
     image2.classList.add("image");
     rectangle3.appendChild(image2);
 
@@ -334,7 +355,7 @@ class RoadmapPage extends HTMLElement {
     
     //3 image object
     const image3 = document.createElement("img");
-    image3.setAttribute("src", "./images/salad.png");
+    image3.setAttribute("src", "./images/pancake.png");
     image3.classList.add("image");
     rectangle5.appendChild(image3);
 
@@ -566,7 +587,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 1 image object
     const image21 = document.createElement("img");
-    image21.setAttribute("src", "./images/scramble.png");
+    image21.setAttribute("src", "./images/steak.png");
     image21.classList.add("image");
     rectangle21.appendChild(image21);
 
@@ -638,7 +659,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 2 image object
     const image22 = document.createElement("img");
-    image22.setAttribute("src", "./images/pancake.png");
+    image22.setAttribute("src", "./images/chicken.png");
     image22.classList.add("image");
     rectangle23.appendChild(image22);
 
@@ -711,7 +732,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 3 image object
     const image23 = document.createElement("img");
-    image23.setAttribute("src", "./images/salad.png");
+    image23.setAttribute("src", "./images/roastmeat.png");
     image23.classList.add("image");
     rectangle25.appendChild(image23);
 
@@ -729,7 +750,7 @@ class RoadmapPage extends HTMLElement {
     text231.innerText = "View Recipe";
     button231.appendChild(text231);
     rectangle25.appendChild(button231);
-    button41.addEventListener("click", (event) => {
+    button231.addEventListener("click", (event) => {
       //pot roast meat 
       const recipeId = "639628";
       this.goRecipe(recipeId);
@@ -784,7 +805,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 4 image object
     const image24 = document.createElement("img");
-    image24.setAttribute("src", "./images/hamburger.png");
+    image24.setAttribute("src", "./images/sauce.png");
     image24.classList.add("image");
     rectangle27.appendChild(image24);
 
@@ -858,7 +879,7 @@ class RoadmapPage extends HTMLElement {
     
     //2 5 image object
     const image25 = document.createElement("img");
-    image25.setAttribute("src", "./images/hamburger.png");
+    image25.setAttribute("src", "./images/cookies.png");
     image25.classList.add("image");
     rectangle29.appendChild(image25);
 
@@ -929,7 +950,7 @@ class RoadmapPage extends HTMLElement {
     congrat_text.classList.add("congrat_text");
     wrapper2.appendChild(congrat_text);
 
-    
+    this.shadowRoot.appendChild(header);
     this.shadowRoot.appendChild(wrapper);
     this.shadowRoot.appendChild(styleElem);
   }
