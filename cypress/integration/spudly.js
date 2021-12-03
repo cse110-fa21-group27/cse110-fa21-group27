@@ -29,10 +29,9 @@ describe("Open Page", { timeout: 10000 }, () => {
     { timeout: 10000 },
     () => {
       cy.get(
-        /*
         `.recipes > :nth-child(${
           Math.ceil(Math.random() * (magicNumbers.numOfRecipes - 1)) + 1
-        })`*/ ".recipes > :nth-child(5)"
+        })`
       )
         .shadow()
         .find(".thumbnail-photo")
