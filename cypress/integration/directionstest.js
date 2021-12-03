@@ -89,8 +89,46 @@ describe(
             expect($el[i].checked).to.be.equal(false);
           });
       });
+
+      it(`check that instruction ${i}'s checkbox can be checked`, () => {
+        cy.get("directions-info")
+          .shadow()
+          .find("input")
+          .then(($el) => {
+            expect($el[i].checked).to.be.equal(false);
+            $el[i].click();
+            expect($el[i].checked).to.be.equal(true);
+            $el[i].click();
+            expect($el[i].checked).to.be.equal(false);
+          });
+      });
+
+      it(`check that there is a down-arrow src for instruction ${i}`, () => {
+        cy.get("directions-info")
+          .shadow()
+          .find("img")
+          .then(($el) => {
+            expect($el[i].src).to.be.contain("/images/arrow-down.png");
+          });
+      });
+
+      it(`check that the down-arrow is clickable for instruction ${i}`, () => {
+        cy.get("directions-info")
+          .shadow()
+          .find("img")
+          .then(($el) => {
+            expect($el[i].src).to.be.contain("/images/arrow-down.png");
+            $el[i].click();
+          });
+        cy.get("directions-info")
+          .shadow()
+          .find("img")
+          .then(($el) => {
+            expect($el[i].src).to.be.contain("/images/arrowUp.png");
+          });
+      });
     }
-    // check that there's a down-arrow src for each
+
     // check that clicking the button does stuff (DEFINE STUFF)
   }
 );
