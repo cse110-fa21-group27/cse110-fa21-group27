@@ -1,4 +1,8 @@
 /*search bar*/
+@font-face {
+  font-family: "custom-font";
+  src: url('font.ttf') format('truetype');
+}
 
 .search_bar {
   position: absolute;
@@ -6,7 +10,7 @@
   height: 10%;
   left: 0%;
   top: 0%;
-  background: #ffbb71;
+  background: #84ff71;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -24,6 +28,7 @@
   height: 66%;
   left: 30%;
   top: 15%;
+  font-family: custom-font;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -31,8 +36,8 @@
   display: flex;
   align-items: center;
   color: #000000;
-  background: #ffbb71;
-  border-color: #ffffff;
+  background: #f50097;
+  border-color: #fff783;
 }
 
 .search_png {
@@ -68,8 +73,8 @@
   width: 23%;
   height: 70%;
   border-style: solid;
-  border-color: #ffbb71;
-  background-color: #fff6ec;
+  border-color: #71ffa0;
+  background-color: #f002f8;
 }
 
 .filter_label {
@@ -90,7 +95,7 @@
   font-weight: normal;
   font-size: 24px;
   line-height: 62px;
-  background-color: #ffbb71;
+  background-color: #71eaff;
 }
 
 .label {
@@ -127,7 +132,7 @@ input[type="checkbox"] {
   font-weight: normal;
   font-size: 24px;
   line-height: 62px;
-  background-color: #ffbb71;
+  background-color: #000000;
 }
 /*search body*/
 .search_body {
@@ -146,4 +151,5 @@ body {
   margin-right: 12%;
   grid-template-rows: 100px;
   grid-template-columns: 100%;
+  font-family: custom-font;
 }
