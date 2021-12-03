@@ -152,7 +152,7 @@ class Directions extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
     
-    const directionList = searchForKey(data, "recipeInstructions");
+    const directionList = data.analyzedInstructions[0].steps;
     
     //background frame
     const wrapper = document.createElement("article");
