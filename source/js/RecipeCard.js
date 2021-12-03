@@ -18,26 +18,42 @@ class RecipeCard extends HTMLElement {
   set data(data) {
     // Creates CSS for the Recipe Info Component
     const style = `
+    @font-face {
+      font-family: font;
+      src: URL('font.ttf') format('truetype');
+    }
+    
     .recipe-card {
-      width: 300px;
-
+      margin-right: auto;
+      margin-left: 25%;
+      width: 350px;
       display: grid;
-      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom]  [bottom];
+      justify-content: center;
+      grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
       grid-template-columns: [left] auto [right];
-
       background: #FFF6EC;
     }
-
+    
+    .title {
+      grid-template-rows: [top] auto [bottom];
+      font-family: font;
+    }
+    
     .thumbnail-photo {
-      height: 225px;
+      height: 205px;
       object-fit: cover;
       width: 100%;
     }
-
+    
     .rating-time {
-      display: grid;
-      grid-template-rows: [top] auto [bottom];
-      grid-template-columns: [left] 50% [middle] 50% [right];
+      font-size: 15px;
+      display: flex;
+      flex-direction: row;
+      margin-left: 22%;
+      display: inline-flex;
+      justify-content: center;
+      justify-content: space-around;
+      width: 190px;
     }
     `;
 
@@ -57,6 +73,7 @@ class RecipeCard extends HTMLElement {
 
     // Adding the Recipe Title
     const title = document.createElement("p");
+    title.classList.add("title");
     title.textContent = data.title;
     card.appendChild(title);
 

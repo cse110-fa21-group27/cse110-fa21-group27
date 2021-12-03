@@ -18,98 +18,106 @@ class IngredientsInfo extends HTMLElement {
   set data(data) {
     // Creates CSS for the Recipe Info Component
     const style = `
-        .ingredients-info {
-          position: absolute;
-          width: 20%;
-          height: 66%;
-          top: 20%;
-          left: 2%;
-          background: #FFF6EC;
+      @font-face {
+        font-family: font;
+        src: URL('font.ttf') format('truetype');
+      }
+      
+      .ingredients-info {
+        position: absolute;
+        width: 20%;
+        height: 66%;
+        top: 20%;
+        left: 2%;
+        background: #FFF6EC;
       }
       
       .ingredients-label {
-          position: absolute;
-          left: 22%;
-          top: 9%;
-          font-family: DM Sans;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 32px;
-          line-height: 62px;
+        position: absolute;
+        text-align: left;
+        left: 22%;
+        top: 0%;
+        font-family: font;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 62px;
       }
-
+      
       .line {
         margin-top: 36%;
         width: 90%;
         text-align: center;
         color: black;
       }
-
-      .form > button {
-          position: absolute;
-          font-family: DM Sans;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          height: 8%;
-          background: #FFB673;
+      
+      .form>button {
+        position: absolute;
+        font-family: font;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        height: 8%;
+        background: #FFB673;
       }
       
       .cartButton {
-        left: 6%;
+        left: 14%;
         top: 20%;
       }
-
+      
       .addButton {
-        left: 45%;
+        left: 55%;
         top: 30%;
         height: 8%;
       }
-
+      
       .subtractButton {
-        left: 25%;
+        left: 35%;
         top: 30%;
         height: 5%;
       }
-
+      
       .quantity {
-          position:absolute;
-          left:36%;
-          top: 25%;
-          font-family: DM Sans;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 32px;
-          line-height: 30px;
+        text-align: left;
+        position: absolute;
+        left: 45%;
+        top: 26%;
+        font-family: font;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 30px;
       }
       
       #serving_size {
-          position:absolute;
-          left:12%;
-          top: 38%;
-          width:98%;
-          font-family: DM Sans;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 12px;
-          line-height: 20px;
+        position: absolute;
+        left: 12%;
+        top: 38%;
+        width: 98%;
+        font-family: font;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 20px;
       }
       
       .ingredients-list {
-          position:absolute;
-          left: 20%;
-          top: 48%;
-          width: 60%;
-          font-family: DM Sans;
-          font-size: 12px;
-          -ms-transform: scale(1.5); 
-          -moz-transform: scale(1.5); 
-          -webkit-transform: scale(1.5); 
-          -o-transform: scale(1.5); 
-          transform: scale(1.5);
-          padding: 10px;
+        text-align: left;
+        position: absolute;
+        left: 20%;
+        top: 48%;
+        width: 60%;
+        font-family: font;
+        font-size: 12px;
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -webkit-transform: scale(1.5);
+        -o-transform: scale(1.5);
+        transform: scale(1.5);
+        padding: 10px;
       }
-      `;
+    `;
 
     // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
