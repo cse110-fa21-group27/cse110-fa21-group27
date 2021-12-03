@@ -8,6 +8,7 @@ class Directions extends HTMLElement {
   }
 
   set data(data) {
+    debugger
     const style = `
       @font-face {
         font-family: 'font';
@@ -300,4 +301,4 @@ function searchForKey(object, key) {
   return value;
 }
 
-module.exports = { Directions };
+//module.exports = { Directions };

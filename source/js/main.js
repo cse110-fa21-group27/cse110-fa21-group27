@@ -151,28 +151,6 @@ function RoadmapPage() {
 }
 
 /**
- * At the end of this function, all of the pages should be removed
- * and the corresponding recipe-page passed into this function should be rendered
- * @function
- */
-function SearchPage() {
-  const main = document.querySelector("main");
-  // delete everyting in main
-  main.innerHTML = "";
-  // show the roadmap page
-  const searchPage = document.createElement("search-page");
-
-  main.appendChild(searchPage);
-
-  /*
-  renderNavBar({
-    recipeUrl: recipeUrl,
-    isRecipe: true,
-  });
-  */
-}
-
-/**
  * DEPRECATED, replaced by storage.getRecipes()
  * After this function resolves, storage.recipeData should be updated
  * with the url's being the keys to access the fetched data.
