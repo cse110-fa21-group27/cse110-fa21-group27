@@ -152,6 +152,7 @@ class IngredientsInfo extends HTMLElement {
     addToCart.textContent = "Add Ingredients To Cart";
     form.appendChild(addToCart);
 
+    /*
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
     // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
@@ -182,16 +183,19 @@ class IngredientsInfo extends HTMLElement {
     });
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
+    */
 
     // Creating the list of ingredients with checkboxes to allow the user
     // to only select some ingredients to add to Grocery List (Not Implemented)
     const list = document.createElement("div");
     list.classList.add("ingredients-list");
     for (let i = 0; i < ingredientList.length; i++) {
+      const entryName = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
       const box = document.createElement("input");
       box.type = "checkbox";
+      box.setAttribute("entry", entryName);
       const listItem = document.createElement("label");
-      listItem.textContent = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      listItem.textContent = entryName;
       const lineBreak = document.createElement("br");
       list.appendChild(box);
       list.appendChild(listItem);
@@ -199,6 +203,17 @@ class IngredientsInfo extends HTMLElement {
     }
     form.appendChild(list);
     info.appendChild(form);
+    // listen to add to cart button
+    addToCart.addEventListener("click", (e) => {
+      const listElements = Array.from(list.children);
+      listElements.forEach((element) => {
+        if (element.nodeName == "INPUT") {
+          if (element.checked) {
+            this.addToGroceryList(element.getAttribute("entry"));
+          }
+        }
+      });
+    });
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
