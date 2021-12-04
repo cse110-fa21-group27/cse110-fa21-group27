@@ -164,6 +164,8 @@ class RecipeInfo extends HTMLElement {
     ingredients.classList.add("button");
     ingredients.textContent = "Show Ingredients";
     const showIngredients = document.createElement("ingredients-info");
+    // allow ingredients-info to add to grocery
+    showIngredients.addToGroceryList = this.addToGroceryList;
     showIngredients.data = data;
     ingredients.addEventListener("click", (event) => {
       if (ingredients.textContent == "Show Ingredients") {

@@ -35,6 +35,8 @@ class RecipePage extends HTMLElement {
     info.addRecipeToSaved = this.addRecipeToSaved;
     info.removeRecipeFromSaved = this.removeRecipeFromSaved;
     info.isSaved = this.isSaved;
+    // allow info to add to ingredients
+    info.addToGroceryList = this.addToGroceryList;
     // pass recipeId to info
     info.id = this.id;
 

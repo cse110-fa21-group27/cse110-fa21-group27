@@ -35,6 +35,7 @@ async function init() {
   router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("groceryList", groceryListPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -123,8 +124,26 @@ function recipePage(recipeId, recipeJSON) {
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
   recipePage.id = recipeId;
   recipePage.isSaved = storage.isSaved(recipeId);
+  // allow it to add to grocery list
+  recipePage.addToGroceryList = storage.addToGroceryList;
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
+}
+
+/**
+ * @function
+ * After this page function is run, <main> should be empty except for the
+ * <grocery-list-page> component
+ */
+function groceryListPage() {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create grocery page
+  const groceryPage = document.createElement("grocery-list-page");
+  main.appendChild(groceryPage);
+  // allow it to remove/edit grocery items
+  groceryPage.removeFromGroceryList = storage.removeFromGroceryList;
+  groceryPage.updateEntryInGrocery = storage.updateEntryInGrocery;
 }
 
 /**
@@ -144,6 +163,9 @@ function renderNavBar(data) {
   bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
     router.navigate("search-page", false, results);
+  };
+  bar.goGrocery = () => {
+    router.navigate("groceryList");
   };
   bar.data = data;
 }
