@@ -34,6 +34,9 @@
       const styleElem = document.createElement("style");
       styleElem.innerHTML = style;
 
+      let page = document.createElement("article");
+      this.shadowRoot.appendChild(page);
+
       let headerName = document.createElement("h1");
       headerName.textContent = data.collection.name;
       this.shadowRoot.appendChild(headerName);
@@ -78,14 +81,21 @@
         addButton.textContent = "Add Recipes";
         addButton.addEventListener("click", () => {
           let checkboxArray = form.querySelectorAll("input");
-          
+          let recipeCardContainer = document.createElement("div");
+          let renderArray = [];
+
           for (let i = 0; i <checkboxArray.length ; i++) {
             // Checks which recipes were checked and deletes them
             if (checkboxArray[i].checked) {
               // Adding to collection
               this.addToCollection(recipesToDisplay[i].id, data.collection.name);
+              // Array of ids to render
+              renderArray.push(recipesToDisplay[i].id);
             }
           }
+          // Render the added recipes
+          this.renderRecipes(renderArray, recipeCardContainer);
+          this.shadowRoot.appendChild(recipeCardContainer);
           
           this.shadowRoot.removeChild(form);
         });
@@ -160,10 +170,10 @@
 
       this.shadowRoot.appendChild(deleteButton);
 
-      const div = document.createElement("div");
-      this.renderRecipes(data.collection.ids, div);
+      const recipeCardContainer = document.createElement("div");
+      this.renderRecipes(data.collection.ids, recipeCardContainer);
 
-      this.shadowRoot.appendChild(div);
+      this.shadowRoot.appendChild(recipeCardContainer);
       this.shadowRoot.appendChild(styleElem);
     }
   }
