@@ -300,4 +300,3 @@ function searchForKey(object, key) {
   });
   return value;
 }
-
