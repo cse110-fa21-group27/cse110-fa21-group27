@@ -917,18 +917,37 @@ class RoadmapPage extends HTMLElement {
         rectangle29.classList.add("rectangle-after");
         button252.classList.remove("button2");
         button252.classList.add("button2-after");
-        this.shadowRoot.removeChild(wrapper);
-        this.shadowRoot.appendChild(wrapper2);
-        this.shadowRoot.appendChild(wrapper);
 
       } else {
         rectangle29.classList.add("rectangle");
         rectangle29.classList.remove("rectangle-after");
         button252.classList.add("button2");
         button252.classList.remove("button2-after");
-        this.shadowRoot.removeChild(wrapper2);
+        
       }
     });
+
+      //tutorial finished display fuction
+      document.addEventListener("click", event => {
+        if (rectangle29.classList.contains("rectangle-after") && rectangle27.classList.contains("rectangle-after")
+        && rectangle25.classList.contains("rectangle-after") && rectangle23.classList.contains("rectangle-after") 
+        && rectangle21.classList.contains("rectangle-after") && rectangle9.classList.contains("rectangle-after")
+        && rectangle7.classList.contains("rectangle-after") && rectangle5.classList.contains("rectangle-after")
+        && rectangle3.classList.contains("rectangle-after") && rectangle1.classList.contains("rectangle-after")) {
+        rectangle29.classList.remove("rectangle");
+        rectangle29.classList.add("rectangle-after");
+        button252.classList.remove("button2");
+        button252.classList.add("button2-after");
+        this.shadowRoot.removeChild(wrapper);
+        this.shadowRoot.appendChild(wrapper2);
+        this.shadowRoot.appendChild(wrapper);
+      }
+      else{
+        this.shadowRoot.removeChild(wrapper2);
+      }
+      });
+ 
+      
 
     //2 5 step number object
     const step10 = document.createElement("text");
