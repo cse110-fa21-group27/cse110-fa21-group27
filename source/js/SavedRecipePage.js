@@ -165,10 +165,10 @@ class SavedRecipePage extends HTMLElement {
           // Checks which collections were checked and deletes them
           if (checkboxArray[i].checked) {
             this.removeCollection(userInfo.collections[i].name);
-            // Adjusting by one so that we don't delete saved-recipes
-            this.shadowRoot.removeChild(sectionArray[i+1]);
-            this.shadowRoot.removeChild(headerArray[i+1]);
-            this.shadowRoot.removeChild(lineArray[i+1]);
+            // Removing the collection
+            this.shadowRoot.removeChild(sectionArray[i]);
+            this.shadowRoot.removeChild(headerArray[i]);
+            this.shadowRoot.removeChild(lineArray[i]);
           }
         }
         this.shadowRoot.removeChild(form);
