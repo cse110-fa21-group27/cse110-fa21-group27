@@ -20,6 +20,7 @@ class SavedRecipePage extends HTMLElement {
    * and the saved recipes
    */
   set data(userInfo) {
+    debugger
     this.shadowRoot.innerHTML = "";
     const style = `
 
