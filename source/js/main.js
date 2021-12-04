@@ -142,7 +142,7 @@ function renderNavBar(data) {
     router.navigate("savedRecipes");
   };
   bar.goSearchPage = async (query) => {
-    const results = storage.search({ query: query });
+    const results = await storage.search({ query: query });
     router.navigate("search-page", false, results);
   };
   bar.data = data;

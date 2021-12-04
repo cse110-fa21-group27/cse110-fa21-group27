@@ -290,4 +290,4 @@ function searchForKey(object, key) {
   return value;
 }
 
-module.exports = { Directions };
+//module.exports = { Directions };
