@@ -19,6 +19,7 @@ async function getUserInfo() {
         storageUserInfo = {
           savedRecipes: [],
           collections: [],
+          groceryList: [],
         };
         window.localStorage.setItem(
           "userInfo",
@@ -176,7 +177,6 @@ async function addRecipeToSaved(recipeId, recipeName) {
     let newSavedRecipe = {
       id: recipeId,
       name: recipeName,
-      checkedIngredients: [],
       checkedSteps: [],
     };
     let newIndex = userInfo.savedRecipes.push(newSavedRecipe);
@@ -214,7 +214,7 @@ async function removeRecipeFromSaved(recipeId) {
       (savedRecipe) => savedRecipe.id == recipeId
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -293,7 +293,7 @@ async function removeCollection(collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -335,7 +335,7 @@ async function addToCollection(recipeId, collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // collection does not exist
       reject("Collection does not exist");
     }
@@ -379,7 +379,7 @@ async function removeFromCollection(recipeId, collectionName) {
       foundCollectionIndex
     ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
 
-    if (!foundRecipeIndex) {
+    if (foundRecipeIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -420,6 +420,7 @@ function isSaved(recipeId) {
 
 /**
  * ON HOLD (UNTESTED)
+ * @function
  * This function fetches an external recipe url and parses it for its recipe
  * json, which we return when this function resolves.
  * @param {string} url
@@ -493,6 +494,97 @@ function hasRecipe(object) {
   return false;
 }
 
+/**
+ * When the returned promise is resolved, the userInfo and localStorage should be updated with the new grocery list entry
+ * @param {string} ingredient - name of ingredient to add
+ * @returns {Promise}
+ */
+async function addToGroceryList(ingredient) {
+  return new Promise((resolve, reject) => {
+    // add to userInfo
+    const index = userInfo.groceryList.push({
+      name: ingredient,
+      checked: false,
+    });
+    // attempt to update userInfo in localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // all good!
+      resolve();
+    } catch (error) {
+      // if there's an error, remove from userInfo
+      userInfo.groceryList.splice(index, 1);
+      console.log(`Unable to add to grocery list ${error}`);
+      reject(error);
+    }
+  });
+}
+
+/**
+ * When the returned promise is resolved, the userInfo and localStorage
+ * should be updated with the remove grocery list entry
+ * @param {string} ingredient - name of ingredient to remove
+ * @returns {Promise}
+ */
+async function removeFromGroceryList(ingredient) {
+  return new Promise((resolve, reject) => {
+    // edit user Info
+    const index = userInfo.groceryList.findIndex((item) => {
+      item.name == ingredient;
+    });
+    if (index === -1) {
+      // already not in grocery list, resolve
+      resolve();
+    }
+    const entry = userInfo.groceryList[index];
+    userInfo.groceryList.splice(index, 1);
+    // attempt to update userInfo in localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // resolve when good
+      resolve();
+    } catch (error) {
+      // reject when there's an error
+      userInfo.groceryList.splice(index, 0, entry);
+      console.log(`Unable to remove from grocery list ${error}`);
+      reject(error);
+    }
+  });
+}
+
+/**
+ * After the returned promise is resolved, the corresponding ingredient in the
+ * user's grocery list will be updated and so will userInfo and localStorage
+ * @param {string} ingredient - the name of the ingredient to update
+ * @param {boolean} checked - the new value for the ingredient's checkbox
+ * @returns {Promise}
+ */
+async function updateEntryInGrocery(ingredient, checked) {
+  return new Promise((resolve, reject) => {
+    // edit user Info
+    const index = userInfo.groceryList;
+    if (index === -1) {
+      // doesn't exist
+      console.log(`${ingredient} does not exist in groceryList`);
+      reject();
+    }
+    const previous = userInfo.groceryList[index].checked;
+    userInfo.groceryList[index].checked = checked;
+    // attempt to update localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // ok
+      resolve();
+    } catch (error) {
+      // reject when there's an error
+      // reset to what it was
+      userInfo.groceryList[index].checked = previous;
+      console.log(`Unable to update grocery list entry ${error}`);
+      reject(error);
+    }
+  });
+}
+
 export const storage = {
   userInfo,
   recipeData,
@@ -505,5 +597,8 @@ export const storage = {
   removeCollection,
   addToCollection,
   removeFromCollection,
+  addToGroceryList,
+  removeFromGroceryList,
+  updateEntryInGrocery,
   search,
 };
