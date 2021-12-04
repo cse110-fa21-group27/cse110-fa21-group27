@@ -377,7 +377,7 @@ async function removeFromCollection(recipeId, collectionName) {
     );
     const foundRecipeIndex = userInfo.collections[
       foundCollectionIndex
-    ].ids.findIndex((savedRecipeId) => savedRecipeId == recipeId);
+    ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
 
     if (!foundRecipeIndex) {
       // already not in array, resolve!
