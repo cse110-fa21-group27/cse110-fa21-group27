@@ -1,8 +1,11 @@
 # Group #27/C.R.U.D. BUDS
+
 ## Brainstorming Meeting
 
 ### Attendance
+
 <!-- Remove the people not attending. -->
+
 - Arturo Amaya
 - Aryan Malik
 - Delia McGrath
@@ -19,27 +22,30 @@ Date: 10/22/2021
 Time: 3PM
 
 ### Agenda
+
 Group Split into two:
+
 - One working on Features, App Research, Purpose
 - One working on User Thinking and User Personas
-
 
 ### Group A: Arturo, Steven C., Delia, Tucker
 
 ### Problem Exploration
+
 <p>The basic cook, want something simple for people that aren't too ambitious cooking</p>
 - college students
 - professors
 - nurses that don't have too much time
 
 ### Features:
+
 - Include a timer as part of the step to allow an all in one functionality
 - Collapsable instructions so as to support peoples focus -- make it easy for people
 - recipes display depending on the time - ex: inspiration for breakfast at 07:00
 - recipe of the day - allow for prettier format on display page
 - something simplistic for layout -- no shadow backgrounds on images to look sleek
-- author (who invented the recipe) - giving credit to authors? 
-- list of tools for recipe 
+- author (who invented the recipe) - giving credit to authors?
+- list of tools for recipe
 - checkbox next to ingredients & a functionality to print off list of ones not checked(grocery list)
 - abiility to plan recipe for the week
 - make recipe "collections" where you can categorise the recipes -- ex: may have a halloween collection for recipes someone wants to make for a halloween party
@@ -52,6 +58,7 @@ Group Split into two:
 ### Group B: Aryan, Dilara, Kevin, Miguel, Steven S, Tiffany
 
 ### User Thinking:
+
 <p>Recipe managers should provide (Bare minimum):</p>
 - Step by step instructions
 - Grocery list
@@ -83,6 +90,7 @@ Group Split into two:
 - learn new tips about a particular recipe
 
 ### Pros and Cons to Different Recipe Managers (just some highlights):
+
 - Paper
   - Simple and easy to add to
   - Easy to lose or have ruined
@@ -94,6 +102,7 @@ Group Split into two:
   - Takes up space in the kitchen and relies on stable internet connection
 
 ### Next Steps:
+
 - Wireframe
 - UML
 - User Stories
@@ -101,4 +110,5 @@ Group Split into two:
 - Project Roadmap
 
 Meeting concluded at 5PM.
+
 <!-- REMINDER TO SAVE THE TEMPLATE AS (mmddyy-topic.md)-->

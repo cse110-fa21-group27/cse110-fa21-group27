@@ -1,11 +1,11 @@
 /*search bar*/
+
 .search_bar {
   position: absolute;
   width: 100%;
   height: 10%;
   left: 0%;
   top: 0%;
-
   background: #ffbb71;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -24,8 +24,6 @@
   height: 66%;
   left: 30%;
   top: 15%;
-
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -34,7 +32,7 @@
   align-items: center;
 
   color: #000000;
-  background: #ffbb71;
+  background: black;
   border-color: #ffffff;
 }
 
@@ -86,7 +84,7 @@
   height: 66%;
   top: 20%;
   left: 2%;
-  background: #fff6ec;
+  background: #ff8800;
 }
 
 .ingredients_label {
