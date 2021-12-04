@@ -25,4 +25,4 @@ class GroceryListPage extends HTMLElement {
   set data(data) {}
 }
 
-customElements.define("grocery-list-page");
+customElements.define("grocery-list-page", GroceryListPage);
