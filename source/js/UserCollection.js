@@ -151,7 +151,7 @@
           let checkboxArray = form.querySelectorAll("input");
           let divSelector = this.shadowRoot.querySelectorAll("div");
           let recipeCardArray = this.shadowRoot.querySelectorAll("recipe-card");
-          console.log(recipeCardArray);
+          
           // It deletes in reverse order to make sure there are no index problems
           for (let i = checkboxArray.length-1; i >= 0 ; i--) {
             // Checks which recipes were checked and deletes them

@@ -149,11 +149,9 @@ class SavedRecipePage extends HTMLElement {
 
       // Grab the sections/headers/brs
       let sectionArray = this.shadowRoot.querySelectorAll("section");
-      console.log(sectionArray);
       let headerArray = this.shadowRoot.querySelectorAll("h1");
-      console.log(headerArray);
       let lineArray = this.shadowRoot.querySelectorAll("hr");
-      console.log(lineArray);
+      
       // Button to delete the collections
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete Collections";
