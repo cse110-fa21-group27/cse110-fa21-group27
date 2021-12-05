@@ -32,11 +32,12 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
+  router.navigate("home");
   router.addPage("roadmap-page", RoadmapPage);
   router.addPage("search-page", SearchPage);
-  router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("collection", collectionPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -96,6 +97,10 @@ function savedRecipesPage() {
   savedPage.removeCollection = storage.removeCollection;
   savedPage.addToCollection = storage.addToCollection;
   savedPage.removeFromCollection = storage.removeFromCollection;
+  // allow it to navigate to collection
+  savedPage.goToCollection = (collection) => {
+    router.navigate("collection", false, collection);
+  };
   // give it the array of userInfo for data
   savedPage.data = storage.userInfo;
   // savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
@@ -177,6 +182,7 @@ function collectionPage(collection) {
     savedRecipes: storage.userInfo.savedRecipes,
   };
   userCollection.data = data;
+  main.appendChild(userCollection);
 }
 
 /**
