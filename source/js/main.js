@@ -156,6 +156,30 @@ function RoadmapPage() {
 }
 
 /**
+ * After this function is run, the page should display a collection and its
+ * corresponding recipe cards
+ * @param {Object} collection - the collection object that we want to display
+ */
+function collectionPage(collection) {
+  // delete everything in main
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create the user collection custom element
+  const userCollection = document.createElement("user-collection");
+  // pass the renderRecipes function
+  userCollection.renderRecipes = renderRecipes;
+  // pass the collections functions
+  userCollection.addToCollection = storage.addToCollection;
+  userCollection.removeFromCollection = storage.removeFromCollection;
+  // create data object
+  const data = {
+    collection: collection,
+    savedRecipes: storage.userInfo.savedRecipes,
+  };
+  userCollection.data = data;
+}
+
+/**
  * DEPRECATED, replaced by storage.getRecipes()
  * After this function resolves, storage.recipeData should be updated
  * with the url's being the keys to access the fetched data.
@@ -224,7 +248,7 @@ function renderNavBar(data) {
   bar.goRoadmap = () => {
     router.navigate("roadmap-page");
   };
-  
+
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
