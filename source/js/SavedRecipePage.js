@@ -166,24 +166,9 @@ class SavedRecipePage extends HTMLElement {
 
           // Create the collection page
           collection.addEventListener("click", () => {
-            const main = document.querySelector("main");
-            // delete everyting in main
-            main.innerHTML = "";
-            // make user-collection visible
-            const userCollection = document.createElement("user-collection");
-            // pass the renderrecipes function
-            userCollection.renderRecipes = this.renderRecipes;
-            // pass the collections functions
-            userCollection.addToCollection = this.addToCollection;
-            userCollection.removeFromCollection = this.removeFromCollection;
-            // Create an object to pass in the information that collections will need
-            let data = {
-              collection: userInfo.collections[userInfo.collections.length - 1],
-              savedRecipes: userInfo.savedRecipes,
-            };
-            // give it the array of userInfo for data
-            userCollection.data = data;
-            main.appendChild(userCollection);
+            this.goToCollection(
+              userInfo.collections[userInfo.collections.length - 1]
+            );
           });
         });
 
