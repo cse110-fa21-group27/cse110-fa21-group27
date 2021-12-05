@@ -34,9 +34,6 @@
       const styleElem = document.createElement("style");
       styleElem.innerHTML = style;
 
-      let page = document.createElement("article");
-      this.shadowRoot.appendChild(page);
-
       let headerName = document.createElement("h1");
       headerName.textContent = data.collection.name;
       this.shadowRoot.appendChild(headerName);
@@ -50,8 +47,12 @@
         name.textContent = "Add Recipes";
         form.appendChild(name);
 
+       // Copy the array
+        let recipesToDisplay = [];
+        for (let i = 0; i < data.savedRecipes.length; i++) {
+          recipesToDisplay.push(data.savedRecipes[i]);
+        }
         // Find the recipes that are not duplicates
-        let recipesToDisplay = data.savedRecipes;
         for (let i = 0; i < data.collection.ids.length; i++) {
           for (let j = recipesToDisplay.length - 1; j >= 0; j--) {
             // Removing values in reverse to avoid index issues
@@ -129,7 +130,15 @@
           input.classList.add("checkbox");
           form.appendChild(input);
           let text = document.createElement("p");
-          text.textContent = "Recipe: " + data.collection.ids[i];
+          // Getting id
+          let id = data.collection.ids[i];
+          // Comparing the id to the saved recipes
+          for (let j = 0; j < data.savedRecipes.length; j++) {
+            if (id === data.savedRecipes[j].id) {
+              text.textContent = "Recipe: " + data.savedRecipes[j].name;
+            }
+          }
+
           form.appendChild(text);
           let lineBreak = document.createElement("br");
           form.appendChild(lineBreak);
