@@ -107,6 +107,28 @@ class SavedRecipePage extends HTMLElement {
         this.renderRecipes(idArray, collection).then(() => {
           this.shadowRoot.appendChild(collection);
           this.shadowRoot.appendChild(document.createElement("hr"));
+
+          // Create the collection page
+          collection.addEventListener('click', () => {
+            const main = document.querySelector("main");
+            // delete everyting in main
+            main.innerHTML = "";
+            // make user-collection visible
+            const userCollection = document.createElement("user-collection");
+            // pass the renderrecipes function
+            userCollection.renderRecipes = this.renderRecipes;
+            // pass the collections functions
+            userCollection.addToCollection = this.addToCollection;
+            userCollection.removeFromCollection = this.removeFromCollection;
+            // Create an object to pass in the information that collections will need
+            let data = {
+              collection: userInfo.collections[userInfo.collections.length - 1],
+              savedRecipes: userInfo.savedRecipes 
+            }
+            // give it the array of userInfo for data
+            userCollection.data = data;
+            main.appendChild(userCollection);
+          });
         });
 
         this.shadowRoot.removeChild(form);
@@ -203,7 +225,7 @@ class SavedRecipePage extends HTMLElement {
       let headerName = document.createElement("h1");
       headerName.textContent = userInfo.collections[i].name;
       this.shadowRoot.appendChild(headerName);
-      // Create the section to render the colletion recipe cards
+      // Create the section to render the collection recipe cards
       let collection = document.createElement("section");
       collection.classList.add("saved-recipes");
 
