@@ -21,8 +21,63 @@
       this.shadowRoot.innerHTML = "";
       const style = `
       button {
+        height: 10vh;
+        width: 20vw;
+      }
+  
+      .addRemoveButton {
+        position: absolute;
+        top: 8vh;
+        left: 5vw;
+      }
+  
+      .neverMindButton {
+        position: absolute;
+        top: 8vh;
+        right: 5vw;
+      }
+  
+      div {
+        width: 50vw;
+        margin-left: 25vw;
+        margin-right: 25vw;
+        margin-top: 25vh;
+        background: grey;
+        min-height: 75vh;
+      }
+  
+      .form {
+        position: absolute;
+        top: 18vh;
+        left: 25vw;
+        margin-left: 0vw;
+        margin-right: 0vw;
+        margin-top: 0vh;
+        z-index: 1;
+      }
+  
+      input {
+        position:absolute;
+        left: 5vw;
+        height: 3vh;
+        width: 3vw;
+        margin-top: 20vh;
+      }
+      
+      p {
+        position: absolute;
+        display: block;
+        left: 8vw;
+        margin-top: 20vh;
+      }
+  
+      .title {
+        position:absolute;
+        left: 10vw;
+        width: 30vw;
         height: 5vh;
-        width: 10vw;
+        margin-top: 1vh;
+        text-align: center;
       }
   
       .saved-recipes {
@@ -43,7 +98,9 @@
       this.shadowRoot.appendChild(addButton);
       addButton.addEventListener('click', () => {
         let form = document.createElement("div");
+        form.classList.add("form");
         let name = document.createElement("p");
+        name.classList.add("title");
         name.textContent = "Add Recipes";
         form.appendChild(name);
 
@@ -69,8 +126,8 @@
           input.type = "checkbox";
           input.classList.add("checkbox");
           form.appendChild(input);
-
           let text = document.createElement("p");
+          text.classList.add("options");
           text.textContent = recipesToDisplay[i].name;
           form.appendChild(text);
           let lineBreak = document.createElement("br");
@@ -79,6 +136,7 @@
 
         // Button to add the recipes
         let addButton = document.createElement("button");
+        addButton.classList.add("addRemoveButton");
         addButton.textContent = "Add Recipes";
         addButton.addEventListener("click", () => {
           let checkboxArray = form.querySelectorAll("input");
@@ -103,6 +161,7 @@
 
         // Button to remove the form without adding the recipes
         let neverMindButton = document.createElement("button");
+        neverMindButton.classList.add("neverMindButton");
         neverMindButton.textContent = "Don't Add Recipes";
         neverMindButton.addEventListener("click", () => {
           this.shadowRoot.removeChild(form);
@@ -119,7 +178,9 @@
       // Create the form for the user to delete collections
       deleteButton.addEventListener('click', () => {
         let form = document.createElement("div");
+        form.classList.add("form");
         let name = document.createElement("p");
+        name.classList.add("title");
         name.textContent = "Remove Recipes";
         form.appendChild(name);
         
@@ -130,6 +191,7 @@
           input.classList.add("checkbox");
           form.appendChild(input);
           let text = document.createElement("p");
+          text.classList.add("options");
           // Getting id
           let id = data.collection.ids[i];
           // Comparing the id to the saved recipes
@@ -146,12 +208,13 @@
 
         // Button to remove the recipes
         let removeButton = document.createElement("button");
+        removeButton.classList.add("addRemoveButton");
         removeButton.textContent = "Remove Recipes";
         removeButton.addEventListener("click", () => {
           let checkboxArray = form.querySelectorAll("input");
           let divSelector = this.shadowRoot.querySelectorAll("div");
           let recipeCardArray = this.shadowRoot.querySelectorAll("recipe-card");
-          
+
           // It deletes in reverse order to make sure there are no index problems
           for (let i = checkboxArray.length-1; i >= 0 ; i--) {
             // Checks which recipes were checked and deletes them
@@ -167,6 +230,7 @@
 
         // Button to remove the form without removing the recipes
         let neverMindButton = document.createElement("button");
+        neverMindButton.classList.add("neverMindButton");
         neverMindButton.textContent = "Don't Remove Recipes";
         neverMindButton.addEventListener("click", () => {
           this.shadowRoot.removeChild(form);
@@ -180,7 +244,8 @@
 
       this.shadowRoot.appendChild(deleteButton);
 
-      const recipeCardContainer = document.createElement("div");
+      const recipeCardContainer = document.createElement("section");
+      recipeCardContainer.classList.add("saved-recipes");
       this.renderRecipes(data.collection.ids, recipeCardContainer);
 
       this.shadowRoot.appendChild(recipeCardContainer);

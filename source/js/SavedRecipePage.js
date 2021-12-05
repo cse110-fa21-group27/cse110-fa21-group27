@@ -23,20 +23,72 @@ class SavedRecipePage extends HTMLElement {
     debugger
     this.shadowRoot.innerHTML = "";
     const style = `
-
     button {
       height: 10vh;
       width: 20vw;
     }
 
+    .createRemoveButton {
+      position: absolute;
+      top: 8vh;
+      left: 5vw;
+    }
+
+    .neverMindButton {
+      position: absolute;
+      top: 8vh;
+      right: 5vw;
+    }
+
     div {
-      display: inline-block property;
       width: 50vw;
       margin-left: 25vw;
       margin-right: 25vw;
       margin-top: 25vh;
       background: grey;
+      min-height: 75vh;
+    }
+
+    .form {
+      position: absolute;
+      top: 18vh;
+      left: 25vw;
+      margin-left: 0vw;
+      margin-right: 0vw;
+      margin-top: 0vh;
       z-index: 1;
+    }
+
+    input {
+      position:absolute;
+      left: 5vw;
+      height: 3vh;
+      width: 3vw;
+      margin-top: 17vh;
+    }
+    
+    .deleteInput {
+      margin-top: 20vh;
+    }
+
+    p {
+      position: absolute;
+      display: block;
+      left: 8vw;
+      margin-top: 17vh;
+    }
+
+    .deleteP {
+      margin-top: 20vh;
+    }
+
+    .title {
+      position:absolute;
+      left: 10vw;
+      width: 30vw;
+      height: 5vh;
+      margin-top: 1vh;
+      text-align: center;
     }
 
     .saved-recipes {
@@ -57,10 +109,13 @@ class SavedRecipePage extends HTMLElement {
     // Create the form for the user to create a new collection
     addButton.addEventListener("click", () => {
       let form = document.createElement("div");
+      form.classList.add("form");
       let name = document.createElement("input");
       name.type = "text";
       name.value = "New Collection";
+      name.classList.add("title");
       form.appendChild(name);
+      form.appendChild(document.createElement("br"));
       // Add options to add each of the user's saved recipes
       for (let i = 0; i < userInfo.savedRecipes.length; i++) {
         let input = document.createElement("input");
@@ -68,7 +123,8 @@ class SavedRecipePage extends HTMLElement {
         input.classList.add("checkbox");
         form.appendChild(input);
         let text = document.createElement("p");
-        text.textContent = "Recipe Name: " + userInfo.savedRecipes[i].name;
+        text.textContent = userInfo.savedRecipes[i].name;
+        text.classList.add("options");
         form.appendChild(text);
         let lineBreak = document.createElement("br");
         form.appendChild(lineBreak);
@@ -78,6 +134,7 @@ class SavedRecipePage extends HTMLElement {
       let idArray = [];
       // Button to create the collection
       let createButton = document.createElement("button");
+      createButton.classList.add("createRemoveButton");
       createButton.textContent = "Create Collection";
       // Create the collection, add the recipes, and delete the form
       createButton.addEventListener("click", () => {
@@ -136,6 +193,7 @@ class SavedRecipePage extends HTMLElement {
 
       // Button to remove the form without creating the collection
       let neverMindButton = document.createElement("button");
+      neverMindButton.classList.add("neverMindButton");
       neverMindButton.textContent = "Don't Create Collection";
       neverMindButton.addEventListener("click", () => {
         this.shadowRoot.removeChild(form);
@@ -152,8 +210,10 @@ class SavedRecipePage extends HTMLElement {
     // Create the form for the user to delete collections
     deleteButton.addEventListener("click", () => {
       let form = document.createElement("div");
+      form.classList.add("form");
       let name = document.createElement("p");
       name.textContent = "Delete Collection";
+      name.classList.add("title");
       form.appendChild(name);
       
       // Add options to remove each of the user's collections
@@ -161,8 +221,11 @@ class SavedRecipePage extends HTMLElement {
         let input = document.createElement("input");
         input.type = "checkbox";
         input.classList.add("checkbox");
+        input.classList.add("deleteInput");
         form.appendChild(input);
         let text = document.createElement("p");
+        text.classList.add("options");
+        text.classList.add("deleteP");
         text.textContent = "Collection Name: " + userInfo.collections[i].name;
         form.appendChild(text);
         let lineBreak = document.createElement("br");
@@ -176,6 +239,7 @@ class SavedRecipePage extends HTMLElement {
       
       // Button to delete the collections
       let deleteButton = document.createElement("button");
+      deleteButton.classList.add("createRemoveButton");
       deleteButton.textContent = "Delete Collections";
       // Select the collections, delete them, and delete the form
       deleteButton.addEventListener("click", () => {
@@ -196,6 +260,7 @@ class SavedRecipePage extends HTMLElement {
 
       // Button to remove the form without creating the collection
       let neverMindButton = document.createElement("button");
+      neverMindButton.classList.add("neverMindButton");
       neverMindButton.textContent = "Don't Delete Collections";
       neverMindButton.addEventListener("click", () => {
         this.shadowRoot.removeChild(form);
