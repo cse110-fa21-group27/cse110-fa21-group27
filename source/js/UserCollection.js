@@ -149,8 +149,9 @@
         removeButton.textContent = "Remove Recipes";
         removeButton.addEventListener("click", () => {
           let checkboxArray = form.querySelectorAll("input");
-          // let divSelector = this.shadowRoot.querySelectorAll("div");
-          // let recipeCardArray = divSelector[0].querySelectorAll("recipe-card");
+          let divSelector = this.shadowRoot.querySelectorAll("div");
+          let recipeCardArray = this.shadowRoot.querySelectorAll("recipe-card");
+          console.log(recipeCardArray);
           // It deletes in reverse order to make sure there are no index problems
           for (let i = checkboxArray.length-1; i >= 0 ; i--) {
             // Checks which recipes were checked and deletes them
@@ -158,7 +159,7 @@
               // Removing from collection
               this.removeFromCollection(data.collection.ids[i], data.collection.name);
               // Removing the recipe card
-              // divSelector.removeChild(recipeCardArray[i]);
+              divSelector[0].removeChild(recipeCardArray[i]);
             }
           }
           this.shadowRoot.removeChild(form);
