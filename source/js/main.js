@@ -144,6 +144,8 @@ function groceryListPage() {
   // allow it to remove/edit grocery items
   groceryPage.removeFromGroceryList = storage.removeFromGroceryList;
   groceryPage.updateEntryInGrocery = storage.updateEntryInGrocery;
+  // give it access to grocery list
+  groceryPage.data = storage.userInfo.groceryList;
 }
 
 /**
