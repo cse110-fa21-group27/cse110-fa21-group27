@@ -138,7 +138,9 @@ class UserCollection extends HTMLElement {
       addButton.textContent = "Add Recipes";
       addButton.addEventListener("click", () => {
         let checkboxArray = form.querySelectorAll("input");
-        let recipeCardContainer = document.createElement("div");
+        let recipeCardContainer = document.querySelector(
+          "section.saved-recipes"
+        );
         let renderArray = [];
 
         for (let i = 0; i < checkboxArray.length; i++) {
@@ -152,7 +154,6 @@ class UserCollection extends HTMLElement {
         }
         // Render the added recipes
         this.renderRecipes(renderArray, recipeCardContainer);
-        this.shadowRoot.appendChild(recipeCardContainer);
 
         this.shadowRoot.removeChild(form);
       });
