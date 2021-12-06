@@ -187,6 +187,7 @@ class UserCollection extends HTMLElement {
         let input = document.createElement("input");
         input.type = "checkbox";
         input.classList.add("checkbox");
+        input.setAttribute("recipeId", data.collection.ids[i]);
         form.appendChild(input);
         let text = document.createElement("p");
         text.classList.add("options");
@@ -217,13 +218,15 @@ class UserCollection extends HTMLElement {
         for (let i = checkboxArray.length - 1; i >= 0; i--) {
           // Checks which recipes were checked and deletes them
           if (checkboxArray[i].checked) {
+            const idToRemove = checkboxArray[i].getAttribute("recipeId");
             // Removing from collection
-            this.removeFromCollection(
-              data.collection.ids[i],
-              data.collection.name
-            );
+            this.removeFromCollection(idToRemove, data.collection.name);
             // Removing the recipe card
-            divSelector[0].removeChild(recipeCardArray[i]);
+            Array.from(recipeCardArray)
+              .find((cardElem) => {
+                return cardElem.getAttribute("recipeId") == idToRemove;
+              })
+              .remove();
           }
         }
         this.shadowRoot.removeChild(form);

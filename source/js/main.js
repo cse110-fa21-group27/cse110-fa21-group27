@@ -281,6 +281,7 @@ async function renderRecipes(list, target, clickable = true) {
     // obtain data
     const recipeJSON = storage.recipeData[recipeId].data;
     const newCard = document.createElement("recipe-card");
+    newCard.setAttribute("recipeId", recipeId);
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
