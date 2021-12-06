@@ -26,6 +26,15 @@ class SavedRecipePage extends HTMLElement {
       height: 10vh;
       width: 20vw;
     }
+    
+    .saved-recipes[collectionName]:hover {
+      background: #5B8775;
+      cursor: pointer;
+    }
+
+    h1[collectionName] {
+      cursor: pointer;
+    }
 
     .createRemoveButton {
       position: absolute;
@@ -156,6 +165,11 @@ class SavedRecipePage extends HTMLElement {
           let headerName = document.createElement("h1");
           headerName.textContent = name.value;
           headerName.setAttribute("collectionName", name.value);
+          headerName.addEventListener("click", () => {
+            this.goToCollection(
+              userInfo.collections[userInfo.collections.length - 1]
+            );
+          });
           this.shadowRoot.appendChild(headerName);
           // Create the section to render the colletion recipe cards
           let collection = document.createElement("section");
@@ -298,6 +312,9 @@ class SavedRecipePage extends HTMLElement {
       let headerName = document.createElement("h1");
       headerName.textContent = userInfo.collections[i].name;
       headerName.setAttribute("collectionName", userInfo.collections[i].name);
+      headerName.addEventListener("click", () => {
+        this.goToCollection(userInfo.collections[i]);
+      });
       this.shadowRoot.appendChild(headerName);
       // Create the section to render the collection recipe cards
       let collection = document.createElement("section");
