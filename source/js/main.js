@@ -272,9 +272,11 @@ function renderNavBar(data) {
  * @function
  * @param {String[]} list - array of ids to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
+ * @param {Boolean} clickable - if we want to bind event listeners to the
+ * card or not. default is true
  * recipe-card's into
  */
-async function renderRecipes(list, target) {
+async function renderRecipes(list, target, clickable = true) {
   list.forEach((recipeId) => {
     // obtain data
     const recipeJSON = storage.recipeData[recipeId].data;
@@ -284,7 +286,9 @@ async function renderRecipes(list, target) {
     // add this recipe's page to the router
     router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, recipeId);
+    if (clickable) {
+      bindRecipeCard(newCard, recipeId);
+    }
 
     target.appendChild(newCard);
   });

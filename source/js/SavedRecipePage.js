@@ -155,14 +155,18 @@ class SavedRecipePage extends HTMLElement {
         // Collection name
         let headerName = document.createElement("h1");
         headerName.textContent = name.value;
+        headerName.setAttribute("collectionName", name.value);
         this.shadowRoot.appendChild(headerName);
         // Create the section to render the colletion recipe cards
         let collection = document.createElement("section");
         collection.classList.add("saved-recipes");
+        collection.setAttribute("collectionName", name.value);
         // Render the cards.
-        this.renderRecipes(idArray, collection).then(() => {
+        this.renderRecipes(idArray, collection, false).then(() => {
           this.shadowRoot.appendChild(collection);
-          this.shadowRoot.appendChild(document.createElement("hr"));
+          const br = document.createElement("hr");
+          br.setAttribute("collectionName", name.value);
+          this.shadowRoot.appendChild(br);
 
           // Create the collection page
           collection.addEventListener("click", () => {
@@ -206,6 +210,7 @@ class SavedRecipePage extends HTMLElement {
         input.type = "checkbox";
         input.classList.add("checkbox");
         input.classList.add("deleteInput");
+        input.setAttribute("collectionName", userInfo.collections[i].name);
         form.appendChild(input);
         let text = document.createElement("p");
         text.classList.add("options");
@@ -232,11 +237,26 @@ class SavedRecipePage extends HTMLElement {
         for (let i = checkboxArray.length - 1; i >= 0; i--) {
           // Checks which collections were checked and deletes them
           if (checkboxArray[i].checked) {
-            this.removeCollection(userInfo.collections[i].name);
-            // Removing the collection
-            this.shadowRoot.removeChild(sectionArray[i]);
-            this.shadowRoot.removeChild(headerArray[i]);
-            this.shadowRoot.removeChild(lineArray[i]);
+            const nameToRemove =
+              checkboxArray[i].getAttribute("collectionName");
+            this.removeCollection(nameToRemove);
+            // Removing the html elements
+
+            Array.from(sectionArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") == nameToRemove;
+              })
+              .remove();
+            Array.from(headerArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") == nameToRemove;
+              })
+              .remove();
+            Array.from(lineArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") == nameToRemove;
+              })
+              .remove();
           }
         }
         this.shadowRoot.removeChild(form);
@@ -265,18 +285,23 @@ class SavedRecipePage extends HTMLElement {
     }
     this.renderRecipes(idList, page);
 
-    this.shadowRoot.appendChild(styleElem);
+    this.shadowRoot.appendChild(h);
+    this.shadowRoot.appendChild(page);
+
     this.shadowRoot.appendChild(document.createElement("hr"));
+    this.shadowRoot.appendChild(styleElem);
 
     // Displaying previously created collections
     for (let i = 0; i < userInfo.collections.length; i++) {
       // Collection name
       let headerName = document.createElement("h1");
       headerName.textContent = userInfo.collections[i].name;
+      headerName.setAttribute("collectionName", userInfo.collections[i].name);
       this.shadowRoot.appendChild(headerName);
       // Create the section to render the collection recipe cards
       let collection = document.createElement("section");
       collection.classList.add("saved-recipes");
+      collection.setAttribute("collectionName", userInfo.collections[i].name);
 
       // Create the collection page
       collection.addEventListener("click", () => {
@@ -293,12 +318,12 @@ class SavedRecipePage extends HTMLElement {
       }
 
       // Render the collection
-      this.renderRecipes(idArray, collection);
+      this.renderRecipes(idArray, collection, false);
       this.shadowRoot.appendChild(collection);
-      this.shadowRoot.appendChild(document.createElement("hr"));
+      const br = document.createElement("hr");
+      br.setAttribute("collectionName", userInfo.collections[i].name);
+      this.shadowRoot.appendChild(br);
     }
-    this.shadowRoot.appendChild(h);
-    this.shadowRoot.appendChild(page);
   }
 }
 
