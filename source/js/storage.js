@@ -214,7 +214,7 @@ async function removeRecipeFromSaved(recipeId) {
       (savedRecipe) => savedRecipe.id == recipeId
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -297,7 +297,7 @@ async function removeCollection(collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -339,7 +339,7 @@ async function addToCollection(recipeId, collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // collection does not exist
       reject("Collection does not exist");
     }
@@ -383,7 +383,7 @@ async function removeFromCollection(recipeId, collectionName) {
       foundCollectionIndex
     ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
 
-    if (!foundRecipeIndex) {
+    if (foundRecipeIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
