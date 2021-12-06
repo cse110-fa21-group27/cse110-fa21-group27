@@ -32,6 +32,8 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
+  router.addPage("roadmap-page", RoadmapPage);
+  router.addPage("search-page", SearchPage);
   router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
@@ -71,6 +73,7 @@ function SearchPage(results) {
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
+  searchPage.renderRecipes = renderRecipes;
   searchPage.data = results;
 
   main.appendChild(searchPage);
@@ -127,6 +130,87 @@ function recipePage(recipeId, recipeJSON) {
 }
 
 /**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed into this function should be rendered
+ * @function
+ */
+function RoadmapPage() {
+  const main = document.querySelector("main");
+  // delete everyting in main
+  main.innerHTML = "";
+  // show the roadmap page
+  const roadmapPage = document.createElement("roadmap-page");
+
+  main.appendChild(roadmapPage);
+
+  roadmapPage.goRecipe = (recipeId) => {
+    router.navigate(recipeId);
+  };
+
+  /*
+  renderNavBar({
+    recipeUrl: recipeUrl,
+    isRecipe: true,
+  });
+  */
+}
+
+/**
+ * DEPRECATED, replaced by storage.getRecipes()
+ * After this function resolves, storage.recipeData should be updated
+ * with the url's being the keys to access the fetched data.
+ * @async
+ * @function
+ * @param {String[]} recipeUrlList
+ * @returns {Promise}
+ */
+async function loadRecipes(recipeUrlList) {
+  return new Promise((resolve, reject) => {
+    // keep track of each promise we make when using fetch
+    const promises = [];
+
+    recipeUrlList.forEach((url) => {
+      // add each fetch promise to the array
+      promises.push(
+        fetch(url)
+          // catch any errors in fetching (network problems or whatever)
+          .catch((error) => {
+            console.log(`Problem fetching ${url}`, error);
+            reject(error);
+          })
+          // check if we get a proper response
+          // fetch() still resolves even if it's a 404
+          .then((response) => {
+            if (!response.ok) {
+              console.log(`Problem fetching ${url}, status ${response.status}`);
+              reject(response);
+            }
+
+            return response.json();
+          })
+          // response.json() is a promise
+          .then((data) => {
+            storage.recipeData[url] = {
+              url: url,
+              data: data,
+            };
+          })
+      );
+    });
+
+    // resolve once the entire promise array is resolved
+    Promise.all(promises)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        reject();
+      });
+  });
+}
+
+/**
  * This function renders the <nav-bar> with the appropriate data
  * @param {Object} data - object containing information about the current
  * state of the page.
@@ -137,11 +221,16 @@ function renderNavBar(data) {
   bar.goHome = () => {
     router.navigate("home");
   };
+  bar.goRoadmap = () => {
+    router.navigate("roadmap-page");
+  };
+  
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = () => {
-    router.navigate("search-page");
+  bar.goSearchPage = async (query) => {
+    const results = await storage.search({ query: query });
+    router.navigate("search-page", false, results);
   };
   bar.data = data;
 }
@@ -192,7 +281,7 @@ function bindRecipeCard(recipeCard, recipeId) {
 function bindPopState() {
   window.addEventListener("popstate", (e) => {
     if (!!e.state) {
-      router.navigate(e.state.page, true);
+      router.navigate(e.state.page, true, e.state.options);
     } else {
       router.navigate("home", true);
     }

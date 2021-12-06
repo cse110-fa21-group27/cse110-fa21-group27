@@ -9,7 +9,7 @@ class NavBar extends HTMLElement {
    * @param {object} data - the recipe json file
    */
   set data(data) {
-    const style =` 
+    const style = ` 
     @font-face {
       font-family: font;
       src: URL('font.ttf') format('truetype');
@@ -77,6 +77,19 @@ class NavBar extends HTMLElement {
       top: 20%;
       width: 3.2%;
       height: 70%;
+  }
+  .roadmap_png {
+    position: absolute;
+    left: 81%;
+    right: 10.88%;
+    top: 20%;
+    width: 4%;
+    height: 72%;
+    background: white;
+    border-radius: 10em;
+  }
+}
+    
     }
     `;
     const styleElem = document.createElement("style");
@@ -105,18 +118,22 @@ class NavBar extends HTMLElement {
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
     navAct2.addEventListener("submit", (e) => {
+      const query = navText.value;
       e.preventDefault();
-      this.goSearchPage();
+      this.goSearchPage(query);
     });
 
     // search button/image
+    const searchAct = document.createElement("button");
     const searchImg = document.createElement("input");
     searchImg.type = "image";
     searchImg.className = "search_png";
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
     searchImg.addEventListener("click", (e) => {
-      this.goSearchPage();
+      const query = navText.value;
+      e.preventDefault();
+      this.goSearchPage(query);
     });
 
     // shopping cart image/button
@@ -127,6 +144,18 @@ class NavBar extends HTMLElement {
     shoppingImg.id = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
     shoppingImg.name = "se_cart_png";
+
+    // roadmap button/img
+    const roadmapAct = document.createElement("button");
+    const roadmapImg = document.createElement("input");
+    roadmapImg.type = "image";
+    roadmapImg.className = "roadmap_png";
+    roadmapImg.id = "se_roadmap_png";
+    roadmapImg.name = "se_roadmap_png";
+    roadmapImg.src = "./images/cook_icon.png";
+    roadmapAct.addEventListener("click", (event) => {
+      this.goRoadmap();
+    });
 
     // saved button/img
     const savedAct = document.createElement("form");
@@ -147,7 +176,14 @@ class NavBar extends HTMLElement {
     navAct2.appendChild(navText);
     navBar.appendChild(navAct2);
 
-    navBar.appendChild(searchImg);
+    searchAct.appendChild(searchImg);
+    navBar.appendChild(searchAct);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
 
     shoppingAct.appendChild(shoppingImg);
     navBar.appendChild(shoppingAct);
