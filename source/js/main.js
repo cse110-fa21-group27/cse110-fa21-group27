@@ -73,6 +73,7 @@ function SearchPage(results) {
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
+  searchPage.renderRecipes = renderRecipes;
   searchPage.data = results;
 
   main.appendChild(searchPage);
@@ -227,8 +228,9 @@ function renderNavBar(data) {
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = () => {
-    router.navigate("search-page");
+  bar.goSearchPage = async (query) => {
+    const results = await storage.search({ query: query });
+    router.navigate("search-page", false, results);
   };
   bar.data = data;
 }
@@ -279,7 +281,7 @@ function bindRecipeCard(recipeCard, recipeId) {
 function bindPopState() {
   window.addEventListener("popstate", (e) => {
     if (!!e.state) {
-      router.navigate(e.state.page, true);
+      router.navigate(e.state.page, true, e.state.options);
     } else {
       router.navigate("home", true);
     }

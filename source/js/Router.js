@@ -28,7 +28,7 @@ export class Router {
    * @param {Boolean} statePopped - True if this function is being called by back/forward
    * 'popstate' event
    */
-  navigate(page, statePopped) {
+  navigate(page, statePopped, options) {
     // check if we have the route
     if (!this[page]) {
       console.log(`${page} does not exist.`);
@@ -41,11 +41,15 @@ export class Router {
     // if this isn't from a back/forward and we're not already on the page,
     // we add it to the history
     if (!statePopped & (window.location.hash != hash)) {
-      history.pushState({ page: page }, "", hash);
+      history.pushState({ page: page, options: options }, "", hash);
       window.location.hash = hash;
     }
 
     // run the function that changes the page
-    this[page]();
+    if (!!options) {
+      this[page](options);
+    } else {
+      this[page]();
+    }
   }
 }

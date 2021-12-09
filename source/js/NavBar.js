@@ -9,7 +9,7 @@ class NavBar extends HTMLElement {
    * @param {object} data - the recipe json file
    */
   set data(data) {
-    const style =` 
+    const style = ` 
     @font-face {
       font-family: font;
       src: URL('font.ttf') format('truetype');
@@ -118,8 +118,9 @@ class NavBar extends HTMLElement {
     navText.name = "se_search_text";
     navText.placeholder = "Find a recipe";
     navAct2.addEventListener("submit", (e) => {
+      const query = navText.value;
       e.preventDefault();
-      this.goSearchPage();
+      this.goSearchPage(query);
     });
 
     // search button/image
@@ -130,7 +131,9 @@ class NavBar extends HTMLElement {
     searchImg.id = "se_search_png";
     searchImg.src = "./images/search.png";
     searchImg.addEventListener("click", (e) => {
-      this.goSearchPage();
+      const query = navText.value;
+      e.preventDefault();
+      this.goSearchPage(query);
     });
 
     // shopping cart image/button
