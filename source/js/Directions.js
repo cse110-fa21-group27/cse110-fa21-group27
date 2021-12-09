@@ -35,8 +35,7 @@ class Directions extends HTMLElement {
         margin-right: auto;
         width: 50vw;
         display: grid;
-        grid-template-rows: 
-        [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
+        grid-template-rows: [top] 50% [image-bottom] 1.5em [title-bottom] 1.5em [info-bottom] [bottom];
         grid-template-columns: [left] auto [right];
         background: #2f4035;
         padding-bottom: 2.5%;
