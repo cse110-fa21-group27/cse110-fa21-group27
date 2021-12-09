@@ -1,9 +1,11 @@
 const { cyan } = require("chalk");
 const { createDocument } = require("parse5/lib/tree-adapters/default");
 const magicNumbers = require("./magictestNumbers");
-const recipe = require("./../../__tests__/unit_js/directions");
+const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
+const time = recipe.recipe1.preparationMinutes;
+const starnumb = recipe.recipe1.spoonacularScore;
 
 // https://on.cypress.io/writing-first-test
 
@@ -21,7 +23,7 @@ describe(
     });
 
     it("Opens index.html", () => {
-      cy.visit("./__tests__/unit_html/recipepage_test.html");
+      cy.visit("./cypress/unit_html/recipepage_test.html");
     });
 
     // Check how many direction pages there are
@@ -164,6 +166,34 @@ describe(
       });
     }
 
-    // check that clicking the button does stuff (DEFINE STUFF)
+    /** TODO
+     *  check valid cook time
+     *  check stars number
+     *  check stars img
+     *  check recipe thumbnail
+     */
+
+    // Check properly parsed cooktime
+    it("check that the cooktime was properly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[1].innerHTML).to.be.equal(time + " mins");
+        });
+    });
+
+    it("check that the number of stars was correctly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[2].innerHTML).to.be.equal(`${(starnumb * 5) / 100} stars`);
+        });
+    });
   }
 );
