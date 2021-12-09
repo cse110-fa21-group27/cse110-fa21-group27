@@ -156,7 +156,5 @@ describe(
           });
       });
     }
-
-    // check that clicking the button does stuff (DEFINE STUFF)
   }
 );
