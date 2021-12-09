@@ -1,70 +1,35 @@
-# {Long overdue Cypress ADR}
+# Long overdue Cypress ADR
 
-- Status: {accepted}
-- Deciders: {Arturo Amaya, Tucker Frandsen, Steven Schaeffer} <!-- optional -->
-- Date: {2021-12-1}
+- Status: accepted
+- Deciders: Arturo Amaya, Tucker Frandsen, Steven Schaeffer
+- Date: 2021-12-1
 
 ## Context and Problem Statement
 
-{Decision whether or not to continue using Jest/Puppeteer in the face of new information that Cypress is "better"}
+Decision whether or not to continue using Jest/Puppeteer in the face of new information that Cypress is "better"
 
 ## Decision Drivers
 
-- {Jest is very annoying}
-- {Jest was, at the time, throwing up a severe yet inexplicable error}
-- {Cypress has a visual dashboard}
-- {Cypress can run on local code without needing to deploy to firebase first. That is, we can check new code without pulling the deploy URL from firebase, which was very annoying.}
+- Jest is very annoying
+- Jest was, at the time, throwing up a severe yet inexplicable error
+- Cypress has a visual dashboard
+- Cypress can run on local code without needing to deploy to firebase first. That is, we can check new code without pulling the deploy URL from firebase, which was very annoying.
+- Cypress has easier querying and more flexible assertions.
 
 ## Considered Options
 
-- {Jest/Puppeteer}
-- {Cypress}
--
+- Jest/Puppeteer
+- Cypress
 
 ## Decision Outcome
 
-Chosen option: "{Cypress}", because {j}.
+Chosen option: " Cypress ", because it has a visual interface, easier querying and actually works right now.
 
-### Positive Consequences <!-- optional -->
+### Positive Consequences
 
-- {e.g., improvement of quality attribute satisfaction, follow-up decisions required, …}
+- Anyone can see the test bench run without a CLI. Accessing elements and their attributes became easier. Can test new code "locally", without Firebase.
 - …
 
-### Negative Consequences <!-- optional -->
+### Negative Consequences
 
-- {e.g., compromising quality attribute, follow-up decisions required, …}
-- …
-
-## Pros and Cons of the Options <!-- optional -->
-
-### {option 1}
-
-{example | description | pointer to more information | …} <!-- optional -->
-
-- Good, because {argument a}
-- Good, because {argument b}
-- Bad, because {argument c}
-- … <!-- numbers of pros and cons can vary -->
-
-### {option 2}
-
-{example | description | pointer to more information | …} <!-- optional -->
-
-- Good, because {argument a}
-- Good, because {argument b}
-- Bad, because {argument c}
-- … <!-- numbers of pros and cons can vary -->
-
-### {option 3}
-
-{example | description | pointer to more information | …} <!-- optional -->
-
-- Good, because {argument a}
-- Good, because {argument b}
-- Bad, because {argument c}
-- … <!-- numbers of pros and cons can vary -->
-
-## Links <!-- optional -->
-
-- {Link type} {Link to ADR} <!-- example: Refined by [ADR-0005](0005-example.md) -->
-- … <!-- numbers of links can vary -->
+- Lost existing work time on Jest/Puppeteer. Have to learn to finagle Cypress's few quirks and syntax.
