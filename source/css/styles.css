@@ -8,11 +8,13 @@
   text-align: center;
   color: gold;
 }
+
 /* end header CSS */
 @font-face {
   font-family: "custom-font";
-  src: url('font.ttf') format('truetype');
+  src: url("font.ttf") format("truetype");
 }
+
 /* begin image slider CSS */
 .slide-container {
   width: 800px;
@@ -38,6 +40,7 @@
   width: 800px;
   height: 600px;
 }
+
 /* end image slider CSS */
 
 #rec {
@@ -65,7 +68,7 @@
   height: 80%;
   left: 2%;
   top: 10%;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 64px;
@@ -113,6 +116,7 @@
   width: 70%;
   opacity: 0.3;
 }
+
 #second {
   display: block;
   margin-left: auto;
@@ -126,12 +130,12 @@
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
 }
 
 /* begin saved Recipe component */
 .saved-recipes {
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
@@ -142,12 +146,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
 }
+
 /* end saved Recipes component */
+
 body {
   background: #99ebff;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   text-align: center;
   margin: auto;
   display: grid;

@@ -7,6 +7,8 @@ class RecipeCard extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. Don't break
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -16,7 +18,7 @@ class RecipeCard extends HTMLElement {
    * @param {Object} data - The recipe json
    */
   set data(data) {
-    // Creates CSS for the Recipe Info Component
+    // Creates CSS for the Recipe Card Component
     const style = `
     @font-face {
       font-family: 'font';
