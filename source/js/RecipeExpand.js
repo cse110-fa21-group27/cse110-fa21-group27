@@ -1,3 +1,5 @@
+/* eslint-disable require-jsdoc */
+// This file is unused.
 // RecipeExpand.js
 class RecipeExpand extends HTMLElement {
   constructor() {
@@ -305,7 +307,7 @@ function getTitle(data) {
   if (data.name) return data.name;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
         if (data["@graph"][i]["name"]) return data["@graph"][i]["name"];
       }
     }
@@ -322,11 +324,11 @@ function getYield(data) {
   if (data.recipeYield) return data.recipeYield;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
         if (data["@graph"][i]["recipeYield"]) {
           if (Array.isArray(data["@graph"][i]["recipeYield"])) {
             return data["@graph"][i]["recipeYield"][0];
-          } else if (typeof data["@graph"][i]["recipeYield"] == "string") {
+          } else if (typeof data["@graph"][i]["recipeYield"] === "string") {
             return data["@graph"][i]["recipeYield"];
           }
         }
@@ -347,7 +349,7 @@ function getCategories(data) {
     categories = data.recipeCategory;
   } else if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
         if (data["@graph"][i]["recipeCategory"]) {
           categories = data["@graph"][i]["recipeCategory"];
         }
@@ -367,7 +369,7 @@ function getDescription(data) {
   if (data.description) return data.description;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
         return data["@graph"][i]["description"];
       }
     }
@@ -386,12 +388,14 @@ function getImage(data) {
   if (data.image?.thumbnail) return data.image.thumbnail;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "ImageObject") {
+      if (data["@graph"][i]["@type"] === "ImageObject") {
         if (data["@graph"][i]["url"]) return data["@graph"][i]["url"];
-        if (data["@graph"][i]["contentUrl"])
+        if (data["@graph"][i]["contentUrl"]) {
           return data["@graph"][i]["contentUrl"];
-        if (data["@graph"][i]["thumbnailUrl"])
+        }
+        if (data["@graph"][i]["thumbnailUrl"]) {
           return data["@graph"][i]["thumbnailUrl"];
+        }
       }
     }
   }
@@ -407,8 +411,9 @@ function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe")
+      if (data["@graph"][i]["@type"] === "Recipe") {
         return data["@graph"][i]["@id"];
+      }
     }
   }
   return null;
@@ -424,7 +429,7 @@ function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "WebSite") {
+      if (data["@graph"][i]["@type"] === "WebSite") {
         return data["@graph"][i].name;
       }
     }
@@ -447,12 +452,12 @@ function convertTime(time) {
   const timeArr = time.split("");
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "H") return `${timeStr} hr`;
+      if (timeArr[i] === "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "M") return `${timeStr} min`;
+      if (timeArr[i] === "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
@@ -467,15 +472,15 @@ function convertTime(time) {
  */
 function getIngredients(data) {
   if (data.recipeIngredient) {
-    if (typeof data.recipeIngredient == "string") {
+    if (typeof data.recipeIngredient === "string") {
       return data.recipeIngredient.slit(". ");
     }
     return data.recipeIngredient;
   }
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
-        if (typeof data["@graph"][i]["recipeIngredient"] == "string") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
+        if (typeof data["@graph"][i]["recipeIngredient"] === "string") {
           return data["@graph"][i]["recipeIngredient"].slit(". ");
         }
         return data["@graph"][i]["recipeIngredient"];
@@ -493,15 +498,15 @@ function getIngredients(data) {
  */
 function getInstructions(data) {
   if (data.recipeInstructions) {
-    if (typeof data.recipeInstructions == "string") {
+    if (typeof data.recipeInstructions === "string") {
       return data.recipeInstructions.split(". ");
     }
     return data.recipeInstructions;
   }
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Recipe") {
-        if (data["@graph"][i]["recipeInstructions"] == "string") {
+      if (data["@graph"][i]["@type"] === "Recipe") {
+        if (data["@graph"][i]["recipeInstructions"] === "string") {
           return data["@graph"][i]["recipeInstructions"].split(". ");
         }
         if (data["@graph"][i]["recipeInstructions"][0]["itemListElement"]) {
