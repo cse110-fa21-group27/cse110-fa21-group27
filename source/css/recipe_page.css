@@ -30,7 +30,6 @@
   line-height: 28px;
   display: flex;
   align-items: center;
-
   color: #000000;
   background: black;
   border-color: #ffffff;
@@ -61,10 +60,12 @@
   width: 3.2%;
   height: 70%;
 }
+
 /*recipe body*/
 .recipe-page {
   display: grid;
   grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
+
   /* e.g. 
       1fr 1fr
       minmax(10px, 1fr) 3fr
