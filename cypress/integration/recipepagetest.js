@@ -163,7 +163,12 @@ describe(
           });
       });
     }
-
-    // check that clicking the button does stuff (DEFINE STUFF)
   }
+
+  /** TODO
+   *  check valid cook time
+   *  check stars number
+   *  check stars img
+   *  check recipe thumbnail
+   */
 );
