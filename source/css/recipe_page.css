@@ -79,8 +79,8 @@
   */
   grid-template-rows: 25% 75% 400px;
 
-  /* 
-      e.g. 
+  /*
+      e.g.
       min-content 1fr min-content
       100px 1fr max-content
   */
