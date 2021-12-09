@@ -1,4 +1,3 @@
-
 module.exports = { convertTime, getOrganization, getRecipeTitle };
 
 /** glider component. hopeful that it will hold recipe cards in a pretty way.*/
@@ -137,8 +136,9 @@ function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article")
+      if (data["@graph"][i]["@type"] == "Article") {
         return data["@graph"][i]["@id"];
+      }
     }
   }
   return null;
@@ -175,8 +175,8 @@ function convertTime(time) {
 /**
  * Takes in a list of ingredients raw from imported data and returns a neatly
  * formatted comma separated list.
- * @param {Array} ingredientArr The raw unprocessed array of ingredients from the
- *                              imported data
+ * @param {Array} ingredientArr The raw unprocessed array of ingredients from
+ *                              the imported data
  * @return {String} the string comma separate list of ingredients from the array
  */
 function createIngredientList(ingredientArr) {
@@ -184,8 +184,9 @@ function createIngredientList(ingredientArr) {
 
   /**
    * Removes the quantity and measurement from an ingredient string.
-   * This isn't perfect, it makes the assumption that there will always be a quantity
-   * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
+   * This isn't perfect, it makes the assumption that there will
+   * always be a quantity (sometimes there isn't, so this would fail on
+   * something like '2 apples' or 'Some olive oil').
    * For the purposes of this lab you don't have to worry about those cases.
    * @param {String} ingredient the raw ingredient string you'd like to process
    * @return {String} the ingredient without the measurement & quantity

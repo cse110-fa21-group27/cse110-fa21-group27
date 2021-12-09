@@ -1,11 +1,9 @@
+// made by cypress. don't touch
+
+// eslint-disable-next-line no-unused-vars
 const { cyan } = require("chalk");
+// eslint-disable-next-line no-unused-vars
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
-function delay(time) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, time);
-  });
-}
 
 // https://on.cypress.io/writing-first-test
 describe("Test the saved recipe feature", { timeout: 10000 }, () => {
@@ -15,7 +13,7 @@ describe("Test the saved recipe feature", { timeout: 10000 }, () => {
 
   // Navigating to each of 5 pages, saving and returning to index
   it("Saving a few recipes", () => {
-    for (let i = 1; i < 6; i++)
+    for (let i = 1; i < 6; i++) {
       cy.get(`.recipes > :nth-child(${i})`)
         .shadow()
         .find("article")
@@ -30,6 +28,7 @@ describe("Test the saved recipe feature", { timeout: 10000 }, () => {
           $el[2].click();
           cy.visit("./source/index.html");
         });
+    }
   });
 
   // Making sure the page exists

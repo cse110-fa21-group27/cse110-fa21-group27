@@ -15,7 +15,7 @@ describe(
   { timeout: 10000 },
   () => {
     // APPARENTLY THE JSON IS BADLY FORMATTED? SO JUST LEAVE IT FOR NOW
-    Cypress.on("uncaught:exception", (err, runnable) => {
+    Cypress.on("uncaught:exception", (err) => {
       if (err.message.includes("Unexpected token")) {
         return false;
       }
