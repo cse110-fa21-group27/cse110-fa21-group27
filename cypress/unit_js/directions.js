@@ -1,10 +1,6 @@
-//window.addEventListener("DOMCOntentLoaded", init);
+/* eslint-disable max-len */
 
-//function init() {
-//const directions = document.createElement("directions-info");
-//console.log("YO");
-//window.directions = directions;
-//}
+// Not messing with line length of JSON stuff
 const recipe1 = {
   vegetarian: false,
   vegan: false,
@@ -463,10 +459,6 @@ const recipe1 = {
   spoonacularSourceUrl:
     "https://spoonacular.com/oreo-cookie-balls-snowman-715439",
 };
-
-//const recipeset = JSON.parse(data);
-//const randomnumber = Math.random() * Object.keys(recipes).length;
-//console.log(recipes[0]);
 
 const direc1 = document.createElement("directions-info");
 direc1.setAttribute("id", "directions1");
