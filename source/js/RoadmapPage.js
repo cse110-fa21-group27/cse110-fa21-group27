@@ -229,7 +229,7 @@ class RoadmapPage extends HTMLElement {
     text11.innerText = "View Recipe";
     button11.appendChild(text11);
     rectangle1.appendChild(button11);
-    button11.addEventListener("click", (event) => {
+    button11.addEventListener("click", () => {
       // scrambled eggs
       const recipeId = "55501";
       this.goRecipe(recipeId);
@@ -243,7 +243,7 @@ class RoadmapPage extends HTMLElement {
     checkImg1.classList.add("checkmark");
     button12.appendChild(checkImg1);
     rectangle1.appendChild(button12);
-    button12.addEventListener("click", (event) => {
+    button12.addEventListener("click", () => {
       if (rectangle1.classList.contains("rectangle")) {
         rectangle1.classList.remove("rectangle");
         rectangle1.classList.add("rectangle-after");
@@ -299,7 +299,7 @@ class RoadmapPage extends HTMLElement {
     text21.innerText = "View Recipe";
     button21.appendChild(text21);
     rectangle3.appendChild(button21);
-    button21.addEventListener("click", (event) => {
+    button21.addEventListener("click", () => {
       // omelet
       const recipeId = "55502";
       this.goRecipe(recipeId);
@@ -313,7 +313,7 @@ class RoadmapPage extends HTMLElement {
     checkImg2.classList.add("checkmark");
     button22.appendChild(checkImg2);
     rectangle3.appendChild(button22);
-    button22.addEventListener("click", (event) => {
+    button22.addEventListener("click", () => {
       if (rectangle3.classList.contains("rectangle")) {
         rectangle3.classList.remove("rectangle");
         rectangle3.classList.add("rectangle-after");
@@ -369,7 +369,7 @@ class RoadmapPage extends HTMLElement {
     text31.innerText = "View Recipe";
     button31.appendChild(text31);
     rectangle5.appendChild(button31);
-    button31.addEventListener("click", (event) => {
+    button31.addEventListener("click", () => {
       // pancakes
       const recipeId = "55503";
       this.goRecipe(recipeId);
@@ -383,7 +383,7 @@ class RoadmapPage extends HTMLElement {
     checkImg3.classList.add("checkmark");
     button32.appendChild(checkImg3);
     rectangle5.appendChild(button32);
-    button32.addEventListener("click", (event) => {
+    button32.addEventListener("click", () => {
       if (rectangle5.classList.contains("rectangle")) {
         rectangle5.classList.remove("rectangle");
         rectangle5.classList.add("rectangle-after");
@@ -439,7 +439,7 @@ class RoadmapPage extends HTMLElement {
     text41.innerText = "View Recipe";
     button41.appendChild(text41);
     rectangle7.appendChild(button41);
-    button41.addEventListener("click", (event) => {
+    button41.addEventListener("click", () => {
       // salad
       const recipeId = "645265";
       this.goRecipe(recipeId);
@@ -453,7 +453,7 @@ class RoadmapPage extends HTMLElement {
     checkImg4.classList.add("checkmark");
     button42.appendChild(checkImg4);
     rectangle7.appendChild(button42);
-    button42.addEventListener("click", (event) => {
+    button42.addEventListener("click", () => {
       if (rectangle7.classList.contains("rectangle")) {
         rectangle7.classList.remove("rectangle");
         rectangle7.classList.add("rectangle-after");
@@ -509,7 +509,7 @@ class RoadmapPage extends HTMLElement {
     text51.innerText = "View Recipe";
     button51.appendChild(text51);
     rectangle9.appendChild(button51);
-    button51.addEventListener("click", (event) => {
+    button51.addEventListener("click", () => {
       // burger
       const recipeId = "632874";
       this.goRecipe(recipeId);
@@ -523,7 +523,7 @@ class RoadmapPage extends HTMLElement {
     checkImg5.classList.add("checkmark");
     button52.appendChild(checkImg5);
     rectangle9.appendChild(button52);
-    button52.addEventListener("click", (event) => {
+    button52.addEventListener("click", () => {
       if (rectangle9.classList.contains("rectangle")) {
         rectangle9.classList.remove("rectangle");
         rectangle9.classList.add("rectangle-after");
@@ -590,7 +590,7 @@ class RoadmapPage extends HTMLElement {
     text211.innerText = "View Recipe";
     button211.appendChild(text211);
     rectangle21.appendChild(button211);
-    button211.addEventListener("click", (event) => {
+    button211.addEventListener("click", () => {
       // steak
       const recipeId = "55504";
       this.goRecipe(recipeId);
@@ -604,7 +604,7 @@ class RoadmapPage extends HTMLElement {
     checkImg21.classList.add("checkmark");
     button212.appendChild(checkImg21);
     rectangle21.appendChild(button212);
-    button212.addEventListener("click", (event) => {
+    button212.addEventListener("click", () => {
       if (rectangle21.classList.contains("rectangle")) {
         rectangle21.classList.remove("rectangle");
         rectangle21.classList.add("rectangle-after");
@@ -660,7 +660,7 @@ class RoadmapPage extends HTMLElement {
     text221.innerText = "View Recipe";
     button221.appendChild(text221);
     rectangle23.appendChild(button221);
-    button221.addEventListener("click", (event) => {
+    button221.addEventListener("click", () => {
       // chicken
       const recipeId = "55505";
       this.goRecipe(recipeId);
@@ -674,7 +674,7 @@ class RoadmapPage extends HTMLElement {
     checkImg22.classList.add("checkmark");
     button222.appendChild(checkImg22);
     rectangle23.appendChild(button222);
-    button222.addEventListener("click", (event) => {
+    button222.addEventListener("click", () => {
       if (rectangle23.classList.contains("rectangle")) {
         rectangle23.classList.remove("rectangle");
         rectangle23.classList.add("rectangle-after");
@@ -730,7 +730,7 @@ class RoadmapPage extends HTMLElement {
     text231.innerText = "View Recipe";
     button231.appendChild(text231);
     rectangle25.appendChild(button231);
-    button231.addEventListener("click", (event) => {
+    button231.addEventListener("click", () => {
       // pot roast meat
       const recipeId = "639628";
       this.goRecipe(recipeId);
@@ -744,7 +744,7 @@ class RoadmapPage extends HTMLElement {
     checkImg23.classList.add("checkmark");
     button232.appendChild(checkImg23);
     rectangle25.appendChild(button232);
-    button232.addEventListener("click", (event) => {
+    button232.addEventListener("click", () => {
       if (rectangle25.classList.contains("rectangle")) {
         rectangle25.classList.remove("rectangle");
         rectangle25.classList.add("rectangle-after");
@@ -800,7 +800,7 @@ class RoadmapPage extends HTMLElement {
     text241.innerText = "View Recipe";
     button241.appendChild(text241);
     rectangle27.appendChild(button241);
-    button241.addEventListener("click", (event) => {
+    button241.addEventListener("click", () => {
       // bolognase sauce
       const recipeId = "633068";
       this.goRecipe(recipeId);
@@ -814,7 +814,7 @@ class RoadmapPage extends HTMLElement {
     checkImg24.classList.add("checkmark");
     button242.appendChild(checkImg24);
     rectangle27.appendChild(button242);
-    button242.addEventListener("click", (event) => {
+    button242.addEventListener("click", () => {
       if (rectangle27.classList.contains("rectangle")) {
         rectangle27.classList.remove("rectangle");
         rectangle27.classList.add("rectangle-after");
@@ -870,7 +870,7 @@ class RoadmapPage extends HTMLElement {
     text251.innerText = "View Recipe";
     button251.appendChild(text251);
     rectangle29.appendChild(button251);
-    button251.addEventListener("click", (event) => {
+    button251.addEventListener("click", () => {
       // Cookies
       const recipeId = "55507";
       this.goRecipe(recipeId);
@@ -884,7 +884,7 @@ class RoadmapPage extends HTMLElement {
     checkImg25.classList.add("checkmark");
     button252.appendChild(checkImg25);
     rectangle29.appendChild(button252);
-    button252.addEventListener("click", (event) => {
+    button252.addEventListener("click", () => {
       if (rectangle29.classList.contains("rectangle")) {
         rectangle29.classList.remove("rectangle");
         rectangle29.classList.add("rectangle-after");
@@ -899,7 +899,7 @@ class RoadmapPage extends HTMLElement {
     });
 
     // tutorial finished display fuction
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", () => {
       if (
         rectangle29.classList.contains("rectangle-after") &&
         rectangle27.classList.contains("rectangle-after") &&
