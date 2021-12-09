@@ -167,7 +167,7 @@ class RecipeInfo extends HTMLElement {
     const showIngredients = document.createElement("ingredients-info");
     showIngredients.data = data;
     ingredients.addEventListener("click", (event) => {
-      if (ingredients.textContent == "Show Ingredients") {
+      if (ingredients.textContent === "Show Ingredients") {
         info.appendChild(showIngredients);
         ingredients.textContent = "Hide Ingredients";
       } else {
