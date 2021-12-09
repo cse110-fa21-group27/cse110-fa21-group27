@@ -166,7 +166,7 @@ class IngredientsInfo extends HTMLElement {
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", (event) => {
-      if (quantity.textContent != 1) {
+      if (quantity.textContent !== 1) {
         quantity.textContent = `${quantity.textContent - 1}`;
       }
     });
