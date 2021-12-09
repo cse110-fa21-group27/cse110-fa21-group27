@@ -96,7 +96,8 @@ function searchForKey(object, key) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @return {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a
+ *                  string, otherwise null
  */
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
@@ -112,8 +113,9 @@ function getOrganization(data) {
 
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
- * @param {Object} Data Raw recipe JSON to find name of
- * @return {String} if found, returns the name of recipe as string, otherwise null
+ * @param {Object} data Raw recipe JSON to find name of
+ * @return {String} if found, returns the name of recipe as string,
+ *                  otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
@@ -202,7 +204,8 @@ function createIngredientList(ingredientArr) {
     finalIngredientList += `${ingredient}, `;
   });
 
-  // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
+  // The .slice(0,-2) here gets ride of the extra ', ' added to the last
+  // ingredient
   return finalIngredientList.slice(0, -2);
 }
 
