@@ -184,12 +184,15 @@ class RoadmapPage extends HTMLElement {
         `;
 
     const line = document.createElement("hr");
+    const line2 = document.createElement("hr");
     const line3 = document.createElement("hr");
     const line4 = document.createElement("hr");
     const line5 = document.createElement("hr");
     const line21 = document.createElement("hr");
     const line22 = document.createElement("hr");
     const line23 = document.createElement("hr");
+    const line24 = document.createElement("hr");
+
     const wrapper2 = document.createElement("article");
 
     const styleElem = document.createElement("style");
@@ -351,7 +354,7 @@ class RoadmapPage extends HTMLElement {
     // 2 line object
     const rectangle4 = document.createElement("div");
     rectangle4.classList.add("rectangle_line");
-    const line2 = document.createElement("hr");
+
     line2.classList.add("line");
     rectangle4.appendChild(line2);
     progressContainer.appendChild(rectangle4);
@@ -850,7 +853,6 @@ class RoadmapPage extends HTMLElement {
     // 2 4 line object
     const rectangle28 = document.createElement("div");
     rectangle28.classList.add("rectangle_line");
-    const line24 = document.createElement("hr");
     line24.classList.add("line");
     rectangle28.appendChild(line24);
     progressContainer2.appendChild(rectangle28);

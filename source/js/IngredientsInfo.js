@@ -149,7 +149,8 @@ class IngredientsInfo extends HTMLElement {
     form.classList.add("form");
 
     // Adding a Add Ingredients To Cart Button with Event Listener that will
-    // call a function to add/remove the Ingredients to Grocery Cart (Not Implemented)
+    // call a function to add/remove the Ingredients to Grocery Cart
+    // (Not Implemented)
     const addToCart = document.createElement("button");
     addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";

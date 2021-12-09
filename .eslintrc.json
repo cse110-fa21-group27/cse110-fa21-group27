@@ -19,6 +19,7 @@
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "space-before-function-paren": "off",
     "comma-dangle": "off",
-    "max-len": ["error", { "ignoreTemplateLiterals": true }]
+    "max-len": ["error", { "ignoreTemplateLiterals": true }],
+    "guard-for-in": "off"
   }
 }

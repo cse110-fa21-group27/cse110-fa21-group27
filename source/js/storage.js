@@ -29,7 +29,7 @@ async function getUserInfo() {
       }
 
       // update global variable
-      for (let attr in storageUserInfo) {
+      for (const attr in storageUserInfo) {
         userInfo[attr] = storageUserInfo[attr];
       }
       // all done!
@@ -49,7 +49,7 @@ async function getUserInfo() {
  * @return {Promise}
  */
 async function getRecipes() {
-  return new Promise(async(resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     // attempt to retrieve
     try {
       const storageRecipesString = window.localStorage.getItem("recipes");
@@ -80,7 +80,7 @@ async function getRecipes() {
               })
               .catch((error) => {
                 console.log(`Error fetching premadejsons ${error}`);
-              }),
+              })
           );
         });
         // return this pushed promise
@@ -94,7 +94,7 @@ async function getRecipes() {
             for (const id in storageRecipes) {
               recipeData[id] = storageRecipes[id];
             }
-          }),
+          })
         );
       } else {
         // it does exist, let's just update global variable
@@ -211,7 +211,7 @@ async function addRecipeToSaved(recipeId, recipeName) {
 async function removeRecipeFromSaved(recipeId) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.savedRecipes.findIndex(
-      (savedRecipe) => savedRecipe.id == recipeId
+      (savedRecipe) => savedRecipe.id === recipeId
     );
 
     if (foundIndex === -1) {
@@ -337,7 +337,8 @@ async function removeCollection(collectionName) {
 async function addToCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.collections.findIndex(
-      (savedCollection) => savedCollection.name === collectionName);
+      (savedCollection) => savedCollection.name === collectionName
+    );
 
     if (foundIndex === -1) {
       // collection does not exist
@@ -378,7 +379,8 @@ async function addToCollection(recipeId, collectionName) {
 async function removeFromCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundCollectionIndex = userInfo.collections.findIndex(
-      (savedCollection) => savedCollection.name === collectionName);
+      (savedCollection) => savedCollection.name === collectionName
+    );
     const foundRecipeIndex = userInfo.collections[
       foundCollectionIndex
     ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
@@ -403,7 +405,7 @@ async function removeFromCollection(recipeId, collectionName) {
       userInfo.collections[foundCollectionIndex].ids.splice(
         foundRecipeIndex,
         0,
-        found,
+        found
       );
       console.log("Unable to remove recipe id from saved collections", error);
       reject(error);

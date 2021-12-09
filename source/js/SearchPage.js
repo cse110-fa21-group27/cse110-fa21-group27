@@ -6,6 +6,8 @@ class SearchPage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. don't break.
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
