@@ -111,7 +111,7 @@ describe(
           });
       });
 
-      it(`check that instruction ${i}'s checkbox is unchecked by default`, () => {
+      it(`check that instruction ${i}'s checkbox is default unchecked`, () => {
         cy.get("recipe-page")
           .shadow()
           .find("directions-info")
