@@ -4,6 +4,7 @@ const magicNumbers = require("../magictestNumbers");
 const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
+const time = recipe.recipe1.preparationMinutes;
 
 // https://on.cypress.io/writing-first-test
 
@@ -163,12 +164,24 @@ describe(
           });
       });
     }
-  }
 
-  /** TODO
-   *  check valid cook time
-   *  check stars number
-   *  check stars img
-   *  check recipe thumbnail
-   */
+    /** TODO
+     *  check valid cook time
+     *  check stars number
+     *  check stars img
+     *  check recipe thumbnail
+     */
+
+    // Check properly parsed cooktime
+    it("check that the cooktime was properly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[1].innerHTML).to.be.equal(time + " mins");
+        });
+    });
+  }
 );
