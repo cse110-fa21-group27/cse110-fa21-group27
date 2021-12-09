@@ -38,7 +38,7 @@ describe(
     });
 
     // Check that the title says "Directions"
-    it('check that the title says "Directions"', () => {
+    it("check that the title says 'Directions'", () => {
       cy.get("recipe-page")
         .shadow()
         .find("directions-info")

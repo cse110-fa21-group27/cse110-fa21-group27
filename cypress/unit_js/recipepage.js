@@ -1,10 +1,3 @@
-//window.addEventListener("DOMCOntentLoaded", init);
-
-//function init() {
-//const directions = document.createElement("directions-info");
-//console.log("YO");
-//window.directions = directions;
-//}
 const recipe1 = {
   vegetarian: false,
   vegan: false,
@@ -463,10 +456,6 @@ const recipe1 = {
   spoonacularSourceUrl:
     "https://spoonacular.com/oreo-cookie-balls-snowman-715439",
 };
-
-//const recipeset = JSON.parse(data);
-//const randomnumber = Math.random() * Object.keys(recipes).length;
-//console.log(recipes[0]);
 
 const recipepage1 = document.createElement("recipe-page");
 recipepage1.setAttribute("id", "recipepage");
