@@ -152,9 +152,9 @@ describe("Basic user flow for Website", () => {
       return prodItems.length;
     });
 
-    expect(numCardspre).toBe(264);
+    expect(numCardspre).toBe(266);
     expect(numCards).toBe(0);
-    expect(numCardspos).toBe(264);
+    expect(numCardspos).toBe(266);
   }, 20000);
   // TODO TESTS
   /**
