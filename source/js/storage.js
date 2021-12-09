@@ -294,7 +294,7 @@ async function addCollection(collectionName) {
 async function removeCollection(collectionName) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.collections.findIndex(
-      (savedCollection) => savedCollection.name == collectionName
+      (savedCollection) => savedCollection.name === collectionName
     );
 
     if (foundIndex === -1) {
