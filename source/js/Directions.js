@@ -226,7 +226,7 @@ class Directions extends HTMLElement {
       list.appendChild(direction);
 
       // If there are inner steps, display them as well
-      if (directionList[i].itemListElement != undefined) {
+      if (directionList[i].itemListElement !== undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
           const direction = document.createElement("div");
           const y = j + 1;
