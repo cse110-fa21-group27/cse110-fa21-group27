@@ -68,7 +68,7 @@
   height: 80%;
   left: 2%;
   top: 10%;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 64px;
@@ -130,12 +130,12 @@
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
 }
 
 /* begin saved Recipe component */
 .saved-recipes {
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
@@ -146,14 +146,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
 }
 
 /* end saved Recipes component */
 
 body {
   background: #99ebff;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   text-align: center;
   margin: auto;
   display: grid;
