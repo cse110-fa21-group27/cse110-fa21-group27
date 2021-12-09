@@ -6,6 +6,7 @@ class RoadmapPage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
     // Creates CSS for the Nav Bar Component
     const style = `
