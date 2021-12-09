@@ -5,6 +5,7 @@ const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
 const time = recipe.recipe1.preparationMinutes;
+const starnumb = recipe.recipe1.spoonacularScore;
 
 // https://on.cypress.io/writing-first-test
 
@@ -181,6 +182,17 @@ describe(
         .find("p")
         .then(($el) => {
           expect($el[1].innerHTML).to.be.equal(time + " mins");
+        });
+    });
+
+    it("check that the number of stars was correctly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[2].innerHTML).to.be.equal(`${(starnumb * 5) / 100} stars`);
         });
     });
   }
