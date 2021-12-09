@@ -1,6 +1,6 @@
 const { cyan } = require("chalk");
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("../magictestNumbers");
+const magicNumbers = require("./magictestNumbers");
 const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
