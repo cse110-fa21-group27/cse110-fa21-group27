@@ -16,7 +16,7 @@ class RecipeCard extends HTMLElement {
    * @param {Object} data - The recipe json
    */
   set data(data) {
-    // Creates CSS for the Recipe Info Component
+    // Creates CSS for the Recipe Card Component
     const style = `
     @font-face {
       font-family: 'font';
