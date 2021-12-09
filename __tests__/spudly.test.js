@@ -70,9 +70,9 @@ describe("Basic user flow for Website", () => {
       innerText = await innerText.jsonValue();
       // console.log(plainValue);
       if (
-        plainValue == "" ||
+        plainValue === "" ||
         plainValue === "https://spudly-f0411.web.app/undefined" ||
-        innerText == ""
+        innerText === ""
       ) {
         allArePopulated = false;
         console.log(
@@ -130,10 +130,10 @@ describe("Basic user flow for Website", () => {
 
     let populated = true;
     populated = !(
-      titleText == "" ||
+      titleText === "" ||
       plainValue === "https://spudly-f0411.web.app/undefined" ||
-      ratingText == "" ||
-      timeText == "" ||
+      ratingText === "" ||
+      timeText === "" ||
       starsimgSrc === "https://spudly-f0411.web.app/undefined"
     );
     await page.goBack();
