@@ -5,6 +5,7 @@ class GliderRecipe extends HTMLElement {
   /** constructs the component and allows access to the shadow */
   constructor() {
     super();
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
@@ -101,7 +102,7 @@ function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Organization") {
+      if (data["@graph"][i]["@type"] === "Organization") {
         return data["@graph"][i].name;
       }
     }
@@ -119,7 +120,7 @@ function getRecipeTitle(data) {
   let value = null;
   if (data["@graph"]) {
     data["@graph"].forEach((obj) => {
-      if (obj["@type"] == "Recipe") {
+      if (obj["@type"] === "Recipe") {
         value = obj["name"];
       }
     });
@@ -136,7 +137,7 @@ function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article") {
+      if (data["@graph"][i]["@type"] === "Article") {
         return data["@graph"][i]["@id"];
       }
     }
@@ -159,12 +160,12 @@ function convertTime(time) {
   const timeArr = time.split("");
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "H") return `${timeStr} hr`;
+      if (timeArr[i] === "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "M") return `${timeStr} min`;
+      if (timeArr[i] === "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
