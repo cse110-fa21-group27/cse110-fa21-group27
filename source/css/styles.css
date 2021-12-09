@@ -8,11 +8,13 @@
   text-align: center;
   color: gold;
 }
+
 /* end header CSS */
 @font-face {
   font-family: "custom-font";
-  src: url('font.ttf') format('truetype');
+  src: url("font.ttf") format("truetype");
 }
+
 /* begin image slider CSS */
 .slide-container {
   width: 800px;
@@ -38,6 +40,7 @@
   width: 800px;
   height: 600px;
 }
+
 /* end image slider CSS */
 
 #rec {
@@ -113,6 +116,7 @@
   width: 70%;
   opacity: 0.3;
 }
+
 #second {
   display: block;
   margin-left: auto;
@@ -144,7 +148,9 @@
   gap: 1em;
   font-family: custom-font;
 }
+
 /* end saved Recipes component */
+
 body {
   background: #99ebff;
   font-family: custom-font;
