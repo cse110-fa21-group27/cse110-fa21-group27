@@ -36,7 +36,7 @@ export class Router {
     }
 
     let hash = "#" + page;
-    if (page == "home") hash = "";
+    if (page === "home") hash = "";
 
     // if this isn't from a back/forward and we're not already on the page,
     // we add it to the history
