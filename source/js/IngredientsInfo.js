@@ -11,12 +11,12 @@ class IngredientsInfo extends HTMLElement {
   }
 
   /**
-   * Populates the Ingredient Info HTML Component with information from the recipe
-   * json file and displays it with some CSS styling.
+   * Populates the Ingredient Info HTML Component with information from the
+   * recipe json file and displays it with some CSS styling.
    * @param {Object} data - The recipe json
    */
   set data(data) {
-    // Creates CSS for the Recipe Info Component
+    // Creates CSS for the Ingredients Info Component
     const style = `
       @font-face {
         font-family: 'font';
