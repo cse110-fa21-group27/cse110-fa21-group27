@@ -7,6 +7,7 @@ class IngredientsInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -148,7 +149,8 @@ class IngredientsInfo extends HTMLElement {
     form.classList.add("form");
 
     // Adding a Add Ingredients To Cart Button with Event Listener that will
-    // call a function to add/remove the Ingredients to Grocery Cart (Not Implemented)
+    // call a function to add/remove the Ingredients to Grocery Cart
+    // (Not Implemented)
     const addToCart = document.createElement("button");
     addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";
@@ -166,7 +168,7 @@ class IngredientsInfo extends HTMLElement {
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", (event) => {
-      if (quantity.textContent != 1) {
+      if (quantity.textContent !== 1) {
         quantity.textContent = `${quantity.textContent - 1}`;
       }
     });

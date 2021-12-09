@@ -14,6 +14,8 @@ class SavedRecipePage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. don't break.
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -172,7 +174,8 @@ class SavedRecipePage extends HTMLElement {
           headerName.setAttribute("collectionName", name.value);
           headerName.addEventListener("click", () => {
             this.goToCollection(
-              userInfo.collections[userInfo.collections.length - 1]);
+              userInfo.collections[userInfo.collections.length - 1]
+            );
           });
           this.shadowRoot.appendChild(headerName);
           // Create the section to render the colletion recipe cards
@@ -189,7 +192,8 @@ class SavedRecipePage extends HTMLElement {
             // Create the collection page
             collection.addEventListener("click", () => {
               this.goToCollection(
-                userInfo.collections[userInfo.collections.length - 1]);
+                userInfo.collections[userInfo.collections.length - 1]
+              );
             });
           });
 
