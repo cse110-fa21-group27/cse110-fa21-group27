@@ -1,14 +1,14 @@
 class SearchPage extends HTMLElement {
-    /** constructs the component and allows access to the shadow */
-    constructor() {
-      super();
-      const shadow = this.attachShadow({ mode: "open" });
-    }
-    /** 
-     * @param {object} data - the recipe json file
-     */
-    set data(data) {
-      const style = `
+  /** constructs the component and allows access to the shadow */
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: "open" });
+  }
+  /**
+   * @param {object} data - the recipe json file
+   */
+  set data(data) {
+    const style = `
       #filter {
         position: absolute;
         left: 0%;
@@ -83,6 +83,10 @@ class SearchPage extends HTMLElement {
         height: 70%;
         width: 60%;
         background-color: cadetblue; /*temp holder*/
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
       }
     `;
     const styleElem = document.createElement("style");
@@ -108,37 +112,37 @@ class SearchPage extends HTMLElement {
 
     //hr
     const hr = document.createElement("hr");
-    hr.style.marginTop = '25%';
-    hr.style.width = '90%';
-    hr.style.textAlign = 'center';
-    hr.style.color = 'black';
+    hr.style.marginTop = "25%";
+    hr.style.width = "90%";
+    hr.style.textAlign = "center";
+    hr.style.color = "black";
     filter.appendChild(hr);
 
     //label Rating
     const label_1 = document.createElement("div");
     label_1.classList.add("label");
-    label_1.style.top = '18%';
+    label_1.style.top = "18%";
     label_1.innerHTML = "Rating";
     filter.appendChild(label_1);
 
     //label Cooking Time
     const label_2 = document.createElement("div");
     label_2.classList.add("label");
-    label_2.style.top = '38%';
+    label_2.style.top = "38%";
     label_2.innerHTML = "Cooking Time";
     filter.appendChild(label_2);
 
-    //label 
+    //label
     const label_3 = document.createElement("div");
     label_3.classList.add("label");
-    label_3.style.top = '60%';
+    label_3.style.top = "60%";
     label_3.innerHTML = "Vegetarian";
     filter.appendChild(label_3);
 
     //form 1
     const form_1 = document.createElement("form");
     form_1.classList.add("form");
-    form_1.style.top = '28%';
+    form_1.style.top = "28%";
 
     const input_1 = document.createElement("input");
     input_1.classList.add("input");
@@ -168,7 +172,7 @@ class SearchPage extends HTMLElement {
     //form 2
     const form_2 = document.createElement("form");
     form_2.classList.add("form");
-    form_2.style.top = '48%';
+    form_2.style.top = "48%";
 
     const input_2 = document.createElement("input");
     input_2.classList.add("input");
@@ -187,7 +191,7 @@ class SearchPage extends HTMLElement {
     const option_7 = document.createElement("option");
     option_7.value = "45 minutes or less";
     data_list_2.appendChild(option_7);
-    
+
     input_2.appendChild(data_list_2);
     form_2.appendChild(input_2);
     filter.appendChild(form_2);
@@ -195,7 +199,7 @@ class SearchPage extends HTMLElement {
     //form 3
     const form_3 = document.createElement("form");
     form_3.classList.add("form");
-    form_3.style.top = '70%';
+    form_3.style.top = "70%";
 
     const input_3 = document.createElement("input");
     input_3.classList.add("input");
@@ -211,7 +215,7 @@ class SearchPage extends HTMLElement {
     const option_9 = document.createElement("option");
     option_9.value = "Not vegetarian";
     data_list_3.appendChild(option_9);
-    
+
     input_3.appendChild(data_list_3);
     form_3.appendChild(input_3);
     filter.appendChild(form_3);
@@ -225,17 +229,18 @@ class SearchPage extends HTMLElement {
     search_page.appendChild(filter);
     //##### end of filter #####
 
-
     //##### start of search body ##### (#todo)
     const body = document.createElement("div");
     body.id = "search_body";
+    // create recipe cards for each result
+    this.renderRecipes(data, body);
 
     search_page.appendChild(body);
     //##### end of search body #####
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(search_page);
-    }
+  }
 }
 
 customElements.define("search-page", SearchPage);

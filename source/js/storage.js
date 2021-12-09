@@ -135,7 +135,11 @@ async function search(options) {
         let hit = false;
         for (const term in searchTerms) {
           // see if its name contains one of the search terms
-          if (recipeData[recipeId].title.toLowerCase().contains(term)) {
+          if (
+            recipeData[recipeId].data.title
+              .toLowerCase()
+              .includes(searchTerms[term])
+          ) {
             hit = true;
           }
         }
@@ -317,7 +321,7 @@ async function removeCollection(collectionName) {
  * After it resolves, the userInfo object should be updated and
  * the userInfo in localStorage should also be updated
  *
- * Should reject if the collection name is incorrect or if 
+ * Should reject if the collection name is incorrect or if
  * we can't update localStorage for some reason
  * @async
  * @function
@@ -325,7 +329,7 @@ async function removeCollection(collectionName) {
  * @param {String} collectionName - the user's name for the collection
  * @returns {Promise}
  */
- async function addToCollection(recipeId, collectionName) {
+async function addToCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.collections.findIndex(
       (savedCollection) => savedCollection.name == collectionName
@@ -356,24 +360,24 @@ async function removeCollection(collectionName) {
  * After it resolves, the userInfo object should be updated.
  * the userInfo in localStorage should also be updated.
  *
- * The promise will still resolve even if the recipe id didn't exist in the 
+ * The promise will still resolve even if the recipe id didn't exist in the
  * collection id array beforehand
  *
  * Should only reject if there's a problem with the above operations.
  * @async
- * @function 
+ * @function
  * @param {String} recipeId - The Recipe Id that we want to remove from the collection
  * @param {String} collectionName - the collection's name to remove
  * @returns {Promise}
  */
- async function removeFromCollection(recipeId, collectionName) {
+async function removeFromCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundCollectionIndex = userInfo.collections.findIndex(
       (savedCollection) => savedCollection.name == collectionName
     );
-    const foundRecipeIndex = userInfo.collections[foundCollectionIndex].ids.findIndex(
-      (savedRecipeId) => savedRecipeId == recipeId
-    );
+    const foundRecipeIndex = userInfo.collections[
+      foundCollectionIndex
+    ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
 
     if (!foundRecipeIndex) {
       // already not in array, resolve!
@@ -381,7 +385,8 @@ async function removeCollection(collectionName) {
     }
 
     // save just in case we need to add it back
-    let found = userInfo.collections[foundCollectionIndex].ids[foundRecipeIndex];
+    let found =
+      userInfo.collections[foundCollectionIndex].ids[foundRecipeIndex];
     // remove from userInfo
     userInfo.collections[foundCollectionIndex].ids.splice(foundRecipeIndex, 1);
     try {
@@ -391,7 +396,11 @@ async function removeCollection(collectionName) {
     } catch (error) {
       // Unable to update localStorage, add it back to global variable
       // and reject the promise
-      userInfo.collections[foundCollectionIndex].ids.splice(foundRecipeIndex, 0, found);
+      userInfo.collections[foundCollectionIndex].ids.splice(
+        foundRecipeIndex,
+        0,
+        found
+      );
       console.log("Unable to remove recipe id from saved collections", error);
       reject(error);
     }
@@ -496,4 +505,5 @@ export const storage = {
   removeCollection,
   addToCollection,
   removeFromCollection,
+  search,
 };
