@@ -1,7 +1,7 @@
 /*search bar*/
 @font-face {
   font-family: "custom-font";
-  src: url('font.ttf') format('truetype');
+  src: url("font.ttf") format("truetype");
 }
 
 .search_bar {
@@ -65,6 +65,7 @@
   width: 3.2%;
   height: 70%;
 }
+
 /*filter*/
 .filter {
   position: absolute;
@@ -134,6 +135,7 @@ input[type="checkbox"] {
   line-height: 62px;
   background-color: #000000;
 }
+
 /*search body*/
 .search_body {
   position: absolute;
