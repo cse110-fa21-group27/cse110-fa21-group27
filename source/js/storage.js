@@ -337,7 +337,7 @@ async function removeCollection(collectionName) {
 async function addToCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundIndex = userInfo.collections.findIndex(
-      (savedCollection) => savedCollection.name == collectionName);
+      (savedCollection) => savedCollection.name === collectionName);
 
     if (foundIndex === -1) {
       // collection does not exist
@@ -378,7 +378,7 @@ async function addToCollection(recipeId, collectionName) {
 async function removeFromCollection(recipeId, collectionName) {
   return new Promise((resolve, reject) => {
     const foundCollectionIndex = userInfo.collections.findIndex(
-      (savedCollection) => savedCollection.name == collectionName);
+      (savedCollection) => savedCollection.name === collectionName);
     const foundRecipeIndex = userInfo.collections[
       foundCollectionIndex
     ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
@@ -484,8 +484,8 @@ function hasRecipe(object) {
   // go through its keys
   Object.keys(object).forEach((key) => {
     // if it is of @type Recipe then we're good
-    if (key == "@type") {
-      if (object[key] == "Recipe") {
+    if (key === "@type") {
+      if (object[key] === "Recipe") {
         return true;
       }
     }
