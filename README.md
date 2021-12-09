@@ -1,27 +1,38 @@
 ### Project Description:
 
-## Goal: To create a Recipe Book Manager.
+## Goal: To create a Recipe Manager.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f0cfb72611de4302a795bb3c2337b5f3)](https://www.codacy.com/gh/cse110-fa21-group27/cse110-fa21-group27/dashboard?utm_source=github.com&utm_medium=referral&utm_content=cse110-fa21-group27/cse110-fa21-group27&utm_campaign=Badge_Grade)
 
-Our users: beginners that wants something simple to gain confidence.
+Targeted Users: Novice cooks and those looking for quick and clear steps on how to cook dishes
 
-App Functionality:
+Current Deployment of the Manager: https://spudly-f0411.web.app/#
 
-- Recipe Exploration
-- Recipe Selection, Single and Bulk
-- Saved and/or Favorite Recipes
-- Instructions
+Manager Functionality:
+
+- Simple UI designed to have a minimum number of steps between loading and starting to cook
+- Recipe Exploration through targeted search or browsing
+- Simple Instructions
   - Cooking Preparation
   - Cooking Execution
   - Ingredients
-- Takes in Recipes
-- Selects Certain Recipes
-- Metric/Imperial Conversions
+- Save Recipes to access later
+- Custom User Created Collections to sort and store recipes
+- Cooking Roadmap that presents ten recipes increasing in difficult
+  - Handpicked to teach the user cooking skills slowly
 
-Tests:
+CI/CD Pipeline: 
 
-- Currently Under Construction - _[view progress](https://github.com/cse110-fa21-group27/cse110-fa21-group27/projects/6)_
+- Individual precommit linting using ESLint and Prettier
+- HTML and CSS Validation
+- Unit Testing through Jest and Cypress
+- Javascript Code Analysis through Codacy
+- Preview Deployment links using Firebase
+- Main Branch Protection
+- Peer Review on PRs
+- Auto Deployment to Firebase upon Merging
+
+Link to _[Team Page](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/admin/team.md)_
 
 Documentation:
 
@@ -30,5 +41,5 @@ Documentation:
 - [Brainstorm](https://github.com/cse110-fa21-group27/cse110-fa21-group27/tree/main/specs/brainstorm)
 - [Pitch](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/specs/pitch/Pitch.pdf)
 - [Roadmap](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/specs/roadmap/Roadmap.PNG)
+- [ADRs](https://github.com/cse110-fa21-group27/cse110-fa21-group27/tree/main/specs/adr)
 
-Link to _[Team Page](https://github.com/cse110-fa21-group27/cse110-fa21-group27/blob/main/admin/team.md)_
