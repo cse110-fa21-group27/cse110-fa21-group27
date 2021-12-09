@@ -78,6 +78,7 @@
       100px 1fr max-content
   */
 }
+
 /*kevin: removed item-1 and added ingredients_box and inner classes*/
 .ingredients_box {
   position: absolute;
@@ -100,7 +101,7 @@
 }
 .recipe_button {
   position: absolute;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
