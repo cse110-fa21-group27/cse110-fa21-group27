@@ -182,6 +182,16 @@ class RoadmapPage extends HTMLElement {
       }
 
         `;
+
+    const line = document.createElement("hr");
+    const line3 = document.createElement("hr");
+    const line4 = document.createElement("hr");
+    const line5 = document.createElement("hr");
+    const line21 = document.createElement("hr");
+    const line22 = document.createElement("hr");
+    const line23 = document.createElement("hr");
+    const wrapper2 = document.createElement("article");
+
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
@@ -271,7 +281,7 @@ class RoadmapPage extends HTMLElement {
     // 1 line object
     const rectangle2 = document.createElement("div");
     rectangle2.classList.add("rectangle_line");
-    const line = document.createElement("hr");
+
     line.classList.add("line");
     rectangle2.appendChild(line);
     progressContainer.appendChild(rectangle2);
@@ -411,7 +421,7 @@ class RoadmapPage extends HTMLElement {
     // 3 line object
     const rectangle6 = document.createElement("div");
     rectangle6.classList.add("rectangle_line");
-    const line3 = document.createElement("hr");
+
     line3.classList.add("line");
     rectangle6.appendChild(line3);
     progressContainer.appendChild(rectangle6);
@@ -481,7 +491,7 @@ class RoadmapPage extends HTMLElement {
     // 4 line object
     const rectangle8 = document.createElement("div");
     rectangle8.classList.add("rectangle_line");
-    const line4 = document.createElement("hr");
+
     line4.classList.add("line");
     rectangle8.appendChild(line4);
     progressContainer.appendChild(rectangle8);
@@ -562,7 +572,7 @@ class RoadmapPage extends HTMLElement {
     // 5 line object
     const rectangle10 = document.createElement("div");
     rectangle10.classList.add("rectangle_line");
-    const line5 = document.createElement("hr");
+
     line5.classList.add("line");
     rectangle10.appendChild(line5);
     progressContainer2.appendChild(rectangle10);
@@ -632,7 +642,7 @@ class RoadmapPage extends HTMLElement {
     // 2 1 line object
     const rectangle22 = document.createElement("div");
     rectangle22.classList.add("rectangle_line");
-    const line21 = document.createElement("hr");
+
     line21.classList.add("line");
     rectangle22.appendChild(line21);
     progressContainer2.appendChild(rectangle22);
@@ -702,7 +712,6 @@ class RoadmapPage extends HTMLElement {
     // 2 2 line object
     const rectangle24 = document.createElement("div");
     rectangle24.classList.add("rectangle_line");
-    const line22 = document.createElement("hr");
     line22.classList.add("line");
     rectangle24.appendChild(line22);
     progressContainer2.appendChild(rectangle24);
@@ -772,7 +781,6 @@ class RoadmapPage extends HTMLElement {
     // 2 3 line object
     const rectangle26 = document.createElement("div");
     rectangle26.classList.add("rectangle_line");
-    const line23 = document.createElement("hr");
     line23.classList.add("line");
     rectangle26.appendChild(line23);
     progressContainer2.appendChild(rectangle26);
@@ -931,7 +939,6 @@ class RoadmapPage extends HTMLElement {
     step10.classList.add("step");
     rectangle29.appendChild(step10);
 
-    const wrapper2 = document.createElement("article");
     wrapper2.classList.add("wrapper2");
 
     // after step 10 completed
