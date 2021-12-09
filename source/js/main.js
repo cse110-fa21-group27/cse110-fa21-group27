@@ -315,7 +315,7 @@ async function renderRecipes(list, target, clickable = true) {
  */
 function bindRecipeCard(recipeCard, recipeId) {
   recipeCard.addEventListener("click", (e) => {
-    if (e.path[0].nodeName == "A") return;
+    if (e.path[0].nodeName === "A") return;
     router.navigate(recipeId);
   });
 }
