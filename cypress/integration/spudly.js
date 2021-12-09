@@ -6,7 +6,7 @@
 
 const { cyan } = require("chalk");
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
+const magicNumbers = require("../magictestNumbers");
 function delay(time) {
   return new Promise(function (resolve) {
     setTimeout(resolve, time);

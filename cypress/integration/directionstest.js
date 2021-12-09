@@ -1,7 +1,7 @@
 const { cyan } = require("chalk");
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
-const recipe = require("./../../__tests__/unit_js/directions");
+const magicNumbers = require("../magictestNumbers");
+const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
 
@@ -21,7 +21,7 @@ describe(
     });
 
     it("Opens index.html", () => {
-      cy.visit("./__tests__/unit_html/directions_test.html");
+      cy.visit("./cypress/unit_html/directions_test.html");
     });
 
     // Check how many direction pages there are
