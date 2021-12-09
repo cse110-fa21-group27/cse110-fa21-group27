@@ -16,6 +16,7 @@ class Directions extends HTMLElement {
    * @param {Object} data - The recipe json
    */
   set data(data) {
+    // Creates CSS for the Directions Component
     const style = `
       @font-face {
         font-family: 'font';
