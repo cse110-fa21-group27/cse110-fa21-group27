@@ -1,4 +1,9 @@
 describe("Basic user flow for Website", () => {
+  /**
+   * Helper function. Delays operation so the page can finish loading.
+   * @param {number} time - delay amount in ms.
+   * @returns
+   */
   function delay(time) {
     return new Promise(function (resolve) {
       setTimeout(resolve, time);
@@ -37,11 +42,15 @@ describe("Basic user flow for Website", () => {
     await delay(4000);
     // Start as true, if any don't have data, swap to false
     let allArePopulated = true;
-    let plainValue, img, imgSrc, p, innerText;
+    let plainValue;
+    let img;
+    let imgSrc;
+    let p;
+    let innerText;
 
     // Query select all of the <recipe-card> elements
     const prodItems = await page.$$("recipe-card");
-    //await page.screenshot({ path: "scrrenshot57.png" });
+    // await page.screenshot({ path: "scrrenshot57.png" });
 
     // loop through and check them all
     for (let i = 0; i < prodItems.length; i++) {
@@ -84,37 +93,37 @@ describe("Basic user flow for Website", () => {
     // await page.screenshot({ path: "scrrenshot57.png" });
 
     // Navigate to where we can access the img and title.
-    let prodItem = await page.$("recipe-page");
-    let prodItemSR = await prodItem.getProperty("shadowRoot");
-    let prodItemRInfo = await prodItemSR.$("recipe-info");
-    let prodItemartRInfoSR = await prodItemRInfo.getProperty("shadowRoot");
+    const prodItem = await page.$("recipe-page");
+    const prodItemSR = await prodItem.getProperty("shadowRoot");
+    const prodItemRInfo = await prodItemSR.$("recipe-info");
+    const prodItemartRInfoSR = await prodItemRInfo.getProperty("shadowRoot");
 
     // Get the imagesrc, the title and the rating-time
-    let img = await prodItemartRInfoSR.$("img");
-    let imgSrc = await img.getProperty("src");
-    let title = await prodItemartRInfoSR.$("p");
+    const img = await prodItemartRInfoSR.$("img");
+    const imgSrc = await img.getProperty("src");
+    const title = await prodItemartRInfoSR.$("p");
     let titleText = await title.getProperty("innerText");
-    let ratingTime = await prodItemartRInfoSR.$$(".rating-time p");
-    let rating = ratingTime[1];
-    let time = ratingTime[0];
-    let starsimg = await prodItemartRInfoSR.$(".rating-time img");
+    const ratingTime = await prodItemartRInfoSR.$$(".rating-time p");
+    const rating = ratingTime[1];
+    const time = ratingTime[0];
+    const starsimg = await prodItemartRInfoSR.$(".rating-time img");
     let ratingText = await rating.getProperty("innerText");
     let timeText = await time.getProperty("innerText");
     let starsimgSrc = await starsimg.getProperty("src");
 
     // Convert to readable
     titleText = await titleText.jsonValue();
-    let plainValue = await imgSrc.jsonValue();
+    const plainValue = await imgSrc.jsonValue();
     ratingText = await ratingText.jsonValue();
     timeText = await timeText.jsonValue();
     starsimgSrc = await starsimgSrc.jsonValue();
 
-    //console.log("")
-    //console.log(titleText);
-    //console.log(plainValue);
-    //console.log(ratingText);
-    //console.log(timeText);
-    //console.log(starsimgSrc);
+    // console.log("")
+    // console.log(titleText);
+    // console.log(plainValue);
+    // console.log(ratingText);
+    // console.log(timeText);
+    // console.log(starsimgSrc);
 
     let populated = true;
     populated = !(
