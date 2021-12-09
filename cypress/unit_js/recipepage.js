@@ -1,3 +1,5 @@
+// Don't mess with the JSON
+/* eslint-disable max-len */
 const recipe1 = {
   vegetarian: false,
   vegan: false,
@@ -289,7 +291,7 @@ const recipe1 = {
         },
         {
           number: 5,
-          step: 'Use a 1" cookie scoop and create round balls with palms of hands.',
+          step: "Use a 1 cookie scoop and create round balls with palms of hands.",
           ingredients: [
             {
               id: 10118192,
