@@ -71,7 +71,7 @@ describe("Basic user flow for Website", () => {
       // console.log(plainValue);
       if (
         plainValue == "" ||
-        plainValue == "https://spudly-f0411.web.app/undefined" ||
+        plainValue === "https://spudly-f0411.web.app/undefined" ||
         innerText == ""
       ) {
         allArePopulated = false;
@@ -131,10 +131,10 @@ describe("Basic user flow for Website", () => {
     let populated = true;
     populated = !(
       titleText == "" ||
-      plainValue == "https://spudly-f0411.web.app/undefined" ||
+      plainValue === "https://spudly-f0411.web.app/undefined" ||
       ratingText == "" ||
       timeText == "" ||
-      starsimgSrc == "https://spudly-f0411.web.app/undefined"
+      starsimgSrc === "https://spudly-f0411.web.app/undefined"
     );
     await page.goBack();
     expect(populated).toBe(true);
