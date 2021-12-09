@@ -158,7 +158,8 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
-    // Adding an Ingredients Button with Event Listener to display Ingredients-Info Element
+    // Adding an Ingredients Button with Event Listener to display
+    // Ingredients-Info Element
     // Ingredients Info will contain the list of Ingredients and Quanitities
     const ingredients = document.createElement("button");
     ingredients.classList.add("button");
@@ -175,13 +176,15 @@ class RecipeInfo extends HTMLElement {
       }
     });
 
-    // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
+    // Adding a Nutrition Button with Event Listener to display
+    // Nutrition Element(Not Created)
     // Nutrition will contain the list of Nutrition for the Recipe
     const nutrition = document.createElement("button");
     nutrition.classList.add("button");
     nutrition.textContent = "Show Nutritions";
 
-    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the
+    // Adding a Save Recipe Button with Event Listener that
+    // will call a function to add/remove the
     // Recipe to the User's Saved Recipes
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
