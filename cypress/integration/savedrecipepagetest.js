@@ -25,7 +25,7 @@ describe("Test the saved recipe feature", { timeout: 10000 }, () => {
         .shadow()
         .find("button")
         .then(($el) => {
-          $el[2].click();
+          $el[1].click();
           cy.visit("./source/index.html");
         });
     }
