@@ -168,6 +168,7 @@ class RecipeExpand extends HTMLElement {
   /**
    * Sets the recipe that will be used inside the <recipe-expand> element.
    * Overwrites the previous recipe, fair warning.
+   * @param {JSON} data - the received data
    */
   set data(data) {
     this.json = data;
@@ -361,7 +362,8 @@ function getCategories(data) {
 }
 
 /**
- * Extract the description of the recipe from the given recipe schema JSON obejct
+ * Extract the description of the recipe from the given recipe schema
+ * JSON obejct
  * @param {Object} data Raw recipe JSON to find the image of
  * @return {String} If found, returns the recipe description
  */
@@ -380,7 +382,8 @@ function getDescription(data) {
 /**
  * Extract a usable image from the given recipe schema JSON object
  * @param {Object} data Raw recipe JSON to find the image of
- * @return {String} If found, returns the URL of the image as a string, otherwise null
+ * @return {String} If found, returns the URL of the image as a string,
+ *                  otherwise null
  */
 function getImage(data) {
   if (data.image?.url) return data.image.url;
@@ -407,6 +410,7 @@ function getImage(data) {
  * @param {Object} data Raw recipe JSON to find the URL of
  * @return {String} If found, it returns the URL as a string, otherwise null
  */
+// eslint-disable-next-line no-unused-vars
 function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
@@ -423,8 +427,10 @@ function getUrl(data) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @return {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a string,
+ *                  otherwise null
  */
+// eslint-disable-next-line no-unused-vars
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
   if (data["@graph"]) {
@@ -466,7 +472,8 @@ function convertTime(time) {
 }
 
 /**
- * Extract the ingredients of the recipe from the given recipe schema JSON obejct
+ * Extract the ingredients of the recipe from the given recipe schema
+ * JSON obejct
  * @param {Object} data Raw recipe JSON to find the image of
  * @return {Array} If found, returns the recipe ingredients
  */
@@ -491,7 +498,8 @@ function getIngredients(data) {
 }
 
 /**
- * Extract the instructions of the recipe from the given recipe schema JSON obejct.
+ * Extract the instructions of the recipe from the given recipe
+ * schema JSON obejct.
  * This ones a bit messy and optimally should be refactored but it works.
  * @param {Object} data Raw recipe JSON to find the image of
  * @return {Array} If found, returns the recipe instructions
