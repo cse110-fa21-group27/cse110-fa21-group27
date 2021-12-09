@@ -48,7 +48,7 @@ describe("Test the home page", { timeout: 10000 }, () => {
           .find(".thumbnail-photo")
           .invoke("attr", "src")
           .then(($el) => {
-            if ($el == "undefined" || !$el) {
+            if ($el === "undefined" || !$el) {
               console.error(
                 `Something is wrong with the image from recipe ${i}`
               );

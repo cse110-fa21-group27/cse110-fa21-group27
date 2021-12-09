@@ -79,8 +79,8 @@
   */
   grid-template-rows: 25% 75% 400px;
 
-  /* 
-      e.g. 
+  /*
+      e.g.
       min-content 1fr min-content
       100px 1fr max-content
   */
@@ -102,7 +102,7 @@
   position: absolute;
   left: 22%;
   top: 9%;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -123,7 +123,7 @@
   position: absolute;
   left: 36%;
   top: 30.5%;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -135,7 +135,7 @@
   left: 12%;
   top: 38%;
   width: 98%;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -147,7 +147,7 @@
   left: 25%;
   top: 48%;
   width: 100%;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   -ms-transform: scale(1.5);
   -moz-transform: scale(1.5);
   -webkit-transform: scale(1.5);
