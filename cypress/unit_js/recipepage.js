@@ -1,10 +1,5 @@
-//window.addEventListener("DOMCOntentLoaded", init);
-
-//function init() {
-//const directions = document.createElement("directions-info");
-//console.log("YO");
-//window.directions = directions;
-//}
+// Don't mess with the JSON
+/* eslint-disable max-len */
 const recipe1 = {
   vegetarian: false,
   vegan: false,
@@ -224,7 +219,7 @@ const recipe1 = {
   image: "https://spoonacular.com/recipeImages/715439-556x370.jpg",
   imageType: "jpg",
   summary:
-    'You can never have too many dessert recipes, so give OREO Cookie Balls – Snowman a try. This recipe serves 12 and costs $1.75 per serving. One portion of this dish contains approximately <b>5g of protein</b>, <b>27g of fat</b>, and a total of <b>465 calories</b>. From preparation to the plate, this recipe takes about <b>1 hour and 15 minutes</b>. This recipe is liked by 1416 foodies and cooks. If you have oreo cookies, gel icing, bakers chocolate, and a few other ingredients on hand, you can make it. It is brought to you by Pink When. Taking all factors into account, this recipe <b>earns a spoonacular score of 0%</b>, which is improvable. Similar recipes include <a href="https://spoonacular.com/recipes/reindeer-and-snowman-oreo-cookie-balls-+-oreo-stuffed-cookies-622109">Reindeer and Snowman Oreo Cookie Balls + Oreo Stuffed Cookies</a>, <a href="https://spoonacular.com/recipes/snowman-oreo-cookie-balls-489438">Snowman OREO Cookie Balls</a>, and <a href="https://spoonacular.com/recipes/snowman-oreo-cookie-balls-516559">Snowman Oreo Cookie Balls</a>.',
+    "You can never have too many dessert recipes, so give OREO Cookie Balls – Snowman a try. This recipe serves 12 and costs $1.75 per serving. One portion of this dish contains approximately <b>5g of protein</b>, <b>27g of fat</b>, and a total of <b>465 calories</b>. From preparation to the plate, this recipe takes about <b>1 hour and 15 minutes</b>. This recipe is liked by 1416 foodies and cooks. If you have oreo cookies, gel icing, bakers chocolate, and a few other ingredients on hand, you can make it. It is brought to you by Pink When. Taking all factors into account, this recipe <b>earns a spoonacular score of 0%</b>, which is improvable. Similar recipes include <a href='https://spoonacular.com/recipes/reindeer-and-snowman-oreo-cookie-balls-+-oreo-stuffed-cookies-622109'>Reindeer and Snowman Oreo Cookie Balls + Oreo Stuffed Cookies</a>, <a href='https://spoonacular.com/recipes/snowman-oreo-cookie-balls-489438'>Snowman OREO Cookie Balls</a>, and <a href='https://spoonacular.com/recipes/snowman-oreo-cookie-balls-516559'>Snowman Oreo Cookie Balls</a>.",
   cuisines: [],
   dishTypes: ["dessert"],
   diets: [],
@@ -296,7 +291,7 @@ const recipe1 = {
         },
         {
           number: 5,
-          step: 'Use a 1" cookie scoop and create round balls with palms of hands.',
+          step: "Use a 1 cookie scoop and create round balls with palms of hands.",
           ingredients: [
             {
               id: 10118192,
@@ -463,10 +458,6 @@ const recipe1 = {
   spoonacularSourceUrl:
     "https://spoonacular.com/oreo-cookie-balls-snowman-715439",
 };
-
-//const recipeset = JSON.parse(data);
-//const randomnumber = Math.random() * Object.keys(recipes).length;
-//console.log(recipes[0]);
 
 const recipepage1 = document.createElement("recipe-page");
 recipepage1.setAttribute("id", "recipepage");

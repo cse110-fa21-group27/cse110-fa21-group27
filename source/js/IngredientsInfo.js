@@ -11,12 +11,12 @@ class IngredientsInfo extends HTMLElement {
   }
 
   /**
-   * Populates the Ingredient Info HTML Component with information from the recipe
-   * json file and displays it with some CSS styling.
+   * Populates the Ingredient Info HTML Component with information from the
+   * recipe json file and displays it with some CSS styling.
    * @param {Object} data - The recipe json
    */
   set data(data) {
-    // Creates CSS for the Recipe Info Component
+    // Creates CSS for the Ingredients Info Component
     const style = `
       @font-face {
         font-family: 'font';
@@ -154,6 +154,12 @@ class IngredientsInfo extends HTMLElement {
     addToCart.textContent = "Add Ingredients To Cart";
     form.appendChild(addToCart);
 
+    // Creating a current display of the number of Servings the Recipe
+    // will make based on the current number of Ingredients
+    const quantity = document.createElement("p");
+    quantity.classList.add("quantity");
+    quantity.textContent = data.servings;
+
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
     // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
@@ -167,11 +173,6 @@ class IngredientsInfo extends HTMLElement {
     subtractQuantity.textContent = "-";
     form.appendChild(subtractQuantity);
 
-    // Creating a current display of the number of Servings the Recipe
-    // will make based on the current number of Ingredients
-    const quantity = document.createElement("p");
-    quantity.classList.add("quantity");
-    quantity.textContent = data.servings;
     form.appendChild(quantity);
 
     // Adding a Add Button with Event Listener that will

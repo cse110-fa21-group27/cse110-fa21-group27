@@ -1,4 +1,6 @@
-/*search bar*/
+/*
+  search bar
+*/
 
 .search_bar {
   position: absolute;
@@ -30,7 +32,6 @@
   line-height: 28px;
   display: flex;
   align-items: center;
-
   color: #000000;
   background: black;
   border-color: #ffffff;
@@ -61,23 +62,33 @@
   width: 3.2%;
   height: 70%;
 }
-/*recipe body*/
+
+/*
+  recipe body
+*/
 .recipe-page {
   display: grid;
   grid-template-columns: [leftmost]25% [endOfIng]50% [endOfRecipe]25% [rightmost]25%;
-  /* e.g. 
+
+  /*
+      e.g.
       1fr 1fr
       minmax(10px, 1fr) 3fr
       repeat(5, 1fr)
       50px auto 100px 1fr
   */
   grid-template-rows: 25% 75% 400px;
-  /* e.g. 
+
+  /* 
+      e.g. 
       min-content 1fr min-content
       100px 1fr max-content
   */
 }
-/*kevin: removed item-1 and added ingredients_box and inner classes*/
+
+/*
+  kevin: removed item-1 and added ingredients_box and inner classes
+*/
 .ingredients_box {
   position: absolute;
   width: 20%;
@@ -97,9 +108,10 @@
   font-size: 32px;
   line-height: 62px;
 }
+
 .recipe_button {
   position: absolute;
-  font-family: DM Sans;
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
