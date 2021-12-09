@@ -259,12 +259,12 @@ class SavedRecipePage extends HTMLElement {
 
             Array.from(sectionArray)
               .find((elem) => {
-                return elem.getAttribute("collectionName") == nameToRemove;
+                return elem.getAttribute("collectionName") === nameToRemove;
               })
               .remove();
             Array.from(headerArray)
               .find((elem) => {
-                return elem.getAttribute("collectionName") == nameToRemove;
+                return elem.getAttribute("collectionName") === nameToRemove;
               })
               .remove();
             Array.from(lineArray)

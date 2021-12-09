@@ -212,7 +212,6 @@ class UserCollection extends HTMLElement {
       removeButton.textContent = "Remove Recipes";
       removeButton.addEventListener("click", () => {
         let checkboxArray = form.querySelectorAll("input");
-        let divSelector = this.shadowRoot.querySelectorAll("div");
         let recipeCardArray = this.shadowRoot.querySelectorAll("recipe-card");
 
         // It deletes in reverse order to make sure there are no index problems
@@ -225,7 +224,7 @@ class UserCollection extends HTMLElement {
             // Removing the recipe card
             Array.from(recipeCardArray)
               .find((cardElem) => {
-                return cardElem.getAttribute("recipeId") == idToRemove;
+                return cardElem.getAttribute("recipeId") === idToRemove;
               })
               .remove();
           }
