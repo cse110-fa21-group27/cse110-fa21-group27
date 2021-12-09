@@ -1,2 +1,2 @@
-const numOfRecipes = 272;
+const numOfRecipes = 266;
 module.exports = { numOfRecipes };
