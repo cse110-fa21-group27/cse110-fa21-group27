@@ -175,11 +175,6 @@ class RecipeInfo extends HTMLElement {
       }
     });
 
-    // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
-    // Nutrition will contain the list of Nutrition for the Recipe
-    const nutrition = document.createElement("button");
-    nutrition.classList.add("button");
-    nutrition.textContent = "Show Nutritions";
 
     // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the
     // Recipe to the User's Saved Recipes
@@ -201,7 +196,6 @@ class RecipeInfo extends HTMLElement {
     });
 
     info.appendChild(ingredients);
-    info.appendChild(nutrition);
     info.appendChild(saveRecipe);
 
     this.shadowRoot.appendChild(styleElem);
