@@ -1,6 +1,9 @@
+// These two were auto-imported by cypress I don't want to mess with that
+
+// eslint-disable-next-line no-unused-vars
 const { cyan } = require("chalk");
+// eslint-disable-next-line no-unused-vars
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
 const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
@@ -30,7 +33,7 @@ describe(
     });
 
     // Check that the title says "Directions"
-    it('check that the title says "Directions"', () => {
+    it("check that the title says 'Directions'", () => {
       cy.get("directions-info")
         .shadow()
         .find("p")
@@ -91,6 +94,7 @@ describe(
           });
       });
 
+      // eslint-disable-next-line max-len
       it(`check that instruction ${i}'s checkbox is unchecked by default`, () => {
         cy.get("directions-info")
           .shadow()
@@ -139,6 +143,7 @@ describe(
           });
       });
 
+      // eslint-disable-next-line max-len
       it(`check that clicking changes the class (and therefore style) of the text of instruction ${i}`, () => {
         cy.get("directions-info")
           .shadow()
