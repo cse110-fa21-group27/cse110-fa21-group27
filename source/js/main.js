@@ -32,11 +32,12 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
+  router.navigate("home");
   router.addPage("roadmap-page", RoadmapPage);
   router.addPage("search-page", SearchPage);
-  router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("collection", collectionPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -96,6 +97,10 @@ function savedRecipesPage() {
   savedPage.removeCollection = storage.removeCollection;
   savedPage.addToCollection = storage.addToCollection;
   savedPage.removeFromCollection = storage.removeFromCollection;
+  // allow it to navigate to collection
+  savedPage.goToCollection = (collection) => {
+    router.navigate("collection", false, collection);
+  };
   // give it the array of userInfo for data
   savedPage.data = storage.userInfo;
   // savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
@@ -153,6 +158,31 @@ function RoadmapPage() {
     isRecipe: true,
   });
   */
+}
+
+/**
+ * After this function is run, the page should display a collection and its
+ * corresponding recipe cards
+ * @param {Object} collection - the collection object that we want to display
+ */
+function collectionPage(collection) {
+  // delete everything in main
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create the user collection custom element
+  const userCollection = document.createElement("user-collection");
+  // pass the renderRecipes function
+  userCollection.renderRecipes = renderRecipes;
+  // pass the collections functions
+  userCollection.addToCollection = storage.addToCollection;
+  userCollection.removeFromCollection = storage.removeFromCollection;
+  // create data object
+  const data = {
+    collection: collection,
+    savedRecipes: storage.userInfo.savedRecipes,
+  };
+  userCollection.data = data;
+  main.appendChild(userCollection);
 }
 
 /**
@@ -224,7 +254,7 @@ function renderNavBar(data) {
   bar.goRoadmap = () => {
     router.navigate("roadmap-page");
   };
-  
+
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
@@ -242,19 +272,24 @@ function renderNavBar(data) {
  * @function
  * @param {String[]} list - array of ids to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
+ * @param {Boolean} clickable - if we want to bind event listeners to the
+ * card or not. default is true
  * recipe-card's into
  */
-async function renderRecipes(list, target) {
+async function renderRecipes(list, target, clickable = true) {
   list.forEach((recipeId) => {
     // obtain data
     const recipeJSON = storage.recipeData[recipeId].data;
     const newCard = document.createElement("recipe-card");
+    newCard.setAttribute("recipeId", recipeId);
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
     router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, recipeId);
+    if (clickable) {
+      bindRecipeCard(newCard, recipeId);
+    }
 
     target.appendChild(newCard);
   });

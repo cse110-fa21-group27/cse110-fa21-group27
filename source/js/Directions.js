@@ -8,7 +8,6 @@ class Directions extends HTMLElement {
   }
 
   set data(data) {
-    debugger
     const style = `
       @font-face {
         font-family: 'font';
@@ -151,9 +150,9 @@ class Directions extends HTMLElement {
 
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
-    
+
     const directionList = data.analyzedInstructions[0].steps;
-    
+
     //background frame
     const wrapper = document.createElement("article");
     wrapper.classList.add("background");
@@ -164,7 +163,6 @@ class Directions extends HTMLElement {
     directions.textContent = "Directions";
     directions.classList.add("header");
     wrapper.appendChild(directions);
-
 
     // Parsing data to create the direction list.
     const list = document.createElement("ol");
@@ -197,8 +195,8 @@ class Directions extends HTMLElement {
       textButton.classList.add("listItemStyle");
 
       /**
-       * Button click event listener to expand and compress 
-       * directions. 
+       * Button click event listener to expand and compress
+       * directions.
        */
       textButton.addEventListener("click", (event) => {
         if (textButton.classList.contains("listItemStyle")) {
@@ -247,9 +245,9 @@ class Directions extends HTMLElement {
           textButton.appendChild(wrapper);
           textButton.classList.add("listItemStyle");
           /**
-          * Button click event listener to expand and compress 
-          * directions. 
-          */
+           * Button click event listener to expand and compress
+           * directions.
+           */
           textButton.addEventListener("click", (event) => {
             if (textButton.classList.contains("listItemStyle")) {
               textButton.classList.remove("listItemStyle");

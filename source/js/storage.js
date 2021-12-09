@@ -214,15 +214,19 @@ async function removeRecipeFromSaved(recipeId) {
       (savedRecipe) => savedRecipe.id == recipeId
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
 
     // save just in case we need to add it back
     let found = userInfo.savedRecipes[foundIndex];
-    // remove from userInfo
+    // remove from saved recipes
     userInfo.savedRecipes.splice(foundIndex, 1);
+    // remove from any collections
+    for (let i = 0; i < userInfo.collections.length; i++) {
+      removeFromCollection(recipeId, userInfo.collections[i].name);
+    }
     try {
       window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
       // all good!
@@ -293,7 +297,7 @@ async function removeCollection(collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
@@ -335,7 +339,7 @@ async function addToCollection(recipeId, collectionName) {
       (savedCollection) => savedCollection.name == collectionName
     );
 
-    if (!foundIndex) {
+    if (foundIndex === -1) {
       // collection does not exist
       reject("Collection does not exist");
     }
@@ -379,7 +383,7 @@ async function removeFromCollection(recipeId, collectionName) {
       foundCollectionIndex
     ].ids.findIndex((savedRecipeId) => savedRecipeId === recipeId);
 
-    if (!foundRecipeIndex) {
+    if (foundRecipeIndex === -1) {
       // already not in array, resolve!
       resolve(true);
     }
