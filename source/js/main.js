@@ -21,6 +21,7 @@ async function init() {
   router.addPage("search-page", SearchPage);
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("groceryList", groceryListPage);
   router.addPage("collection", collectionPage);
   renderNavBar({
     recipeUrl: null,
@@ -56,16 +57,26 @@ function recipesPage() {
  * including the filter and the body
  * @function
  * @name SearchPage
- * @param {Object} results - passes in the results from the search
+ * @param {Object} data - passes in the results from the search, as
+ * well as the request that prompted the search
  */
-function SearchPage(results) {
+function SearchPage(data) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
   searchPage.renderRecipes = renderRecipes;
-  searchPage.data = results;
+  // allow it to filter and search again
+  searchPage.search = async (request) => {
+    const results = await storage.search(request);
+    const data = {
+      results: results,
+      request: request,
+    };
+    router.navigate("search-page", false, data);
+  };
+  searchPage.data = data;
 
   main.appendChild(searchPage);
 }
@@ -120,14 +131,38 @@ function recipePage(recipeId, recipeJSON) {
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
   recipePage.id = recipeId;
   recipePage.isSaved = storage.isSaved(recipeId);
+  // allow it to add to grocery list
+  recipePage.addToGroceryList = storage.addToGroceryList;
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
 }
 
 /**
+ * After this page function is run, <main> should be empty except for the
+ * <grocery-list-page> component
+ * @function
+ */
+function groceryListPage() {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create grocery page
+  const groceryPage = document.createElement("grocery-list-page");
+  main.appendChild(groceryPage);
+  // allow it to remove/edit grocery items
+  groceryPage.removeFromGroceryList = storage.removeFromGroceryList;
+  groceryPage.updateEntryInGrocery = storage.updateEntryInGrocery;
+  // give it access to grocery list
+  groceryPage.data = storage.userInfo.groceryList;
+}
+
+/**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed
+ * into this function should be rendered
  * This function would replace the main with the roadmap page
  * that will display recipes meant to help the user learn how
  * to cook
+
  * @function
  * @name RoadmapPage
  */
@@ -194,9 +229,16 @@ function renderNavBar(data) {
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = async(query) => {
+  bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
-    router.navigate("search-page", false, results);
+    const data = {
+      results: results,
+      request: { query: query },
+    };
+    router.navigate("search-page", false, data);
+  };
+  bar.goGrocery = () => {
+    router.navigate("groceryList");
   };
   bar.data = data;
 }

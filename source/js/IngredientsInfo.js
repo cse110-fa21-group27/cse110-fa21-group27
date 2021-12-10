@@ -167,8 +167,15 @@ class IngredientsInfo extends HTMLElement {
         quantityText.textContent = `${quantity.textContent - 1}`;
         const listOfItems = list.querySelectorAll("label");
         for (let i = 0; i < ingredientList.length; i++) {
-          const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
-          listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+          const oldName = listOfItems[i].textContent;
+          const checkBox = list.querySelector(`input[entry="${oldName}"]`);
+          const newAmount =
+            (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
+            parseFloat(ingredientList[i].amount);
+          listOfItems[
+            i
+          ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+          checkBox.setAttribute("entry", listOfItems[i].textContent);
         }
       }
     });
@@ -189,11 +196,19 @@ class IngredientsInfo extends HTMLElement {
       quantityText.textContent = `${parseInt(quantityText.textContent) + 1}`;
       const listOfItems = list.querySelectorAll("label");
       for (let i = 0; i < ingredientList.length; i++) {
-        const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
-        listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        const oldName = listOfItems[i].textContent;
+        const checkBox = list.querySelector(`input[entry="${oldName}"]`);
+        const newAmount =
+          (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
+          parseFloat(ingredientList[i].amount);
+        listOfItems[
+          i
+        ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        checkBox.setAttribute("entry", listOfItems[i].textContent);
       }
     });
     addQuantity.textContent = "+";
+
     servingContainer.appendChild(addQuantity);
 
     // Creating a Stylish Line Break to separate the Title from the Rest
@@ -210,10 +225,12 @@ class IngredientsInfo extends HTMLElement {
     const list = document.createElement("div");
     list.classList.add("ingredients-list");
     for (let i = 0; i < ingredientList.length; i++) {
+      const entryName = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
       const box = document.createElement("input");
       box.type = "checkbox";
+      box.setAttribute("entry", entryName);
       const listItem = document.createElement("label");
-      listItem.textContent = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      listItem.textContent = entryName;
       const lineBreak = document.createElement("br");
       list.appendChild(box);
       list.appendChild(listItem);
@@ -221,6 +238,17 @@ class IngredientsInfo extends HTMLElement {
     }
     form.appendChild(list);
     info.appendChild(form);
+    // listen to add to cart button
+    addToCart.addEventListener("click", (e) => {
+      const listElements = Array.from(list.children);
+      listElements.forEach((element) => {
+        if (element.nodeName === "INPUT") {
+          if (element.checked) {
+            this.addToGroceryList(element.getAttribute("entry"));
+          }
+        }
+      });
+    });
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
