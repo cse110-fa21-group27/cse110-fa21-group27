@@ -6,23 +6,6 @@ window.addEventListener("DOMContentLoaded", init);
 // for now, saved recipes is the homepage
 const router = new Router(recipesPage);
 
-/* gonna ignore glider for now
-const gliderConfig = {
-  focusAt: 'center', //this line seems to being nothing. i wanted it to maybe
-  like, enable the non-translucence. or something like that
-  type: 'carousel',
-  perView: 3,
-  breakpoints:{
-    800: {
-      perView: 2
-    }
-    // peek: {
-    //     before: 1000,
-    //     after: 500
-    // }
-  }
-};
-*/
 /**
  * Initializes everything. It all begins here.
  * @async
@@ -38,6 +21,7 @@ async function init() {
   router.addPage("search-page", SearchPage);
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("groceryList", groceryListPage);
   router.addPage("collection", collectionPage);
   renderNavBar({
     recipeUrl: null,
@@ -73,16 +57,26 @@ function recipesPage() {
  * including the filter and the body
  * @function
  * @name SearchPage
- * @param {Object} results - passes in the results from the search
+ * @param {Object} data - passes in the results from the search, as
+ * well as the request that prompted the search
  */
-function SearchPage(results) {
+function SearchPage(data) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
   searchPage.renderRecipes = renderRecipes;
-  searchPage.data = results;
+  // allow it to filter and search again
+  searchPage.search = async (request) => {
+    const results = await storage.search(request);
+    const data = {
+      results: results,
+      request: request,
+    };
+    router.navigate("search-page", false, data);
+  };
+  searchPage.data = data;
 
   main.appendChild(searchPage);
 }
@@ -137,14 +131,38 @@ function recipePage(recipeId, recipeJSON) {
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
   recipePage.id = recipeId;
   recipePage.isSaved = storage.isSaved(recipeId);
+  // allow it to add to grocery list
+  recipePage.addToGroceryList = storage.addToGroceryList;
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
 }
 
 /**
+ * After this page function is run, <main> should be empty except for the
+ * <grocery-list-page> component
+ * @function
+ */
+function groceryListPage() {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create grocery page
+  const groceryPage = document.createElement("grocery-list-page");
+  main.appendChild(groceryPage);
+  // allow it to remove/edit grocery items
+  groceryPage.removeFromGroceryList = storage.removeFromGroceryList;
+  groceryPage.updateEntryInGrocery = storage.updateEntryInGrocery;
+  // give it access to grocery list
+  groceryPage.data = storage.userInfo.groceryList;
+}
+
+/**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed
+ * into this function should be rendered
  * This function would replace the main with the roadmap page
  * that will display recipes meant to help the user learn how
  * to cook
+
  * @function
  * @name RoadmapPage
  */
@@ -191,61 +209,6 @@ function collectionPage(collection) {
 }
 
 /**
- * DEPRECATED, replaced by storage.getRecipes()
- * After this function resolves, storage.recipeData should be updated
- * with the url's being the keys to access the fetched data.
- * @async
- * @function
- * @param {String[]} recipeUrlList
- * @return {Promise}
- */
-async function loadRecipes(recipeUrlList) {
-  return new Promise((resolve, reject) => {
-    // keep track of each promise we make when using fetch
-    const promises = [];
-
-    recipeUrlList.forEach((url) => {
-      // add each fetch promise to the array
-      promises.push(
-        fetch(url)
-          // catch any errors in fetching (network problems or whatever)
-          .catch((error) => {
-            console.log(`Problem fetching ${url}`, error);
-            reject(error);
-          })
-          // check if we get a proper response
-          // fetch() still resolves even if it's a 404
-          .then((response) => {
-            if (!response.ok) {
-              console.log(`Problem fetching ${url}, status ${response.status}`);
-              reject(response);
-            }
-
-            return response.json();
-          })
-          // response.json() is a promise
-          .then((data) => {
-            storage.recipeData[url] = {
-              url: url,
-              data: data,
-            };
-          }),
-      );
-    });
-
-    // resolve once the entire promise array is resolved
-    Promise.all(promises)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        reject();
-      });
-  });
-}
-
-/**
  * This function renders the <nav-bar> component with the appropriate data
  * @function
  * @name renderNavBar
@@ -266,9 +229,16 @@ function renderNavBar(data) {
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = async(query) => {
+  bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
-    router.navigate("search-page", false, results);
+    const data = {
+      results: results,
+      request: { query: query },
+    };
+    router.navigate("search-page", false, data);
+  };
+  bar.goGrocery = () => {
+    router.navigate("groceryList");
   };
   bar.data = data;
 }
@@ -335,35 +305,3 @@ function bindPopState() {
     }
   });
 }
-
-/* gonna ignore glider for now
-function bindGliderEntry(gliderEntry, url) {
-  gliderEntry.addEventListener('click',()=>{
-    // just slap it onto body for now
-    const body = document.querySelector('body');
-    const recipeCard = document.createElement('recipe-card');
-    recipeCard.data = storage.recipeData[url].data;
-
-    body.appendChild(recipeCard);
-  })
-}
-
-async function renderRecipesIntoGlider() {
-  // obtain the glider thingy we want to add into
-  const glider = document.querySelector('.glide__slides');
-
-  for (const url in storage.recipeData) {
-    // iterate through recipes we have loaded
-    let recipeInfo = storage.recipeData[url].data;
-    const newGliderEntry = document.createElement('glider-recipe');
-    newGliderEntry.classList.add('glide__slide');
-    newGliderEntry.data = recipeInfo;
-
-
-    // we actually want the li in glider-recipe
-    const li = newGliderEntry.shadowRoot.querySelector('li');
-    bindGliderEntry(li, url);
-    glider.appendChild(li);
-  }
-}
-*/

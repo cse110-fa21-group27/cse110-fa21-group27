@@ -44,10 +44,10 @@ class RoadmapPage extends HTMLElement {
           width: 98%;
           height: 30%;
           align-items: center;
-          border: 10px solid orange;
+          border: 10px solid #004152;
           border-radius: 1em;
           border-style: solid none solid solid ;
-          background: #FFF6EC ;
+          background: #5b8775 ;
         }
         .container2 {
           display: block;
@@ -56,10 +56,10 @@ class RoadmapPage extends HTMLElement {
           width: 98%;
           height: 30%;
           align-items: center;
-          border: 10px solid orange;
+          border: 10px solid #004152;
           border-radius: 1em;
           border-style: solid solid solid none ;
-          background: #FFF6EC;
+          background: #5b8775;
         }
         .progress_container1{
           display: flex;
@@ -69,7 +69,7 @@ class RoadmapPage extends HTMLElement {
           margin-left: auto;
           margin-right: 0em;
           width: 90vw;
-          background: #FFF6EC;
+          background: #5b8775;
         }
 
         .progress_container2{
@@ -80,7 +80,7 @@ class RoadmapPage extends HTMLElement {
           margin-left: 0em;
           margin-right: 0em;
           width: 90vw;
-          background: #FFF6EC;
+          background: #5b8775;
         }
         .rectangle{
           display: flex;
@@ -89,7 +89,7 @@ class RoadmapPage extends HTMLElement {
           width: 20%;
           height: auto;
           background: white;
-          border: 2px solid orange;
+          border: 2px solid #004152;
           border-radius: 0.5em;
         }
         .rectangle-after{
@@ -120,7 +120,7 @@ class RoadmapPage extends HTMLElement {
           margin-left: auto;
           margin-right: auto;
           background: white;
-          border: solid orange;
+          border: solid #004152;
           border-radius: 10em;
           width: 9em;
           height: 9em;
@@ -132,19 +132,19 @@ class RoadmapPage extends HTMLElement {
         .button1{
           margin-left: 0.5em;
           margin-right: 0.5em;
-          border: 2px solid orange;
+          border: 2px solid #004152;
           border-radius: 10em;
         }
         .button2{
           margin-left: 2em;
           margin-right: 2em;
-          border: 2px solid orange;
+          border: 2px solid #004152;
           border-radius: 10em;
         }
         .button2-after{
           margin-left: 2em;
           margin-right: 2em;
-          border: 2px solid orange;
+          border: 2px solid #004152;
           border-radius: 10em;
           background: #5ba459;
         }
@@ -155,7 +155,7 @@ class RoadmapPage extends HTMLElement {
         .line{
           width: 100%;
           display: block;
-          border: 1px inset orange;
+          border: 1px inset #004152;
           border-radius: 1em;
           overflow: hidden;
         }
@@ -881,9 +881,8 @@ class RoadmapPage extends HTMLElement {
     text251.innerText = "View Recipe";
     button251.appendChild(text251);
     rectangle29.appendChild(button251);
-    
     button251.addEventListener("click", (event) => {
-      //Cookies
+      // Cookies
       const recipeId = "638940";
       this.goRecipe(recipeId);
     });
