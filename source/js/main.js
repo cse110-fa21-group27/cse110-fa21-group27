@@ -6,23 +6,6 @@ window.addEventListener("DOMContentLoaded", init);
 // for now, saved recipes is the homepage
 const router = new Router(recipesPage);
 
-/* gonna ignore glider for now
-const gliderConfig = {
-  focusAt: 'center', //this line seems to being nothing. i wanted it to maybe
-  like, enable the non-translucence. or something like that
-  type: 'carousel',
-  perView: 3,
-  breakpoints:{
-    800: {
-      perView: 2
-    }
-    // peek: {
-    //     before: 1000,
-    //     after: 500
-    // }
-  }
-};
-*/
 /**
  * Initializes everything. It all begins here.
  * @async
@@ -322,35 +305,3 @@ function bindPopState() {
     }
   });
 }
-
-/* gonna ignore glider for now
-function bindGliderEntry(gliderEntry, url) {
-  gliderEntry.addEventListener('click',()=>{
-    // just slap it onto body for now
-    const body = document.querySelector('body');
-    const recipeCard = document.createElement('recipe-card');
-    recipeCard.data = storage.recipeData[url].data;
-
-    body.appendChild(recipeCard);
-  })
-}
-
-async function renderRecipesIntoGlider() {
-  // obtain the glider thingy we want to add into
-  const glider = document.querySelector('.glide__slides');
-
-  for (const url in storage.recipeData) {
-    // iterate through recipes we have loaded
-    let recipeInfo = storage.recipeData[url].data;
-    const newGliderEntry = document.createElement('glider-recipe');
-    newGliderEntry.classList.add('glide__slide');
-    newGliderEntry.data = recipeInfo;
-
-
-    // we actually want the li in glider-recipe
-    const li = newGliderEntry.shadowRoot.querySelector('li');
-    bindGliderEntry(li, url);
-    glider.appendChild(li);
-  }
-}
-*/
