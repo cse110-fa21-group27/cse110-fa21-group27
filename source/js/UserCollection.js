@@ -54,7 +54,7 @@ class UserCollection extends HTMLElement {
   
       .form {
         position: absolute;
-        top: 18vh;
+        top: 11vh;
         left: 25vw;
         margin-left: 0vw;
         margin-right: 0vw;
