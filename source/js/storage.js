@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 const userInfo = {};
 const recipeData = {};
 
@@ -154,7 +155,7 @@ async function search(options) {
     } catch (error) {
       // uh oh
       console.log(`Error searching for ${options}, ${error}`);
-      reject();
+      reject(error);
     }
   });
 }
@@ -425,86 +426,11 @@ function isSaved(recipeId) {
 }
 
 /**
- * ON HOLD (UNTESTED)
- * @function
- * This function fetches an external recipe url and parses it for its recipe
- * json, which we return when this function resolves.
- * @param {string} url
- * @return {Promise}
- */
-async function retrieveJSONFromPage(url) {
-  return Promise((resolve, reject) => {
-    fetch(url)
-      .then((response) => {
-        // check if we got the page
-        if (!response.ok) {
-          console.log(`Unable to retrieve ${url}`);
-          reject();
-        }
-        response.text();
-      })
-      // get the page as text
-      .then((text) => {
-        // parse it as an html element
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(text, "text/html");
-        // get all scripts with attribute type="application/ld+json"
-        const candidates = htmlDoc.querySelectorAll(
-          'script[type="application/ld+json]"'
-        );
-        // go through all of them and see which one is our recipe script
-        let ourRecipe = null;
-        candidates.forEach((candidateScript) => {
-          // parse it into an object
-          const json = JSON.parse(candidateScript.innerHTML);
-
-          if (hasRecipe(json)) {
-            ourRecipe = json;
-          }
-        });
-
-        // if we don't find it then we reject the promise
-        if (!ourRecipe) {
-          console.log(`Woopsies, json not found from ${url}`);
-          reject();
-        } else {
-          // resolve
-          resolve(ourRecipe);
-        }
-      });
-  });
-}
-
-/**
- * UNTESTED
- * Recursively searches the object
- * Returns true if the given object contains a recipe inside of it
- * @param {Object} object - a js object we want to check if it has
- * a recipe in it
- * @return {Boolean}
- */
-function hasRecipe(object) {
-  // go through its keys
-  Object.keys(object).forEach((key) => {
-    // if it is of @type Recipe then we're good
-    if (key === "@type") {
-      if (object[key] === "Recipe") {
-        return true;
-      }
-    }
-    // check if it has subobjects and recurse
-    else if (!!object[key] && typeof object[key] === "object") {
-      return hasRecipe(object[key]);
-    }
-  });
-  // no recipe!!!!
-  return false;
-}
-
-/**
- * When the returned promise is resolved, the userInfo and localStorage should be updated with the new grocery list entry
+ * When the returned promise is resolved,
+ * the userInfo and localStorage should be updated
+ *  with the new grocery list entry
  * @param {string} ingredient - name of ingredient to add
- * @returns {Promise}
+ * @return {Promise}
  */
 async function addToGroceryList(ingredient) {
   return new Promise((resolve, reject) => {
@@ -531,7 +457,7 @@ async function addToGroceryList(ingredient) {
  * When the returned promise is resolved, the userInfo and localStorage
  * should be updated with the remove grocery list entry
  * @param {string} ingredient - name of ingredient to remove
- * @returns {Promise}
+ * @return {Promise}
  */
 async function removeFromGroceryList(ingredient) {
   return new Promise((resolve, reject) => {
@@ -564,7 +490,7 @@ async function removeFromGroceryList(ingredient) {
  * user's grocery list will be updated and so will userInfo and localStorage
  * @param {string} ingredient - the name of the ingredient to update
  * @param {boolean} checked - the new value for the ingredient's checkbox
- * @returns {Promise}
+ * @return {Promise}
  */
 async function updateEntryInGrocery(ingredient, checked) {
   return new Promise((resolve, reject) => {

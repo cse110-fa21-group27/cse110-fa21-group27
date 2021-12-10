@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable require-jsdoc */
+/* eslint-disable valid-jsdoc */
 /**
  * @class
  * This is the custom web component used to display the grocery list page
@@ -63,7 +66,7 @@ class GroceryListPage extends HTMLElement {
       const entry = document.createElement("div");
       entry.classList.add("listEntry");
 
-      //label
+      // label
       const name = document.createElement("p");
       name.textContent = groceryEntry.name;
       name.classList.add("ingredientName");

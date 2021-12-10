@@ -145,9 +145,9 @@ function recipePage(recipeId, recipeJSON) {
 }
 
 /**
- * @function
  * After this page function is run, <main> should be empty except for the
  * <grocery-list-page> component
+ * @function
  */
 function groceryListPage() {
   const main = document.querySelector("main");
@@ -164,7 +164,8 @@ function groceryListPage() {
 
 /**
  * At the end of this function, all of the pages should be removed
- * and the corresponding recipe-page passed into this function should be rendered
+ * and the corresponding recipe-page passed
+ * into this function should be rendered
  * This function would replace the main with the roadmap page
  * that will display recipes meant to help the user learn how
  * to cook
@@ -215,61 +216,6 @@ function collectionPage(collection) {
 }
 
 /**
- * DEPRECATED, replaced by storage.getRecipes()
- * After this function resolves, storage.recipeData should be updated
- * with the url's being the keys to access the fetched data.
- * @async
- * @function
- * @param {String[]} recipeUrlList
- * @return {Promise}
- */
-async function loadRecipes(recipeUrlList) {
-  return new Promise((resolve, reject) => {
-    // keep track of each promise we make when using fetch
-    const promises = [];
-
-    recipeUrlList.forEach((url) => {
-      // add each fetch promise to the array
-      promises.push(
-        fetch(url)
-          // catch any errors in fetching (network problems or whatever)
-          .catch((error) => {
-            console.log(`Problem fetching ${url}`, error);
-            reject(error);
-          })
-          // check if we get a proper response
-          // fetch() still resolves even if it's a 404
-          .then((response) => {
-            if (!response.ok) {
-              console.log(`Problem fetching ${url}, status ${response.status}`);
-              reject(response);
-            }
-
-            return response.json();
-          })
-          // response.json() is a promise
-          .then((data) => {
-            storage.recipeData[url] = {
-              url: url,
-              data: data,
-            };
-          }),
-      );
-    });
-
-    // resolve once the entire promise array is resolved
-    Promise.all(promises)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        reject();
-      });
-  });
-}
-
-/**
  * This function renders the <nav-bar> component with the appropriate data
  * @function
  * @name renderNavBar
@@ -290,7 +236,7 @@ function renderNavBar(data) {
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
-  bar.goSearchPage = async(query) => {
+  bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
     router.navigate("search-page", false, results);
   };
