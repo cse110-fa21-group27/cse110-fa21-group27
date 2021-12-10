@@ -150,6 +150,10 @@ class NavBar extends HTMLElement {
     shoppingImg.id = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
     shoppingImg.name = "se_cart_png";
+    shoppingImg.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.goGrocery();
+    });
 
     // roadmap button/img
     const roadmapAct = document.createElement("button");

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 const userInfo = {};
 const recipeData = {};
 
@@ -19,6 +20,7 @@ async function getUserInfo() {
         storageUserInfo = {
           savedRecipes: [],
           collections: [],
+          groceryList: [],
         };
         window.localStorage.setItem(
           "userInfo",
@@ -153,7 +155,7 @@ async function search(options) {
     } catch (error) {
       // uh oh
       console.log(`Error searching for ${options}, ${error}`);
-      reject();
+      reject(error);
     }
   });
 }
@@ -176,7 +178,6 @@ async function addRecipeToSaved(recipeId, recipeName) {
     const newSavedRecipe = {
       id: recipeId,
       name: recipeName,
-      checkedIngredients: [],
       checkedSteps: [],
     };
     const newIndex = userInfo.savedRecipes.push(newSavedRecipe);
@@ -425,79 +426,98 @@ function isSaved(recipeId) {
 }
 
 /**
- * ON HOLD (UNTESTED)
- * This function fetches an external recipe url and parses it for its recipe
- * json, which we return when this function resolves.
- * @param {string} url
+ * When the returned promise is resolved,
+ * the userInfo and localStorage should be updated
+ *  with the new grocery list entry
+ * @param {string} ingredient - name of ingredient to add
  * @return {Promise}
  */
-async function retrieveJSONFromPage(url) {
-  return Promise((resolve, reject) => {
-    fetch(url)
-      .then((response) => {
-        // check if we got the page
-        if (!response.ok) {
-          console.log(`Unable to retrieve ${url}`);
-          reject();
-        }
-        response.text();
-      })
-      // get the page as text
-      .then((text) => {
-        // parse it as an html element
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(text, "text/html");
-        // get all scripts with attribute type="application/ld+json"
-        const candidates = htmlDoc.querySelectorAll(
-          'script[type="application/ld+json]"'
-        );
-        // go through all of them and see which one is our recipe script
-        let ourRecipe = null;
-        candidates.forEach((candidateScript) => {
-          // parse it into an object
-          const json = JSON.parse(candidateScript.innerHTML);
-
-          if (hasRecipe(json)) {
-            ourRecipe = json;
-          }
-        });
-
-        // if we don't find it then we reject the promise
-        if (!ourRecipe) {
-          console.log(`Woopsies, json not found from ${url}`);
-          reject();
-        } else {
-          // resolve
-          resolve(ourRecipe);
-        }
-      });
+async function addToGroceryList(ingredient) {
+  return new Promise((resolve, reject) => {
+    // add to userInfo
+    const index = userInfo.groceryList.push({
+      name: ingredient,
+      checked: false,
+    });
+    // attempt to update userInfo in localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // all good!
+      resolve();
+    } catch (error) {
+      // if there's an error, remove from userInfo
+      userInfo.groceryList.splice(index, 1);
+      console.log(`Unable to add to grocery list ${error}`);
+      reject(error);
+    }
   });
 }
 
 /**
- * UNTESTED
- * Recursively searches the object
- * Returns true if the given object contains a recipe inside of it
- * @param {Object} object - a js object we want to check if it has
- * a recipe in it
- * @return {Boolean}
+ * When the returned promise is resolved, the userInfo and localStorage
+ * should be updated with the remove grocery list entry
+ * @param {string} ingredient - name of ingredient to remove
+ * @return {Promise}
  */
-function hasRecipe(object) {
-  // go through its keys
-  Object.keys(object).forEach((key) => {
-    // if it is of @type Recipe then we're good
-    if (key === "@type") {
-      if (object[key] === "Recipe") {
-        return true;
-      }
+async function removeFromGroceryList(ingredient) {
+  return new Promise((resolve, reject) => {
+    // edit user Info
+    const index = userInfo.groceryList.findIndex((item) => {
+      item.name === ingredient;
+    });
+    if (index === -1) {
+      // already not in grocery list, resolve
+      resolve();
     }
-    // check if it has subobjects and recurse
-    else if (!!object[key] && typeof object[key] === "object") {
-      return hasRecipe(object[key]);
+    const entry = userInfo.groceryList[index];
+    userInfo.groceryList.splice(index, 1);
+    // attempt to update userInfo in localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // resolve when good
+      resolve();
+    } catch (error) {
+      // reject when there's an error
+      userInfo.groceryList.splice(index, 0, entry);
+      console.log(`Unable to remove from grocery list ${error}`);
+      reject(error);
     }
   });
-  // no recipe!!!!
-  return false;
+}
+
+/**
+ * After the returned promise is resolved, the corresponding ingredient in the
+ * user's grocery list will be updated and so will userInfo and localStorage
+ * @param {string} ingredient - the name of the ingredient to update
+ * @param {boolean} checked - the new value for the ingredient's checkbox
+ * @return {Promise}
+ */
+async function updateEntryInGrocery(ingredient, checked) {
+  return new Promise((resolve, reject) => {
+    // edit user Info
+    const index = userInfo.groceryList.findIndex((item) => {
+      return item.name === ingredient;
+    });
+    if (index === -1) {
+      // doesn't exist
+      console.log(`${ingredient} does not exist in groceryList`);
+      reject();
+    }
+    const previous = userInfo.groceryList[index].checked;
+    userInfo.groceryList[index].checked = checked;
+    // attempt to update localStorage
+    try {
+      window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // ok
+      resolve();
+    } catch (error) {
+      // reject when there's an error
+      // reset to what it was
+      userInfo.groceryList[index].checked = previous;
+      console.log(`Unable to update grocery list entry ${error}`);
+      reject(error);
+    }
+  });
 }
 
 export const storage = {
@@ -512,5 +532,8 @@ export const storage = {
   removeCollection,
   addToCollection,
   removeFromCollection,
+  addToGroceryList,
+  removeFromGroceryList,
+  updateEntryInGrocery,
   search,
 };
