@@ -153,18 +153,20 @@ class IngredientsInfo extends HTMLElement {
 
     // Creating a current display of the number of Servings the Recipe
     // will make based on the current number of Ingredients
-    const quantity = document.createElement("p");
+    const quantity = document.createElement("div");
     quantity.classList.add("quantity");
-    quantity.textContent = data.servings;
+    const quantity_txt = document.createElement("p");
+    quantity_txt.textContent = data.servings;
+    quantity_txt.classList.add("quantity_txt");
 
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
     // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
-    subtractQuantity.addEventListener("click", (event) => {
-      if (quantity.textContent !== 1) {
-        quantity.textContent = `${quantity.textContent - 1}`;
+    subtractQuantity.addEventListener("click", () => {
+      if (quantity_txt.textContent !== 1) {
+        quantity_txt.textContent = `${quantity_txt.textContent - 1}`;
       }
     });
     subtractQuantity.textContent = "-";
@@ -172,11 +174,7 @@ class IngredientsInfo extends HTMLElement {
 
     // Creating a current display of the number of Servings the Recipe
     // will make based on the current number of Ingredients
-    const quantity = document.createElement("div");
-    quantity.classList.add("quantity");
-    const quantity_txt = document.createElement("p");
-    quantity_txt.textContent = data.servings;
-    quantity_txt.classList.add("quantity_txt");
+    
     quantity.appendChild(quantity_txt);
     serving_container.appendChild(quantity);
 
@@ -185,7 +183,7 @@ class IngredientsInfo extends HTMLElement {
     // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
-    addQuantity.addEventListener("click", (event) => {
+    addQuantity.addEventListener("click", () => {
       quantity_txt.textContent = `${parseInt(quantity_txt.textContent) + 1}`;
     });
     addQuantity.textContent = "+";
