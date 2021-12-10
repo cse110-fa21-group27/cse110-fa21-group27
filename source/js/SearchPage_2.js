@@ -118,7 +118,7 @@ class SearchPage extends HTMLElement {
     const filter = document.createElement("div");
     filter.id = "filter";
 
-    searchAgain = (e) => {
+    const searchAgain = (e) => {
       e.preventDefault();
       const reqCopy = Object.assign({}, request);
       // get elements
