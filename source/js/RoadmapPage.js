@@ -47,7 +47,7 @@ class RoadmapPage extends HTMLElement {
           border: 10px solid #004152;
           border-radius: 1em;
           border-style: solid none solid solid ;
-          background: #FFF6EC ;
+          background: #5b8775 ;
         }
         .container2 {
           display: block;
@@ -59,7 +59,7 @@ class RoadmapPage extends HTMLElement {
           border: 10px solid #004152;
           border-radius: 1em;
           border-style: solid solid solid none ;
-          background: #FFF6EC;
+          background: #5b8775;
         }
         .progress_container1{
           display: flex;
@@ -69,7 +69,7 @@ class RoadmapPage extends HTMLElement {
           margin-left: auto;
           margin-right: 0em;
           width: 90vw;
-          background: #FFF6EC;
+          background: #5b8775;
         }
 
         .progress_container2{
@@ -80,7 +80,7 @@ class RoadmapPage extends HTMLElement {
           margin-left: 0em;
           margin-right: 0em;
           width: 90vw;
-          background: #FFF6EC;
+          background: #5b8775;
         }
         .rectangle{
           display: flex;
