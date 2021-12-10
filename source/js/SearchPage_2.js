@@ -1,5 +1,8 @@
 /**
- * This custom web component handles displaying search results
+ * This custom web component handles displaying search results.
+ * It assumes the following properties are set before .data
+ * @property {Function} renderRecipes
+ * @property {Function} search
  */
 class SearchPage extends HTMLElement {
   /** constructs the component and allows access to the shadow */
@@ -76,10 +79,6 @@ class SearchPage extends HTMLElement {
           left: 1%;
         }
   
-        .input {
-          width: 90%;
-        }
-        
         .box {
           width: 100%;
           height: 80px;
@@ -119,6 +118,62 @@ class SearchPage extends HTMLElement {
     const filter = document.createElement("div");
     filter.id = "filter";
 
+    searchAgain = (e) => {
+      e.preventDefault();
+      const reqCopy = Object.assign({}, request);
+      // get elements
+      const input1 = filter.querySelector("#input1");
+      const input2 = filter.querySelector("#input2");
+      const input3 = filter.querySelector("#input3");
+      const input4 = filter.querySelector("#input4");
+      const input5 = filter.querySelector("#input5");
+      const input6 = filter.querySelector("#input6");
+      // get minRating
+      const minRating = input1.value;
+      if (minRating > 0) {
+        reqCopy.minRating = minRating;
+      } else {
+        delete reqCopy.minRating;
+      }
+      // get maxTime
+      const maxTimeString = input2.value;
+      if (Number(maxTimeString)) {
+        reqCopy.maxTime = Number(maxTimeString);
+      } else {
+        delete reqCopy.maxTime;
+      }
+      // get vegetarian
+      const vegetarian = input3.checked;
+      if (vegetarian) {
+        reqCopy.vegetarian = true;
+      } else {
+        delete reqCopy.vegetarian;
+      }
+      // get vegan
+      const vegan = input4.checked;
+      if (vegan) {
+        reqCopy.vegan = true;
+      } else {
+        delete reqCopy.vegan;
+      }
+      // get glutenFree
+      const glutenFree = input5.checked;
+      if (glutenFree) {
+        reqCopy.glutenFree = true;
+      } else {
+        delete reqCopy.glutenFree;
+      }
+      // get dairyFree
+      const dairyFree = input6.checked;
+      if (dairyFree) {
+        reqCopy.dairyFree = true;
+      } else {
+        delete reqCopy.dairyFree;
+      }
+      // navigate to searchresults with new request
+      this.search(reqCopy);
+    };
+
     // filter label
     const filterLabel = document.createElement("div");
     filterLabel.id = "filter_label";
@@ -129,6 +184,21 @@ class SearchPage extends HTMLElement {
     const clearAll = document.createElement("button");
     clearAll.id = "clear_all";
     clearAll.innerHTML = "CLEAR ALL";
+    clearAll.addEventListener("click", (e) => {
+      e.preventDefault();
+      const input1 = filter.querySelector("#input1");
+      const input2 = filter.querySelector("#input2");
+      const input3 = filter.querySelector("#input3");
+      const input4 = filter.querySelector("#input4");
+      const input5 = filter.querySelector("#input5");
+      const input6 = filter.querySelector("#input6");
+      input1.value = 0;
+      input2.value = "";
+      input3.checked = false;
+      input4.checked = false;
+      input5.checked = false;
+      input6.checked = false;
+    });
     filter.appendChild(clearAll);
 
     // hr
@@ -157,56 +227,61 @@ class SearchPage extends HTMLElement {
     const form1 = document.createElement("form");
     form1.classList.add("form");
     form1.style.top = "140px";
+    form1.addEventListener("submit", searchAgain);
 
-    const input1 = document.createElement("input");
+    const input1 = document.createElement("select");
     input1.classList.add("input");
-    input1.setAttribute("list", "input_list_1");
     input1.id = "input1";
     input1.name = "input1";
 
-    const resultsList1 = document.createElement("datalist");
-    resultsList1.id = "input_list_1";
+    const blankOption = document.createElement("option");
+    blankOption.textContent = "--select an option--";
+    blankOption.disabled = true;
+    blankOption.selected = true;
+    blankOption.value = 0;
+    input1.appendChild(blankOption);
     const option1 = document.createElement("option");
-    option1.value = "4 or more stars";
-    resultsList1.appendChild(option1);
+    option1.value = 4;
+    option1.textContent = "4 or more stars";
+    input1.appendChild(option1);
     const option2 = document.createElement("option");
-    option2.value = "3 or more stars";
-    resultsList1.appendChild(option2);
+    option2.value = 3;
+    option2.textContent = "3 or more stars";
+    input1.appendChild(option2);
     const option3 = document.createElement("option");
-    option3.value = "2 or more stars";
-    resultsList1.appendChild(option3);
+    option3.value = 2;
+    option3.textContent = "2 or more stars";
+    input1.appendChild(option3);
     const option4 = document.createElement("option");
-    option4.value = "1 or more stars";
-    resultsList1.appendChild(option4);
-
-    input1.appendChild(resultsList1);
+    option4.value = 1;
+    option4.textContent = "1 or more stars";
+    input1.appendChild(option4);
     form1.appendChild(input1);
     filter.appendChild(form1);
+
+    // pre-fill with request
+    if ("minRating" in request) {
+      input1.value = request.minRating;
+    }
 
     // form 2
     const form2 = document.createElement("form");
     form2.classList.add("form");
     form2.style.top = "220px";
+    form2.addEventListener("submit", searchAgain);
 
     const input2 = document.createElement("input");
     input2.classList.add("input");
-    input2.setAttribute("list", "input_list_2");
+    input2.setAttribute("type", "text");
     input2.id = "input2";
     input2.name = "input2";
+    input2.placeholder = "maximum # of minutes";
 
-    const resultsList2 = document.createElement("datalist");
-    resultsList2.id = "input_list_2";
-    const option5 = document.createElement("option");
-    option5.value = "15 minutes or less";
-    resultsList2.appendChild(option5);
-    const option6 = document.createElement("option");
-    option6.value = "30 minutes or less";
-    resultsList2.appendChild(option6);
-    const option7 = document.createElement("option");
-    option7.value = "45 minutes or less";
-    resultsList2.appendChild(option7);
+    // pre-fill with request
+    if ("maxTime" in request) {
+      input2.value = request.maxTime;
+    }
 
-    input2.appendChild(resultsList2);
     form2.appendChild(input2);
     filter.appendChild(form2);
 
@@ -221,6 +296,7 @@ class SearchPage extends HTMLElement {
     const form3 = document.createElement("form");
     form3.classList.add("form");
     form3.style.top = "270px";
+    form3.addEventListener("submit", searchAgain);
 
     const div3 = document.createElement("div");
     div3.classList.add("box");
@@ -232,6 +308,11 @@ class SearchPage extends HTMLElement {
     input3.value = "Vegetarian";
     input3.style.width = "40px";
     input3.style.height = "40px";
+
+    // pre-fill with request
+    if ("vegetarian" in request) {
+      input3.checked = true;
+    }
 
     div3.appendChild(input3);
     form3.appendChild(div3);
@@ -248,6 +329,7 @@ class SearchPage extends HTMLElement {
     const form4 = document.createElement("form");
     form4.classList.add("form");
     form4.style.top = "350px";
+    form4.addEventListener("submit", searchAgain);
 
     const div4 = document.createElement("div");
     div4.classList.add("box");
@@ -259,6 +341,11 @@ class SearchPage extends HTMLElement {
     input4.value = "Vegan";
     input4.style.width = "40px";
     input4.style.height = "40px";
+
+    // pre-fill with request
+    if ("vegan" in request) {
+      input4.checked = true;
+    }
 
     div4.appendChild(input4);
     form4.appendChild(div4);
@@ -275,6 +362,7 @@ class SearchPage extends HTMLElement {
     const form5 = document.createElement("form");
     form5.classList.add("form");
     form5.style.top = "430px";
+    form5.addEventListener("submit", searchAgain);
 
     const div5 = document.createElement("div");
     div5.classList.add("box");
@@ -286,6 +374,11 @@ class SearchPage extends HTMLElement {
     input5.value = "Gluten Free";
     input5.style.width = "40px";
     input5.style.height = "40px";
+
+    // pre-fill with request
+    if ("glutenFree" in request) {
+      input5.checked = true;
+    }
 
     div5.appendChild(input5);
     form5.appendChild(div5);
@@ -302,6 +395,7 @@ class SearchPage extends HTMLElement {
     const form6 = document.createElement("form");
     form6.classList.add("form");
     form6.style.top = "510px";
+    form6.addEventListener("submit", searchAgain);
 
     const div6 = document.createElement("div");
     div6.classList.add("box");
@@ -310,9 +404,14 @@ class SearchPage extends HTMLElement {
     input6.type = "checkbox";
     input6.id = "input6";
     input6.name = "input6";
-    input6.value = "Diary Free";
+    input6.value = "Dairy Free";
     input6.style.width = "40px";
     input6.style.height = "40px";
+
+    // pre-fill with request
+    if ("dairyFree" in request) {
+      input6.checked = true;
+    }
 
     div6.appendChild(input6);
     form6.appendChild(div6);
@@ -322,6 +421,8 @@ class SearchPage extends HTMLElement {
     const apply = document.createElement("button");
     apply.id = "apply";
     apply.innerHTML = "APPLY";
+    apply.addEventListener("click", searchAgain);
+
     filter.appendChild(apply);
 
     searchPage.appendChild(filter);

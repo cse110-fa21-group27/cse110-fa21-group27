@@ -91,7 +91,7 @@ function SearchPage(data) {
       results: results,
       request: request,
     };
-    router.navigate("searchPage", false, data);
+    router.navigate("search-page", false, data);
   };
   searchPage.data = data;
 

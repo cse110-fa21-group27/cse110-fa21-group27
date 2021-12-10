@@ -150,16 +150,17 @@ async function search(options) {
         }
         // check if search options has minRating
         if ("minRating" in options) {
-          const rating =
-            (recipeData[recipeId].data.spoonacularScore * 5.0) / 100.0;
-          if (rating < minRating) {
+          const rating = Math.round(
+            (recipeData[recipeId].data.spoonacularScore * 5.0) / 100.0
+          );
+          if (rating < options.minRating) {
             hit = false;
           }
         }
         // check if search options has maxTime
         if ("maxTime" in options) {
           const time = recipeData[recipeId].data.readyInMinutes;
-          if (time > maxTime) {
+          if (time > options.maxTime) {
             hit = false;
           }
         }
