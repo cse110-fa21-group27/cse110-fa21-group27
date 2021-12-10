@@ -1,7 +1,7 @@
 /*search bar*/
 @font-face {
   font-family: "custom-font";
-  src: url('font.ttf') format('truetype');
+  src: url("font.ttf") format("truetype");
 }
 
 .search_bar {
@@ -28,7 +28,7 @@
   height: 66%;
   left: 30%;
   top: 15%;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -65,6 +65,7 @@
   width: 3.2%;
   height: 70%;
 }
+
 /*filter*/
 .filter {
   position: absolute;
@@ -134,6 +135,7 @@ input[type="checkbox"] {
   line-height: 62px;
   background-color: #000000;
 }
+
 /*search body*/
 .search_body {
   position: absolute;
@@ -151,5 +153,5 @@ body {
   margin-right: 12%;
   grid-template-rows: 100px;
   grid-template-columns: 100%;
-  font-family: custom-font;
+  font-family: custom-font, sans-serif;
 }
