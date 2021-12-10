@@ -77,6 +77,19 @@ class NavBar extends HTMLElement {
       top: 20%;
       width: 3.2%;
       height: 70%;
+  }
+  .roadmap_png {
+    position: absolute;
+    left: 81%;
+    right: 10.88%;
+    top: 20%;
+    width: 4%;
+    height: 72%;
+    background: white;
+    border-radius: 10em;
+  }
+}
+    
     }
     `;
     const styleElem = document.createElement("style");
@@ -111,6 +124,7 @@ class NavBar extends HTMLElement {
     });
 
     // search button/image
+    const searchAct = document.createElement("button");
     const searchImg = document.createElement("input");
     searchImg.type = "image";
     searchImg.className = "search_png";
@@ -135,6 +149,18 @@ class NavBar extends HTMLElement {
       this.goGrocery();
     });
 
+    // roadmap button/img
+    const roadmapAct = document.createElement("button");
+    const roadmapImg = document.createElement("input");
+    roadmapImg.type = "image";
+    roadmapImg.className = "roadmap_png";
+    roadmapImg.id = "se_roadmap_png";
+    roadmapImg.name = "se_roadmap_png";
+    roadmapImg.src = "./images/cook_icon.png";
+    roadmapAct.addEventListener("click", (event) => {
+      this.goRoadmap();
+    });
+
     // saved button/img
     const savedAct = document.createElement("form");
     const savedImg = document.createElement("input");
@@ -154,7 +180,14 @@ class NavBar extends HTMLElement {
     navAct2.appendChild(navText);
     navBar.appendChild(navAct2);
 
-    navBar.appendChild(searchImg);
+    searchAct.appendChild(searchImg);
+    navBar.appendChild(searchAct);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
+
+    roadmapAct.appendChild(roadmapImg);
+    navBar.appendChild(roadmapAct);
 
     shoppingAct.appendChild(shoppingImg);
     navBar.appendChild(shoppingAct);

@@ -27,9 +27,11 @@ class IngredientsInfo extends HTMLElement {
         position: absolute;
         font-family: font;
         width: 20%;
-        height: 66%;
+        height: 100%;
         top: 20%;
         left: 2%;
+        display: block;
+        overflow: auto;
         background: #FFF6EC;
       }
       

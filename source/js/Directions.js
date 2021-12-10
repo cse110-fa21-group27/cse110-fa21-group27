@@ -1,3 +1,6 @@
+/**
+ * directions component
+ */
 class Directions extends HTMLElement {
   constructor() {
     super();
@@ -150,17 +153,16 @@ class Directions extends HTMLElement {
 
     const directionList = data.analyzedInstructions[0].steps;
 
+    //background frame
     const wrapper = document.createElement("article");
     wrapper.classList.add("background");
 
+    //directions header "Directions"
     const directions = document.createElement("p");
     directions.classList.add("directions");
     directions.textContent = "Directions";
     directions.classList.add("header");
     wrapper.appendChild(directions);
-
-    // let button_wrapper = document.createElement('button_wrapper');
-    // button_wrapper.classList.add('buttonstyle');
 
     // Parsing data to create the direction list.
     const list = document.createElement("ol");
@@ -192,6 +194,10 @@ class Directions extends HTMLElement {
       textButton.appendChild(wrapper);
       textButton.classList.add("listItemStyle");
 
+      /**
+       * Button click event listener to expand and compress
+       * directions.
+       */
       textButton.addEventListener("click", (event) => {
         if (textButton.classList.contains("listItemStyle")) {
           textButton.classList.remove("listItemStyle");
@@ -238,6 +244,10 @@ class Directions extends HTMLElement {
           wrapper.appendChild(downArrow);
           textButton.appendChild(wrapper);
           textButton.classList.add("listItemStyle");
+          /**
+           * Button click event listener to expand and compress
+           * directions.
+           */
           textButton.addEventListener("click", (event) => {
             if (textButton.classList.contains("listItemStyle")) {
               textButton.classList.remove("listItemStyle");
@@ -251,7 +261,6 @@ class Directions extends HTMLElement {
               wrapper.appendChild(downArrow);
             }
           });
-
           list.appendChild(direction);
         }
       }
@@ -289,5 +298,3 @@ function searchForKey(object, key) {
   });
   return value;
 }
-
-//module.exports = { Directions };

@@ -26,7 +26,7 @@ describe("Basic user flow for Website", () => {
       return prodItems.length;
     });
     // Expect that array from earlier to be of length 264, meaning 264 <recipe-card> elements were found
-    expect(numCards).toBe(264);
+    expect(numCards).toBe(266);
   });
 
   // Check to make sure that all 264 <recipe-card> elements have "good" data in them
@@ -152,9 +152,9 @@ describe("Basic user flow for Website", () => {
       return prodItems.length;
     });
 
-    expect(numCardspre).toBe(264);
+    expect(numCardspre).toBe(266);
     expect(numCards).toBe(0);
-    expect(numCardspos).toBe(264);
+    expect(numCardspos).toBe(266);
   }, 20000);
   // TODO TESTS
   /**
