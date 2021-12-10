@@ -149,7 +149,7 @@ async function search(options) {
           }
         }
         // check if search options has minRating
-        if (minRating in options) {
+        if ("minRating" in options) {
           const rating =
             (recipeData[recipeId].data.spoonacularScore * 5.0) / 100.0;
           if (rating < minRating) {
@@ -157,32 +157,32 @@ async function search(options) {
           }
         }
         // check if search options has maxTime
-        if (maxTime in options) {
+        if ("maxTime" in options) {
           const time = recipeData[recipeId].data.readyInMinutes;
           if (time > maxTime) {
             hit = false;
           }
         }
         // check if search options has vegetarian
-        if (vegetarian in options) {
+        if ("vegetarian" in options) {
           if (!recipeData[recipeId].data.vegetarian) {
             hit = false;
           }
         }
         // check if search options has vegan
-        if (vegan in options) {
+        if ("vegan" in options) {
           if (!recipeData[recipeId].data.vegan) {
             hit = false;
           }
         }
         // check if search options has gluten free
-        if (glutenFree in options) {
+        if ("glutenFree" in options) {
           if (!recipeData[recipeId].data.glutenFree) {
             hit = false;
           }
         }
         // check if search options has dairy free
-        if (dairyFree in options) {
+        if ("dairyFree" in options) {
           if (!recipeData[recipeId].data.dairyFree) {
             hit = false;
           }
