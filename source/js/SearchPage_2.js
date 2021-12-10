@@ -164,7 +164,7 @@ class SearchPage extends HTMLElement {
     input1.id = "input1";
     input1.name = "input1";
 
-    const resultsList1 = document.createElement("resultslist");
+    const resultsList1 = document.createElement("datalist");
     resultsList1.id = "input_list_1";
     const option1 = document.createElement("option");
     option1.value = "4 or more stars";
@@ -194,7 +194,7 @@ class SearchPage extends HTMLElement {
     input2.id = "input2";
     input2.name = "input2";
 
-    const resultsList2 = document.createElement("resultslist");
+    const resultsList2 = document.createElement("datalist");
     resultsList2.id = "input_list_2";
     const option5 = document.createElement("option");
     option5.value = "15 minutes or less";
