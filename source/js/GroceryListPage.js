@@ -36,6 +36,9 @@ class GroceryListPage extends HTMLElement {
       margin-right: 25vw;
       padding: 0.5em;
     }
+    h3 {
+      color: white;
+    }
     p.ingredientName {
       color: white;
       display: inline;
@@ -79,6 +82,13 @@ class GroceryListPage extends HTMLElement {
       rm.addEventListener("click", () => {
         this.removeFromGroceryList(groceryEntry.name).then((e) => {
           entry.remove();
+
+          if (data.length <= 0) {
+            // empty message
+            const empty = document.createElement("h3");
+            empty.textContent = "Your grocery list is empty";
+            list.appendChild(empty);
+          }
         });
       });
       entry.appendChild(rm);
@@ -98,6 +108,12 @@ class GroceryListPage extends HTMLElement {
 
       list.appendChild(entry);
     });
+    if (data.length <= 0) {
+      // empty message
+      const empty = document.createElement("h3");
+      empty.textContent = "Your grocery list is empty";
+      list.appendChild(empty);
+    }
 
     page.appendChild(list);
 

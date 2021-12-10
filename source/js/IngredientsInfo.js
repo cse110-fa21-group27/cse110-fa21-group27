@@ -167,12 +167,15 @@ class IngredientsInfo extends HTMLElement {
         quantityText.textContent = `${quantity.textContent - 1}`;
         const listOfItems = list.querySelectorAll("label");
         for (let i = 0; i < ingredientList.length; i++) {
+          const oldName = listOfItems[i].textContent;
+          const checkBox = list.querySelector(`input[entry="${oldName}"]`);
           const newAmount =
             (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
             parseFloat(ingredientList[i].amount);
           listOfItems[
             i
           ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+          checkBox.setAttribute("entry", listOfItems[i].textContent);
         }
       }
     });
@@ -193,12 +196,15 @@ class IngredientsInfo extends HTMLElement {
       quantityText.textContent = `${parseInt(quantityText.textContent) + 1}`;
       const listOfItems = list.querySelectorAll("label");
       for (let i = 0; i < ingredientList.length; i++) {
+        const oldName = listOfItems[i].textContent;
+        const checkBox = list.querySelector(`input[entry="${oldName}"]`);
         const newAmount =
           (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
           parseFloat(ingredientList[i].amount);
         listOfItems[
           i
         ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        checkBox.setAttribute("entry", listOfItems[i].textContent);
       }
     });
     addQuantity.textContent = "+";
