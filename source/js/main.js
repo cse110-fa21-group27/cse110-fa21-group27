@@ -84,6 +84,15 @@ function SearchPage(data) {
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
   searchPage.renderRecipes = renderRecipes;
+  // allow it to filter and search again
+  searchPage.search = async (request) => {
+    const results = await storage.search(request);
+    const data = {
+      results: results,
+      request: request,
+    };
+    router.navigate("searchPage", false, data);
+  };
   searchPage.data = data;
 
   main.appendChild(searchPage);
