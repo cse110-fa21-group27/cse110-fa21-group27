@@ -1,5 +1,9 @@
 /**
- * This assumes that the following properties are passed into this object before .data is called or set
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
+ * This assumes that the following properties are passed into this object before
+ *  .data is called or set
  * @property {function} renderRecipes
  * @property {function} addCollection
  * @property {function} removeCollection
@@ -10,6 +14,8 @@ class SavedRecipePage extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. don't break.
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -20,23 +26,84 @@ class SavedRecipePage extends HTMLElement {
    * and the saved recipes
    */
   set data(userInfo) {
-    debugger
     this.shadowRoot.innerHTML = "";
+    // Creates CSS for the Saved Recipe Page Component
     const style = `
-
     button {
       height: 10vh;
       width: 20vw;
     }
+    
+    .saved-recipes[collectionName]:hover {
+      background: #5B8775;
+      cursor: pointer;
+    }
+
+    h1[collectionName] {
+      cursor: pointer;
+    }
+
+    .createRemoveButton {
+      position: absolute;
+      top: 8vh;
+      left: 5vw;
+    }
+
+    .neverMindButton {
+      position: absolute;
+      top: 8vh;
+      right: 5vw;
+    }
 
     div {
-      display: inline-block property;
       width: 50vw;
       margin-left: 25vw;
       margin-right: 25vw;
       margin-top: 25vh;
       background: grey;
+      min-height: 75vh;
+    }
+
+    .form {
+      position: absolute;
+      top: 18vh;
+      left: 25vw;
+      margin-left: 0vw;
+      margin-right: 0vw;
+      margin-top: 0vh;
       z-index: 1;
+    }
+
+    input {
+      position:absolute;
+      left: 5vw;
+      height: 3vh;
+      width: 3vw;
+      margin-top: 17vh;
+    }
+    
+    .deleteInput {
+      margin-top: 20vh;
+    }
+
+    p {
+      position: absolute;
+      display: block;
+      left: 8vw;
+      margin-top: 17vh;
+    }
+
+    .deleteP {
+      margin-top: 20vh;
+    }
+
+    .title {
+      position:absolute;
+      left: 10vw;
+      width: 30vw;
+      height: 5vh;
+      margin-top: 1vh;
+      text-align: center;
     }
 
     .saved-recipes {
@@ -56,64 +123,87 @@ class SavedRecipePage extends HTMLElement {
 
     // Create the form for the user to create a new collection
     addButton.addEventListener("click", () => {
-      let form = document.createElement("div");
-      let name = document.createElement("input");
+      const form = document.createElement("div");
+      form.classList.add("form");
+      const name = document.createElement("input");
       name.type = "text";
       name.value = "New Collection";
+      name.classList.add("title");
       form.appendChild(name);
+      form.appendChild(document.createElement("br"));
       // Add options to add each of the user's saved recipes
       for (let i = 0; i < userInfo.savedRecipes.length; i++) {
-        let input = document.createElement("input");
+        const input = document.createElement("input");
         input.type = "checkbox";
         input.classList.add("checkbox");
         form.appendChild(input);
-        let text = document.createElement("p");
-        text.textContent = "Recipe Name: " + userInfo.savedRecipes[i].name;
+        const text = document.createElement("p");
+        text.textContent = userInfo.savedRecipes[i].name;
+        text.classList.add("options");
         form.appendChild(text);
-        let lineBreak = document.createElement("br");
+        const lineBreak = document.createElement("br");
         form.appendChild(lineBreak);
       }
 
       // Create an array of recipe ids to render the new collection
-      let idArray = [];
+      const idArray = [];
       // Button to create the collection
-      let createButton = document.createElement("button");
+      const createButton = document.createElement("button");
+      createButton.classList.add("createRemoveButton");
       createButton.textContent = "Create Collection";
       // Create the collection, add the recipes, and delete the form
       createButton.addEventListener("click", () => {
-        this.addCollection(name.value);
-        let checkboxArray = form.querySelectorAll("input");
-        for (let i = 0; i < checkboxArray.length; i++) {
-          // There is an extra input for the user to input collection name, 
-          // all the other inputs need to be checked for a checkmark from user
-          if (checkboxArray[i].checked) {
-            this.addToCollection(userInfo.savedRecipes[i-1].id, name.value);
-            // Only display the first three recipes
-            if (idArray.length < 3) {
-              idArray.push(userInfo.savedRecipes[i-1].id);
+        this.addCollection(name.value).then(() => {
+          const checkboxArray = form.querySelectorAll("input");
+          for (let i = 0; i < checkboxArray.length; i++) {
+            // There is an extra input for the user to input collection name,
+            // all the other inputs need to be checked for a checkmark from user
+            if (checkboxArray[i].checked) {
+              this.addToCollection(userInfo.savedRecipes[i - 1].id, name.value);
+              // Only display the first three recipes
+              if (idArray.length < 3) {
+                idArray.push(userInfo.savedRecipes[i - 1].id);
+              }
             }
           }
-        }
-        
-        // Rendering the new Collection
-        // Collection name
-        let headerName = document.createElement("h1");
-        headerName.textContent = name.value;
-        this.shadowRoot.appendChild(headerName);
-        // Create the section to render the colletion recipe cards
-        let collection = document.createElement("section");
-        collection.classList.add("saved-recipes");
-        // Render the cards.
-        this.renderRecipes(idArray, collection).then(() => {
-          this.shadowRoot.appendChild(collection);
-          this.shadowRoot.appendChild(document.createElement("hr"));
-        });
 
-        this.shadowRoot.removeChild(form);
+          // Rendering the new Collection
+          // Collection name
+          const headerName = document.createElement("h1");
+          headerName.textContent = name.value;
+          headerName.setAttribute("collectionName", name.value);
+          headerName.addEventListener("click", () => {
+            this.goToCollection(
+              userInfo.collections[userInfo.collections.length - 1]
+            );
+          });
+          this.shadowRoot.appendChild(headerName);
+          // Create the section to render the colletion recipe cards
+          const collection = document.createElement("section");
+          collection.classList.add("saved-recipes");
+          collection.setAttribute("collectionName", name.value);
+          // Render the cards.
+          this.renderRecipes(idArray, collection, false).then(() => {
+            this.shadowRoot.appendChild(collection);
+            const br = document.createElement("hr");
+            br.setAttribute("collectionName", name.value);
+            this.shadowRoot.appendChild(br);
+
+            // Create the collection page
+            collection.addEventListener("click", () => {
+              this.goToCollection(
+                userInfo.collections[userInfo.collections.length - 1]
+              );
+            });
+          });
+
+          this.shadowRoot.removeChild(form);
+        });
       });
 
       // Button to remove the form without creating the collection
-      let neverMindButton = document.createElement("button");
+      const neverMindButton = document.createElement("button");
+      neverMindButton.classList.add("neverMindButton");
       neverMindButton.textContent = "Don't Create Collection";
       neverMindButton.addEventListener("click", () => {
         this.shadowRoot.removeChild(form);
@@ -129,53 +219,74 @@ class SavedRecipePage extends HTMLElement {
     deleteButton.textContent = "Delete Collection";
     // Create the form for the user to delete collections
     deleteButton.addEventListener("click", () => {
-      let form = document.createElement("div");
-      let name = document.createElement("p");
+      const form = document.createElement("div");
+      form.classList.add("form");
+      const name = document.createElement("p");
       name.textContent = "Delete Collection";
+      name.classList.add("title");
       form.appendChild(name);
-      
+
       // Add options to remove each of the user's collections
       for (let i = 0; i < userInfo.collections.length; i++) {
-        let input = document.createElement("input");
+        const input = document.createElement("input");
         input.type = "checkbox";
         input.classList.add("checkbox");
+        input.classList.add("deleteInput");
+        input.setAttribute("collectionName", userInfo.collections[i].name);
         form.appendChild(input);
-        let text = document.createElement("p");
+        const text = document.createElement("p");
+        text.classList.add("options");
+        text.classList.add("deleteP");
         text.textContent = "Collection Name: " + userInfo.collections[i].name;
         form.appendChild(text);
-        let lineBreak = document.createElement("br");
+        const lineBreak = document.createElement("br");
         form.appendChild(lineBreak);
       }
 
       // Grab the sections/headers/brs
-      let sectionArray = this.shadowRoot.querySelectorAll("section");
-      console.log(sectionArray);
-      let headerArray = this.shadowRoot.querySelectorAll("h1");
-      console.log(headerArray);
-      let lineArray = this.shadowRoot.querySelectorAll("hr");
-      console.log(lineArray);
+      const sectionArray = this.shadowRoot.querySelectorAll("section");
+      const headerArray = this.shadowRoot.querySelectorAll("h1");
+      const lineArray = this.shadowRoot.querySelectorAll("hr");
+
       // Button to delete the collections
-      let deleteButton = document.createElement("button");
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("createRemoveButton");
       deleteButton.textContent = "Delete Collections";
       // Select the collections, delete them, and delete the form
       deleteButton.addEventListener("click", () => {
-        let checkboxArray = form.querySelectorAll("input");
+        const checkboxArray = form.querySelectorAll("input");
         // It deletes in reverse order to make sure there are no index problems
-        for (let i = checkboxArray.length-1; i >= 0 ; i--) {
+        for (let i = checkboxArray.length - 1; i >= 0; i--) {
           // Checks which collections were checked and deletes them
           if (checkboxArray[i].checked) {
-            this.removeCollection(userInfo.collections[i].name);
-            // Adjusting by one so that we don't delete saved-recipes
-            this.shadowRoot.removeChild(sectionArray[i+1]);
-            this.shadowRoot.removeChild(headerArray[i+1]);
-            this.shadowRoot.removeChild(lineArray[i+1]);
+            const nameToRemove =
+              checkboxArray[i].getAttribute("collectionName");
+            this.removeCollection(nameToRemove);
+            // Removing the html elements
+
+            Array.from(sectionArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") === nameToRemove;
+              })
+              .remove();
+            Array.from(headerArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") === nameToRemove;
+              })
+              .remove();
+            Array.from(lineArray)
+              .find((elem) => {
+                return elem.getAttribute("collectionName") === nameToRemove;
+              })
+              .remove();
           }
         }
         this.shadowRoot.removeChild(form);
       });
 
       // Button to remove the form without creating the collection
-      let neverMindButton = document.createElement("button");
+      const neverMindButton = document.createElement("button");
+      neverMindButton.classList.add("neverMindButton");
       neverMindButton.textContent = "Don't Delete Collections";
       neverMindButton.addEventListener("click", () => {
         this.shadowRoot.removeChild(form);
@@ -190,49 +301,40 @@ class SavedRecipePage extends HTMLElement {
     const page = document.createElement("section");
     page.classList.add("saved-recipes");
     // Loading the saved recipes into an array to pass to render recipes
-    let idList = [];
+    const idList = [];
     for (let i = 0; i < userInfo.savedRecipes.length; i++) {
       idList.push(userInfo.savedRecipes[i].id);
     }
     this.renderRecipes(idList, page);
 
-    this.shadowRoot.appendChild(styleElem);
+    this.shadowRoot.appendChild(h);
+    this.shadowRoot.appendChild(page);
+
     this.shadowRoot.appendChild(document.createElement("hr"));
-       
+    this.shadowRoot.appendChild(styleElem);
+
     // Displaying previously created collections
     for (let i = 0; i < userInfo.collections.length; i++) {
       // Collection name
-      let headerName = document.createElement("h1");
+      const headerName = document.createElement("h1");
       headerName.textContent = userInfo.collections[i].name;
+      headerName.setAttribute("collectionName", userInfo.collections[i].name);
+      headerName.addEventListener("click", () => {
+        this.goToCollection(userInfo.collections[i]);
+      });
       this.shadowRoot.appendChild(headerName);
-      // Create the section to render the colletion recipe cards
-      let collection = document.createElement("section");
+      // Create the section to render the collection recipe cards
+      const collection = document.createElement("section");
       collection.classList.add("saved-recipes");
+      collection.setAttribute("collectionName", userInfo.collections[i].name);
 
       // Create the collection page
-      collection.addEventListener('click', () => {
-        const main = document.querySelector("main");
-        // delete everyting in main
-        main.innerHTML = "";
-        // make user-collection visible
-        const userCollection = document.createElement("user-collection");
-        // pass the renderrecipes function
-        userCollection.renderRecipes = this.renderRecipes;
-        // pass the collections functions
-        userCollection.addToCollection = this.addToCollection;
-        userCollection.removeFromCollection = this.removeFromCollection;
-        // Create an object to pass in the information that collections will need
-        let data = {
-          collection: userInfo.collections[i],
-          savedRecipes: userInfo.savedRecipes 
-        }
-        // give it the array of userInfo for data
-        userCollection.data = data;
-        main.appendChild(userCollection);
+      collection.addEventListener("click", () => {
+        this.goToCollection(userInfo.collections[i]);
       });
 
       // Getting the ids from the collection
-      let idArray = [];
+      const idArray = [];
       for (let j = 0; j < userInfo.collections[i].ids.length; j++) {
         // Only display 3 recipes
         if (j < 3) {
@@ -241,12 +343,12 @@ class SavedRecipePage extends HTMLElement {
       }
 
       // Render the collection
-      this.renderRecipes(idArray, collection);
+      this.renderRecipes(idArray, collection, false);
       this.shadowRoot.appendChild(collection);
-      this.shadowRoot.appendChild(document.createElement("hr"));
+      const br = document.createElement("hr");
+      br.setAttribute("collectionName", userInfo.collections[i].name);
+      this.shadowRoot.appendChild(br);
     }
-    this.shadowRoot.appendChild(h);
-    this.shadowRoot.appendChild(page);
   }
 }
 

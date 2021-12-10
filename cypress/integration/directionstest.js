@@ -1,7 +1,10 @@
+// These two were auto-imported by cypress I don't want to mess with that
+
+// eslint-disable-next-line no-unused-vars
 const { cyan } = require("chalk");
+// eslint-disable-next-line no-unused-vars
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
-const recipe = require("./../../__tests__/unit_js/directions");
+const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
 
@@ -12,7 +15,7 @@ describe(
   { timeout: 10000 },
   () => {
     // APPARENTLY THE JSON IS BADLY FORMATTED? SO JUST LEAVE IT FOR NOW
-    Cypress.on("uncaught:exception", (err, runnable) => {
+    Cypress.on("uncaught:exception", (err) => {
       if (err.message.includes("Unexpected token")) {
         return false;
       }
@@ -21,7 +24,7 @@ describe(
     });
 
     it("Opens index.html", () => {
-      cy.visit("./__tests__/unit_html/directions_test.html");
+      cy.visit("./cypress/unit_html/directions_test.html");
     });
 
     // Check how many direction pages there are
@@ -30,7 +33,7 @@ describe(
     });
 
     // Check that the title says "Directions"
-    it('check that the title says "Directions"', () => {
+    it("check that the title says 'Directions'", () => {
       cy.get("directions-info")
         .shadow()
         .find("p")
@@ -91,6 +94,7 @@ describe(
           });
       });
 
+      // eslint-disable-next-line max-len
       it(`check that instruction ${i}'s checkbox is unchecked by default`, () => {
         cy.get("directions-info")
           .shadow()
@@ -139,6 +143,7 @@ describe(
           });
       });
 
+      // eslint-disable-next-line max-len
       it(`check that clicking changes the class (and therefore style) of the text of instruction ${i}`, () => {
         cy.get("directions-info")
           .shadow()
@@ -156,7 +161,5 @@ describe(
           });
       });
     }
-
-    // check that clicking the button does stuff (DEFINE STUFF)
   }
 );

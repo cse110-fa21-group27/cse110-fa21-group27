@@ -1,13 +1,22 @@
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ */
 class SearchPage extends HTMLElement {
-  /** constructs the component and allows access to the shadow */
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. don't break.
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
+   * Creates the Search Page Component with information from the
+   * recipe json file and displays it with some CSS styling.
    * @param {object} data - the recipe json file
    */
   set data(data) {
+    // Creates CSS for the Nav Bar Component
     const style = `
       #filter {
         position: fixed;
@@ -91,25 +100,25 @@ class SearchPage extends HTMLElement {
     const styleElem = document.createElement("style");
     styleElem.innerHTML = style;
 
-    const search_page = document.createElement("article");
+    const searchPage = document.createElement("article");
 
-    //##### start of filter #####
+    // Start of filter
     const filter = document.createElement("div");
     filter.id = "filter";
 
-    //filter label
+    // filter label
     const filterLabel = document.createElement("div");
     filterLabel.id = "filter_label";
     filterLabel.innerHTML = "Filter";
     filter.appendChild(filterLabel);
 
-    //clear all button
+    // clear all button
     const clearAll = document.createElement("button");
     clearAll.id = "clear_all";
     clearAll.innerHTML = "CLEAR ALL";
     filter.appendChild(clearAll);
 
-    //hr
+    // hr
     const hr = document.createElement("hr");
     hr.style.marginTop = "25%";
     hr.style.width = "90%";
@@ -117,50 +126,49 @@ class SearchPage extends HTMLElement {
     hr.style.color = "black";
     filter.appendChild(hr);
 
-    //label Rating
+    // label Rating
     const label_1 = document.createElement("div");
     label_1.classList.add("label");
     label_1.style.top = "80px";
     label_1.innerHTML = "Rating";
     filter.appendChild(label_1);
 
-    //label Cooking Time
+    // label Cooking Time
     const label_2 = document.createElement("div");
     label_2.classList.add("label");
     label_2.style.top = "160px";
     label_2.innerHTML = "Cooking Time";
     filter.appendChild(label_2);
 
-    //label Vegetarian
+    // label Vegetarian
     const label_3 = document.createElement("div");
     label_3.classList.add("label");
     label_3.style.top = "240px";
     label_3.innerHTML = "Vegetarian";
     filter.appendChild(label_3);
 
-    //label Vegan
+    // label Vegan
     const label_4 = document.createElement("div");
     label_4.classList.add("label");
     label_4.style.top = "320px";
     label_4.innerHTML = "Vegan";
     filter.appendChild(label_4);
 
-    //label Gluten Free
+    // label Gluten Free
     const label_5 = document.createElement("div");
     label_5.classList.add("label");
     label_5.style.top = "400px";
     label_5.innerHTML = "Gluten Free";
     filter.appendChild(label_5);
 
-    //label Diary Free
+    // label Diary Free
     const label_6 = document.createElement("div");
     label_6.classList.add("label");
     label_6.style.top = "480px";
     label_6.innerHTML = "Diary Free";
     filter.appendChild(label_6);
 
-
-    //form 1
+    // form 1
     const form_1 = document.createElement("form");
     form_1.classList.add("form");
     form_1.style.top = "140px";
@@ -190,7 +198,7 @@ class SearchPage extends HTMLElement {
     form_1.appendChild(input_1);
     filter.appendChild(form_1);
 
-    //form 2
+    // form 2
     const form_2 = document.createElement("form");
     form_2.classList.add("form");
     form_2.style.top = "220px";
@@ -217,7 +225,7 @@ class SearchPage extends HTMLElement {
     form_2.appendChild(input_2);
     filter.appendChild(form_2);
 
-    //form 3
+    // form 3
     const form_3 = document.createElement("form");
     form_3.classList.add("form");
     form_3.style.top = "300px";
@@ -241,7 +249,7 @@ class SearchPage extends HTMLElement {
     form_3.appendChild(input_3);
     filter.appendChild(form_3);
 
-    //form 4
+    // form 4
     const form_4 = document.createElement("form");
     form_4.classList.add("form");
     form_4.style.top = "380px";
@@ -265,7 +273,7 @@ class SearchPage extends HTMLElement {
     form_4.appendChild(input_4);
     filter.appendChild(form_4);
 
-    //form 5
+    // form 5
     const form_5 = document.createElement("form");
     form_5.classList.add("form");
     form_5.style.top = "460px";
@@ -289,7 +297,7 @@ class SearchPage extends HTMLElement {
     form_5.appendChild(input_5);
     filter.appendChild(form_5);
 
-    //form 6
+    // form 6
     const form_6 = document.createElement("form");
     form_6.classList.add("form");
     form_6.style.top = "540px";
@@ -313,26 +321,26 @@ class SearchPage extends HTMLElement {
     form_6.appendChild(input_6);
     filter.appendChild(form_6);
 
-    //apply button
+    // apply button
     const apply = document.createElement("button");
     apply.id = "apply";
     apply.innerHTML = "APPLY";
     filter.appendChild(apply);
 
-    search_page.appendChild(filter);
-    //##### end of filter #####
+    searchPage.appendChild(filter);
+    // ##### end of filter #####
 
-    //##### start of search body ##### (#todo)
+    // ##### start of search body ##### (#todo)
     const body = document.createElement("div");
     body.id = "search_body";
     // create recipe cards for each result
     this.renderRecipes(data, body);
 
-    search_page.appendChild(body);
-    //##### end of search body #####
+    searchPage.appendChild(body);
+    // ##### end of search body #####
 
     this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(search_page);
+    this.shadowRoot.appendChild(searchPage);
   }
 }
 

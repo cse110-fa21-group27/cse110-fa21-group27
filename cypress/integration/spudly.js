@@ -1,17 +1,10 @@
-// sample_spec.js created with Cypress
-//
-// Start writing your Cypress tests below!
-// If you're unfamiliar with how Cypress works,
-// check out the link below and learn how to write your first test:
+// Created by cypress, I don't want to mess with that.
 
+// eslint-disable-next-line no-unused-vars
 const { cyan } = require("chalk");
+// eslint-disable-next-line no-unused-vars
 const { createDocument } = require("parse5/lib/tree-adapters/default");
 const magicNumbers = require("./magictestNumbers");
-function delay(time) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, time);
-  });
-}
 
 // https://on.cypress.io/writing-first-test
 describe("Test the home page", { timeout: 10000 }, () => {
@@ -43,7 +36,6 @@ describe("Test the home page", { timeout: 10000 }, () => {
   );
 
   for (let i = 1; i < magicNumbers.numOfRecipes + 1; i++) {
-    let allPop = true;
     // Check that *all* recipe thumbnails aren't empty
     it(
       `check that recipe ${i}'s thumbnail isn't empty`,
@@ -56,7 +48,7 @@ describe("Test the home page", { timeout: 10000 }, () => {
           .find(".thumbnail-photo")
           .invoke("attr", "src")
           .then(($el) => {
-            if ($el == "undefined" || !$el) {
+            if ($el === "undefined" || !$el) {
               console.error(
                 `Something is wrong with the image from recipe ${i}`
               );
@@ -72,7 +64,7 @@ describe("Test the home page", { timeout: 10000 }, () => {
 
   // Check that *a* recipe title isn't empty
   it("check that a recipe title isn't empty", { timeout: 10000 }, () => {
-    /*cy.get(
+    /* cy.get(
       `.recipes > :nth-child(${Math.ceil(
         Math.random() * (magicNumbers.numOfRecipes - 1) + 1
       )})`
@@ -110,7 +102,6 @@ describe("Test the home page", { timeout: 10000 }, () => {
   });
 
   for (let i = 1; i < magicNumbers.numOfRecipes + 1; i++) {
-    let allPop = true;
     it(
       `check that recipe #${i} has a non empty recipe title`,
       { timeout: 10000 },

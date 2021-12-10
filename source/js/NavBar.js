@@ -1,14 +1,20 @@
-/** this is the navbar component for all pages */
+/**
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ */
 class NavBar extends HTMLElement {
-  /** constructs the component and allows access to the shadow */
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
-  /** we did not know how to get this navbar without using the data func even tho it tech shouldnt need it
+  /**
+   * Creates the Nav Bar Component and and displays it with some CSS styling.
    * @param {object} data - the recipe json file
    */
   set data(data) {
+    // Creates CSS for the Nav Bar Component
     const style = ` 
     @font-face {
       font-family: font;
@@ -144,6 +150,10 @@ class NavBar extends HTMLElement {
     shoppingImg.id = "se_cart_png";
     shoppingImg.src = "./images/cart.png";
     shoppingImg.name = "se_cart_png";
+    shoppingImg.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.goGrocery();
+    });
 
     // roadmap button/img
     const roadmapAct = document.createElement("button");

@@ -8,7 +8,8 @@ const router = new Router(recipesPage);
 
 /* gonna ignore glider for now
 const gliderConfig = {
-  focusAt: 'center', //this line seems to being nothing. i wanted it to maybe like, enable the non-translucence. or something like that
+  focusAt: 'center', //this line seems to being nothing. i wanted it to maybe
+  like, enable the non-translucence. or something like that
   type: 'carousel',
   perView: 3,
   breakpoints:{
@@ -32,11 +33,13 @@ async function init() {
   await storage.getUserInfo();
   // obtain recipes from storage
   await storage.getRecipes();
+  router.navigate("home");
   router.addPage("roadmap-page", RoadmapPage);
   router.addPage("search-page", SearchPage);
-  router.navigate("home");
   router.addPage("savedRecipes", savedRecipesPage);
   router.addPage("search-page", SearchPage);
+  router.addPage("groceryList", groceryListPage);
+  router.addPage("collection", collectionPage);
   renderNavBar({
     recipeUrl: null,
     isRecipe: false,
@@ -45,7 +48,9 @@ async function init() {
 }
 
 /**
- * At the end of this function
+ * This function will fill main with all the recipes
+ * @function
+ * @name recipesPage
  */
 function recipesPage() {
   const main = document.querySelector("main");
@@ -65,7 +70,11 @@ function recipesPage() {
 }
 
 /**
- * This function would replace the main with the search page including the filter and the body
+ * This function would replace the main with the search page
+ * including the filter and the body
+ * @function
+ * @name SearchPage
+ * @param {Object} results - passes in the results from the search
  */
 function SearchPage(results) {
   const main = document.querySelector("main");
@@ -80,8 +89,10 @@ function SearchPage(results) {
 }
 
 /**
- * At the end of this function, all the other pages should be hidden and only the saved Recipe List should be visible
+ * This function would replace the main with the saved recipe page
+ * including the user's custom collections, if any
  * @function
+ * @name savedRecipesPage
  */
 function savedRecipesPage() {
   const main = document.querySelector("main");
@@ -96,19 +107,21 @@ function savedRecipesPage() {
   savedPage.removeCollection = storage.removeCollection;
   savedPage.addToCollection = storage.addToCollection;
   savedPage.removeFromCollection = storage.removeFromCollection;
+  // allow it to navigate to collection
+  savedPage.goToCollection = (collection) => {
+    router.navigate("collection", false, collection);
+  };
   // give it the array of userInfo for data
   savedPage.data = storage.userInfo;
-  // savedPage.data = storage.userInfo.savedRecipes.map((savedRecipe) => {
-  //   return savedRecipe.id;
-  // });
 
   main.appendChild(savedPage);
 }
 
 /**
- * At the end of this function, all of the pages should be removed
- * and the corresponding recipe-page passed into this function should be rendered
+ * This function would replace the main with the recipe page
+ * of the recipe that the user just clicked on
  * @function
+ * @name recipePage
  * @param {string} recipeId - the id of the recipe the page is showing
  * @param {Object} recipeJSON - the recipeJSON of the recipe that contains
  * all its data
@@ -125,14 +138,40 @@ function recipePage(recipeId, recipeJSON) {
   recipePage.removeRecipeFromSaved = storage.removeRecipeFromSaved;
   recipePage.id = recipeId;
   recipePage.isSaved = storage.isSaved(recipeId);
+  // allow it to add to grocery list
+  recipePage.addToGroceryList = storage.addToGroceryList;
   // set the recipe-page's data into this recipe's JSON
   recipePage.data = recipeJSON;
 }
 
 /**
- * At the end of this function, all of the pages should be removed
- * and the corresponding recipe-page passed into this function should be rendered
+ * After this page function is run, <main> should be empty except for the
+ * <grocery-list-page> component
  * @function
+ */
+function groceryListPage() {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create grocery page
+  const groceryPage = document.createElement("grocery-list-page");
+  main.appendChild(groceryPage);
+  // allow it to remove/edit grocery items
+  groceryPage.removeFromGroceryList = storage.removeFromGroceryList;
+  groceryPage.updateEntryInGrocery = storage.updateEntryInGrocery;
+  // give it access to grocery list
+  groceryPage.data = storage.userInfo.groceryList;
+}
+
+/**
+ * At the end of this function, all of the pages should be removed
+ * and the corresponding recipe-page passed
+ * into this function should be rendered
+ * This function would replace the main with the roadmap page
+ * that will display recipes meant to help the user learn how
+ * to cook
+
+ * @function
+ * @name RoadmapPage
  */
 function RoadmapPage() {
   const main = document.querySelector("main");
@@ -146,77 +185,46 @@ function RoadmapPage() {
   roadmapPage.goRecipe = (recipeId) => {
     router.navigate(recipeId);
   };
-
-  /*
-  renderNavBar({
-    recipeUrl: recipeUrl,
-    isRecipe: true,
-  });
-  */
 }
 
 /**
- * DEPRECATED, replaced by storage.getRecipes()
- * After this function resolves, storage.recipeData should be updated
- * with the url's being the keys to access the fetched data.
- * @async
+ * This function would replace the main with the collection page
+ * of the user-created collection that they just clicked on and
+ * its corresponding recipe cards
  * @function
- * @param {String[]} recipeUrlList
- * @returns {Promise}
+ * @name collectionPage
+ * @param {Object} collection - the collection object that we want to display
  */
-async function loadRecipes(recipeUrlList) {
-  return new Promise((resolve, reject) => {
-    // keep track of each promise we make when using fetch
-    const promises = [];
-
-    recipeUrlList.forEach((url) => {
-      // add each fetch promise to the array
-      promises.push(
-        fetch(url)
-          // catch any errors in fetching (network problems or whatever)
-          .catch((error) => {
-            console.log(`Problem fetching ${url}`, error);
-            reject(error);
-          })
-          // check if we get a proper response
-          // fetch() still resolves even if it's a 404
-          .then((response) => {
-            if (!response.ok) {
-              console.log(`Problem fetching ${url}, status ${response.status}`);
-              reject(response);
-            }
-
-            return response.json();
-          })
-          // response.json() is a promise
-          .then((data) => {
-            storage.recipeData[url] = {
-              url: url,
-              data: data,
-            };
-          })
-      );
-    });
-
-    // resolve once the entire promise array is resolved
-    Promise.all(promises)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        reject();
-      });
-  });
+function collectionPage(collection) {
+  // delete everything in main
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+  // create the user collection custom element
+  const userCollection = document.createElement("user-collection");
+  // pass the renderRecipes function
+  userCollection.renderRecipes = renderRecipes;
+  // pass the collections functions
+  userCollection.addToCollection = storage.addToCollection;
+  userCollection.removeFromCollection = storage.removeFromCollection;
+  // create data object
+  const data = {
+    collection: collection,
+    savedRecipes: storage.userInfo.savedRecipes,
+  };
+  userCollection.data = data;
+  main.appendChild(userCollection);
 }
 
 /**
- * This function renders the <nav-bar> with the appropriate data
+ * This function renders the <nav-bar> component with the appropriate data
+ * @function
+ * @name renderNavBar
  * @param {Object} data - object containing information about the current
  * state of the page.
  */
 function renderNavBar(data) {
-  // it should already be there, we just need to give it the data to force it to re-render itself appropriately
+  // it should already be there, we just need to give it the data to
+  // force it to re-render itself appropriately
   const bar = document.querySelector("nav-bar");
   bar.goHome = () => {
     router.navigate("home");
@@ -224,13 +232,16 @@ function renderNavBar(data) {
   bar.goRoadmap = () => {
     router.navigate("roadmap-page");
   };
-  
+
   bar.goToSaved = () => {
     router.navigate("savedRecipes");
   };
   bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
     router.navigate("search-page", false, results);
+  };
+  bar.goGrocery = () => {
+    router.navigate("groceryList");
   };
   bar.data = data;
 }
@@ -240,21 +251,27 @@ function renderNavBar(data) {
  * to an id in list will be created and placed into target
  * @async
  * @function
+ * @name renderRecipes
  * @param {String[]} list - array of ids to render
  * @param {HTMLElement} target - the HTMLElement we want to place the
+ * @param {Boolean} clickable - if we want to bind event listeners to the
+ * card or not. default is true
  * recipe-card's into
  */
-async function renderRecipes(list, target) {
+async function renderRecipes(list, target, clickable = true) {
   list.forEach((recipeId) => {
     // obtain data
     const recipeJSON = storage.recipeData[recipeId].data;
     const newCard = document.createElement("recipe-card");
+    newCard.setAttribute("recipeId", recipeId);
     newCard.data = recipeJSON;
 
     // add this recipe's page to the router
     router.addPage(recipeId, recipePage.bind(null, recipeId, recipeJSON));
     // bind the router page to the card
-    bindRecipeCard(newCard, recipeId);
+    if (clickable) {
+      bindRecipeCard(newCard, recipeId);
+    }
 
     target.appendChild(newCard);
   });
@@ -264,19 +281,23 @@ async function renderRecipes(list, target) {
  * Taken from Lab 7. Binds the click event listener to the card
  * HTMLElement so that when it is clicked, the router navigates to
  * that corresponding recipe's page
+ * @function
+ * @name bindRecipeCard
  * @param {HTMLElement} recipeCard
  * @param {string} recipeId
  */
 function bindRecipeCard(recipeCard, recipeId) {
   recipeCard.addEventListener("click", (e) => {
-    if (e.path[0].nodeName == "A") return;
+    if (e.path[0].nodeName === "A") return;
     router.navigate(recipeId);
   });
 }
 
 /**
- * this function handles the clicking of back/forward and renders
+ * This function handles the clicking of back/forward and renders
  * the corresponding page
+ * @function
+ * @name bindPopState
  */
 function bindPopState() {
   window.addEventListener("popstate", (e) => {

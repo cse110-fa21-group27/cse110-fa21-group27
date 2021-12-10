@@ -1,9 +1,15 @@
+// These two were made by cypress. DOn't want to mess with that
+
+// eslint-disable-next-line no-unused-vars
 const { cyan } = require("chalk");
+// eslint-disable-next-line no-unused-vars
 const { createDocument } = require("parse5/lib/tree-adapters/default");
-const magicNumbers = require("./magictestNumbers");
-const recipe = require("./../../__tests__/unit_js/directions");
+const recipe = require("../unit_js/directions");
 console.log(recipe);
 const numSteps = recipe.recipe1.analyzedInstructions[0].steps.length;
+const time = recipe.recipe1.preparationMinutes;
+const starnumb = recipe.recipe1.spoonacularScore;
+const thumbnailsrc = recipe.recipe1.image;
 
 // https://on.cypress.io/writing-first-test
 
@@ -21,7 +27,7 @@ describe(
     });
 
     it("Opens index.html", () => {
-      cy.visit("./__tests__/unit_html/recipepage_test.html");
+      cy.visit("./cypress/unit_html/recipepage_test.html");
     });
 
     // Check how many direction pages there are
@@ -33,7 +39,7 @@ describe(
     });
 
     // Check that the title says "Directions"
-    it('check that the title says "Directions"', () => {
+    it("check that the title says 'Directions'", () => {
       cy.get("recipe-page")
         .shadow()
         .find("directions-info")
@@ -106,7 +112,7 @@ describe(
           });
       });
 
-      it(`check that instruction ${i}'s checkbox is unchecked by default`, () => {
+      it(`check that instruction ${i}'s checkbox is default unchecked`, () => {
         cy.get("recipe-page")
           .shadow()
           .find("directions-info")
@@ -164,6 +170,54 @@ describe(
       });
     }
 
-    // check that clicking the button does stuff (DEFINE STUFF)
+    // Check properly parsed cooktime
+    it("check that the cooktime was properly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[1].innerHTML).to.be.equal(time + " mins");
+        });
+    });
+
+    it("check that the number of stars was correctly parsed", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find("p")
+        .then(($el) => {
+          expect($el[2].innerHTML).to.be.equal(`${(starnumb * 5) / 100} stars`);
+        });
+    });
+
+    it("check that the number of stars is reflectd in the img", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find(".star-image")
+        .invoke("attr", "src")
+        .then(($el) => {
+          expect($el).to.contain(
+            `${Math.round((starnumb * 5) / 100)}-star.svg`
+          );
+        });
+    });
+
+    // check that the thumbnail exists and is correct
+    it("check for correct thumbnail", () => {
+      cy.get("recipe-page")
+        .shadow()
+        .find("recipe-info")
+        .shadow()
+        .find(".thumbnail-photo")
+        .invoke("attr", "src")
+        .then(($el) => {
+          expect($el).to.be.equal(thumbnailsrc);
+        });
+    });
   }
 );

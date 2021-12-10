@@ -13,6 +13,8 @@ class RecipeInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // legacy from lab. don't break.
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -158,15 +160,18 @@ class RecipeInfo extends HTMLElement {
 
     info.appendChild(review);
 
-    // Adding an Ingredients Button with Event Listener to display Ingredients-Info Element
+    // Adding an Ingredients Button with Event Listener to display
+    // Ingredients-Info Element
     // Ingredients Info will contain the list of Ingredients and Quanitities
     const ingredients = document.createElement("button");
     ingredients.classList.add("button");
     ingredients.textContent = "Show Ingredients";
     const showIngredients = document.createElement("ingredients-info");
+    // allow ingredients-info to add to grocery
+    showIngredients.addToGroceryList = this.addToGroceryList;
     showIngredients.data = data;
-    ingredients.addEventListener("click", (event) => {
-      if (ingredients.textContent == "Show Ingredients") {
+    ingredients.addEventListener("click", () => {
+      if (ingredients.textContent === "Show Ingredients") {
         info.appendChild(showIngredients);
         ingredients.textContent = "Hide Ingredients";
       } else {
@@ -175,13 +180,8 @@ class RecipeInfo extends HTMLElement {
       }
     });
 
-    // Adding a Nutrition Button with Event Listener to display Nutrition Element(Not Created)
-    // Nutrition will contain the list of Nutrition for the Recipe
-    const nutrition = document.createElement("button");
-    nutrition.classList.add("button");
-    nutrition.textContent = "Show Nutritions";
-
-    // Adding a Save Recipe Button with Event Listener that will call a function to add/remove the
+    // Adding a Save Recipe Button with Event Listener that
+    // will call a function to add/remove the
     // Recipe to the User's Saved Recipes
     const saveRecipe = document.createElement("button");
     saveRecipe.classList.add("button");
@@ -201,7 +201,6 @@ class RecipeInfo extends HTMLElement {
     });
 
     info.appendChild(ingredients);
-    info.appendChild(nutrition);
     info.appendChild(saveRecipe);
 
     this.shadowRoot.appendChild(styleElem);
