@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * Upon construction, this custom webcomponent is empty.
  * When its .data property is set, the webcomponent is filled
