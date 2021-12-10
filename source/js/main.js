@@ -74,16 +74,17 @@ function recipesPage() {
  * including the filter and the body
  * @function
  * @name SearchPage
- * @param {Object} results - passes in the results from the search
+ * @param {Object} data - passes in the results from the search, as
+ * well as the request that prompted the search
  */
-function SearchPage(results) {
+function SearchPage(data) {
   const main = document.querySelector("main");
   // delete everyting in main
   main.innerHTML = "";
   // make a section displaying recipes
   const searchPage = document.createElement("search-page");
   searchPage.renderRecipes = renderRecipes;
-  searchPage.data = results;
+  searchPage.data = data;
 
   main.appendChild(searchPage);
 }
@@ -238,7 +239,11 @@ function renderNavBar(data) {
   };
   bar.goSearchPage = async (query) => {
     const results = await storage.search({ query: query });
-    router.navigate("search-page", false, results);
+    const data = {
+      results: results,
+      request: { query: query },
+    };
+    router.navigate("search-page", false, data);
   };
   bar.goGrocery = () => {
     router.navigate("groceryList");

@@ -9,9 +9,11 @@ class SearchPage extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
-   * @param {object} data - the recipe json file
+   * @param {object} data - the object containing the search request
+   * and the search results
    */
   set data(data) {
+    const { results, request } = data;
     const style = `
         #filter {
           position: fixed;
@@ -162,22 +164,22 @@ class SearchPage extends HTMLElement {
     input1.id = "input1";
     input1.name = "input1";
 
-    const dataList1 = document.createElement("datalist");
-    dataList1.id = "input_list_1";
+    const resultsList1 = document.createElement("resultslist");
+    resultsList1.id = "input_list_1";
     const option1 = document.createElement("option");
     option1.value = "4 or more stars";
-    dataList1.appendChild(option1);
+    resultsList1.appendChild(option1);
     const option2 = document.createElement("option");
     option2.value = "3 or more stars";
-    dataList1.appendChild(option2);
+    resultsList1.appendChild(option2);
     const option3 = document.createElement("option");
     option3.value = "2 or more stars";
-    dataList1.appendChild(option3);
+    resultsList1.appendChild(option3);
     const option4 = document.createElement("option");
     option4.value = "1 or more stars";
-    dataList1.appendChild(option4);
+    resultsList1.appendChild(option4);
 
-    input1.appendChild(dataList1);
+    input1.appendChild(resultsList1);
     form1.appendChild(input1);
     filter.appendChild(form1);
 
@@ -192,19 +194,19 @@ class SearchPage extends HTMLElement {
     input2.id = "input2";
     input2.name = "input2";
 
-    const dataList2 = document.createElement("datalist");
-    dataList2.id = "input_list_2";
+    const resultsList2 = document.createElement("resultslist");
+    resultsList2.id = "input_list_2";
     const option5 = document.createElement("option");
     option5.value = "15 minutes or less";
-    dataList2.appendChild(option5);
+    resultsList2.appendChild(option5);
     const option6 = document.createElement("option");
     option6.value = "30 minutes or less";
-    dataList2.appendChild(option6);
+    resultsList2.appendChild(option6);
     const option7 = document.createElement("option");
     option7.value = "45 minutes or less";
-    dataList2.appendChild(option7);
+    resultsList2.appendChild(option7);
 
-    input2.appendChild(dataList2);
+    input2.appendChild(resultsList2);
     form2.appendChild(input2);
     filter.appendChild(form2);
 
@@ -329,7 +331,7 @@ class SearchPage extends HTMLElement {
     const body = document.createElement("div");
     body.id = "search_body";
     // create recipe cards for each result
-    this.renderRecipes(data, body);
+    this.renderRecipes(results, body);
 
     searchPage.appendChild(body);
     // ##### end of search body #####
