@@ -74,7 +74,7 @@ class GroceryListPage extends HTMLElement {
       rm.setAttribute("type", "image");
       rm.setAttribute("src", "./images/clear_black_24dp.svg");
       rm.addEventListener("click", () => {
-        this.removeFromGroceryList(groceryEntry.name).then(() => {
+        this.removeFromGroceryList(groceryEntry.name).then((e) => {
           entry.remove();
         });
       });
