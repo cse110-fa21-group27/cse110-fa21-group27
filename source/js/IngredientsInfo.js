@@ -137,7 +137,6 @@ class IngredientsInfo extends HTMLElement {
     ingredients.textContent = "Ingredients";
     head.appendChild(ingredients);
 
-    
     // Adding a Add Ingredients To Cart Button with Event Listener that will
     // call a function to add/remove the Ingredients to Grocery Cart
     // (Not Implemented)
@@ -147,49 +146,55 @@ class IngredientsInfo extends HTMLElement {
     head.appendChild(addToCart);
 
     // serving container Container
-    const serving_container = document.createElement("div");
-    serving_container.classList.add("serving_container");
-    head.appendChild(serving_container);
+    const servingContainer = document.createElement("div");
+    servingContainer.classList.add("serving_container");
+    head.appendChild(servingContainer);
 
     // Creating a current display of the number of Servings the Recipe
     // will make based on the current number of Ingredients
     const quantity = document.createElement("div");
     quantity.classList.add("quantity");
-    const quantity_txt = document.createElement("p");
-    quantity_txt.textContent = data.servings;
-    quantity_txt.classList.add("quantity_txt");
+    const quantityText = document.createElement("p");
+    quantityText.textContent = data.servings;
+    quantityText.classList.add("quantity_txt");
 
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
-    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", () => {
-      if (quantity_txt.textContent !== 1) {
-        quantity_txt.textContent = `${quantity_txt.textContent - 1}`;
+      if (quantityText.textContent != 1) {
+        quantityText.textContent = `${quantity.textContent - 1}`;
+        const listOfItems = list.querySelectorAll("label");
+        for (let i = 0; i < ingredientList.length; i++) {
+          const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
+          listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        }
       }
     });
     subtractQuantity.textContent = "-";
-    serving_container.appendChild(subtractQuantity);
+    servingContainer.appendChild(subtractQuantity);
 
     // Creating a current display of the number of Servings the Recipe
     // will make based on the current number of Ingredients
-    
-    quantity.appendChild(quantity_txt);
-    serving_container.appendChild(quantity);
+
+    quantity.appendChild(quantityText);
+    servingContainer.appendChild(quantity);
 
     // Adding a Add Button with Event Listener that will
     // increment the number of servings and Ingredients
-    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
     addQuantity.addEventListener("click", () => {
-      quantity_txt.textContent = `${parseInt(quantity_txt.textContent) + 1}`;
+      quantityText.textContent = `${parseInt(quantityText.textContent) + 1}`;
+      const listOfItems = list.querySelectorAll("label");
+      for (let i = 0; i < ingredientList.length; i++) {
+        const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
+        listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      }
     });
     addQuantity.textContent = "+";
-    serving_container.appendChild(addQuantity);
-
-
+    servingContainer.appendChild(addQuantity);
 
     // Creating a Stylish Line Break to separate the Title from the Rest
     const line = document.createElement("hr");
