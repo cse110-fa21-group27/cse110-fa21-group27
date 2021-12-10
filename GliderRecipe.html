@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>IngredientsInfo.js - Documentation</title>
+    <title>GliderRecipe - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,278 +30,201 @@ with the information retrieved from the data parameter</a></span></li><li class=
 
 <div id="main">
     
-    <h1 class="page-title">IngredientsInfo.js</h1>
+    <h1 class="page-title">GliderRecipe</h1>
     
 
     
 
 
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Upon construction, this custom webcomponent is empty.
- * When its .data property is set, the webcomponent is filled
- * in with the recipe data passed into .data
- */
-class IngredientsInfo extends HTMLElement {
-  /** Constructs the Component and allows access to the shadow */
-  constructor() {
-    super();
-    // eslint-disable-next-line no-unused-vars
-    const shadow = this.attachShadow({ mode: "open" });
-  }
 
-  /**
-   * Populates the Ingredient Info HTML Component with information from the
-   * recipe json file and displays it with some CSS styling.
-   * @param {Object} data - The recipe json
-   */
-  set data(data) {
-    // Creates CSS for the Ingredients Info Component
-    const style = `
-      @font-face {
-        font-family: 'font';
-        src: URL('font.ttf') format('truetype');
-      }
-      
-      .ingredients-info {
-        position: absolute;
-        font-family: font;
-        width: 20%;
-        height: 100%;
-        top: 20%;
-        left: 2%;
-        display: block;
-        overflow: auto;
-        background: #FFF6EC;
-      }
-      
-      .ingredients-label {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 32px;
-      }
-      
-      .line {
-        width: 100%;
-        text-align: center;
-        color: green;
-      
-      }
-      
-      .head{
-        display: flex;
-        flex-direction: column;
-        gap: 0px;
-        margin-right: 15%;;
-        margin-left: 15%;
-        align-items: center;
-      }
-      
-      .cartButton {
-        font-family: font;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        height: 6%;
-        right: 14%;
-        background: #427820;
-        color: white;
-      }
-      
-      .serving_container{
-        display: flex;
-        flex-direction: row;
-        gap: 5%;
-        align-items: center;
-        margin-right: 15%;;
-        margin-left: 15%;
+<section>
+
+<header>
+    
+        <h2>
+        GliderRecipe
+        </h2>
         
-      }
-      
-      .addButton {
-        height: 6%;
-        background: #427820;
-        color: white;
-      }
-      
-      .subtractButton {
-        height: 6%; 
-        background: #427820;
-        color: white;
-      }
-      
-      .quantity_txt {
-        font-size: 24px;
-      }
-      .quantity{
-        height: 6%;
-      }
-      
-      .ingredients-list {
-        text-align: left;
-        position: absolute;
-        left: 20%;
-        top: 325px;
-        width: 60%;
-        font-family: font;
-        font-size: 12px;
-        -ms-transform: scale(1.5);
-        -moz-transform: scale(1.5);
-        -webkit-transform: scale(1.5);
-        -o-transform: scale(1.5);
-        transform: scale(1.5);
-        padding: 10%;
-      }
-    `;
+            <div class="class-description">glider component. hopeful that it will hold recipe cards in a pretty way.</div>
+        
+    
+</header>
 
-    // Adds the style sheet to the shadow
-    const styleElem = document.createElement("style");
-    styleElem.innerHTML = style;
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-    // Grabs the Ingredients from data
-    const ingredientList = data.extendedIngredients;
+    
+    <h2>Constructor</h2>
+    
 
-    // Creating an Overall Container
-    const info = document.createElement("div");
-    info.classList.add("ingredients-info");
+    <h4 class="name" id="GliderRecipe"><span class="type-signature"></span>new GliderRecipe<span class="signature">()</span><span class="type-signature"></span></h4>
 
-    // header Container
-    const head = document.createElement("div");
-    head.classList.add("head");
-    info.appendChild(head);
+    
 
-    // Creating the Ingredients Title
-    const ingredients = document.createElement("p");
-    ingredients.classList.add("ingredients-label");
-    ingredients.textContent = "Ingredients";
-    head.appendChild(ingredients);
 
-    // Adding a Add Ingredients To Cart Button with Event Listener that will
-    // call a function to add/remove the Ingredients to Grocery Cart
-    // (Not Implemented)
-    const addToCart = document.createElement("button");
-    addToCart.classList.add("cartButton");
-    addToCart.textContent = "Add Ingredients To Cart";
-    head.appendChild(addToCart);
 
-    // serving container Container
-    const servingContainer = document.createElement("div");
-    servingContainer.classList.add("serving_container");
-    head.appendChild(servingContainer);
+<div class="description">
+    constructs the component and allows access to the shadow
+</div>
 
-    // Creating a current display of the number of Servings the Recipe
-    // will make based on the current number of Ingredients
-    const quantity = document.createElement("div");
-    quantity.classList.add("quantity");
-    const quantityText = document.createElement("p");
-    quantityText.textContent = data.servings;
-    quantityText.classList.add("quantity_txt");
 
-    // Adding a Subtract Button with Event Listener that will
-    // decrement the number of servings and Ingredients
-    const subtractQuantity = document.createElement("button");
-    subtractQuantity.classList.add("subtractButton");
-    subtractQuantity.addEventListener("click", () => {
-      if (quantityText.textContent != 1) {
-        quantityText.textContent = `${quantity.textContent - 1}`;
-        const listOfItems = list.querySelectorAll("label");
-        for (let i = 0; i &lt; ingredientList.length; i++) {
-          const oldName = listOfItems[i].textContent;
-          const checkBox = list.querySelector(`input[entry="${oldName}"]`);
-          const newAmount =
-            (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
-            parseFloat(ingredientList[i].amount);
-          listOfItems[
-            i
-          ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
-          checkBox.setAttribute("entry", listOfItems[i].textContent);
-        }
-      }
-    });
-    subtractQuantity.textContent = "-";
-    servingContainer.appendChild(subtractQuantity);
 
-    // Creating a current display of the number of Servings the Recipe
-    // will make based on the current number of Ingredients
 
-    quantity.appendChild(quantityText);
-    servingContainer.appendChild(quantity);
 
-    // Adding a Add Button with Event Listener that will
-    // increment the number of servings and Ingredients
-    const addQuantity = document.createElement("button");
-    addQuantity.classList.add("addButton");
-    addQuantity.addEventListener("click", () => {
-      quantityText.textContent = `${parseInt(quantityText.textContent) + 1}`;
-      const listOfItems = list.querySelectorAll("label");
-      for (let i = 0; i &lt; ingredientList.length; i++) {
-        const oldName = listOfItems[i].textContent;
-        const checkBox = list.querySelector(`input[entry="${oldName}"]`);
-        const newAmount =
-          (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
-          parseFloat(ingredientList[i].amount);
-        listOfItems[
-          i
-        ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
-        checkBox.setAttribute("entry", listOfItems[i].textContent);
-      }
-    });
-    addQuantity.textContent = "+";
+<dl class="details">
 
-    servingContainer.appendChild(addQuantity);
+    
 
-    // Creating a Stylish Line Break to separate the Title from the Rest
-    const line = document.createElement("hr");
-    line.classList.add("line");
-    head.appendChild(line);
+    
 
-    // Creating an Inner Container
-    const form = document.createElement("div");
-    form.classList.add("form");
+    
 
-    // Creating the list of ingredients with checkboxes to allow the user
-    // to only select some ingredients to add to Grocery List (Not Implemented)
-    const list = document.createElement("div");
-    list.classList.add("ingredients-list");
-    for (let i = 0; i &lt; ingredientList.length; i++) {
-      const entryName = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
-      const box = document.createElement("input");
-      box.type = "checkbox";
-      box.setAttribute("entry", entryName);
-      const listItem = document.createElement("label");
-      listItem.textContent = entryName;
-      const lineBreak = document.createElement("br");
-      list.appendChild(box);
-      list.appendChild(listItem);
-      list.appendChild(lineBreak);
-    }
-    form.appendChild(list);
-    info.appendChild(form);
-    // listen to add to cart button
-    addToCart.addEventListener("click", (e) => {
-      const listElements = Array.from(list.children);
-      listElements.forEach((element) => {
-        if (element.nodeName === "INPUT") {
-          if (element.checked) {
-            this.addToGroceryList(element.getAttribute("entry"));
-          }
-        }
-      });
-    });
+    
 
-    this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(info);
-  }
-}
+    
 
-// Creating a custom Ingredients-Info Element
-customElements.define("ingredients-info", IngredientsInfo);
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GliderRecipe.js.html">GliderRecipe.js</a>, <a href="GliderRecipe.js.html#line4">line 4</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id="data"><span class="type-signature"></span>data<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GliderRecipe.js.html">GliderRecipe.js</a>, <a href="GliderRecipe.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
