@@ -170,6 +170,11 @@ class IngredientsInfo extends HTMLElement {
     subtractQuantity.addEventListener("click", (event) => {
       if (quantity.textContent !== 1) {
         quantity.textContent = `${quantity.textContent - 1}`;
+        const listOfItems = list.querySelectorAll("label");
+        for (let i = 0; i < ingredientList.length; i++) {
+          const newAmount = `${parseFloat(quantity.textContent)} / ${parseFloat(data.servings)} * ${parseFloat(ingredientList[i].amount)}`;
+          listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        }
       }
     });
     subtractQuantity.textContent = "-";
@@ -184,6 +189,11 @@ class IngredientsInfo extends HTMLElement {
     addQuantity.classList.add("addButton");
     addQuantity.addEventListener("click", (event) => {
       quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
+      const listOfItems = list.querySelectorAll("label");
+      for (let i = 0; i < ingredientList.length; i++) {
+        const newAmount = `${parseFloat(quantity.textContent)} / ${parseFloat(data.servings)} * ${parseFloat(ingredientList[i].amount)}`;
+        listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      }
     });
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
