@@ -164,10 +164,9 @@ class IngredientsInfo extends HTMLElement {
 
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
-    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const subtractQuantity = document.createElement("button");
     subtractQuantity.classList.add("subtractButton");
-    subtractQuantity.addEventListener("click", (event) => {
+    subtractQuantity.addEventListener("click", () => {
       if (quantity.textContent !== 1) {
         quantity.textContent = `${quantity.textContent - 1}`;
         const listOfItems = list.querySelectorAll("label");
@@ -184,10 +183,9 @@ class IngredientsInfo extends HTMLElement {
 
     // Adding a Add Button with Event Listener that will
     // increment the number of servings and Ingredients
-    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
     const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
-    addQuantity.addEventListener("click", (event) => {
+    addQuantity.addEventListener("click", () => {
       quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
       const listOfItems = list.querySelectorAll("label");
       for (let i = 0; i < ingredientList.length; i++) {
