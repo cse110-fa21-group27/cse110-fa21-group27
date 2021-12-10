@@ -1,4 +1,4 @@
-### Project Description:
+### CSE 110 Project Description:
 
 ## Goal: To create a Recipe Manager.
 
