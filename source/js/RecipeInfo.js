@@ -2,209 +2,227 @@
  * Upon construction, this custom webcomponent is empty.
  * When its .data property is set, the webcomponent is filled
  * in with the recipe data passed into .data
- *
- * This assumes the following properties are set before .data
- * @property {Function} addRecipeToSaved
- * @property {Function} removeRecipeFromSaved
- * @property {Boolean} isSaved
- * @property {string} id - The id for the recipe displayed
  */
-class RecipeInfo extends HTMLElement {
+class IngredientsInfo extends HTMLElement {
   /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
-    // legacy from lab. don't break.
     // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
   /**
-   * Populates the Recipe Info HTML Component with information from the recipe
-   * json file and displays it with some CSS styling.
+   * Populates the Ingredient Info HTML Component with information from the
+   * recipe json file and displays it with some CSS styling.
    * @param {Object} data - The recipe json
    */
   set data(data) {
-    // Creates CSS for the Recipe Info Component
-    const styleRecipe = `
-
-    @font-face {
-      font-family: 'font';
-      src: local('font.ttf') format('truetype');
-    }
-
-    @font-face {
-      font-family: 'boldFont';
-      src: url('semiBold.ttf') format('truetype');
-    }
-    
-    .recipe-info {
-      margin-left: auto;
-      margin-right: auto;
-      width: 50vw;
-      background: #5b8775;
-      border: 10px solid #302B27;
-      border-top-left-radius: 60px;
-      border-top-right-radius: 60px;
-    }
-    
-    .thumbnail-photo {
-      height: 50vh;
-      object-fit: cover;
-      width: 50vw;
-      border-bottom: 20px solid #302B27;
-      border-top-left-radius: 60px;
-      border-top-right-radius: 60px;
-    }
-    
-    .title {
-      font-family: font;
-      color: #FFEFEB;
-      text-align: center;
-      font-size: 3vh;
-      font-weight: bolder;
-      font-family: font;
-
-    }
-    
-    .rating-time {
-      background: #b1c9b5;
-      border: 5px solid #395645;
-      font-family: font;
-      font-size: 20px;
-      padding-right: -3px;
-      display: inline-flex;
-      justify-content: space-between;
-      flex-direction: row;
-      width: 98%;
-    }
-    
-    .star-image {
-      height: 6vh;
-      width: 6vw;
-      float: center;
-    }
-    
-    .directions {
-      color: white;
-      text-align: left;
-      font-size: 5vh;
-      font-style: italic;
-      font-family: font;
-      padding: none;
-    }
-    
-    button {
-      height: 5vh;
-      width: 10vw;
-    }
-        `;
+    // Creates CSS for the Ingredients Info Component
+    const style = `
+      @font-face {
+        font-family: 'font';
+        src: URL('font.ttf') format('truetype');
+      }
+      
+      .ingredients-info {
+        position: absolute;
+        font-family: font;
+        width: 20%;
+        height: 100%;
+        top: 20%;
+        left: 2%;
+        display: block;
+        overflow: auto;
+        background: #FFF6EC;
+      }
+      
+      .ingredients-label {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 32px;
+      }
+      
+      .line {
+        width: 100%;
+        text-align: center;
+        color: green;
+      
+      }
+      
+      .head{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        margin-right: 15%;;
+        margin-left: 15%;
+        align-items: center;
+      }
+      
+      .cartButton {
+        font-family: font;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        height: 6%;
+        right: 14%;
+        background: #427820;
+        color: white;
+      }
+      
+      .serving_container{
+        display: flex;
+        flex-direction: row;
+        gap: 5%;
+        align-items: center;
+        margin-right: 15%;;
+        margin-left: 15%;
+        
+      }
+      
+      .addButton {
+        height: 6%;
+        background: #427820;
+        color: white;
+      }
+      
+      .subtractButton {
+        height: 6%; 
+        background: #427820;
+        color: white;
+      }
+      
+      .quantity_txt {
+        font-size: 24px;
+      }
+      .quantity{
+        height: 6%;
+      }
+      
+      .ingredients-list {
+        text-align: left;
+        position: absolute;
+        left: 20%;
+        top: 325px;
+        width: 60%;
+        font-family: font;
+        font-size: 12px;
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -webkit-transform: scale(1.5);
+        -o-transform: scale(1.5);
+        transform: scale(1.5);
+        padding: 10%;
+      }
+    `;
 
     // Adds the style sheet to the shadow
     const styleElem = document.createElement("style");
-    styleElem.innerHTML = styleRecipe;
+    styleElem.innerHTML = style;
+
+    // Grabs the Ingredients from data
+    const ingredientList = data.extendedIngredients;
 
     // Creating an Overall Container
-    const info = document.createElement("article");
-    info.classList.add("recipe-info");
+    const info = document.createElement("div");
+    info.classList.add("ingredients-info");
 
-    // Adding the Recipe Photo
-    const photo = document.createElement("img");
-    photo.classList.add("thumbnail-photo");
-    photo.setAttribute("src", data.image);
-    info.appendChild(photo);
+    // header Container
+    const head = document.createElement("div");
+    head.classList.add("head");
+    info.appendChild(head);
 
-    // Adding the Recipe Title
-    const title = document.createElement("p");
-    title.classList.add("title");
-    title.textContent = data.title;
-    info.appendChild(title);
+    // Creating the Ingredients Title
+    const ingredients = document.createElement("p");
+    ingredients.classList.add("ingredients-label");
+    ingredients.textContent = "Ingredients";
+    head.appendChild(ingredients);
 
-    // Adding a Container called Review
-    const review = document.createElement("div");
-    review.classList.add("rating-time");
+    
+    // Adding a Add Ingredients To Cart Button with Event Listener that will
+    // call a function to add/remove the Ingredients to Grocery Cart
+    // (Not Implemented)
+    const addToCart = document.createElement("button");
+    addToCart.classList.add("cartButton");
+    addToCart.textContent = "Add Ingredients To Cart";
+    head.appendChild(addToCart);
 
-    // Adding the Time to make the Recipe to  Review
-    const time = document.createElement("p");
-    time.textContent = `${data.readyInMinutes} mins`;
-    review.appendChild(time);
+    // serving container Container
+    const serving_container = document.createElement("div");
+    serving_container.classList.add("serving_container");
+    head.appendChild(serving_container);
 
-    // Adding the Rating of the Recipe to  Review
-    const rating = document.createElement("p");
-    rating.textContent = `${(data.spoonacularScore * 5.0) / 100.0} stars`;
+    // Creating a current display of the number of Servings the Recipe
+    // will make based on the current number of Ingredients
+    const quantity = document.createElement("p");
+    quantity.classList.add("quantity");
+    quantity.textContent = data.servings;
 
-    // Adding the Star Picture to  Review
-    const starPicture = document.createElement("img");
-    starPicture.classList.add("star-image");
-    switch (Math.round((data.spoonacularScore * 5.0) / 100.0)) {
-      case 0:
-        starPicture.src = "images/0-star.svg";
-        break;
-      case 1:
-        starPicture.src = "images/1-star.svg";
-        break;
-      case 2:
-        starPicture.src = "images/2-star.svg";
-        break;
-      case 3:
-        starPicture.src = "images/3-star.svg";
-        break;
-      case 4:
-        starPicture.src = "images/4-star.svg";
-        break;
-      case 5:
-        starPicture.src = "images/5-star.svg";
-        break;
+    // Adding a Subtract Button with Event Listener that will
+    // decrement the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
+    const subtractQuantity = document.createElement("button");
+    subtractQuantity.classList.add("subtractButton");
+    subtractQuantity.addEventListener("click", (event) => {
+      if (quantity.textContent != 1) {
+        quantity_txt.textContent = `${quantity_txt.textContent - 1}`;
+      }
+    });
+    subtractQuantity.textContent = "-";
+    serving_container.appendChild(subtractQuantity);
+
+    // Creating a current display of the number of Servings the Recipe
+    // will make based on the current number of Ingredients
+    const quantity = document.createElement("div");
+    quantity.classList.add("quantity");
+    const quantity_txt = document.createElement("p");
+    quantity_txt.textContent = data.servings;
+    quantity_txt.classList.add("quantity_txt");
+    quantity.appendChild(quantity_txt);
+    serving_container.appendChild(quantity);
+
+    // Adding a Add Button with Event Listener that will
+    // increment the number of servings and Ingredients
+    // NOT IMPLEMENTED THE CHANGE IN INGREDIENTS
+    const addQuantity = document.createElement("button");
+    addQuantity.classList.add("addButton");
+    addQuantity.addEventListener("click", (event) => {
+      quantity_txt.textContent = `${parseInt(quantity_txt.textContent) + 1}`;
+    });
+    addQuantity.textContent = "+";
+    serving_container.appendChild(addQuantity);
+
+
+
+    // Creating a Stylish Line Break to separate the Title from the Rest
+    const line = document.createElement("hr");
+    line.classList.add("line");
+    head.appendChild(line);
+
+    // Creating an Inner Container
+    const form = document.createElement("div");
+    form.classList.add("form");
+
+    // Creating the list of ingredients with checkboxes to allow the user
+    // to only select some ingredients to add to Grocery List (Not Implemented)
+    const list = document.createElement("div");
+    list.classList.add("ingredients-list");
+    for (let i = 0; i < ingredientList.length; i++) {
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      const listItem = document.createElement("label");
+      listItem.textContent = `${ingredientList[i].amount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+      const lineBreak = document.createElement("br");
+      list.appendChild(box);
+      list.appendChild(listItem);
+      list.appendChild(lineBreak);
     }
-    review.appendChild(rating);
-    review.appendChild(starPicture);
-
-    info.appendChild(review);
-
-    // Adding an Ingredients Button with Event Listener to display
-    // Ingredients-Info Element
-    // Ingredients Info will contain the list of Ingredients and Quanitities
-    const ingredients = document.createElement("button");
-    ingredients.classList.add("button");
-    ingredients.textContent = "Show Ingredients";
-    const showIngredients = document.createElement("ingredients-info");
-    showIngredients.data = data;
-    ingredients.addEventListener("click", () => {
-      if (ingredients.textContent === "Show Ingredients") {
-        info.appendChild(showIngredients);
-        ingredients.textContent = "Hide Ingredients";
-      } else {
-        info.removeChild(showIngredients);
-        ingredients.textContent = "Show Ingredients";
-      }
-    });
-
-    // Adding a Save Recipe Button with Event Listener that
-    // will call a function to add/remove the
-    // Recipe to the User's Saved Recipes
-    const saveRecipe = document.createElement("button");
-    saveRecipe.classList.add("button");
-    saveRecipe.textContent = this.isSaved ? "Unsave Recipe" : "Save Recipe";
-    saveRecipe.addEventListener("click", () => {
-      if (!this.isSaved) {
-        this.addRecipeToSaved(this.id, data.title).then(() => {
-          this.isSaved = true;
-          saveRecipe.textContent = "Unsave Recipe";
-        });
-      } else {
-        this.removeRecipeFromSaved(this.id).then(() => {
-          this.isSaved = false;
-          saveRecipe.textContent = "Save Recipe";
-        });
-      }
-    });
-
-    info.appendChild(ingredients);
-    info.appendChild(saveRecipe);
+    form.appendChild(list);
+    info.appendChild(form);
 
     this.shadowRoot.appendChild(styleElem);
     this.shadowRoot.appendChild(info);
   }
 }
 
-// Creating a custom Recipe-Info Element
-customElements.define("recipe-info", RecipeInfo);
+// Creating a custom Ingredients-Info Element
+customElements.define("ingredients-info", IngredientsInfo);
