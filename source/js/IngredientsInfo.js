@@ -158,7 +158,6 @@ class IngredientsInfo extends HTMLElement {
     quantityText.textContent = data.servings;
     quantityText.classList.add("quantity_txt");
 
-    /*
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
     const subtractQuantity = document.createElement("button");
@@ -168,8 +167,12 @@ class IngredientsInfo extends HTMLElement {
         quantityText.textContent = `${quantity.textContent - 1}`;
         const listOfItems = list.querySelectorAll("label");
         for (let i = 0; i < ingredientList.length; i++) {
-          const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
-          listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+          const newAmount =
+            (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
+            parseFloat(ingredientList[i].amount);
+          listOfItems[
+            i
+          ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
         }
       }
     });
@@ -190,13 +193,17 @@ class IngredientsInfo extends HTMLElement {
       quantityText.textContent = `${parseInt(quantityText.textContent) + 1}`;
       const listOfItems = list.querySelectorAll("label");
       for (let i = 0; i < ingredientList.length; i++) {
-        const newAmount = parseFloat(quantityText.textContent) / parseFloat(data.servings) * parseFloat(ingredientList[i].amount);
-        listOfItems[i].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
+        const newAmount =
+          (parseFloat(quantityText.textContent) / parseFloat(data.servings)) *
+          parseFloat(ingredientList[i].amount);
+        listOfItems[
+          i
+        ].textContent = `${newAmount} ${ingredientList[i].unit} ${ingredientList[i].name}`;
       }
     });
     addQuantity.textContent = "+";
     form.appendChild(addQuantity);
-    */
+
     servingContainer.appendChild(addQuantity);
 
     // Creating a Stylish Line Break to separate the Title from the Rest
@@ -207,7 +214,6 @@ class IngredientsInfo extends HTMLElement {
     // Creating an Inner Container
     const form = document.createElement("div");
     form.classList.add("form");
-
 
     // Creating the list of ingredients with checkboxes to allow the user
     // to only select some ingredients to add to Grocery List (Not Implemented)
