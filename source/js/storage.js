@@ -463,7 +463,7 @@ async function removeFromGroceryList(ingredient) {
   return new Promise((resolve, reject) => {
     // edit user Info
     const index = userInfo.groceryList.findIndex((item) => {
-      item.name == ingredient;
+      item.name === ingredient;
     });
     if (index === -1) {
       // already not in grocery list, resolve
@@ -496,7 +496,7 @@ async function updateEntryInGrocery(ingredient, checked) {
   return new Promise((resolve, reject) => {
     // edit user Info
     const index = userInfo.groceryList.findIndex((item) => {
-      return item.name == ingredient;
+      return item.name === ingredient;
     });
     if (index === -1) {
       // doesn't exist

@@ -242,7 +242,7 @@ class IngredientsInfo extends HTMLElement {
     addToCart.addEventListener("click", (e) => {
       const listElements = Array.from(list.children);
       listElements.forEach((element) => {
-        if (element.nodeName == "INPUT") {
+        if (element.nodeName === "INPUT") {
           if (element.checked) {
             this.addToGroceryList(element.getAttribute("entry"));
           }
