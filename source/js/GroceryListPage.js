@@ -63,6 +63,13 @@ class GroceryListPage extends HTMLElement {
       const cb = document.createElement("input");
       cb.setAttribute("type", "checkbox");
       cb.checked = groceryEntry.checked;
+      // checkbox event listener
+      cb.addEventListener("change", () => {
+        this.updateEntryInGrocery(groceryEntry.name, cb.checked).catch((e) => {
+          // revert if failed
+          cb.checked = !cb.checked;
+        });
+      });
       entry.appendChild(cb);
 
       list.appendChild(entry);

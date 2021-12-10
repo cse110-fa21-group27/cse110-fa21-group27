@@ -562,7 +562,9 @@ async function removeFromGroceryList(ingredient) {
 async function updateEntryInGrocery(ingredient, checked) {
   return new Promise((resolve, reject) => {
     // edit user Info
-    const index = userInfo.groceryList;
+    const index = userInfo.groceryList.findIndex((item) => {
+      return item.name == ingredient;
+    });
     if (index === -1) {
       // doesn't exist
       console.log(`${ingredient} does not exist in groceryList`);
