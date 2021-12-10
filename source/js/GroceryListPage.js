@@ -41,6 +41,13 @@ class GroceryListPage extends HTMLElement {
       display: inline;
       float: right;
     }
+    input[type=image] {
+      display: inline;
+      float: right;
+      height: 1em;
+      padding-top: 0.25em;
+    }
+
     .listEntry{
       text-align: left;
       padding: 0.25em;
@@ -52,14 +59,28 @@ class GroceryListPage extends HTMLElement {
     const list = document.createElement("div");
     list.classList.add("groceryList");
     data.forEach((groceryEntry) => {
+      // container
       const entry = document.createElement("div");
       entry.classList.add("listEntry");
 
+      //label
       const name = document.createElement("p");
       name.textContent = groceryEntry.name;
       name.classList.add("ingredientName");
       entry.appendChild(name);
 
+      // remove button
+      const rm = document.createElement("input");
+      rm.setAttribute("type", "image");
+      rm.setAttribute("src", "./images/clear_black_24dp.svg");
+      rm.addEventListener("click", () => {
+        this.removeFromGroceryList(groceryEntry.name).then(() => {
+          entry.remove();
+        });
+      });
+      entry.appendChild(rm);
+
+      // checkbox
       const cb = document.createElement("input");
       cb.setAttribute("type", "checkbox");
       cb.checked = groceryEntry.checked;
