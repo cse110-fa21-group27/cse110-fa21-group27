@@ -202,7 +202,6 @@ class IngredientsInfo extends HTMLElement {
       }
     });
     addQuantity.textContent = "+";
-    form.appendChild(addQuantity);
 
     servingContainer.appendChild(addQuantity);
 
