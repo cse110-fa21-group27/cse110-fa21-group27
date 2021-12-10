@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SearchPage.js - Documentation</title>
+    <title>GliderRecipe.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,7 +30,7 @@ with the information retrieved from the data parameter</a></span></li><li class=
 
 <div id="main">
     
-    <h1 class="page-title">SearchPage.js</h1>
+    <h1 class="page-title">GliderRecipe.js</h1>
     
 
     
@@ -40,353 +40,219 @@ with the information retrieved from the data parameter</a></span></li><li class=
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Upon construction, this custom webcomponent is empty.
- * When its .data property is set, the webcomponent is filled
- */
-class SearchPage extends HTMLElement {
-  /** Constructs the Component and allows access to the shadow */
+            <pre class="prettyprint source linenums"><code>module.exports = { convertTime, getOrganization, getRecipeTitle };
+
+/** glider component. hopeful that it will hold recipe cards in a pretty way.*/
+class GliderRecipe extends HTMLElement {
+  /** constructs the component and allows access to the shadow */
   constructor() {
     super();
-    // legacy from lab. don't break.
     // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
-   * Creates the Search Page Component with information from the
-   * recipe json file and displays it with some CSS styling.
    * @param {object} data - the recipe json file
    */
   set data(data) {
-    // Creates CSS for the Nav Bar Component
-    const style = `
-      #filter {
-        position: fixed;
-        left: 0%;
-        top: 17%;
-        width: 23%;
-        height: 80%;
-        border-style: solid;
-        border-color: #ffbb71;
-        background-color: #fff6ec;
-      }
-      
-      #filter_label {
-        position: absolute;
-        left: 3%;
-        top: 1%;
-        font-family: DM Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 58px;
-        line-height: 62px;
-      }
+    const cleanData = {};
+    /**
+     * Making a more organized object for getting
+     * the info from messy recipe json. Might not end up using all of it,
+     * I just yoinked this from my lab code
+     *
+     * cleanData should have
+     * cleanData.thumbnail - link to the photo of recipe
+     * cleanData.title - title of the recipe
+     * cleanData.url - url for the recipe
+     * cleanData.organization - organization of the recipe
+     * cleanData.time - cook time of the recipe
+     * cleanData.ingredients - string of ingredients
+     *
+     * cleanData.rating is optional and should be
+     * rating.score - review score out of 5
+     * rating.count - number of reviews
+     */
 
-      #clear_all {
-        position: absolute;
-        left: 55%;
-        top: 1%;
-        font-family: DM Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
-        line-height: 62px;
-        background-color: #ffbb71;
-      }
-      
-      .label {
-        position: absolute;
-        left: 1%;
-      
-        font-family: DM Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 36px;
-        line-height: 62px;
-      }
-      
-      .form {
-        position: absolute;
-        left: 1%;
-      }
+    // process raw data into cleanData
+    cleanData.thumbnail = searchForKey(data, "thumbnailUrl");
+    cleanData.title = getRecipeTitle(data);
+    cleanData.url = getUrl(data);
+    cleanData.organization = getOrganization(data);
+    let tempTime = searchForKey(data, "cookTime");
+    if (!tempTime) tempTime = searchForKey(data, "totalTime");
+    cleanData.time = convertTime(tempTime);
+    cleanData.ingredients = createIngredientList(
+      searchForKey(data, "recipeIngredient")
+    );
+    const tempRating = searchForKey(data, "aggregateRating");
+    if (tempRating) {
+      cleanData.rating = {
+        count: tempRating.ratingCount,
+        score: tempRating.ratingValue,
+      };
+    }
 
-      .input {
-        width: 90%;
-      }
-      
-      #apply {
-        position: absolute;
-        left: 30%;
-        top: 85%;
-        width: 40%;
-        font-family: DM Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
-        line-height: 62px;
-        background-color: #ffbb71;
-      }
+    // alright cool we got everything, time to actually build it
 
-      #search_body {
-        position: absolute;
-        left: 30%;
-        top: 20%;
-        height: 70%;
-        width: 60%;
+    // this is gonna be the root element we'll slap everything else onto
+    const entry = document.createElement("li");
+    entry.classList.add("glide__slide");
 
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-      }
-    `;
-    const styleElem = document.createElement("style");
-    styleElem.innerHTML = style;
+    const picture = document.createElement("img");
+    picture.setAttribute("src", cleanData.thumbnail);
+    picture.setAttribute("alt", cleanData.title);
+    picture.setAttribute("id", "rec");
+    entry.appendChild(picture);
 
-    const searchPage = document.createElement("article");
-
-    // Start of filter
-    const filter = document.createElement("div");
-    filter.id = "filter";
-
-    // filter label
-    const filterLabel = document.createElement("div");
-    filterLabel.id = "filter_label";
-    filterLabel.innerHTML = "Filter";
-    filter.appendChild(filterLabel);
-
-    // clear all button
-    const clearAll = document.createElement("button");
-    clearAll.id = "clear_all";
-    clearAll.innerHTML = "CLEAR ALL";
-    filter.appendChild(clearAll);
-
-    // hr
-    const hr = document.createElement("hr");
-    hr.style.marginTop = "25%";
-    hr.style.width = "90%";
-    hr.style.textAlign = "center";
-    hr.style.color = "black";
-    filter.appendChild(hr);
-
-    // label Rating
-    const label_1 = document.createElement("div");
-    label_1.classList.add("label");
-    label_1.style.top = "80px";
-    label_1.innerHTML = "Rating";
-    filter.appendChild(label_1);
-
-    // label Cooking Time
-    const label_2 = document.createElement("div");
-    label_2.classList.add("label");
-    label_2.style.top = "160px";
-    label_2.innerHTML = "Cooking Time";
-    filter.appendChild(label_2);
-
-    // label Vegetarian
-    const label_3 = document.createElement("div");
-    label_3.classList.add("label");
-    label_3.style.top = "240px";
-    label_3.innerHTML = "Vegetarian";
-    filter.appendChild(label_3);
-
-    // label Vegan
-    const label_4 = document.createElement("div");
-    label_4.classList.add("label");
-    label_4.style.top = "320px";
-    label_4.innerHTML = "Vegan";
-    filter.appendChild(label_4);
-
-    // label Gluten Free
-    const label_5 = document.createElement("div");
-    label_5.classList.add("label");
-    label_5.style.top = "400px";
-    label_5.innerHTML = "Gluten Free";
-    filter.appendChild(label_5);
-
-    // label Diary Free
-    const label_6 = document.createElement("div");
-    label_6.classList.add("label");
-    label_6.style.top = "480px";
-    label_6.innerHTML = "Diary Free";
-    filter.appendChild(label_6);
-
-    // form 1
-    const form_1 = document.createElement("form");
-    form_1.classList.add("form");
-    form_1.style.top = "140px";
-
-    const input_1 = document.createElement("input");
-    input_1.classList.add("input");
-    input_1.setAttribute("list", "input_list_1");
-    input_1.id = "input_1";
-    input_1.name = "input_1";
-
-    const data_list_1 = document.createElement("datalist");
-    data_list_1.id = "input_list_1";
-    const option_1 = document.createElement("option");
-    option_1.value = "4 or more stars";
-    data_list_1.appendChild(option_1);
-    const option_2 = document.createElement("option");
-    option_2.value = "3 or more stars";
-    data_list_1.appendChild(option_2);
-    const option_3 = document.createElement("option");
-    option_3.value = "2 or more stars";
-    data_list_1.appendChild(option_3);
-    const option_4 = document.createElement("option");
-    option_4.value = "1 or more stars";
-    data_list_1.appendChild(option_4);
-
-    input_1.appendChild(data_list_1);
-    form_1.appendChild(input_1);
-    filter.appendChild(form_1);
-
-    // form 2
-    const form_2 = document.createElement("form");
-    form_2.classList.add("form");
-    form_2.style.top = "220px";
-
-    const input_2 = document.createElement("input");
-    input_2.classList.add("input");
-    input_2.setAttribute("list", "input_list_2");
-    input_2.id = "input_2";
-    input_2.name = "input_2";
-
-    const data_list_2 = document.createElement("datalist");
-    data_list_2.id = "input_list_2";
-    const option_5 = document.createElement("option");
-    option_5.value = "15 minutes or less";
-    data_list_2.appendChild(option_5);
-    const option_6 = document.createElement("option");
-    option_6.value = "30 minutes or less";
-    data_list_2.appendChild(option_6);
-    const option_7 = document.createElement("option");
-    option_7.value = "45 minutes or less";
-    data_list_2.appendChild(option_7);
-
-    input_2.appendChild(data_list_2);
-    form_2.appendChild(input_2);
-    filter.appendChild(form_2);
-
-    // form 3
-    const form_3 = document.createElement("form");
-    form_3.classList.add("form");
-    form_3.style.top = "300px";
-
-    const input_3 = document.createElement("input");
-    input_3.classList.add("input");
-    input_3.setAttribute("list", "input_list_3");
-    input_3.id = "input_3";
-    input_3.name = "input_3";
-
-    const data_list_3 = document.createElement("datalist");
-    data_list_3.id = "input_list_3";
-    const option_8 = document.createElement("option");
-    option_8.value = "Vegetarian";
-    data_list_3.appendChild(option_8);
-    const option_9 = document.createElement("option");
-    option_9.value = "Not vegetarian";
-    data_list_3.appendChild(option_9);
-
-    input_3.appendChild(data_list_3);
-    form_3.appendChild(input_3);
-    filter.appendChild(form_3);
-
-    // form 4
-    const form_4 = document.createElement("form");
-    form_4.classList.add("form");
-    form_4.style.top = "380px";
-
-    const input_4 = document.createElement("input");
-    input_4.classList.add("input");
-    input_4.setAttribute("list", "input_list_4");
-    input_4.id = "input_4";
-    input_4.name = "input_4";
-
-    const data_list_4 = document.createElement("datalist");
-    data_list_4.id = "input_list_4";
-    const option_10 = document.createElement("option");
-    option_10.value = "Vegan";
-    data_list_4.appendChild(option_10);
-    const option_11 = document.createElement("option");
-    option_11.value = "Not vegan";
-    data_list_4.appendChild(option_11);
-
-    input_4.appendChild(data_list_4);
-    form_4.appendChild(input_4);
-    filter.appendChild(form_4);
-
-    // form 5
-    const form_5 = document.createElement("form");
-    form_5.classList.add("form");
-    form_5.style.top = "460px";
-
-    const input_5 = document.createElement("input");
-    input_5.classList.add("input");
-    input_5.setAttribute("list", "input_list_5");
-    input_5.id = "input_5";
-    input_5.name = "input_5";
-
-    const data_list_5 = document.createElement("datalist");
-    data_list_5.id = "input_list_5";
-    const option_12 = document.createElement("option");
-    option_12.value = "Gluten free";
-    data_list_5.appendChild(option_12);
-    const option_13 = document.createElement("option");
-    option_13.value = "Not gluten free";
-    data_list_5.appendChild(option_13);
-
-    input_5.appendChild(data_list_5);
-    form_5.appendChild(input_5);
-    filter.appendChild(form_5);
-
-    // form 6
-    const form_6 = document.createElement("form");
-    form_6.classList.add("form");
-    form_6.style.top = "540px";
-
-    const input_6 = document.createElement("input");
-    input_6.classList.add("input");
-    input_6.setAttribute("list", "input_list_6");
-    input_6.id = "input_6";
-    input_6.name = "input_6";
-
-    const data_list_6 = document.createElement("datalist");
-    data_list_6.id = "input_list_6";
-    const option_14 = document.createElement("option");
-    option_14.value = "Diary free";
-    data_list_6.appendChild(option_14);
-    const option_15 = document.createElement("option");
-    option_15.value = "Not diary free";
-    data_list_6.appendChild(option_15);
-
-    input_6.appendChild(data_list_6);
-    form_6.appendChild(input_6);
-    filter.appendChild(form_6);
-
-    // apply button
-    const apply = document.createElement("button");
-    apply.id = "apply";
-    apply.innerHTML = "APPLY";
-    filter.appendChild(apply);
-
-    searchPage.appendChild(filter);
-    // ##### end of filter #####
-
-    // ##### start of search body ##### (#todo)
-    const body = document.createElement("div");
-    body.id = "search_body";
-    // create recipe cards for each result
-    this.renderRecipes(data, body);
-
-    searchPage.appendChild(body);
-    // ##### end of search body #####
-
-    this.shadowRoot.appendChild(styleElem);
-    this.shadowRoot.appendChild(searchPage);
+    this.shadowRoot.appendChild(entry);
   }
 }
 
-customElements.define("search-page", SearchPage);
+/** *******************************************************************/
+/** *                       Helper Functions:                       ***/
+/** *          Shout out to the TA's lemme just yoink these         ***/
+/** *******************************************************************/
+
+/**
+ * Recursively search for a key nested somewhere inside an object
+ * @param {Object} object the object with which you'd like to search
+ * @param {String} key the key that you are looking for in the object
+ * @return {*} the value of the found key
+ */
+function searchForKey(object, key) {
+  let value;
+  Object.keys(object).some(function (k) {
+    if (k === key) {
+      value = object[k];
+      return true;
+    }
+    if (object[k] &amp;&amp; typeof object[k] === "object") {
+      value = searchForKey(object[k], key);
+      return value !== undefined;
+    }
+  });
+  return value;
+}
+
+/**
+ * Similar to getUrl(), this function extracts the organizations name from the
+ * schema JSON object. It's not in a standard location so this function helps.
+ * @param {Object} data Raw recipe JSON to find the org string of
+ * @return {String} If found, it retuns the name of the org as a
+ *                  string, otherwise null
+ */
+function getOrganization(data) {
+  if (data.publisher?.name) return data.publisher?.name;
+  if (data["@graph"]) {
+    for (let i = 0; i &lt; data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] === "Organization") {
+        return data["@graph"][i].name;
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Similar to getOrganization(), this extracts recipe name from raw JSON
+ * @param {Object} data Raw recipe JSON to find name of
+ * @return {String} if found, returns the name of recipe as string,
+ *                  otherwise null
+ */
+function getRecipeTitle(data) {
+  if (data.name) return data.name;
+  let value = null;
+  if (data["@graph"]) {
+    data["@graph"].forEach((obj) => {
+      if (obj["@type"] === "Recipe") {
+        value = obj["name"];
+      }
+    });
+  }
+  return value;
+}
+
+/**
+ * Extract the URL from the given recipe schema JSON object
+ * @param {Object} data Raw recipe JSON to find the URL of
+ * @return {String} If found, it returns the URL as a string, otherwise null
+ */
+function getUrl(data) {
+  if (data.url) return data.url;
+  if (data["@graph"]) {
+    for (let i = 0; i &lt; data["@graph"].length; i++) {
+      if (data["@graph"][i]["@type"] === "Article") {
+        return data["@graph"][i]["@id"];
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Converts ISO 8061 time strings to regular english time strings.
+ * Not perfect but it works for this lab
+ * @param {String} time time string to format
+ * @return {String} formatted time string
+ */
+function convertTime(time) {
+  let timeStr = "";
+
+  // Remove the 'PT'
+  time = time.slice(2);
+
+  const timeArr = time.split("");
+  if (time.includes("H")) {
+    for (let i = 0; i &lt; timeArr.length; i++) {
+      if (timeArr[i] === "H") return `${timeStr} hr`;
+      timeStr += timeArr[i];
+    }
+  } else {
+    for (let i = 0; i &lt; timeArr.length; i++) {
+      if (timeArr[i] === "M") return `${timeStr} min`;
+      timeStr += timeArr[i];
+    }
+  }
+
+  return timeStr;
+}
+
+/**
+ * Takes in a list of ingredients raw from imported data and returns a neatly
+ * formatted comma separated list.
+ * @param {Array} ingredientArr The raw unprocessed array of ingredients from
+ *                              the imported data
+ * @return {String} the string comma separate list of ingredients from the array
+ */
+function createIngredientList(ingredientArr) {
+  let finalIngredientList = "";
+
+  /**
+   * Removes the quantity and measurement from an ingredient string.
+   * This isn't perfect, it makes the assumption that there will
+   * always be a quantity (sometimes there isn't, so this would fail on
+   * something like '2 apples' or 'Some olive oil').
+   * For the purposes of this lab you don't have to worry about those cases.
+   * @param {String} ingredient the raw ingredient string you'd like to process
+   * @return {String} the ingredient without the measurement &amp; quantity
+   * (e.g. '1 cup flour' returns 'flour')
+   */
+  function _removeQtyAndMeasurement(ingredient) {
+    return ingredient.split(" ").splice(2).join(" ");
+  }
+
+  ingredientArr.forEach((ingredient) => {
+    ingredient = _removeQtyAndMeasurement(ingredient);
+    finalIngredientList += `${ingredient}, `;
+  });
+
+  // The .slice(0,-2) here gets ride of the extra ', ' added to the last
+  // ingredient
+  return finalIngredientList.slice(0, -2);
+}
+
+// define custom element!!
+customElements.define("glider-recipe", GliderRecipe);
 </code></pre>
         </article>
     </section>
