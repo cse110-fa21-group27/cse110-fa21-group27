@@ -1,13 +1,24 @@
 /**
- * directions component
+ * Upon construction, this custom webcomponent is empty.
+ * When its .data property is set, the webcomponent is filled
+ * in with the recipe data passed into .data
  */
 class Directions extends HTMLElement {
+  /** Constructs the Component and allows access to the shadow */
   constructor() {
     super();
+    // This was based on lab code. I don't want to mess it up this late
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
 
+  /**
+   * Populates the Directions HTML Component with information from the recipe
+   * json file and displays it with some CSS styling.
+   * @param {Object} data - The recipe json
+   */
   set data(data) {
+    // Creates CSS for the Directions Component
     const style = `
       @font-face {
         font-family: 'font';
@@ -153,11 +164,11 @@ class Directions extends HTMLElement {
 
     const directionList = data.analyzedInstructions[0].steps;
 
-    //background frame
+    // Background frame
     const wrapper = document.createElement("article");
     wrapper.classList.add("background");
 
-    //directions header "Directions"
+    // Directions header "Directions"
     const directions = document.createElement("p");
     directions.classList.add("directions");
     directions.textContent = "Directions";
@@ -215,7 +226,7 @@ class Directions extends HTMLElement {
       list.appendChild(direction);
 
       // If there are inner steps, display them as well
-      if (directionList[i].itemListElement != undefined) {
+      if (directionList[i].itemListElement !== undefined) {
         for (let j = 0; j < directionList[i].itemListElement.length; j++) {
           const direction = document.createElement("div");
           const y = j + 1;
@@ -272,29 +283,3 @@ class Directions extends HTMLElement {
 }
 
 customElements.define("directions-info", Directions);
-
-/** *******************************************************************/
-/** *                       Helper Functions:                       ***/
-/** *          Shout out to the TA's lemme just yoink these         ***/
-/** *******************************************************************/
-
-/**
- * Recursively search for a key nested somewhere inside an object
- * @param {Object} object the object with which you'd like to search
- * @param {String} key the key that you are looking for in the object
- * @return {*} the value of the found key
- */
-function searchForKey(object, key) {
-  let value;
-  Object.keys(object).some(function (k) {
-    if (k === key) {
-      value = object[k];
-      return true;
-    }
-    if (object[k] && typeof object[k] === "object") {
-      value = searchForKey(object[k], key);
-      return value !== undefined;
-    }
-  });
-  return value;
-}

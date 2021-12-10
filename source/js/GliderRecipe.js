@@ -1,4 +1,3 @@
-
 module.exports = { convertTime, getOrganization, getRecipeTitle };
 
 /** glider component. hopeful that it will hold recipe cards in a pretty way.*/
@@ -6,6 +5,7 @@ class GliderRecipe extends HTMLElement {
   /** constructs the component and allows access to the shadow */
   constructor() {
     super();
+    // eslint-disable-next-line no-unused-vars
     const shadow = this.attachShadow({ mode: "open" });
   }
   /**
@@ -96,13 +96,14 @@ function searchForKey(object, key) {
  * Similar to getUrl(), this function extracts the organizations name from the
  * schema JSON object. It's not in a standard location so this function helps.
  * @param {Object} data Raw recipe JSON to find the org string of
- * @return {String} If found, it retuns the name of the org as a string, otherwise null
+ * @return {String} If found, it retuns the name of the org as a
+ *                  string, otherwise null
  */
 function getOrganization(data) {
   if (data.publisher?.name) return data.publisher?.name;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Organization") {
+      if (data["@graph"][i]["@type"] === "Organization") {
         return data["@graph"][i].name;
       }
     }
@@ -112,15 +113,16 @@ function getOrganization(data) {
 
 /**
  * Similar to getOrganization(), this extracts recipe name from raw JSON
- * @param {Object} Data Raw recipe JSON to find name of
- * @return {String} if found, returns the name of recipe as string, otherwise null
+ * @param {Object} data Raw recipe JSON to find name of
+ * @return {String} if found, returns the name of recipe as string,
+ *                  otherwise null
  */
 function getRecipeTitle(data) {
   if (data.name) return data.name;
   let value = null;
   if (data["@graph"]) {
     data["@graph"].forEach((obj) => {
-      if (obj["@type"] == "Recipe") {
+      if (obj["@type"] === "Recipe") {
         value = obj["name"];
       }
     });
@@ -137,8 +139,9 @@ function getUrl(data) {
   if (data.url) return data.url;
   if (data["@graph"]) {
     for (let i = 0; i < data["@graph"].length; i++) {
-      if (data["@graph"][i]["@type"] == "Article")
+      if (data["@graph"][i]["@type"] === "Article") {
         return data["@graph"][i]["@id"];
+      }
     }
   }
   return null;
@@ -159,12 +162,12 @@ function convertTime(time) {
   const timeArr = time.split("");
   if (time.includes("H")) {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "H") return `${timeStr} hr`;
+      if (timeArr[i] === "H") return `${timeStr} hr`;
       timeStr += timeArr[i];
     }
   } else {
     for (let i = 0; i < timeArr.length; i++) {
-      if (timeArr[i] == "M") return `${timeStr} min`;
+      if (timeArr[i] === "M") return `${timeStr} min`;
       timeStr += timeArr[i];
     }
   }
@@ -175,8 +178,8 @@ function convertTime(time) {
 /**
  * Takes in a list of ingredients raw from imported data and returns a neatly
  * formatted comma separated list.
- * @param {Array} ingredientArr The raw unprocessed array of ingredients from the
- *                              imported data
+ * @param {Array} ingredientArr The raw unprocessed array of ingredients from
+ *                              the imported data
  * @return {String} the string comma separate list of ingredients from the array
  */
 function createIngredientList(ingredientArr) {
@@ -184,8 +187,9 @@ function createIngredientList(ingredientArr) {
 
   /**
    * Removes the quantity and measurement from an ingredient string.
-   * This isn't perfect, it makes the assumption that there will always be a quantity
-   * (sometimes there isn't, so this would fail on something like '2 apples' or 'Some olive oil').
+   * This isn't perfect, it makes the assumption that there will
+   * always be a quantity (sometimes there isn't, so this would fail on
+   * something like '2 apples' or 'Some olive oil').
    * For the purposes of this lab you don't have to worry about those cases.
    * @param {String} ingredient the raw ingredient string you'd like to process
    * @return {String} the ingredient without the measurement & quantity
@@ -200,7 +204,8 @@ function createIngredientList(ingredientArr) {
     finalIngredientList += `${ingredient}, `;
   });
 
-  // The .slice(0,-2) here gets ride of the extra ', ' added to the last ingredient
+  // The .slice(0,-2) here gets ride of the extra ', ' added to the last
+  // ingredient
   return finalIngredientList.slice(0, -2);
 }
 
