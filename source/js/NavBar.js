@@ -84,6 +84,12 @@ class NavBar extends HTMLElement {
       width: 3.2%;
       height: 70%;
   }
+
+  button {
+    background: transparent;
+    border: none !important;
+  }
+
   .roadmap_png {
     position: absolute;
     left: 81%;
