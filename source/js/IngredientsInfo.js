@@ -36,72 +36,65 @@ class IngredientsInfo extends HTMLElement {
       }
       
       .ingredients-label {
-        left: 30%;
-        top: 0%;
         font-style: normal;
         font-weight: normal;
         font-size: 32px;
-        line-height: 62px;
       }
       
       .line {
-        margin-top: 160px;
-        width: 90%;
+        width: 100%;
         text-align: center;
-        color: black;
+        color: green;
+      
       }
       
-      .form>button {
-        position: absolute;
+      .head{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        margin-right: 15%;;
+        margin-left: 15%;
+        align-items: center;
+      }
+      
+      .cartButton {
         font-family: font;
         font-style: normal;
         font-weight: normal;
         font-size: 18px;
-        height: 8%;
+        height: 6%;
         right: 14%;
         background: #427820;
         color: white;
       }
       
-      .cartButton {
-        margin:auto;
-        left: 17%;
-        top: 20%;
+      .serving_container{
+        display: flex;
+        flex-direction: row;
+        gap: 5%;
+        align-items: center;
+        margin-right: 15%;;
+        margin-left: 15%;
+        
       }
       
       .addButton {
-        margin-right: 75%;
-        left: 55%;
-        top: 30%;
+        height: 6%;
+        background: #427820;
+        color: white;
       }
       
       .subtractButton {
-        margin-right: 95%;
-        left: 35%;
-        top: 30%;
-        height: 5%;
+        height: 6%; 
+        background: #427820;
+        color: white;
       }
       
-      .quantity {
-        text-align: left;
-        position: absolute;
-        left: 45%;
-        top: 26%;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 32px;
-        line-height: 30px;
+      .quantity_txt {
+        font-size: 24px;
       }
-      
-      #serving_size {
-        position: absolute;
-        left: 12%;
-        top: 38%;
-        width: 98%;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 20px;
+      .quantity{
+        height: 6%;
       }
       
       .ingredients-list {
@@ -132,27 +125,29 @@ class IngredientsInfo extends HTMLElement {
     const info = document.createElement("div");
     info.classList.add("ingredients-info");
 
+    // header Container
+    const head = document.createElement("div");
+    head.classList.add("head");
+    info.appendChild(head);
+
     // Creating the Ingredients Title
     const ingredients = document.createElement("p");
     ingredients.classList.add("ingredients-label");
     ingredients.textContent = "Ingredients";
-    info.appendChild(ingredients);
+    head.appendChild(ingredients);
 
-    // Creating a Stylish Line Break to separate the Title from the Rest
-    const line = document.createElement("hr");
-    line.classList.add("line");
-    info.appendChild(line);
-
-    // Creating an Inner Container
-    const form = document.createElement("div");
-    form.classList.add("form");
-
+    
     // Adding a Add Ingredients To Cart Button with Event Listener that will
     // call a function to add/remove the Ingredients to Grocery Cart (Not Implemented)
     const addToCart = document.createElement("button");
     addToCart.classList.add("cartButton");
     addToCart.textContent = "Add Ingredients To Cart";
-    form.appendChild(addToCart);
+    head.appendChild(addToCart);
+
+    // serving container Container
+    const serving_container = document.createElement("div");
+    serving_container.classList.add("serving_container");
+    head.appendChild(serving_container);
 
     // Adding a Subtract Button with Event Listener that will
     // decrement the number of servings and Ingredients
@@ -161,18 +156,21 @@ class IngredientsInfo extends HTMLElement {
     subtractQuantity.classList.add("subtractButton");
     subtractQuantity.addEventListener("click", (event) => {
       if (quantity.textContent != 1) {
-        quantity.textContent = `${quantity.textContent - 1}`;
+        quantity_txt.textContent = `${quantity_txt.textContent - 1}`;
       }
     });
     subtractQuantity.textContent = "-";
-    form.appendChild(subtractQuantity);
+    serving_container.appendChild(subtractQuantity);
 
     // Creating a current display of the number of Servings the Recipe
     // will make based on the current number of Ingredients
-    const quantity = document.createElement("p");
+    const quantity = document.createElement("div");
     quantity.classList.add("quantity");
-    quantity.textContent = data.servings;
-    form.appendChild(quantity);
+    const quantity_txt = document.createElement("p");
+    quantity_txt.textContent = data.servings;
+    quantity_txt.classList.add("quantity_txt");
+    quantity.appendChild(quantity_txt);
+    serving_container.appendChild(quantity);
 
     // Adding a Add Button with Event Listener that will
     // increment the number of servings and Ingredients
@@ -180,10 +178,21 @@ class IngredientsInfo extends HTMLElement {
     const addQuantity = document.createElement("button");
     addQuantity.classList.add("addButton");
     addQuantity.addEventListener("click", (event) => {
-      quantity.textContent = `${parseInt(quantity.textContent) + 1}`;
+      quantity_txt.textContent = `${parseInt(quantity_txt.textContent) + 1}`;
     });
     addQuantity.textContent = "+";
-    form.appendChild(addQuantity);
+    serving_container.appendChild(addQuantity);
+
+
+
+    // Creating a Stylish Line Break to separate the Title from the Rest
+    const line = document.createElement("hr");
+    line.classList.add("line");
+    head.appendChild(line);
+
+    // Creating an Inner Container
+    const form = document.createElement("div");
+    form.classList.add("form");
 
     // Creating the list of ingredients with checkboxes to allow the user
     // to only select some ingredients to add to Grocery List (Not Implemented)
